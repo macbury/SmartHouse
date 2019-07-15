@@ -1,0 +1,6 @@
+living_room_target_temperature:
+  name: 'Target temperature'
+  min: 4
+  max: 28
+  initial: 24.0
+  step: 0.5

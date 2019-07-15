@@ -1,0 +1,3 @@
+db_url: !env_var HOME_ASSISTANT_DB_URL
+purge_interval: 0
+purge_keep_days: 365

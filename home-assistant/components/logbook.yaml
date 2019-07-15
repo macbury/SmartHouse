@@ -1,0 +1,13 @@
+exclude:
+  entities:
+    - automation.ping_aqara_gateway
+    - automation.refresh_courtains_if_they_draw_power
+include:
+  entities:
+    - binary_sensor.hall_pir
+  domains:
+    - switch
+    - media_player
+    - light
+    - device_tracker
+    - automation

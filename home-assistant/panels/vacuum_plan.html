@@ -1,0 +1,193 @@
+<dom-module id="ha-panel-vacuum_plan">
+
+    <template>
+      <style include="ha-style">
+        .container-with-toolbar {
+          height: calc(100% - 64px);
+          vertical-align: top;
+          position: relative;
+        }
+
+        .inner-container {
+          overflow: scroll;
+          background: #000;
+          height: 100%;
+          width: 100%;
+        }
+
+        #output {
+          position: fixed;
+          top: 84px;
+          right: 20px;
+          width: 320px;
+        }
+
+        textarea {
+          width: 90%;
+          height: 90px;
+          color: #fff;
+          background: #000;
+          padding: 10px;
+          border: 2px solid #fff;
+          border-radius: 10px;
+        }
+
+        vacuum-map-controller-card {
+          height: 100%;
+          position: relative;
+        }
+      </style>
+  
+      <app-toolbar>
+        <ha-menu-button></ha-menu-button>
+        <div main-title>Vacuum Plan</div>
+      </app-toolbar>
+  
+      <div class='container-with-toolbar'>
+        <vacuum-map-controller-card hass=[[hass]]></vacuum-map-controller-card>
+      </div>
+    </template>
+  
+  </dom-module>
+  
+  <script>
+    const CANVAS_ORIGIN = 512
+    const SCALE = 2
+    const XIAOMI_SIZE = 25500
+    //(𝑥1,𝑦1)=(−𝑦,𝑥)
+    function toXiaomiUnitX(position) {
+      const ppmPosition = position / SCALE
+      const originPos = ppmPosition - CANVAS_ORIGIN
+      const partPos = originPos / CANVAS_ORIGIN
+      return Math.round(XIAOMI_SIZE - partPos * XIAOMI_SIZE)
+    }
+    function toXiaomiUnitY(position) {
+      const ppmPosition = position / SCALE
+      const originPos = ppmPosition + CANVAS_ORIGIN
+      const partPos = originPos / CANVAS_ORIGIN
+      return Math.round(XIAOMI_SIZE - partPos * XIAOMI_SIZE)
+    }
+    function rotatePoint({ x, y }) {
+      return { x: y, y: -x }
+    }
+
+    class HaVacuumPlan extends Polymer.Element {
+      static get is() { return 'ha-panel-vacuum_plan'; }
+  
+      static get properties() {
+        return {
+          hass: {
+            type: Object,
+          }
+        };
+      }
+    }
+
+    class VacuumMapControllerCard extends HTMLElement {
+      set hass(hass) {
+        this._hass = hass
+        if (!this.content) {
+          this.drag = false
+          this.origin = { x: 0, y: 0 }
+          this.current = { x: 0, y: 0 }
+          this.content = document.createElement('div')
+          this.content.className = "inner-container"
+          this.mapImg = document.createElement('img')
+          this.canvas = document.createElement('canvas')
+
+          this.canvas.width = this.canvas.height = 2048
+
+          this.output = document.createElement('div')
+          this.output.id = 'output'
+
+          this.serviceText = document.createElement('textarea')
+          this.content.appendChild(this.canvas)
+          this.output.appendChild(this.serviceText)
+          
+          this.ctx = this.canvas.getContext('2d')
+
+          this.mapImg.onload = () => {
+            this.draw()
+            this.mapImg.hidden = true
+          }
+          
+          this.content.appendChild(this.mapImg)
+
+          this.content.addEventListener('mousedown', (e) => {
+            e.preventDefault()
+            this.current.x = this.origin.x = e.clientX + this.content.scrollLeft;
+            this.current.y = this.origin.y = e.clientY + this.content.scrollTop - 64;
+            this.drag = true;
+            this.draw()
+          }, false);
+
+          this.content.addEventListener('mouseup', (e) => {
+            e.preventDefault()
+            this.drag = false;
+          }, false);
+
+          this.content.addEventListener('mousemove', (e) => {
+            if (this.drag) {
+              e.preventDefault()
+              this.current.x = e.clientX + this.content.scrollLeft
+              this.current.y = e.clientY + this.content.scrollTop - 64
+            }
+            this.draw()
+          }, false);
+
+          this.appendChild(this.content);
+          this.appendChild(this.output);
+        }
+        
+        this.mapImg.src = this.entity.attributes.entity_picture
+      }
+
+      draw() {
+        requestAnimationFrame(() => this.redraw())
+      }
+
+      redraw() {
+        this.ctx.fillStyle = '#000000';
+        this.ctx.rect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fill();
+
+        this.ctx.drawImage(this.mapImg, 0, 0);
+
+        const sy = Math.round(Math.min(this.origin.y, this.current.y))
+        const sx = Math.round(Math.min(this.origin.x, this.current.x))
+        const ey = Math.round(Math.max(this.origin.y, this.current.y))
+        const ex = Math.round(Math.max(this.origin.x, this.current.x))
+        const width = ex - sx
+        const height = ey - sy
+        if (width > 0 && height > 0) {
+          this.ctx.fillStyle = 'rgba(250, 200, 150, 0.4)';
+          this.ctx.fillRect(sx, sy, width, height);
+        }
+
+        this.updateTextArea()
+      }
+
+      /**
+       * the first two digits are the coordinates of the bottom left corner of the zone, the second two digits for the top right corner of the zone, and the last digit for number of times to clean a zone. 
+       */
+      updateTextArea() {
+        const start = rotatePoint(this.origin)
+        const end = rotatePoint(this.current)
+        const sy = toXiaomiUnitY(Math.min(start.y, end.y))
+        const sx = toXiaomiUnitX(Math.min(start.x, end.x))
+        const ey = toXiaomiUnitY(Math.max(start.y, end.y))
+        const ex = toXiaomiUnitX(Math.max(start.x, end.x))
+        this.serviceText.value = "- service: vacuum.send_command\n" +
+                                 "  data:\n" +
+                                 "    entity_id: vacuum.main_vacum\n" +
+                                 "    command: app_zoned_clean\n" +
+                                 `    params: [[${ey}, ${ex}, ${sy}, ${sx}, 1]]`
+      }
+
+      get entity() {
+        return this._hass.states['camera.vacuum_grid_map']
+      }
+    }
+    customElements.define('vacuum-map-controller-card', VacuumMapControllerCard);
+    customElements.define(HaVacuumPlan.is, HaVacuumPlan);
+  </script>

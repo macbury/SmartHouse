@@ -1,0 +1,12 @@
+{
+  "domain": "soundbar",
+  "name": "SamsungMultiRoom",
+  "documentation": "http://macbury.ninja",
+  "requirements": [
+    "xmltodict==0.11.0"
+  ],
+  "dependencies": [],
+  "codeowners": [
+    "@macbury"
+  ]
+}

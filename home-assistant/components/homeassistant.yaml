@@ -1,0 +1,11 @@
+auth_providers:
+  - type: homeassistant
+name: !env_var HOME_ASSISTANT_NAME
+latitude: !env_var HOME_ASSISTANT_LAT
+longitude: !env_var HOME_ASSISTANT_LNG
+elevation: !env_var HOME_ASSISTANT_ELEVATION
+unit_system: metric
+time_zone: Europe/Warsaw
+customize: !include customize.yaml
+whitelist_external_dirs:
+  - /tmp

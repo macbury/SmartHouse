@@ -1,0 +1,12 @@
+{
+  "domain": "kkm",
+  "name": "KKMSensor",
+  "documentation": "http://macbury.ninja",
+  "requirements": [
+    "beautifulsoup4==4.6.3"
+  ],
+  "dependencies": [],
+  "codeowners": [
+    "@macbury"
+  ]
+}

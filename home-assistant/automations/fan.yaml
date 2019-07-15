@@ -1,0 +1,23 @@
+- alias: Switch off fan leds after sunset
+  trigger:
+    - platform: sun
+      event: sunset
+      offset: "-00:10:00"
+    - platform: time
+      at: '23:59:59'
+  action:
+    - service: fan.xiaomi_miio_set_led_off
+      data:
+        entity_id: "fan.living_room_air_purifier"
+
+- alias: Switch on fan leds after sunrise
+  trigger:
+    - platform: sun
+      event: sunrise
+      offset: "-00:10:00"
+    - platform: time
+      at: '7:00:00'
+  action:
+    - service: fan.xiaomi_miio_set_led_on
+      data:
+        entity_id: "fan.living_room_air_purifier"

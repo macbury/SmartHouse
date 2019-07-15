@@ -1,0 +1,13 @@
+partition_size: '130G'
+encrypted_disk: /dev/sda3
+disk_password: 'admin1234'
+email:
+domain: 'test.local'
+ipfs_domain: 'ipfs.test.local'
+
+ipfs_peer_id: asda
+ipfs_private_key: ''
+ipfs_storage_max: 20GB
+ipfs_version: v0.4.21
+ipfs_http_api_listen_multiaddress: /ip4/0.0.0.0/tcp/5001
+ipfs_http_gateway_listen_multiaddress: /ip4/0.0.0.0/tcp/8080

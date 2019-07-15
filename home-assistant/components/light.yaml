@@ -1,0 +1,51 @@
+- platform: switch
+  name: Work Desk
+  entity_id: switch.work_desk_light
+
+- platform: switch
+  name: Bathroom
+  entity_id: switch.bathroom_light
+
+- platform: switch
+  name: Bedroom
+  entity_id: switch.bedroom_light
+
+- platform: switch
+  name: Coffee
+  entity_id: switch.coffee_light
+
+- platform: switch
+  name: Dinner table
+  entity_id: switch.dinner_table_light
+
+- platform: switch
+  name: Corridor
+  entity_id: switch.hall_light
+
+- platform: switch
+  name: Cooking
+  entity_id: switch.kitchen_cooking_light
+
+- platform: switch
+  name: Kitchen
+  entity_id: switch.kitchen_main_light
+
+- platform: switch
+  name: Main
+  entity_id: switch.living_room_main_light
+
+- platform: switch
+  name: Tv Stand
+  entity_id: switch.tv_light
+
+- platform: mqtt
+  schema: json
+  command_topic: 'home/living_room/led_strip/desk/set'
+  state_topic: 'home/living_room/led_strip/desk'
+  name: work_ambient_desk
+  qos: 1
+  rgb: true
+  retain: false
+  brightness: true
+  # effect_list: !include led_strip_effects.yaml
+  # effect_value_template: '{{ json_value.effect }}'

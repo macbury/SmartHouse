@@ -1,0 +1,18 @@
+- platform: spotify
+  client_id: !env_var HOME_ASSISTANT_SPOTIFY_CLIENT_ID
+  client_secret: !env_var HOME_ASSISTANT_SPOTIFY_CLIENT_SECRET
+  cache_path: '/config/spotify-token-cache.json'
+
+- platform: samsung_multi_room
+  host: 192.168.1.227
+  max_volume: 20
+
+- platform: webostv
+  name: tv
+  host: 192.168.1.120
+  turn_on_action:
+    service: wake_on_lan.send_magic_packet
+    data:
+      mac: 04:4E:AF:7A:CA:3A
+
+- platform: plex

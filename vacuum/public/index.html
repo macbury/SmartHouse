@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Xiaomi Vacuum Zone Cleaning Generator</title>
+
+  <style>
+    body {
+      margin: 0px;
+      padding: 0px;
+      background: #000000;
+    }
+
+    #output {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 320px;
+    }
+
+    textarea {
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    // https://hackernoon.com/how-i-set-up-room-cleaning-automation-with-google-home-home-assistant-and-xiaomi-vacuum-cleaner-9149e0267e6d
+    const origin = { x: 0, y: 0 }
+    const current = { x: 0, y: 0 }
+
+    const canvasOrigin = 512
+    const SCALE = 2
+
+    const XIAOMI_SIZE = 25500
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const map = document.body
+      const mapImg = document.createElement('img')
+      const canvas = document.getElementById('canvas')
+      const serviceText = document.getElementById('service')
+      const ctx = canvas.getContext('2d')
+      let drag = false
+
+      mapImg.onload = () => {
+        map.scrollLeft = (mapImg.clientWidth - map.clientWidth) / 2
+        map.scrollTop = (mapImg.clientHeight - map.clientHeight) / 2
+
+        draw()
+        mapImg.hidden = true
+      }
+
+      mapImg.src = './map.grid.png'
+      document.body.appendChild(mapImg)
+
+      canvas.addEventListener('mousedown', function(e) {
+        current.x = origin.x = e.pageX - this.offsetLeft;
+        current.y = origin.y = e.pageY - this.offsetTop;
+        drag = true;
+        draw()
+      }, false);
+  
+      canvas.addEventListener('mouseup', function(e) {
+        drag = false;
+      }, false);
+  
+      canvas.addEventListener('mousemove', function(e) {
+        if (drag) {
+          current.x = e.pageX - this.offsetLeft
+          current.y = e.pageY - this.offsetTop
+        }
+
+        draw()
+      }, false);
+
+      function draw() {
+        requestAnimationFrame(redraw)
+      }
+
+      //(𝑥1,𝑦1)=(−𝑦,𝑥)
+      function toXiaomiUnitX(position) {
+        const ppmPosition = position / SCALE
+        const originPos = ppmPosition - canvasOrigin
+        const partPos = originPos / canvasOrigin
+        return Math.round(XIAOMI_SIZE - partPos * XIAOMI_SIZE)
+      }
+
+      function toXiaomiUnitY(position) {
+        const ppmPosition = position / SCALE
+        const originPos = ppmPosition + canvasOrigin
+        const partPos = originPos / canvasOrigin
+        return Math.round(XIAOMI_SIZE - partPos * XIAOMI_SIZE)
+      }
+
+      function rotatePoint({ x, y }) {
+        return { x: y, y: -x }
+      }
+
+      /**
+       * the first two digits are the coordinates of the bottom left corner of the zone, the second two digits for the top right corner of the zone, and the last digit for number of times to clean a zone. 
+       */
+      function updateTextArea() {
+        const start = rotatePoint(origin)
+        const end = rotatePoint(current)
+
+        const sy = toXiaomiUnitY(Math.min(start.y, end.y))
+        const sx = toXiaomiUnitX(Math.min(start.x, end.x))
+
+        const ey = toXiaomiUnitY(Math.max(start.y, end.y))
+        const ex = toXiaomiUnitX(Math.max(start.x, end.x))
+
+        serviceText.value = "- service: vacuum.send_command\n" +
+                            "  data:\n" +
+                            "    entity_id: vacuum.main_vacum\n" +
+                            "    command: app_zoned_clean\n" +
+                            `    params: [[${ey}, ${ex}, ${sy}, ${sx}, 1]]`
+      }
+
+      function redraw() {
+        ctx.fillStyle = '#000000';
+        ctx.rect(0, 0, canvas.width, canvas.height);
+        ctx.fill();
+        ctx.drawImage(mapImg, 0, 0);
+
+        const sy = Math.round(Math.min(origin.y, current.y))
+        const sx = Math.round(Math.min(origin.x, current.x))
+
+        const ey = Math.round(Math.max(origin.y, current.y))
+        const ex = Math.round(Math.max(origin.x, current.x))
+
+        const width = ex - sx
+        const height = ey - sy
+
+        if (width > 0 && height > 0) {
+          ctx.fillStyle = 'rgba(250, 200, 150, 0.4)';
+          ctx.fillRect(sx, sy, width, height);
+        }
+        updateTextArea()
+      }
+    })
+  </script>
+</head>
+<body>
+    <canvas id="canvas" width="2048" height="2048"></canvas>
+
+  <div id="output">
+    <textarea id="service" cols="30" rows="10" readonly></textarea>
+  </div>
+</body>
+</html>

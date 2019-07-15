@@ -1,0 +1,3 @@
+#!/bin/bash
+docker build . -t vacuum
+docker run -t vacuum -p 3000:3000

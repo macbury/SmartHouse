@@ -1,0 +1,79 @@
+- type: custom:layout-card
+  layout: vertical
+  max_columns: 2
+  cards:
+    - type: horizontal-stack
+      cards:
+        - type: entity-button
+          entity: light.kitchen
+          icon: mdi:ceiling-light
+        - type: entity-button
+          entity: light.cooking
+          icon: mdi:stove
+        - type: entity-button
+          entity: light.coffee
+          icon: mdi:coffee
+    - type: horizontal-stack
+      cards:
+        - type: horizontal-stack
+          cards:
+            - type: custom:mini-graph-card
+              entities:
+                - sensor.kitchen_temperature
+              line_color: '#E53935'
+              hours_to_show: 24
+              points_per_hour: 1
+              animate: true
+              hour24: true
+              extrema: true
+              show:
+                points: true
+                fill: fade
+            - type: custom:mini-graph-card
+              entities:
+                - sensor.kitchen_humidity
+              line_color: '#3949AB'
+              hours_to_show: 24
+              points_per_hour: 1
+              animate: true
+              hour24: true
+              show:
+                points: true
+                fill: fade
+    - type: custom:mini-media-player
+      entity: media_player.kitchen
+      name: 'Alexa'
+      icon: mdi:amazon-alexa
+      hide_power: true
+      hide_controls: false
+      hide_mute: true
+      hide_volume: true
+      show_progress: false
+      show_source: full
+    - type: entities
+      show_header_toggle: false
+      entities:
+        - binary_sensor.dishwasher
+    - break
+    - type: custom:vacuum-card
+      entity: vacuum.main_vacuum
+      map: camera.vacuum_map
+      actions:
+        - name: Clean living room
+          service: script.clean_living_room
+          icon: mdi:seat-recline-extra
+        - name: Clean bedroom
+          service: script.clean_bedroom
+          icon: mdi:hotel
+        - name: Clean kitchen
+          service: script.clean_kitchen
+          icon: mdi:fridge
+        - name: Clean corridor
+          service: script.clean_corridor
+          icon: mdi:door-closed
+        - name: Clean bathroom
+          service: script.clean_bathroom
+          icon: mdi:shower
+    - type: custom:dynamic-wallpaper
+      entity: sun.sun
+    - type: custom:compact-custom-header

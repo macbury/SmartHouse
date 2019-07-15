@@ -1,0 +1,73 @@
+- alias: Notify if Ola left home
+  trigger:
+    platform: state
+    entity_id: device_tracker.ola
+    from: 'home'
+    to: 'not_home'
+  action:
+    service: notify.all
+    data:
+      message: 'Ola wyszła z domu'
+
+- alias: Notify if I left home
+  trigger:
+    platform: state
+    entity_id: device_tracker.arek
+    from: 'home'
+    to: 'not_home'
+  action:
+    service: notify.all
+    data:
+      message: 'Arek wyszedł z domu'
+
+- alias: Say hello alexa
+  trigger:
+    - platform: state
+      entity_id: group.family
+      to: 'home'
+      from: 'not_home'
+  action:
+    - delay: '00:02:00'
+    - service: notify.alexa_media_living_room
+      data:
+        message: 'Welcome back, masters!'
+        data:
+          type: announce
+          method: all
+
+- alias: Switch lights in living room after humans come
+  trigger:
+    - platform: state
+      entity_id: group.family
+      to: 'home'
+      from: 'not_home'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: sun.sun
+        state: below_horizon
+  action:
+    - service: light.turn_on
+      entity_id: light.main
+
+
+# - alias: Inform if Arek is back in cracow
+#   trigger:
+#     - platform: state
+#       entity_id: sensor.city_arek
+#       to: 'Kraków'
+#   action:
+#     - service: notify.all
+#       data:
+#         message: '@Ola, Arek jest juz w Krakowie'
+
+# - alias: Inform if Ola is back in cracow
+#   trigger:
+#     - platform: state
+#       entity_id: sensor.city_ola
+#       to: 'Kraków'
+#   action:
+#     - service: notify.all
+#       data:
+#         message: '@Arek, Ola jest juz w Krakowie'

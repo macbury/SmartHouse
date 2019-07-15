@@ -1,0 +1,40 @@
+ha_pihole:
+  title: "PiHole"
+  url: '/pihole/'
+  icon: 'mdi:pi-hole'
+ha_ytdl:
+  title: "Youtube Downloader"
+  url: '/ytdl/'
+  icon: 'mdi:youtube-subscription'
+ha_grafana:
+  title: "Grafana"
+  url: '/grafana/'
+  icon: 'mdi:database'
+ha_glances:
+  require_admin: true
+  title: "Glances"
+  url: '/glances/1'
+  icon: 'mdi:ubuntu'
+ha_plex:
+  title: "Plex"
+  url: '/plex/web/index.html'
+  icon: 'mdi:plex'
+ha_qnap:
+  require_admin: true
+  title: "QNAP"
+  url: "https://mr-pickle.here/"
+  icon: 'mdi:nas'
+ha_transmission:
+  title: "Transmission"
+  url: !env_var HOME_ASSISTANT_TRANSMISSION_URL
+  icon: 'mdi:cloud-download'
+  require_admin: true
+ha_sonarr:
+  title: "Sonarr"
+  url: "/sonarr"
+  icon: 'mdi:radar'
+ha_nextcloud:
+  require_admin: true
+  title: "Nextcloud"
+  url: "/nextcloud/"
+  icon: 'mdi:calendar-multiselect'

@@ -1,0 +1,3 @@
+- platform: darksky
+  api_key: !env_var HOME_ASSISTANT_DARKSKY_API_KEY
+  mode: hourly

@@ -1,0 +1,4 @@
+accounts:
+  - email: !env_var HOME_ASSISTANT_ALEXA_EMAIL
+    password: !env_var HOME_ASSISTANT_ALEXA_PASSWORD
+    url: "amazon.com"

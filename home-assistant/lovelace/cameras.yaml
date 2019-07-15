@@ -1,0 +1,29 @@
+- type: custom:layout-card
+  layout: horizontal
+  max_columns: 3
+  cards:
+    - type: picture-entity
+      title: Kuchnia
+      entity: camera.kitchen
+      camera_view: 'live'
+    - type: picture-entity
+      entity: camera.main_square
+      camera_view: 'live'
+    - type: picture-entity
+      entity: camera.wawel
+      camera_view: 'live'
+    # - type: picture-glance
+    #   title: Salon
+    #   camera_image: camera.living_room
+    #   entity: camera.living_room
+    #   entities:
+    #     - image_processing.tensorflow_living_room
+    # - type: picture-glance
+    #   title: Salon
+    #   camera_image: camera.living_room
+    #   entity: camera.living_room
+    #   entities:
+    #     - image_processing.tensorflow_living_room
+    - type: custom:dynamic-wallpaper
+      entity: sun.sun
+    - type: custom:compact-custom-header

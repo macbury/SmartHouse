@@ -1,0 +1,13 @@
+- platform: public_transit
+  name: back_from_work_transit
+  from: "Białucha"
+  to: "Wzgórza Krzesławickie"
+  count: 5
+  endpoint: "http://localhost:10008/api"
+
+- platform: public_transit
+  name: to_work_transit
+  from: "Wzgórza Krzesławickie"
+  to: "Nowy Bieżanów P+R"
+  count: 3
+  endpoint: "http://localhost:10008/api"

@@ -1,0 +1,13 @@
+{
+  "domain": "spotify_cover",
+  "name": "SpotifyCoverSensor",
+  "documentation": "http://macbury.ninja",
+  "requirements": [
+    "colorthief==0.2.1",
+    "spotipy-homeassistant==2.4.4.dev1"
+  ],
+  "dependencies": [],
+  "codeowners": [
+    "@macbury"
+  ]
+}

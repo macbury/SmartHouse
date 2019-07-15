@@ -1,0 +1,30 @@
+- alias: 'Set theme at startup and notify about that event'
+  initial_state: 'on'
+  trigger:
+    - platform: homeassistant
+      event: start
+  action:
+    - service: frontend.set_theme
+      data:
+        name: darkblue
+    - service: automation.turn_on
+      data:
+        entity_id: group.all_automations
+    - delay: '00:00:45'
+    - service: notify.all
+      data:
+        title: 'Home Assistant'
+        message: 'Home assistant finished booting'
+    - service: automation.turn_on
+      data:
+        entity_id: group.all_automations
+
+- alias: Update notifications
+  trigger:
+    - platform: state
+      entity_id: updater.updater
+  action:
+    service: notify.all
+    data_template:
+      title: 'New Home Assistant Release'
+      message: "Home Assistant  {{ states.updater.updater.state }}  is now available."

@@ -1,0 +1,10 @@
+- platform: template
+  sensors:
+    vacuum_status:
+      friendly_name: "Vacuum - Status"
+      value_template: "Status: {{ states.vacuum.main_vacuum.attributes.status }}"
+    vacuum_battery:
+      friendly_name: "Vacuum - Battery"
+      value_template: "Battery: {{ states.vacuum.main_vacuum.attributes.battery_level }}"
+      device_class: battery
+      unit_of_measurement: '%'

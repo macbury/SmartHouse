@@ -1,0 +1,76 @@
+- type: custom:layout-card
+  layout: vertical
+  max_columns: 3
+  cards:
+    - type: horizontal-stack
+      cards:
+        - type: custom:mini-graph-card
+          entities:
+            - sensor.asuswrt_upload_speed
+          line_color: '#5e2f5d'
+          hours_to_show: 6
+          points_per_hour: 1
+          animate: true
+          hour24: true
+          extrema: true
+          show:
+            points: true
+            fill: fade
+        - type: custom:mini-graph-card
+          entities:
+            - sensor.asuswrt_download_speed
+          line_color: '#385e2f'
+          hours_to_show: 6
+          points_per_hour: 1
+          animate: true
+          hour24: true
+          show:
+            points: true
+            fill: fade
+    - type: entities
+      title: PiHole
+      show_header_toggle: false
+      entities:
+        - sensor.pi_hole_dns_queries_today
+        - sensor.pi_hole_ads_blocked_today
+        - sensor.pi_hole_dns_unique_clients
+    - type: custom:monster-card
+      card:
+        type: entities
+        title: Have I Been Pwned
+      filter:
+        include:
+          - entity_id: "sensor.breaches_*"
+            state: '> 0'
+    - type: entities
+      title: Nas i Transmission
+      show_header_toggle: false
+      entities:
+        - sensor.transmission_status
+        - sensor.mrpickle_status
+    - break
+    - type: entities
+      title: Internet
+      show_header_toggle: false
+      entities:
+        - sensor.speedtest_download
+        - sensor.speedtest_ping
+        - sensor.speedtest_upload
+        - sensor.asuswrt_upload
+        - sensor.asuswrt_upload_speed
+        - sensor.asuswrt_download_speed
+        - sensor.asuswrt_download
+
+    - type: custom:monster-card
+      card:
+        type: entities
+        title: Fail2Ban
+      filter:
+        include:
+          - entity_id: "sensor.fail2ban*"
+    - break
+    - type: custom:qr-card
+      code: !env_var HOME_ASSISTANT_SSID_QR_CODE
+    - type: custom:dynamic-wallpaper
+      entity: sun.sun
+    - type: custom:compact-custom-header

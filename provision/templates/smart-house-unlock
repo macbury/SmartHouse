@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+sudo cryptsetup luksOpen {{encrypted_disk}} smart-house && sudo mount /dev/mapper/smart-house /smart-house
+sync
+smart-house mount-nas
+smart-house restart
+sudo systemctl restart fail2ban

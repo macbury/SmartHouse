@@ -1,0 +1,12 @@
+rf_switch:
+  command_topic: 'home/rf_emitter/set'
+  state_topic: 'home/rf_emitter'
+  gpio: 3
+  pulselength: 321
+  protocol: 1
+
+mqtt:
+  host: '{{ mqtt_host }}'
+  port: {{ mqtt_port }}
+  username: '{{ mqtt_username }}'
+  password: '{{ mqtt_password }}'

@@ -1,0 +1,11 @@
+- alias: Notify me that my train card will expire
+  trigger:
+    - platform: time
+      at: '18:00:00'
+  condition:
+    - condition: template
+      value_template: '{{ states.sensor.arek_karta_miejsca.attributes.days <= 4 }}'
+  action:
+    - service: notify.all
+      data:
+        message: '@Arek, twoja karta miejska wygaśnie za {{ states.sensor.arek_karta_miejsca.attributes.days }} dni! Kup nowy bilet tutaj: https://ebilet.kkm.krakow.pl/ebilet/Logowanie'

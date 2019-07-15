@@ -1,0 +1,18 @@
+- platform: webostv
+  name: tv_notifications
+  host: 192.168.1.120
+- platform: slack
+  name: slack
+  api_key: !env_var HOME_ASSISTANT_SLACK_API_KEY
+  default_channel: '#dom'
+  icon: ':suspect:'
+- platform: alexa_media
+  name: alexa_media
+- name: telegram_arek
+  platform: telegram
+  chat_id: 66368059
+- name: all
+  platform: group
+  services:
+    - service: slack
+    - service: tv_notifications

@@ -1,0 +1,4 @@
+- platform: kkm
+  name: Arek Karta Miejsca
+  identity: !env_var HOME_ASSISTANT_KKM_IDENDITY
+  city_card: !env_var HOME_ASSISTANT_KKM_CITY_CARD

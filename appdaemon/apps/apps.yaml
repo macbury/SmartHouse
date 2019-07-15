@@ -1,0 +1,27 @@
+living_room_air:
+  module: air_purifier_ai
+  class: AirPurifierAI
+  calendar: calendar.oczyszczacz_salon
+  fan_id: 'fan.living_room_air_purifier'
+  family_devices: 'group.family'
+  fallback: 5400
+  balcone_door: binary_sensor.balcone_door
+  mode: 'Auto'
+
+bedroom_air:
+  module: air_purifier_ai
+  class: AirPurifierAI
+  calendar: calendar.oczyszczacz_sypialnia
+  fan_id: 'fan.bedroom_air_purifier'
+  family_devices: 'group.family'
+  fallback: 5400
+  mode: 'Auto'
+
+# cover:
+#   module: cover
+#   class: Blinds
+#   luminance_entity_id: sensor.stat_window_luminance_mean
+#   close_treshold: 6000
+#   blinds_entity_id: cover.living_room
+#   calendar_entity_id: calendar.zaluzje
+#   family_group_entity_id: group.family

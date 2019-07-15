@@ -1,0 +1,94 @@
+find_vacuum:
+  alias: 'Find Vacuum'
+  sequence:
+    - service: vacuum.locate
+      entity_id:  vacuum.main_vacuum
+
+clean_bedroom:
+  alias: 'Clean bedroom'
+  sequence:
+    - service: vacuum.set_fan_speed
+      data:
+        entity_id:  vacuum.main_vacuum
+        fan_speed: Balanced
+    - service: vacuum.send_command
+      data:
+        entity_id:  vacuum.main_vacuum
+        command: app_zoned_clean
+        params: [[23109, 22188, 26670, 25226, 1]]
+
+clean_bathroom:
+  alias: 'Clean bathroom'
+  sequence:
+    - service: vacuum.set_fan_speed
+      data:
+        entity_id:  vacuum.main_vacuum
+        fan_speed: Balanced
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.main_vacuum
+        command: app_zoned_clean
+        params: [[27592, 25052, 29534, 27119, 1]]
+
+clean_kitchen:
+  alias: 'Clean kitchen'
+  sequence:
+    - service: vacuum.set_fan_speed
+      data:
+        entity_id:  vacuum.main_vacuum
+        fan_speed: Balanced
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.main_vacuum
+        command: app_zoned_clean
+        params: 
+          - [24579, 25201, 26123, 26745, 1]
+          - [25874, 25575, 27667, 26969, 1]
+
+clean_corridor:
+  alias: 'Clean corridor'
+  sequence:
+    - service: vacuum.set_fan_speed
+      data:
+        entity_id:  vacuum.main_vacuum
+        fan_speed: Balanced
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.main_vacuum
+        command: app_zoned_clean
+        params:
+          - [26471, 23757, 27542, 25948, 1]
+          - [27168, 23782, 31053, 25251, 1]
+          - [29758, 24828, 31153, 25998, 1]
+          - [26944, 23732, 28563, 25326, 3]
+
+clean_living_room:
+  alias: 'Clean living room'
+  sequence:
+    - service: vacuum.set_fan_speed
+      data:
+        entity_id: vacuum.main_vacuum
+        fan_speed: Balanced
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.main_vacuum
+        command: app_zoned_clean
+        params:
+          - [27816, 22238, 29634, 23931, 1]
+          - [27318, 18478, 29609, 22437, 1]
+          - [26396, 18403, 27891, 21192, 1]
+          - [23607, 19723, 26745, 22337, 1]
+
+stop_cleaning:
+  sequence:
+    - service: vacuum.return_to_base
+      entity_id:  vacuum.main_vacuum
+
+start_cleaning:
+  sequence:
+    - service: vacuum.set_fan_speed
+      data:
+        entity_id:  vacuum.main_vacuum
+        fan_speed: Balanced
+    - service: vacuum.start
+      entity_id:  vacuum.main_vacuum

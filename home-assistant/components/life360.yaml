@@ -1,0 +1,8 @@
+accounts:
+  - username: !env_var HOME_ASSISTANT_LIFE360_USERNAME
+    password: !env_var HOME_ASSISTANT_LIFE360_PASSWORD
+max_update_wait:
+  minutes: 15
+driving_speed: 18
+max_gps_accuracy: 200
+prefix: ''

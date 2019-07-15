@@ -1,0 +1,15 @@
+host: localhost
+port: 8112
+username: macbury
+password: !env_var HOME_ASSISTANT_TRANSMISSION_PASSWORD
+turtle_mode: true
+scan_interval: 15
+monitored_conditions:
+  - current_status
+  - download_speed
+  - upload_speed
+  - active_torrents
+  - paused_torrents
+  - total_torrents
+  - started_torrents
+  - completed_torrents

@@ -1,0 +1,27 @@
+- type: custom:layout-card
+  layout: vertical
+  max_columns: 4
+  cards:
+    - type: horizontal-stack
+      cards:
+        - type: picture-entity
+          entity: sensor.arek_jedzenie
+          name: "Zamówienie żarło?"
+          state_image:
+            "on": /local/food_on.gif
+            "off": /local/food_off.gif
+
+        - type: picture-entity
+          entity: sensor.arek_czas_pracy
+          name: "Fajrant?"
+          state_image:
+            "on": /local/working_on.gif
+            "off": /local/working_off.gif
+    - break
+    - type: "custom:kkm-card"
+      entity_id: sensor.arek_karta_miejsca
+    - type: custom:transit-card
+      entity: sensor.back_from_work_transit
+    - type: custom:dynamic-wallpaper
+      entity: sun.sun
+    - type: custom:compact-custom-header

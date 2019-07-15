@@ -1,0 +1,61 @@
+nav:
+  - Home: index.md
+  - Getting Started: Software/GettingStarted.md
+  - Hardware: Hardware/index.md
+  - Home Assistant:
+    - Screens: HomeAssistant/Screens/index.md
+    - Presence Detection: HomeAssistant/PresenceDetection.md
+    - Custom Components: HomeAssistant/Components.md
+    - Lovelace: HomeAssistant/Lovelace/index.md
+    - Vacuum: HomeAssistant/Vacuum/index.md
+    - AppDaemon: HomeAssistant/AppDaemon.md
+    - Voice Control: HomeAssistant/VoiceControl/index.md
+  - Software:
+    - Overview: Software/Overview.md
+    - Nginx: Software/Nginx.md
+    - Development: Software/Development.md
+    - Upgrading: Software/Upgrading.md 
+    - Control Scripts: Software/ControlScript.md
+    - Ports: Software/Ports.md
+    - Encryption: Software/Encryption.md
+    - Backup: Software/Backup.md
+  - Services:
+    - Uptime Robot: Services/UpTimeRobot.md
+  - DIY:
+    - Riggad Lamp: DIY/RiggadLamp/index.md
+    - Led Strips: DIY/LedStrips/index.md
+    - Cat Feeder: DIY/CatFeeder/index.md
+  - References: References.md
+
+theme:
+  logo: './logo.svg'
+  font: false
+  name: 'material'
+  palette:
+    primary: 'Red'
+    accent: 'Red'
+repo_name: 'macbury/SmartHouse'
+repo_url: 'https://github.com/macbury/SmartHouse'
+extra:
+  disqus: macbury-github-io
+  social:
+    - link: 'http://macbury.ninja'
+      type: 'globe'
+    - type: 'github'
+      link: 'https://github.com/macbury/SmartHouse/'
+    - type: 'twitter'
+      link: 'https://twitter.com/macbury'
+    - type: 'linkedin'
+      link: 'https://www.linkedin.com/in/arkadiusz-buras-83041810/'
+markdown_extensions:
+  - codehilite
+  - toc:
+      permalink: true
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+
+copyright: 'Copyright &copy; 2019 Buras Arkadiusz'
+site_author: 'Arkadiusz Buras'
+site_name: MacBury Smart House
+site_url: 'https://macbury.github.io/SmartHouseMVP'
+site_description: 'All stuff that is needed to run my smart house'

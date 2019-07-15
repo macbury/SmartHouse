@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+COMMAND=${1}
+shift 1
+COMMAND_ARGS=${@}
+
+function provision_command_help() {
+  echo "
+  ☢️  SmartHouse Provisioner
+
+  $ smart-house-provision help                          - print this help message
+  $ smart-house-provision dev                           - test provision on local vagrant machine
+  $ smart-house-provision quick-dev                     - just run provision
+  $ smart-house-provision server                        - provision all home servers
+  $ smart-house-provision ngrok                         - initialize ngrok pointing into vagrant machine
+"
+}
+
+function provision_validate_command() {
+  if [ "$(type -t provision_command_${COMMAND})" = function ]; then
+    return 0
+  else
+    echo "Unknown command: ${COMMAND}"
+    provision_command_help
+    return 1
+  fi
+}
+
+function provision_execute_command() {
+  if ! provision_validate_command; then
+    return 1
+  fi
+  provision_command_${COMMAND} ${COMMAND_ARGS}
+  return $?
+}
+
+function provision_run_local() {
+  ssh-add ~/.ssh/id_rsa;
+  ansible-playbook --ssh-common-args="-o ForwardAgent=yes $(vagrant ssh-config | awk 'NR>1 {print " -o "$1"="$2}')" -u vagrant provision/playbook.yml -i provision/inventory.vagrant.ini
+}
+
+function provision_command_dev() {
+  vagrant destroy --force;
+  vagrant up && \
+  ansible-galaxy install -r provision/install_roles.yml && \
+  provision_run_local;
+}
+
+function provision_command_ngrok() {
+  ngrok http 7000 --host-header=rewrite;
+}
+
+function provision_command_server() {
+  ansible-galaxy install -r provision/install_roles.yml;
+  ansible-playbook --ssh-common-args="-o ForwardAgent=yes" provision/playbook.yml -i provision/inventory.ini
+}
+
+function provision_command_quick-dev() {
+  provision_run_local && vagrant ssh;
+}
+
+function main() {
+  if ! provision_execute_command; then
+    return 1
+  fi
+}
+
+main

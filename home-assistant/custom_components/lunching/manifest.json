@@ -1,0 +1,11 @@
+{
+  "domain": "lunching",
+  "name": "LunchingSensor",
+  "documentation": "http://macbury.ninja",
+  "requirements": [
+  ],
+  "dependencies": [],
+  "codeowners": [
+    "@macbury"
+  ]
+}

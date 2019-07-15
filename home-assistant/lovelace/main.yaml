@@ -1,0 +1,101 @@
+{% set modules = [
+  '/local/js/mini-graph-card-bundle.js',
+  '/local/js/mini-media-player-bundle.js',
+  '/local/custom_ui/kkm-card.js',
+  '/local/custom-lovelace/compact-custom-header.js',
+  '/local/custom-lovelace/vacuum/card.js',
+  '/local/custom-lovelace/linak-desk/card.js',
+  '/local/custom-lovelace/transit/card.js',
+  '/local/custom-lovelace/air-purifier/card.js',
+  '/local/custom-lovelace/qr-card/card.js',
+  '/local/custom-lovelace/courtain/card.js',
+  '/local/custom-lovelace/thermostat/card.js'
+  ] %}
+
+{% set js = [
+  '/local/custom-lovelace/qr-card/qrcode.js',
+  '/local/custom_ui/weather-card.js',
+  '/local/custom_ui/monster-card.js',
+  '/local/custom_ui/dynamic-wallpaper.js',
+  '/local/custom-lovelace/light-card.js',
+  '/local/custom-lovelace/card-tools.js',
+  '/local/custom-lovelace/layout-card.js'
+  ] %}
+
+resources:
+{% for p in modules %}
+  - url: !file {{ p }}
+    type: module
+{% endfor %}
+{% for p in js %}
+  - url: !file {{ p }}
+    type: js
+{% endfor %}
+
+title: Smart House
+views:
+  - title: Dashboard
+    path: dashboard
+    panel: true
+    icon: mdi:view-dashboard
+    cards: !include dashboard.yaml
+
+  - title: Salon
+    panel: true
+    path: living-room
+    icon: 'mdi:seat-recline-extra'
+    cards: !include living_room.yaml
+
+  - title: Pracownia
+    panel: true
+    path: desk
+    icon: 'mdi:desktop-mac-dashboard'
+    cards: !include desk.yaml
+
+  - title: Sypialnia
+    panel: true
+    icon: mdi:hotel
+    path: bedroom
+    cards: !include bedroom.yaml
+
+  - title: Kuchnia
+    panel: true
+    icon: mdi:fridge
+    path: kitchen
+    cards: !include kitchen.yaml
+
+  - title: Lazienka
+    panel: true
+    icon: mdi:shower
+    path: batchroom
+    cards: !include batchroom.yaml
+
+  - title: Korytarz
+    panel: true
+    icon: mdi:door-closed
+    path: corridor
+    cards: !include corridor.yaml
+
+  - title: Kamery
+    panel: true
+    icon: mdi:cctv
+    path: cameras
+    cards: !include cameras.yaml
+
+  - title: Praca
+    panel: true
+    icon: mdi:briefcase
+    path: work
+    cards: !include work.yaml
+
+  - title: Network
+    icon: mdi:wifi
+    panel: true
+    path: network
+    cards: !include network.yaml
+
+  - title: Smart House
+    panel: true
+    path: smart-house
+    icon: mdi:glasses
+    cards: !include smart-home.yaml

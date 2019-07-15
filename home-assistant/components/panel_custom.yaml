@@ -1,0 +1,5 @@
+- name: vacuum_plan
+  sidebar_title: Vacuum Map
+  sidebar_icon: mdi:robot-vacuum
+  url_path: vacuum_plan
+  require_admin: true

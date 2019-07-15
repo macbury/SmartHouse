@@ -1,0 +1,68 @@
+- alias: Switch on ambient light in corridor on movement
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.hall_pir
+      from: 'off'
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: 'sun.sun'
+        state: 'below_horizon'
+      - condition: state
+        entity_id: light.corridor
+        state: 'off'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.gatewa_ambient_light
+        rgb_color: [255, 255, 36]
+        brightness: 20
+    - wait_template: "{{ is_state('binary_sensor.hall_pir', 'off') }}"
+      timeout: '00:01:00'
+      continue_on_timeout: true
+    - service: light.turn_off
+      entity_id: light.gatewa_ambient_light
+
+- alias: Ping me if main doors are open
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.main_door
+      to: 'on'
+      from: 'off'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: 'group.family'
+        state: 'not_home'
+  action:
+    - service: notify.all
+      data:
+        message: 'Drzwi do mieszkania zostały otwarte!'
+
+- alias: Switch on ambient light if door open
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.main_door
+      to: 'on'
+      from: 'off'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: 'sun.sun'
+        state: 'below_horizon'
+      - condition: state
+        entity_id: light.corridor
+        state: 'off'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.gatewa_ambient_light
+        rgb_color: [255, 255, 36]
+        brightness: 50
+    - delay: '00:00:45'
+    - service: light.turn_off
+      entity_id: light.gatewa_ambient_light

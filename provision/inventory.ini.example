@@ -1,0 +1,11 @@
+[master]
+127.0.0.1     ansible_connection=ssh        ansible_user=vagrant        ansible_port=2222
+
+[panel]
+127.0.0.1     ansible_connection=ssh        ansible_user=vagrant        ansible_port=2222
+
+[gateway]
+127.0.0.1     ansible_connection=ssh        ansible_user=vagrant        ansible_port=2222
+
+[vacuum]
+192.168.1.222 ansible_connection=ssh        ansible_user=root           ansible_port=22

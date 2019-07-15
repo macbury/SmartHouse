@@ -1,0 +1,71 @@
+- alias: Notify me that my work is done
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.arek_czas_pracy
+    value_template: '{{ state.attributes.minutes }}'
+    above: 420
+  condition:
+    - condition: state
+      entity_id: person.arek
+      state: codesthq
+  action:
+    - service: notify.telegram_arek
+      data:
+        title: 'Praca'
+        message: "Fajrant, czas spierdalać do domu!"
+
+- alias: Notify me if wife is near work
+  trigger:
+    platform: state
+    entity_id: person.ola
+    to: 'codesthq'
+  action:
+    - service: notify.telegram_arek
+      data:
+        title: 'Praca'
+        message: "Ola jest pod biurem"
+
+- alias: Notify wife that I left work
+  trigger:
+    - platform: state
+      entity_id: person.arek
+      from: 'codesthq'
+      to: 'not_home'
+  condition:
+    - condition: state
+      entity_id: person.ola
+      state: home
+  action:
+    - service: notify.alexa_media_living_room
+      data:
+        message: "Wife, Your housband left work"
+        data:
+          type: announce
+          method: all
+    - delay: '00:00:45'
+    - service: notify.all
+      data:
+        message: '@Ola, Monsz wyszedł z roboty'
+
+- alias: Inform about lunching order
+  trigger:
+    platform: state
+    entity_id: person.arek
+    to: 'codesthq'
+    for: '00:05:00'
+  condition:
+    - condition: state
+      entity_id: sensor.arek_jedzenie
+      state: 'off'
+  action:
+    - service: notify.alexa_media_living_room
+      data:
+        message: "Wife, Order stuff on lunching!"
+        data:
+          type: announce
+          method: all
+    - delay: '00:00:15'
+    - service: notify.all
+      data:
+        message: '@Arek Lunching mutafaka!'
+

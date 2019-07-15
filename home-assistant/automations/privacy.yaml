@@ -1,0 +1,6 @@
+- alias: Clear Alexa History
+  trigger:
+    platform: time_pattern
+    minutes: '/15'
+  action:
+    - service: alexa_media.clear_history

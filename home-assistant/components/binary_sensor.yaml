@@ -1,0 +1,69 @@
+- platform: iss
+  show_on_map: false
+
+- platform: workday
+  country: PL
+
+- platform: trend
+  sensors:
+    luminance_falling:
+      entity_id: sensor.window_luminance
+      sample_duration: 1800
+      min_gradient: -0.0002
+      max_samples: 6
+    luminance_rising:
+      entity_id: sensor.window_luminance
+      sample_duration: 1800
+      min_gradient: 0.0002
+      max_samples: 6
+    living_room_temp_rising:
+      device_class: heat
+      entity_id: sensor.living_room_temperature
+      sample_duration: 1800
+      min_gradient: 0.0002
+      max_samples: 6
+    living_room_temp_falling:
+      entity_id: sensor.living_room_temperature
+      sample_duration: 1800
+      min_gradient: -0.0002
+      device_class: cold
+      max_samples: 6
+    bedroom_temp_rising:
+      device_class: heat
+      entity_id: sensor.bedroom_temperature
+      sample_duration: 1800
+      min_gradient: 0.0002
+      max_samples: 6
+    bedroom_temp_falling:
+      entity_id: sensor.bedroom_temperature
+      sample_duration: 1800
+      min_gradient: -0.0002
+      device_class: cold
+      max_samples: 6
+
+- platform: template
+  sensors:
+    too_bright:
+      friendly_name: "Słońce jebie w oczy"
+      entity_id: sensor.stat_window_luminance_mean
+      icon_template: mdi:weather-sunny-alert
+      value_template: >-
+        {{ states.sensor.stat_window_luminance_mean.state | float >= 5000 }}
+    dishwasher:
+      friendly_name: "Zmywarka"
+      entity_id: sensor.washing_machine_power
+      device_class: power
+      icon_template: mdi:dishwasher
+      delay_off: 
+        minutes: 5
+      value_template: >-
+        {{ states.sensor.washing_machine_power.state | float > 0 }}
+    washer:
+      friendly_name: "Pralka"
+      entity_id: sensor.washer_power
+      device_class: power
+      icon_template: mdi:washing-machine
+      delay_off: 
+        minutes: 3
+      value_template: >-
+        {{ states.sensor.washer_power.state | float > 10 }}

@@ -1,0 +1,9 @@
+- alias: Notify about completed torrent
+  trigger:
+    platform: event
+    event_type: transmission_downloaded_torrent
+  action:
+    service: notify.all
+    data_template:
+      title: "Transmission"
+      message: "Torrent downloaded!"

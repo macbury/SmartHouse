@@ -1,0 +1,127 @@
+- type: custom:layout-card
+  layout: vertical
+  max_columns: 3
+  cards:
+    - type: horizontal-stack
+      cards:
+        - type: horizontal-stack
+          cards:
+            - type: custom:mini-graph-card
+              entities:
+                - sensor.living_room_temperature
+              line_color: '#E53935'
+              hours_to_show: 24
+              points_per_hour: 1
+              animate: true
+              hour24: true
+              extrema: true
+              show:
+                points: true
+                fill: fade
+            - type: custom:mini-graph-card
+              entities:
+                - sensor.living_room_humidity
+              line_color: '#3949AB'
+              hours_to_show: 24
+              points_per_hour: 1
+              animate: true
+              hour24: true
+              show:
+                points: true
+                fill: fade
+    - type: custom:air-purifier-card
+      entity: fan.living_room_air_purifier
+    - break
+    - type: horizontal-stack
+      cards:
+        - type: entity-button
+          entity: light.main
+          icon: mdi:ceiling-light
+        - type: entity-button
+          entity: light.dinner_table
+          icon: mdi:ceiling-light
+    - type: horizontal-stack
+      cards:
+        - type: entity-button
+          entity: light.tv_stand
+          icon: mdi:track-light
+        - type: entity-button
+          entity: light.work_desk
+          icon: mdi:track-light
+    - type: entities
+      show_header_toggle: false
+      entities:
+        - cover.living_room
+        - binary_sensor.balcone_door
+        - sensor.transmission_status
+    # - type: custom:thermostat-card
+    #   entity: climate.living_room
+    #   target_temperature: input_number.living_room_target_temperature
+    #   temperature: sensor.living_room_temperature
+    #   calendar: calendar.living_room_heating
+
+    # Wallpaper and stuff
+    - type: custom:dynamic-wallpaper
+      entity: sun.sun
+    - type: custom:compact-custom-header
+    - break
+    - type: entities
+      title: Telewizor
+      show_header_toggle: false
+      entities:
+        - type: custom:mini-media-player
+          entity: media_player.tv
+          name: Ekran
+          artwork: none
+          icon: mdi:television
+          show_source: full
+          hide_power: false
+          hide_controls: false
+          hide_mute: true
+          hide_volume: true
+          show_progress: false
+          group: true
+          toggle_power: false
+
+        - type: custom:mini-media-player
+          entity: media_player.soundbar
+          name: Soundbar
+          artwork: none
+          icon: mdi:surround-sound
+          show_source: full
+          toggle_power: false
+          hide_power: true
+          hide_controls: true
+          hide_mute: false
+          hide_volume: false
+          show_progress: false
+          group: true
+
+        - type: custom:mini-media-player
+          entity: media_player.living_room
+          name: 'Alexa'
+          icon: mdi:amazon-alexa
+          hide_power: true
+          hide_controls: false
+          hide_mute: true
+          hide_volume: true
+          show_progress: false
+          show_source: false
+          group: true
+
+    - type: custom:mini-media-player
+      entity: media_player.spotify
+      name: Spotify Player
+      artwork: full-cover
+      hide_power: true
+      hide_volume: false
+      show_progress: true
+    - type: custom:mini-media-player
+      entity: media_player.playstation
+      name: Playstation Player
+      artwork: full-cover
+      power_color: true
+      hide_volume: true
+      show_progress: false
+      show_source: false
+      toggle_power: true

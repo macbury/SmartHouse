@@ -1,0 +1,1 @@
+Nothing fancy here. Everyday at 2:00 am cron job triggers backup using command `smart-house backup`. All processes are stopped and everything is compressed to one zip file that is later transferred to my QNAP NAS.

@@ -1,0 +1,65 @@
+- type: custom:layout-card
+  layout: horizontal
+  max_columns: 3
+  cards:
+    - type: entities
+      title: System
+      show_header_toggle: false
+      entities:
+        - sensor.uptime
+
+    - type: custom:monster-card
+      card:
+        type: entities
+        title: Things that are broken
+      filter:
+        include:
+          - state: "unknown"
+        exclude:
+          - entity_id: group.*
+
+    - type: custom:monster-card
+      show_empty: false
+      card:
+        type: glance
+        title: Low Battery Devices
+      filter:
+        include:
+          - entity_id: "*battery_level*"
+            state: '< 25'
+          - attributes:
+              battery: '< 25'
+          - attributes:
+              battery_level: '< 25'
+
+    - type: custom:monster-card
+      card:
+        type: entities
+        title: Automations
+      filter:
+        include:
+          - entity_id: "automation.*"
+    - type: custom:monster-card
+      card:
+        type: entities
+        title: Binary Sensors
+      filter:
+        include:
+          - entity_id: "binary_sensor.*"
+    - type: custom:monster-card
+      card:
+        type: entities
+        title: Z-Wave
+      filter:
+        include:
+          - entity_id: "zwave.*"
+    - type: custom:monster-card
+      card:
+        type: entities
+        title: Switches tests
+      filter:
+        include:
+          - entity_id: "switch.*"
+    - type: custom:compact-custom-header
+    - type: custom:dynamic-wallpaper
+      entity: sun.sun

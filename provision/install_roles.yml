@@ -1,0 +1,9 @@
+- src: geerlingguy.nginx
+- src: weareinteractive.ufw
+- src: nickjj.fail2ban
+- src: geerlingguy.certbot
+- src: geerlingguy.nodejs
+- src: petermosmans.customize-gnome
+- src: brianhartsock.netatalk
+- src: https://github.com/jeffbr13/ansible-ipfs
+  name: ansible-ipfs

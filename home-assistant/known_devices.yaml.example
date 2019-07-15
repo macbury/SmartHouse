@@ -1,0 +1,15 @@
+arek:
+  hide_if_away: false
+  icon:
+  mac: C9:37:AE:8E:0D:BD
+  name: life360 arek
+  picture: /local/arek.png
+  track: true
+
+ola:
+  hide_if_away: false
+  icon:
+  mac: FA:A2:BD:12:9D:32
+  name: life360 ola
+  picture: /local/ola.png
+  track: true

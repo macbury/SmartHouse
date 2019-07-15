@@ -1,0 +1,13 @@
+[Unit]
+Description=Bluetooth MQTT gateway
+Documentation=https://github.com/zewelor/bt-mqtt-gateway
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/bt-mqtt-gateway
+ExecStart=/home/pi/bt-mqtt-gateway/gateway.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

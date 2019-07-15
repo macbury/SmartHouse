@@ -1,0 +1,13 @@
+- platform: tensorflow
+  source:
+    - entity_id: camera.main_square
+    - entity_id: camera.wawel
+  file_out:
+    - "/tmp/{{ camera_entity.split('.')[1] }}_latest.jpg"
+  model:
+    graph: /tensorflow/frozen_inference_graph.pb
+    labels: /tensorflow/object_detection/data/mscoco_label_map.pbtxt
+    model_dir: /tensorflow
+    categories:
+      - person
+      - cat

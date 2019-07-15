@@ -1,0 +1,9 @@
+- platform: fail2ban
+  jails:
+    - nginx-noscript
+    - nginx-http-auth
+    - nginx-badbots
+    - nginx-forbidden
+    - ssh
+    - ha
+  file_path: /fail2ban/fail2ban.log

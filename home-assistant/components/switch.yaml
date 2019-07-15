@@ -1,0 +1,14 @@
+- platform: wake_on_lan
+  name: tv
+  mac_address: "04:4E:AF:7A:CA:3A"
+
+- platform: flux
+  lights:
+    - light.arek_szafka
+    - light.ola_szafka
+  brightness: 83
+  mode: mired
+  disable_brightness_adjust: true
+  start_colortemp: 3500
+  sunset_colortemp: 2800
+  stop_colortemp: 2200

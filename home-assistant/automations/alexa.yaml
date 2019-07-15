@@ -1,0 +1,10 @@
+- alias: Inform about alexa timer off
+  trigger:
+    platform: event
+    event_type: ifttt_webhook_received
+    event_data:
+      action: alexa_timer_off
+  action:
+    - service: notify.all
+      data:
+        message: 'Alexa timer finished countdown!'

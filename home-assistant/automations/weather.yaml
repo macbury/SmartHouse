@@ -1,0 +1,37 @@
+- alias: Inform about Vistula alert level
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.vistula_water_level
+    above: 520 #TODO: fetch this from sensor.vistula_alert_level ?
+  action:
+    - service: notify.all
+      data:
+        title: 'Wisła'
+        message: 'Poziom Wisły przekroczył poziom alarmowy!'
+
+- alias: Switch off blue light alert
+  trigger:
+    platform: state
+    entity_id: sensor.it_will_rain
+    to: 'off'
+  action:
+    - service: light.turn_off
+      entity_id: light.gatewa_ambient_light
+
+- alias: Switch on blue light alert if it is going to rain
+  trigger:
+    platform: state
+    entity_id: sensor.it_will_rain
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.gatewa_ambient_light
+        rgb_color: [0, 190, 255]
+        brightness: 5

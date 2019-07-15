@@ -1,0 +1,44 @@
+upstream firefly {
+  server 127.0.0.1:10001 fail_timeout=0;
+}
+
+server {
+  listen 80;
+  listen [::]:80;
+  server_name budget.{{ domain }};
+  return 301 https://$server_name$request_uri;
+}
+
+server {
+  listen 443 ssl;
+  ssl        on;
+  ssl_certificate /etc/letsencrypt/live/budget.{{ domain }}/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/budget.{{ domain }}/privkey.pem;
+  server_name budget.{{ domain }};
+
+  location / {
+    allow 192.168.0.0/16;
+    allow 10.0.0.0/16;
+    deny all;
+    proxy_pass http://firefly/;
+    proxy_set_header Host $host;
+
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+
+  error_page 404 403 @error;
+
+  location @error {
+    root /var/www;
+    try_files /403.html /403.html;
+  }
+
+  client_max_body_size 50M;
+  keepalive_timeout 10;
+}

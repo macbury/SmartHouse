@@ -1,0 +1,11 @@
+{
+  "domain": "public_transit",
+  "name": "PublicTransit",
+  "documentation": "http://macbury.ninja",
+  "requirements": [
+  ],
+  "dependencies": [],
+  "codeowners": [
+    "@macbury"
+  ]
+}

@@ -1,0 +1,2 @@
+- platform: spotify_cover_sensor
+  cache_path: '/config/spotify-token-cache.json'

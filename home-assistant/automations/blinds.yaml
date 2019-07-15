@@ -1,0 +1,40 @@
+- alias: Refresh blinds if they draw power
+  trigger:
+    - platform: time_pattern
+      seconds: '*/10'
+  action:
+    - service: zwave.refresh_node
+      data:
+        node_id: 25
+    - service: zwave.refresh_entity
+      data:
+        node_id: cover.living_room
+
+- alias: Open blinds if humans come home
+  trigger:
+    - platform: state
+      entity_id: group.family
+      to: 'home'
+      from: 'not_home'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: sun.sun
+        state: above_horizon
+  action:
+    - service: cover.set_cover_position
+      data:
+        entity_id: cover.living_room
+        position: 47
+
+- alias: Close blinds if it is too bright
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.too_bright
+      to: 'on'
+      from: 'off'
+  action:
+    - service: cover.close_cover
+      data:
+        entity_id: cover.living_room

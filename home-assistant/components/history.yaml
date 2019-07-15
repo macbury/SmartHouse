@@ -1,0 +1,15 @@
+exclude:
+  entities:
+    - sensor.to_work_transit
+    - sensor.back_from_work_transit
+    - sensor.date_time
+    - sensor.internet_time
+    - sensor.time
+    - sensor.time_date
+    - sensor.time_utc
+    - sensor.uptime
+    - automation.ping_aqara_gateway
+    - automation.refresh_courtains_if_they_draw_power
+  domains:
+    - calendar
+    - zwave

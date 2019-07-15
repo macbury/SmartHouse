@@ -1,0 +1,55 @@
+- platform: moon
+
+- platform: season
+  type: astronomical
+
+- platform: cracow_air_quality
+  station_id: 7
+  name: 'nowa_huta'
+
+- platform: rest
+  name: Nowa Huta AQI
+  unit_of_measurement: AQI
+  resource: https://api.waqi.info/api/feed/@3403/obs.en.json
+  force_update: true
+  value_template: '{{ value_json.rxs.obs[0].msg.aqi }}'
+
+- platform: airvisual
+  api_key: !env_var HOME_ASSISTANT_AIR_VISUAL
+  show_on_map: false
+  monitored_conditions:
+    - cn
+    - us
+
+- platform: darksky
+  api_key: !env_var HOME_ASSISTANT_DARKSKY_API_KEY
+  monitored_conditions:
+    - temperature
+    - precip_probability
+    - apparent_temperature
+    - wind_speed
+    - wind_gust
+    - humidity
+    - pressure
+    - ozone
+    - uv_index
+    - nearest_storm_distance
+
+- platform: command_line
+  name: Vistula Water Level
+  command: curl --silent "http://pogodynka.pl/hydro/wisla/" | xmllint --html --xpath "/html/body/div[2]/div[1]/div[2]/div[2]/div[2]/div[2]/table/tbody/tr[4]/td[6]" - 2>/dev/null | tr -d 'a-z<>' | tr '/' '\n'
+  unit_of_measurement: cm
+  scan_interval: 600
+  value_template: '{{ value.replace(",", ".") | float }}'
+
+- platform: command_line
+  name: Vistula Alert Level
+  command: curl --silent "http://pogodynka.pl/hydro/wisla/" | xmllint --html --xpath "/html/body/div[2]/div[1]/div[2]/div[2]/div[2]/div[2]/table/tbody/tr[4]/td[4]" - 2>/dev/null | tr -d 'a-z<>' | tr '/' '\n'
+  unit_of_measurement: cm
+  scan_interval: 600
+  value_template: '{{ value.replace(",", ".") | float }}'
+
+
+- platform: it_will_rain
+  name: It will rain
+  entity_id: weather.dark_sky

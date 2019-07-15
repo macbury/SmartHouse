@@ -1,0 +1,90 @@
+# A
+api:
+asuswrt: !include components/asuswrt.yaml
+alexa: !include components/alexa.yaml
+alexa_media: !include components/alexa_media.yaml
+automation: !include_dir_merge_list automations/
+# B
+binary_sensor: !include components/binary_sensor.yaml
+# C
+calendar: !include components/calendar.yaml
+camera: !include components/camera.yaml
+config:
+cover: !include components/cover.yaml
+climate:
+  - platform: zwave
+# D
+discovery:
+device_tracker: !include components/device_tracker.yaml
+# E
+# F
+fan: !include components/fan.yaml
+ffmpeg:
+# G
+group: !include groups.yaml
+# H
+homeassistant: !include components/homeassistant.yaml
+http: !include components/http.yaml
+history:
+hue: !include components/hue.yaml
+# I
+influxdb: !include components/influxdb.yaml
+ifttt:
+  key: !env_var HOME_ASSISTANT_IFTTT
+input_number: !include components/input_number.yaml
+# image_processing: !include components/image_processing.yaml
+input_boolean: !include components/input_boolean.yaml
+input_select: !include components/input_select.yaml
+# J
+frontend: !include components/frontend.yaml
+# K
+panel_iframe: !include components/panel_iframe.yaml
+# L
+life360: !include components/life360.yaml
+light: !include components/light.yaml
+logbook: !include components/logbook.yaml
+logger: !include components/logger.yaml
+lovelace:
+  mode: yaml
+# M
+mqtt: !include components/mqtt.yaml
+map:
+media_player: !include components/media_player.yaml
+# N
+recorder: !include components/recorder.yaml
+notify: !include components/notify.yaml
+# O
+# P
+panel_custom: !include components/panel_custom.yaml
+person: !include components/person.yaml
+proximity: !include components/proximity.yaml
+# R
+# S
+stream:
+sun:
+system_health:
+script: !include_dir_merge_named scripts/
+speedtestdotnet: !include components/speedtestdotnet.yaml
+switch: !include components/switch.yaml
+sensor: !include_dir_merge_list sensors/
+# T
+transmission: !include components/transmission.yaml
+tts:
+  - platform: google_translate
+    service_name: google_say
+telegram_bot: !include components/telegram.yaml
+# U
+updater:
+  include_used_components: true
+# W
+wake_on_lan:
+weather: !include components/weather.yaml
+websocket_api:
+# X
+xiaomi_aqara: !include components/xiaomi_aqara.yaml
+# Y
+# Z
+zone: !include components/zones.yaml
+zwave: !include components/zwave.yaml
+# V
+vacuum: !include components/vacuum.yaml

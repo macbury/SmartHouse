@@ -1,0 +1,802 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: include vars from provision/vars.yml
+      include_vars:
+        file: vars.yml
+
+- hosts: master
+  become: yes
+  roles:
+     - role: ansible-ipfs
+
+- hosts: vacuum
+  become: yes
+  tasks:
+    - name: Install curl
+      apt:
+        name: curl
+    - name: Create /root/watch_map.sh
+      template:
+        src: ./root/watch_map.sh
+        dest: /root/watch_map.sh
+    - name: Create /root/upload_map.sh
+      template:
+        src: ./root/upload_map.sh
+        dest: /root/upload_map.sh
+    - name: Add crontab entry for health-check
+      cron:
+        name: "start watch map script"
+        reboot: true
+        job: "sh /root/watch_map.sh >> /tmp/watch_map.log 2>&1"
+    - name: Reboot vacuum to start watch map in background
+      reboot:
+
+# Packages
+# - hosts: all
+#   become: yes
+#   tasks:
+#     - name: Install sshfs
+#       apt:
+#         name: sshfs
+#     - name: Install htop
+#       apt:
+#         name: htop
+#     - name: Install ufw
+#       apt:
+#         name: ufw
+#     - name: Install zsh
+#       apt:
+#         name: zsh
+#     - name: Install git
+#       apt:
+#         name: git
+#     - name: Install zip
+#       apt:
+#         name: zip
+#     - name: Install AFP
+#       apt:
+#         name: netatalk
+#     - name: 'Python pip'
+#       apt:
+#         name: python-pip
+#     - name: 'Python pip3'
+#       apt:
+#         name: python3-pip
+
+- hosts: master
+  become: yes
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+    - name: Install cryptsetup
+      apt:
+        name: cryptsetup
+    - name: Install go
+      apt:
+        name: golang
+    - name: Install xpath stuff
+      apt:
+        name: libxml2-utils
+    - name: Install ccrypt for dustcloud
+      apt:
+        name: ccrypt
+    - name: Install dos2unix for dustcloud
+      apt:
+        name: dos2unix
+    - name: PSQL
+      apt:
+        name: postgresql-client
+    - name: smb
+      apt:
+        name: cifs-utils
+    - name: lovelace-dev
+      apt:
+        name: fswatch
+    - name: mc
+      apt:
+        name: mc
+
+- hosts: panel
+  become: yes
+  tasks:
+    - name: Install onboard
+      apt:
+        name: onboard
+    - name: 'Controling backlight'
+      apt:
+        name: xbacklight
+    - name: 'Dconf editor'
+      apt:
+        name: dconf-editor
+
+# Make a /tmp as tmpfs
+- hosts: all
+  become: yes
+  tasks:
+    - name: Make /tmp as tmpfs
+      mount:
+        boot: yes
+        src: tmpfs
+        fstype: 'tmpfs'
+        path: '/tmp'
+        state: mounted
+        opts: 'rw,nodev,nosuid,size=200M'
+
+# install packages
+# - hosts: gateway
+#   become: yes
+#   tasks:
+#     - apt:
+#         name: build-essential
+#     - apt:
+#         name: git
+#     - apt:
+#         name: python3
+#     - apt:
+#         name: python3-pip
+#     - apt:
+#         name: python3-wheel
+#     - apt:
+#         name: bluetooth
+#     - apt:
+#         name: bluez
+#     - apt:
+#         name: libglib2.0-dev
+#     - apt:
+#         name: libzbar-dev
+#     - apt:
+#         name: libzbar0
+#     - apt:
+#         name: libssl-dev
+
+# install gateways
+- hosts: gateway
+  handlers:
+    - name: restart mqtt2rf
+      become: yes
+      service:
+        name: mqtt2rf
+        enabled: yes
+        state: restarted
+    - name: restart bt-mqtt-gateway
+      become: yes
+      service:
+        name: bt-mqtt-gateway
+        enabled: yes
+        state: restarted
+  tasks:
+    - name: Clone bt-mqtt-gateway repo
+      git:
+        repo: 'https://github.com/zewelor/bt-mqtt-gateway.git'
+        dest: /home/pi/bt-mqtt-gateway
+        accept_hostkey: yes
+        update: yes
+    - name: Clone mqtt2rf repo
+      git:
+        repo: 'git@github.com:macbury/mqtt2rf.git'
+        dest: /home/pi/mqtt2rf
+        accept_hostkey: yes
+        update: yes
+    - name: 'Install pip3 packages'
+      become: yes
+      pip:
+        executable: /usr/bin/pip3
+        requirements: '/home/pi/mqtt2rf/requirements.txt'
+    - name: 'Install pip3 packages'
+      become: yes
+      pip:
+        executable: /usr/bin/pip3
+        requirements: '/home/pi/bt-mqtt-gateway/requirements.txt'
+    - name: Create mqtt2rf configuration
+      template:
+        src: ./home/pi/mqtt2rf/config.yaml.j2
+        dest: /home/pi/mqtt2rf/config.yaml
+    - name: Copy systemd configuration for bt-mqtt-gateway
+      become: yes
+      copy:
+        src: ./etc/systemd/bt-mqtt-gateway.service
+        dest: /lib/systemd/system/bt-mqtt-gateway.service
+      notify:
+        - reload systemctl
+        - restart bt-mqtt-gateway
+    - name: Copy systemd configuration for mqtt2rf
+      become: yes
+      copy:
+        src: /home/pi/mqtt2rf/systemd/mqtt2rf.service
+        dest: /lib/systemd/system/mqtt2rf.service
+      notify:
+        - reload systemctl
+        - restart mqtt2rf
+# Disk encryption
+- hosts: master
+  become: yes
+  tasks:
+    - name: Check if already encrypted
+      command: 'grep "/dev/mapper/smart-house" /etc/fstab'
+      register: is_encrypted
+      ignore_errors: True
+    - name: Unmount smart-house
+      when: is_encrypted is failed
+      mount:
+        path: "/smart-house"
+        src: "{{encrypted_disk}}"
+        state: unmounted
+    - name: Encrypting smart house partition
+      when: is_encrypted is failed
+      shell: echo {{ disk_password }} | cryptsetup --verbose --batch-mode luksFormat {{encrypted_disk}}
+    - name: Open encrypted disk
+      when: is_encrypted is failed
+      shell: echo {{ disk_password }} | cryptsetup luksOpen {{encrypted_disk}} smart-house
+    - name: mkfs on {{encrypted_disk}}
+      when: is_encrypted is failed
+      command: 'mkfs.ext4 -L smart-house /dev/mapper/smart-house'
+    - name: Mount smart-house
+      mount:
+        path: "/smart-house"
+        src: "/dev/mapper/smart-house"
+        state: mounted
+        opts: 'sync,rw,noauto'
+        fstype: 'ext4'
+    - name: Create smart-house-unlock script
+      template:
+        src: ./smart-house-unlock
+        dest: /usr/bin/smart-house-unlock
+        mode: '777'
+
+# Firewall setup
+- hosts: master
+  become: yes
+  roles:
+    - role: weareinteractive.ufw
+  vars:
+    ufw_logging: "off"
+    ufw_rules:
+      - { port: 53, rule: allow, comment: 'Allow PiHole DNS' }
+      - { port: 22, rule: allow, comment: 'Allow SSH' }
+      - { port: 80, rule: allow, comment: 'Allow HTTP' }
+      - { port: 443, rule: allow, comment: 'Allow HTTPS' }
+      - { port: 4105, rule: allow, comment: 'Allow MQTT' }
+      - { port: 987, rule: allow, comment: 'Allow PS4' }
+      - { port: 997, rule: allow, comment: 'Allow PS4' }
+      - { from_ip: '192.168.1.229', comment: 'Allow PS4 console access' }
+      - { port: 4001, rule: allow, comment: 'Allow IPFS swarm' }
+      - { port: 5001, rule: allow, comment: 'Allow IPFS API' }
+      - { port: 548, rule: allow, comment: 'Allow AFP' }
+      - { port: 427, rule: allow, comment: 'Allow AFP' }
+      - { port: 7000, rule: allow, comment: 'Allow mkdocs dev server' }
+      - { port: 9898, rule: allow, comment: 'Allow xiaomi aqara multicast shit' }
+      - { port: 1080, rule: allow, comment: 'Sonoff HTTP' }
+      - { port: 1081, rule: allow, comment: 'Sonoff HTTPs' }
+      - { port: 1443, rule: allow, comment: 'Sonoff Websocket' }
+      - { from_ip: '127.0.0.1/24', comment: 'Allow localhost' }
+      - { from_ip: '192.168.0.1/24', comment: 'Allow local network' }
+      - { from_ip: '10.0.0.1/24', comment: 'Allow vpn network' }
+      - { from_ip: '10.0.1.1/24', comment: 'Allow vpn network' }
+      - { from_ip: '10.0.2.1/24', comment: 'Allow vpn network' }
+      - { port: 32400, rule: allow, comment: 'Plex companion' }
+      - { port: 3005, rule: allow, comment: 'Plex companion' }
+      - { port: 5353, rule: allow, comment: 'Plex bonjur shit' }
+      - { port: 1900, rule: allow, comment: 'Plex dlna shit' }
+      - { port: 8324, rule: allow, comment: 'Plex other shit' }
+      - { port: 32469, rule: allow, comment: 'Plex other shit' }
+      - { port: 32410, rule: allow, comment: 'Plex GDM network discover' }
+      - { port: 32412, rule: allow, comment: 'Plex GDM network discover' }
+      - { port: 32413, rule: allow, comment: 'Plex GDM network discover' }
+      - { port: 32414, rule: allow, comment: 'Plex GDM network discover' }
+      - { port: 51413, rule: allow, comment: 'Transmission shit' }
+      - { port: 10005, rule: allow, from_ip: '192.168.1.222', comment: 'Allow only vacuum to access this port' }
+
+# Vnc setup
+- hosts: panel
+  handlers:
+    - name: restart avahi-daemon
+      become: yes
+      service:
+        name: avahi-daemon
+        enabled: yes
+        state: restarted
+  tasks:
+    - name: 'VPN'
+      apt:
+        name: vino
+    - name: Disable encryption, viva la mac os x
+      shell: 'dconf write /org/gnome/desktop/remote-access/require-encryption false'
+      notify:
+        - restart avahi-daemon
+
+# Node js
+- hosts: panel
+  become: yes
+  roles:
+    - role: geerlingguy.nodejs
+  vars:
+    nodejs_version: "10.x"
+
+# letsencrypt certificate
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.certbot
+  vars:
+    certbot_auto_renew: false
+    certbot_admin_email: "{{ email }}"
+    certbot_create_if_missing: true
+    certbot_certs:
+      - domains:
+        - "{{ ipfs_domain }}"
+
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.certbot
+  vars:
+    certbot_auto_renew: false
+    certbot_admin_email: "{{ email }}"
+    certbot_create_if_missing: true
+    certbot_certs:
+      - domains:
+        - "budget.{{ domain }}"
+
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.certbot
+  vars:
+    certbot_auto_renew: false
+    certbot_admin_email: "{{ email }}"
+    certbot_create_if_missing: true
+    certbot_certs:
+      - domains:
+        - "{{ domain }}"
+
+# Nginx
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.nginx
+  handlers:
+    - name: restart nginx
+      become: yes
+      service:
+        name: nginx
+        enabled: yes
+        state: restarted
+  tasks:
+    - name: Create /etc/nginx/sites-enabled/firefly.conf
+      template:
+        src: ./etc/nginx/sites-enabled/firefly.conf.j2
+        dest: /etc/nginx/sites-enabled/firefly.conf
+      notify:
+        - reload nginx
+        - restart nginx
+    - name: Create /etc/nginx/sites-enabled/ipfs.conf
+      template:
+        src: ./etc/nginx/sites-enabled/ipfs.conf.j2
+        dest: /etc/nginx/sites-enabled/ipfs.conf
+      notify:
+        - reload nginx
+        - restart nginx
+    - name: Create /etc/nginx/sites-enabled/home-assistant.conf
+      template:
+        src: ./etc/nginx/sites-enabled/home-assistant.conf.j2
+        dest: /etc/nginx/sites-enabled/home-assistant.conf
+      notify:
+        - reload nginx
+        - restart nginx
+    - name: Create /etc/nginx/sites-enabled/honeytap.conf
+      template:
+        src: ./etc/nginx/sites-enabled/default.conf.j2
+        dest: /etc/nginx/sites-enabled/default
+      notify:
+        - reload nginx
+        - restart nginx
+    - name: Create /var/www/html/index.html
+      template:
+        src: ./var/www/html/index.html
+        dest: /var/www/html/index.html
+      notify:
+        - reload nginx
+        - restart nginx
+    - name: Create /var/www/html/403.html
+      template:
+        src: ./var/www/html/403.html
+        dest: /var/www/html/403.html
+      notify:
+        - reload nginx
+        - restart nginx
+# Home Assistant
+- hosts: master
+  become: yes
+  handlers:
+    - name: reload systemctl
+      become: yes
+      command: systemctl daemon-reload
+    - name: restart systemd-resolved
+      service:
+        name: systemd-resolved
+        state: restarted
+    - name: reload afp
+      service:
+        name: netatalk
+        state: restarted
+  tasks:
+    - name: Fallback resolver to pihole and then try cloudflare on boot
+      become: yes
+      shell: 'ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf'
+      notify:
+        - restart systemd-resolved
+    - name: Fallback resolver to pihole and then try cloudflare on boot
+      become: yes
+      template:
+        force: yes
+        src: ./etc/systemd/resolved.conf
+        dest: /etc/systemd/resolved.conf
+      notify:
+        - restart systemd-resolved
+    - name: Ensure a locale exists
+      locale_gen:
+        name: en_GB.UTF-8
+        state: present
+    - name: Adding docker apt-key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: 'Adding repository'
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }}  stable
+        state: present
+    - name: Update repositories cache and install "docker-ce" package
+      apt:
+        name: docker-ce
+        update_cache: yes
+    - name: 'Docker compose'
+      pip:
+        name: docker-compose
+    - name: Adding user {{ ansible_user }} to group docker
+      user:
+        name: '{{ ansible_user }}'
+        group: docker
+        append: yes
+    - name: Creates app directory
+      file:
+        path: /smart-house
+        state: directory
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+    - name: Create smart-house.service
+      template:
+        src: ./lib/systemd/system/smart-house.service.j2
+        dest: /lib/systemd/system/smart-house.service
+      notify:
+        - reload systemctl
+    - name: Append domain to /etc/hosts
+      lineinfile:
+        dest: /etc/hosts
+        line: "192.168.1.12 {{ domain }}"
+        regexp: "{{ domain }}"
+        state: present
+        insertafter: EOF
+        create: True
+
+# Setup oh my zsh
+- hosts: all
+  become: yes
+  tasks:
+    - name: Updating current user
+      user:
+        name: '{{ ansible_user }}'
+        append: yes
+        shell: /usr/bin/zsh
+    - name: Updating root user
+      user:
+        name: 'root'
+        append: yes
+        shell: /usr/bin/zsh
+    - name: Install oh-my-zsh to current user
+      become: no
+      git:
+        repo: 'https://github.com/robbyrussell/oh-my-zsh.git'
+        dest: '~/.oh-my-zsh'
+    - name: 'Copy ~/.zshrc'
+      become: no
+      shell: 'cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc'
+    - name: Install oh-my-zsh to root
+      git:
+        repo: 'https://github.com/robbyrussell/oh-my-zsh.git'
+        dest: '~/.oh-my-zsh'
+    - name: 'Copy ~/.zshrc'
+      shell: 'cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc'
+
+# Shell and configs
+- hosts: master
+  tasks:
+    - name: Remove /smart-house/lost+found
+      become: yes
+      file:
+        path: /smart-house/lost+found
+        state: absent
+    - name: Clone smart-house repo
+      git:
+        repo: 'git@github.com:macbury/SmartHouse.git'
+        dest: /smart-house
+        accept_hostkey: yes
+        update: no
+    - name: Creates grafana directory
+      become: yes
+      file:
+        path: /smart-house/.docker/data/grafana
+        state: directory
+        owner: "472"
+        group: "472"
+    - name: Creates log directory
+      become: yes
+      file:
+        path: /smart-house/.docker/log/
+        state: directory
+        owner: "root"
+        group: "root"
+    - name: Creates pihole directory
+      become: yes
+      file:
+        path: /smart-house/.docker/data/pihole/dnsmasq.d/
+        state: directory
+    - name: Dns script
+      become: yes
+      template:
+        src: ./etc/dnsmasq.d/02-localhosts.conf.j2
+        dest: /smart-house/.docker/data/pihole/dnsmasq.d/02-localhosts.conf
+    - name: Domain list
+      become: yes
+      template:
+        src: ./etc/pihole/lan.list.j2
+        dest: /smart-house/.docker/data/pihole/pihole/lan.list
+    - name: Create symbolic link for bin/smart-hose
+      become: yes
+      file:
+        src: "/smart-house/bin/smart-house"
+        dest: "/usr/bin/smart-house"
+        state: link
+    # - name: Copy example .env.home-assistant.example
+    #   shell: 'cp /smart-house/.env.home-assistant.example /smart-house/.env.home-assistant'
+    #   args:
+    #     creates: '/smart-house/.env.home-assistant'
+    # - name: Copy example .env.influxdb.example
+    #   shell: 'cp /smart-house/.env.influxdb.example /smart-house/.env.influxdb'
+    #   args:
+    #     creates: '/smart-house/.env.influxdb'
+    # - name: Copy example .env.pihole.example
+    #   shell: 'cp /smart-house/.env.pihole.example /smart-house/.env.pihole'
+    #   args:
+    #     creates: '/smart-house/.env.pihole'
+    # - name: Copy example .env.postgresql.example
+    #   shell: 'cp /smart-house/.env.postgresql.example /smart-house/.env.postgresql'
+    #   args:
+    #     creates: '/smart-house/.env.postgresql'
+    # - name: Copy example .env.grafana.example
+    #   shell: 'cp /smart-house/.env.grafana.example /smart-house/.env.grafana'
+    #   args:
+    #     creates: '/smart-house/.env.grafana'
+    # - name: Copy example .env.crontab.example
+    #   shell: 'cp /smart-house/.env.crontab.example /smart-house/.env.crontab'
+    #   args:
+    #     creates: '/smart-house/.env.crontab'
+    - name: create .env.local file
+      template:
+        src: .env.local.j2
+        dest: /smart-house/.env.local
+      vars:
+        env:
+          HOME_ASSISTANT_DOMAIN: "{{ domain }}"
+          HOME_ASSISTANT_URL: "https://{{ domain }}"
+    - name: Insert SMART_HOUSE_DIR env variable to current user
+      lineinfile:
+        path: "~/.zshrc"
+        line: "export SMART_HOUSE_DIR=/smart-house"
+    - name: Insert SMART_HOUSE_DIR env variable to root
+      become: yes
+      lineinfile:
+        path: "~/.zshrc"
+        line: "export SMART_HOUSE_DIR=/smart-house"
+    - name: 'pip3 packages'
+      become: yes
+      pip:
+        executable: /usr/bin/pip3
+        requirements: '/smart-house/requirements.txt'
+
+# Setup cron
+- hosts: master
+  become: yes
+  tasks:
+    - name: Add crontab entry for health-check
+      cron:
+        name: "health-check"
+        minute: "*/15"
+        job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house health-check' >> /tmp/health-check.log 2>&1"
+    - name: Add crontab entry for refreshing dns
+      cron:
+        name: "ddns"
+        minute: "*/15"
+        job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house ddns' >> /tmp/ddns.log 2>&1"
+    - name: Add crontab entry for certs
+      cron:
+        name: "certs"
+        hour: "4"
+        minute: "0"
+        job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house certbot' >> /tmp/certbot.log 2>&1"
+    - name: Add crontab entry for backup
+      cron:
+        name: "backup"
+        hour: "2"
+        minute: "0"
+        job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house backup' >> /tmp/backup.log 2>&1"
+    - name: Cleanup docker shit
+      cron:
+        name: 'docker'
+        hour: "3"
+        minute: "0"
+        job: "/usr/bin/zsh -l -c 'docker system prune -f'"
+    - name: Cleanup old logs
+      cron:
+        name: 'logs'
+        hour: "22"
+        minute: "0"
+        job: '/usr/bin/zsh -l -c "rm /tmp/*.log"'
+    - name: Cleanup covers
+      cron:
+        name: 'cover'
+        hour: "2"
+        minute: "0"
+        job: '/usr/bin/zsh -l -c "rm /tmp/cover_*"'
+# Setup mosquitto passwd
+- hosts: master
+  become: yes
+  tasks:
+    - name: Install mosquitto
+      apt:
+        name: mosquitto
+    - name: Disable mosquitto service on ubuntu desktop
+      service:
+        name: mosquitto
+        state: stopped
+    - name: Creates mosquitto docker directory
+      file:
+        path: /smart-house/.docker/data/mosquitto
+        state: directory
+        owner: "1883"
+        group: "1883"
+    - name: Create mosquitto/users.db
+      file:
+        path: /smart-house/.docker/data/mosquitto/users.db
+        state: touch
+        owner: "1883"
+        group: "1883"
+    - name: Create mosquitto.log
+      file:
+        path: /smart-house/.docker/log/mosquitto.log
+        state: touch
+        owner: "1883"
+        group: "1883"
+
+# Setup AFP
+- hosts: master
+  become: yes
+  roles:
+    - role: brianhartsock.netatalk
+  vars:
+    netatalk_shares:
+      - /smart-house "Config" allow:macbury cnidscheme:cdb"
+
+# Install kiosk on panel
+- hosts: panel
+  tasks:
+    - name: Create kiosk.service
+      template:
+        src: ./lib/systemd/system/kiosk.service.j2
+        dest: /lib/systemd/system/kiosk.service
+      notify:
+        - reload systemctl
+    - name: Clone smart-house repo
+      git:
+        repo: 'git@github.com:macbury/SmartHouse.git'
+        dest: /smart-house
+        accept_hostkey: yes
+        update: yes
+    - name: Install electron
+      shell: 'cd /smart-house/panel && npm install'
+# Gnome
+- hosts: panel
+  tasks:
+    - name: Download GNOME Shell gestures extensions
+      get_url:
+        url: "https://extensions.gnome.org/extension-data/disable-gestures%40mattbell.com.au.v2.shell-extension.zip"
+        dest: "/tmp/disable-gesture.zip"
+    - name: Create GNOME gestures extension directories
+      file:
+        path: /home/{{ ansible_user }}/.local/share/gnome-shell/extensions/disable-gestures@mattbell.com.au
+        state: directory
+    - name: Unzip GNOME gestures extensions
+      unarchive:
+        src: "/tmp/disable-gesture.zip"
+        dest: "/home/{{ ansible_user }}/.local/share/gnome-shell/extensions/disable-gestures@mattbell.com.au"
+        remote_src: yes
+    - name: Enable gnome gestures extension
+      shell: 'gnome-shell-extension-tool -e disable-gestures@mattbell.com.au'
+      ignore_errors: yes
+    - name: Download GNOME Shell onboard extensions
+      get_url:
+        url: "https://extensions.gnome.org/extension-data/onboard%40simon.schumann.web.de.v4.shell-extension.zip"
+        dest: "/tmp/onboard.zip"
+    - name: Create GNOME onboard extension directories
+      file:
+        path: /home/{{ ansible_user }}/.local/share/gnome-shell/extensions/onboardintegration@simon.schumann.web.de
+        state: directory
+    - name: Unzip GNOME onboard extensions
+      unarchive:
+        src: "/tmp/disable-gesture.zip"
+        dest: "/home/{{ ansible_user }}/.local/share/gnome-shell/extensions/onboardintegration@simon.schumann.web.de"
+        remote_src: yes
+    - name: Enable gnome onboard extension
+      shell: 'gnome-shell-extension-tool -e onboardintegration@simon.schumann.web.de'
+      ignore_errors: yes
+
+# Fail2Ban setup
+- hosts: master
+  become: yes
+  roles:
+    - role: nickjj.fail2ban
+  handlers:
+    - name: restart fail2ban
+      service:
+        name: fail2ban
+        state: restarted
+  tasks:
+    - name: Copy filter nginx-http-auth.conf to fail2ban
+      template:
+        force: yes
+        src: ./etc/fail2ban/filter.d/nginx-http-auth.conf
+        dest: /etc/fail2ban/filter.d/nginx-http-auth.conf
+      notify:
+        - restart fail2ban
+    - name: Copy filter nginx-badbots.conf to fail2ban
+      template:
+        force: yes
+        src: ./etc/fail2ban/filter.d/nginx-badbots.conf
+        dest: /etc/fail2ban/filter.d/nginx-badbots.conf
+      notify:
+        - restart fail2ban
+    - name: Copy filter nginx-forbidden.conf to fail2ban
+      template:
+        force: yes
+        src: ./etc/fail2ban/filter.d/nginx-forbidden.conf
+        dest: /etc/fail2ban/filter.d/nginx-forbidden.conf
+      notify:
+        - restart fail2ban
+    - name: Copy filter ha.conf to fail2ban
+      template:
+        force: yes
+        src: ./etc/fail2ban/filter.d/ha.conf
+        dest: /etc/fail2ban/filter.d/ha.conf
+      notify:
+        - restart fail2ban
+    - name: Copy filter mosquitto-auth.conf to fail2ban
+      template:
+        force: yes
+        src: ./etc/fail2ban/filter.d/mosquitto-auth.conf
+        dest: /etc/fail2ban/filter.d/mosquitto-auth.conf
+      notify:
+        - restart fail2ban
+    - name: Copy jail ha.conf to fail2ban
+      template:
+        force: yes
+        src: ./etc/fail2ban/jail.d/ha.conf
+        dest: /etc/fail2ban/jail.d/ha.conf
+      notify:
+        - restart fail2ban
+    - name: Create symbolic link for fail2ban
+      become: yes
+      file:
+        src: "/var/log/fail2ban.log"
+        dest: "/smart-house/.docker/log/fail2ban.log"
+        state: link

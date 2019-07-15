@@ -1,0 +1,32 @@
+- platform: rest
+  name: Starman
+  json_attributes:
+    - earth_distance_km
+  value_template: '{{ value_json["speed_kph"] }}'
+  unit_of_measurement: "km/h"
+  resource: 'https://api.spacexdata.com/v2/info/roadster'
+
+- platform: rest
+  name: SpaceX
+  json_attributes:
+    - mission_name
+    - launch_site
+    - rocket
+  value_template: '{{ value_json["launch_date_unix"] }}'
+  resource: 'https://api.spacexdata.com/v2/launches/next'
+
+- platform: template
+  sensors:
+    starman_speed:
+      friendly_name: 'Starman prędkosć'
+      value_template: '{{ states.sensor.starman.state | round(0) }}'
+      unit_of_measurement: 'km/h'
+    starman_earth_distance:
+      friendly_name: 'Starman odległość od ziemi'
+      value_template: '{{ (states.sensor.starman.attributes["earth_distance_km"] | multiply(0.000001)) | round(2) }}'
+      unit_of_measurement: 'km x10⁶'
+    spacex_next_launch_day:
+      friendly_name: 'Następny start'
+      value_template: '{{ states.sensor.spacex.state | int | timestamp_custom("%d.%m.%Y")}}'
+
+- platform: launch_library

@@ -1,0 +1,11 @@
+{
+  "domain": "it_will_rain",
+  "name": "ItWillRain",
+  "documentation": "http://macbury.ninja",
+  "requirements": [
+  ],
+  "dependencies": [],
+  "codeowners": [
+    "@macbury"
+  ]
+}

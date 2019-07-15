@@ -1,0 +1,81 @@
+- alias: Enable flux if bedroom light is turned on
+  trigger:
+    - platform: state
+      entity_id: light.arek_szafka
+      from: 'off'
+      to: 'on'
+    - platform: state
+      entity_id: light.ola_szafka
+      from: 'off'
+      to: 'on'
+  action:
+    - service: switch.turn_on
+      entity_id: switch.flux
+
+- alias: Switch off other lights in kitchen if main light is switched off
+  trigger:
+    - platform: state
+      entity_id: light.kitchen
+      from: 'on'
+      to: 'off'
+  action:
+    - service: light.turn_off
+      entity_id: light.cooking
+    - service: light.turn_off
+      entity_id: light.coffee
+
+- alias: Switch on bathroom lights after door is opened
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bathroom_door
+      from: 'off'
+      to: 'on'
+  action:
+    - service: light.turn_on
+      entity_id: light.bathroom
+
+- alias: Switch on bedroom lights after door is opened
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bedroom_door
+      from: 'off'
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: sun.sun
+        state: below_horizon
+      - condition: time
+        after: '16:00:00'
+        before: '23:59:59'
+  action:
+    - service: light.turn_on
+      entity_id: light.bedroom
+
+- alias: Switch off bedroom main light if stand light are switched on
+  trigger:
+    - platform: state
+      entity_id: light.bedroom_ambient
+      from: 'off'
+      to: 'on'
+  action:
+    - service: light.turn_off
+      entity_id: light.bedroom
+
+- alias: Notify if light in bathroom is on too long
+  trigger:
+    - platform: state
+      entity_id: light.bathroom
+      to: 'on'
+      for:
+        minutes: 25
+    - platform: state
+      entity_id: light.bathroom
+      to: 'on'
+      for:
+        minutes: 45
+  action:
+    service: notify.all
+    data_template:
+      message: "Światło w łazience świeci się długo..."

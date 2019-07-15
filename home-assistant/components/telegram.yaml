@@ -1,0 +1,4 @@
+- platform: polling
+  api_key: !env_var HOME_ASSISTANT_TELEGRAM_KEY
+  allowed_chat_ids:
+    - 66368059

@@ -1,0 +1,75 @@
+# - alias: "Message me if there is any motion with pictures"
+#   trigger:
+#     - entity_id: binary_sensor.hall_pir
+#       platform: 'state'
+#       from: 'off'
+#       to: 'on'
+#   condition:
+#     - condition: state
+#       entity_id: group.family
+#       state: not_home
+#   action:
+#     - service: notify.telegram_arek
+#       data:
+#         title: 'Motion detected'
+#         message: "Here are pictures of the event"
+#     - service: camera.snapshot
+#       data:
+#         entity_id: camera.kitchen
+#         filename: /tmp/snapshot.jpg
+#     - delay: '00:00:01'
+#     - service: notify.telegram_arek
+#       data:
+#         title: 'Motion detected'
+#         message: "Here are pictures of the event"
+#         data:
+#           photo:
+#             - file: /tmp/snapshot.jpg
+#     - service: camera.snapshot
+#       data:
+#         entity_id: camera.kitchen
+#         filename: /tmp/snapshot.jpg
+#     - delay: '00:00:01'
+#     - service: notify.telegram_arek
+#       data:
+#         title: 'Motion detected'
+#         message: "Here are pictures of the event"
+#         data:
+#           photo:
+#             - file: /tmp/snapshot.jpg
+#     - service: camera.snapshot
+#       data:
+#         entity_id: camera.kitchen
+#         filename: /tmp/snapshot.jpg
+#     - delay: '00:00:01'
+#     - service: notify.telegram_arek
+#       data:
+#         title: 'Motion detected'
+#         message: "Here are pictures of the event"
+#         data:
+#           photo:
+#             - file: /tmp/snapshot.jpg
+#     - service: camera.snapshot
+#       data:
+#         entity_id: camera.kitchen
+#         filename: /tmp/snapshot.jpg
+#     - delay: '00:00:01'
+#     - service: notify.telegram_arek
+#       data:
+#         title: 'Motion detected'
+#         message: "Here are pictures of the event"
+#         data:
+#           photo:
+#             - file: /tmp/snapshot.jpg
+#     - service: camera.snapshot
+#       data:
+#         entity_id: camera.kitchen
+#         filename: /tmp/snapshot.jpg
+#     - delay: '00:00:01'
+#     - service: notify.telegram_arek
+#       data:
+#         title: 'Motion detected'
+#         message: "Here are pictures of the event"
+#         data:
+#           photo:
+#             - file: /tmp/snapshot.jpg

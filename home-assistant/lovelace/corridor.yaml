@@ -1,0 +1,59 @@
+- type: custom:layout-card
+  layout: vertical
+  max_columns: 3
+  cards:
+    - type: horizontal-stack
+      cards:
+        - type: entity-button
+          entity: light.corridor
+          icon: mdi:ceiling-light
+          icon_height: '153px'
+        - type: light
+          entity: light.gatewa_ambient_light
+          icon: mdi:spotlight-beam
+    - type: horizontal-stack
+      cards:
+        - type: custom:mini-graph-card
+          entities:
+            - sensor.corridor_temperature
+          line_color: '#E53935'
+          hours_to_show: 24
+          points_per_hour: 1
+          animate: true
+          hour24: true
+          extrema: true
+          show:
+            points: true
+            fill: fade
+        - type: custom:mini-graph-card
+          entities:
+            - sensor.corridor_humidity
+          line_color: '#3949AB'
+          hours_to_show: 24
+          points_per_hour: 1
+          animate: true
+          hour24: true
+          show:
+            points: true
+            fill: fade
+    - type: entities
+      show_header_toggle: false
+      entities:
+        - binary_sensor.main_door
+    # - type: custom:courtain-card
+    #   entity: cover.desk
+    #   height:
+    #     min: 68
+    #     max: 128
+    #   presets:
+    #     - target: 100
+    #       label: 'Arek Praca'
+    #     - target: 170
+    #       label: 'Arek Majsterkowanie'
+    #     - target: 120
+    #       label: 'Ola Stanie'
+    #     - target: 60
+    #       label: 'Ola Praca'
+    - type: custom:dynamic-wallpaper
+      entity: sun.sun
+    - type: custom:compact-custom-header

@@ -1,0 +1,36 @@
+- alias: Switch off all devices at night
+  trigger:
+    platform: time
+    at: '01:00:00'
+  action:
+    service: media_player.turn_off
+    entity_id:
+      - media_player.tv
+      - media_player.soundbar
+
+- alias: Switch off running shit if nobody is home
+  trigger:
+    platform: state
+    entity_id: group.family
+    from: 'home'
+    to: 'not_home'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: 'group.all_lights'
+    - service: fan.turn_off
+      entity_id: group.all_fans
+    - service: media_player.turn_off
+      entity_id:
+        - media_player.tv
+        - media_player.soundbar
+        - media_player.playstation
+    - service: media_player.media_stop
+      entity_id:
+        - media_player.soundbar
+        - media_player.bedroom
+        - media_player.kitchen
+        - media_player.living_room
+    - service: cover.close_cover
+      data:
+        entity_id: cover.living_room

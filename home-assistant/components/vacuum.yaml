@@ -1,0 +1,4 @@
+- platform: xiaomi_miio
+  host: 192.168.1.222
+  name: main_vacuum
+  token: !env_var HOME_ASSISTANT_VACUUM_TOKEN

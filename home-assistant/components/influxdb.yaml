@@ -1,0 +1,10 @@
+host: localhost
+port: 8086
+database: !env_var INFLUXDB_DB
+username: !env_var INFLUXDB_ADMIN_USER
+password: !env_var INFLUXDB_ADMIN_PASSWORD
+tags:
+  source: homeassistant
+include:
+  domains: 
+    - sensor

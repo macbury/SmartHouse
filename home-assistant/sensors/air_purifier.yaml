@@ -1,0 +1,24 @@
+- platform: template
+  sensors:
+    living_room_humidity:
+      unit_of_measurement: '%'
+      value_template: '{{ states.fan.living_room_air_purifier.attributes.humidity }}'
+    living_room_aqi:
+      unit_of_measurement: 'aqi'
+      value_template: '{{ states.fan.living_room_air_purifier.attributes.aqi }}'
+    living_room_temperature:
+      unit_of_measurement: '°C'
+      value_template: '{{ states.fan.living_room_air_purifier.attributes.temperature }}'
+    bedroom_temperature:
+      unit_of_measurement: '°C'
+      value_template: '{{ states.fan.bedroom_air_purifier.attributes.temperature }}'
+    bedroom_aqi:
+      unit_of_measurement: 'aqi'
+      value_template: '{{ states.fan.bedroom_air_purifier.attributes.aqi }}'
+    bedroom_humidity:
+      unit_of_measurement: '%'
+      value_template: '{{ states.fan.bedroom_air_purifier.attributes.humidity }}'
+    main_cover_position:
+      unit_of_measurement: '%'
+      value_template: '{{ states.cover.living_room.attributes.current_position }}'
+

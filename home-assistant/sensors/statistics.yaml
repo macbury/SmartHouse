@@ -1,0 +1,43 @@
+- platform: min_max
+  name: mean_aqi
+  type: mean
+  round_digits: 0
+  entity_ids:
+    - sensor.living_room_aqi
+    - sensor.bedroom_aqi
+
+- platform: min_max
+  name: mean_humidity
+  type: mean
+  entity_ids:
+    - sensor.living_room_humidity
+    - sensor.bedroom_humidity
+    - sensor.bathroom_humidity
+    - sensor.corridor_humidity
+    - sensor.kitchen_humidity
+
+- platform: min_max
+  name: mean_temperature
+  type: mean
+  entity_ids:
+    - sensor.living_room_temperature
+    - sensor.bathroom_temperature
+    - sensor.bedroom_temperature
+    - sensor.corridor_temperature
+    - sensor.kitchen_temperature
+
+- platform: min_max
+  name: mean_pressure
+  type: mean
+  entity_ids:
+    - sensor.bathroom_pressure
+    - sensor.corridor_pressure
+    - sensor.kitchen_pressure
+
+- platform: statistics
+  entity_id: sensor.window_luminance
+  precision: 0
+  sampling_size: 20
+  max_age:
+    minutes: 45
+  name: stat_window_luminance

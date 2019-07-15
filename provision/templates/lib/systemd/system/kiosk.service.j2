@@ -1,0 +1,25 @@
+[Unit]
+Description=Kiosk UI
+ConditionPathExists=/smart-house/.env.home-assistant
+After=network.target
+
+[Service]
+Type=simple
+User={{ ansible_user }}
+Group={{ ansible_user }}
+LimitNOFILE=1024
+
+Restart=on-failure
+RestartSec=10
+Environment=DISPLAY=:0.0
+
+WorkingDirectory=/smart-house/
+ExecStart=/usr/bin/zsh -l -c "source /home/{{ ansible_user }}/.zshrc && cd /smart-house/panel && npx electron . --host=https://{{ domain }} --production"
+
+PermissionsStartOnly=true
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=panel
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,41 @@
+- type: picture-elements
+  image: !file /local/floor_plan.png
+  elements:
+    - type: state-icon
+      tap_action:
+        action: toggle
+      entity: light.ceiling_lights
+      style:
+        top: 47%
+        left: 42%
+    - type: state-icon
+      tap_action:
+        action: toggle
+      entity: light.kitchen_lights
+      style:
+        top: 30%
+        left: 15%
+    - type: state-label
+      entity: sensor.outside_temperature
+      style:
+        top: 82%
+        left: 79%
+    - type: service-button
+      title: Turn lights off
+      style:
+        top: 95%
+        left: 60%
+      service: homeassistant.turn_off
+      service_data:
+        entity_id: group.all_lights
+    - type: icon
+      icon: mdi:home
+      tap_action:
+        action: navigate
+        navigation_path: /lovelace/0
+      style:
+        top: 10%
+        left: 10%
+- type: custom:dynamic-wallpaper
+  entity: sun.sun
+- type: custom:compact-custom-header

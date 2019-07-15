@@ -1,0 +1,3 @@
+Most of credentials is stored in plain .env files, and they are pretty sensitive(duh). Most configurations of HomeAssistant is based on installing everything yolo on RaspberryPi without and counting on that most bouglars will ignore this small box.
+
+My setup is stored on encrypted LUKS partition under `/smart-house`. After reboot, to decrypt partition I have small script named `smart-house-unlock` that asks for password, decrypts partition and starts all services.

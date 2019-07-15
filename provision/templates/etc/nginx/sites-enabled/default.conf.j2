@@ -1,0 +1,17 @@
+server {
+  listen 80 default_server;
+
+  root /var/www/html;
+
+  location ~ / {
+    allow 192.168.0.0/24;
+    allow 192.168.1.0/24;
+    allow 10.0.0.0/24;
+    allow 10.0.2.0/24;
+    deny all;
+    expires max;
+    try_files /index.html =404;
+  }
+
+  error_page 403 https://www.youtube.com/watch?v=Ucmy0Yw141U;
+}

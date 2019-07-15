@@ -1,0 +1,7 @@
+- platform: mqtt
+  name: 'desk'
+  command_topic: "linak_desk/height/cm/set"
+  state_topic: "linak_desk/height/cm"
+  qos: 2
+  retain: true
+

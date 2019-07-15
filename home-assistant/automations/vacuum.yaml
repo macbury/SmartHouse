@@ -1,0 +1,46 @@
+- alias: Summon vacuum back to dock if sombody returns to home
+  trigger:
+    platform: state
+    entity_id: group.family
+    from: 'not_home'
+    to: 'home'
+  action:
+    - service: vacuum.return_to_base
+      data:
+        entity_id: vacuum.main_vacuum
+    - service: vacuum.set_fan_speed
+      data_template:
+        entity_id: vacuum.living_room_vacum
+        fan_speed: Balanced
+
+- alias: Start cleaning the house
+  trigger:
+    platform: state
+    entity_id: group.family
+    from: 'home'
+    to: 'not_home'
+  action:
+    - service: vacuum.start
+      data:
+        entity_id: vacuum.main_vacuum
+    - delay: '00:00:05'
+    - service: vacuum.set_fan_speed
+      data_template:
+        entity_id: vacuum.main_vacuum
+        fan_speed: Balanced
+
+- alias: Send vacuum near trash bin and ask for replacing trash can
+  trigger:
+    platform: state
+    entity_id: vacuum.main_vacuum
+    to: 'docked'
+  condition:
+    - condition: template
+      value_template: '{{ states.vacuum.main_vacuum.attributes.cleaning_count % 10 == 0 }}'
+  action:
+    - service: notify.telegram_arek
+      data:
+        title: 'Odkurzacz'
+        message: "Wyrzuć śmieci z pojemnika odkurzacza"
+        # add go to target...
+  

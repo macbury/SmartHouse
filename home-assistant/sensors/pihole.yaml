@@ -1,0 +1,11 @@
+- platform: pi_hole
+  host: 0.0.0.0:4104
+  monitored_conditions:
+    - ads_blocked_today
+    - dns_queries_today
+    - unique_clients
+    - queries_cached
+    - queries_forwarded
+    - unique_clients
+    - unique_domains
+    - clients_ever_seen

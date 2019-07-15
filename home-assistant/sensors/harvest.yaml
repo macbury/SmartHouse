@@ -1,0 +1,4 @@
+- platform: harvest
+  name: Arek Czas Pracy
+  account_id: !env_var HOME_ASSISTANT_HARVEST_ACCOUNT_ID
+  token: !env_var HOME_ASSISTANT_HARVEST_TOKEN

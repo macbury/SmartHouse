@@ -1,0 +1,23 @@
+- name: home
+  latitude: 0
+  longitude: 0
+  radius: 80
+  icon: mdi:home
+
+- name: codesthq
+  latitude: 0
+  longitude: 0
+  radius: 100
+  icon: mdi:worker
+
+- name: netguru
+  latitude: 0
+  longitude: 0
+  radius: 100
+  icon: mdi:worker
+
+- name: Port COM
+  latitude: 50.0612024
+  longitude: 19.9297733
+  radius: 100
+  icon: mdi:beer

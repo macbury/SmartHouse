@@ -1,0 +1,7 @@
+broker: localhost
+port: 4105
+username: !env_var HOME_ASSISTANT_MQTT_USER
+password: !env_var HOME_ASSISTANT_MQTT_PASSWORD
+birth_message:
+  topic: 'homeassistant/status'
+  payload: 'online'

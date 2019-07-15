@@ -1,0 +1,27 @@
+- alias: Notify puny humans about feeding of the overlord
+  trigger:
+    - platform: state
+      entity_id: calendar.pushi
+      to: 'on'
+      from: 'off'
+  condition:
+    - condition: state
+      entity_id: group.family
+      state: home
+  action:
+    - service: notify.alexa_media_living_room
+      data:
+        message: 'Attention puny humans. Himen needs pushi now!'
+        data:
+          type: announce
+          method: all
+    - service: notify.alexa_media_kitchen
+      data:
+        message: 'Attention puny humans. Himen needs pushi now!'
+        data:
+          type: announce
+          method: all
+    - delay: '00:00:15'
+    - service: notify.all
+      data:
+        message: '/giphy cat food'

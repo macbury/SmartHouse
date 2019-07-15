@@ -1,0 +1,9 @@
+sensor.fibaro_system_fgrm223_roller_shutter_controller_3_energy:
+  ignored: false
+  polling_intensity: 10
+sensor.cover_power:
+  ignored: false
+  polling_intensity: 10
+cover.living_room:
+  ignored: false
+  polling_intensity: 10

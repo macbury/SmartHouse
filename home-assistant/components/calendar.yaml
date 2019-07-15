@@ -1,0 +1,4 @@
+- platform: caldav
+  username: !env_var HOME_ASSISTANT_CALENDAR_USER
+  password: !env_var HOME_ASSISTANT_CALENDAR_PASSWORD
+  url: !env_var HOME_ASSISTANT_CALENDAR_URL

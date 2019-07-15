@@ -1,0 +1,7 @@
+who_cooks:
+  name: Who cooks today
+  options:
+    - Arek
+    - Ola
+  initial: Arek
+  icon: mdi:panda

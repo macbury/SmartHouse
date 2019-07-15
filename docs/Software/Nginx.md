@@ -1,0 +1,1 @@
+[Nginx](https://nginx.org/) is very nice web server used to proxy all traffic from docker containers. SSL certificates are provided by [Lets Encrypt](https://letsencrypt.org/).

@@ -1,0 +1,36 @@
+- alias: Change soundbar source after TV is switched on
+  trigger:
+    platform: state
+    entity_id: media_player.tv
+    from: 'off'
+    to: 'on'
+  action:
+    - service: media_player.select_source
+      data:
+        entity_id: 'media_player.soundbar'
+        source: 'hdmi'
+    - delay: '00:00:05'
+    - service: media_player.select_source
+      data:
+        entity_id: 'media_player.soundbar'
+        source: 'hdmi'
+    - delay: '00:00:05'
+    - service: media_player.select_source
+      data:
+        entity_id: 'media_player.soundbar'
+        source: 'hdmi'
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.soundbar
+        volume_level: 0.40
+
+- alias: Adjust volume after PS4 boots up
+  trigger:
+    platform: state
+    entity_id: media_player.playstation
+    to: 'playing'
+  action:
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.soundbar
+        volume_level: 0.45

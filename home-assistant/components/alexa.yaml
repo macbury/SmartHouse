@@ -1,0 +1,19 @@
+smart_home:
+  endpoint: https://api.amazonalexa.com/v3/events
+  client_id: !env_var HOME_ASSISTANT_ALEXA_CLIENT_ID
+  client_secret: !env_var HOME_ASSISTANT_ALEXA_CLIENT_SECRET
+  filter:
+    include_domains:
+      - light
+    include_entities:
+      - cover.living_room
+      - media_player.tv
+      - media_player.playstation
+      - script.find_vacuum
+      - script.clean_kitchen
+      - script.clean_bedroom
+      - script.clean_corridor
+      - script.clean_living_room
+      - script.clean_bathroom
+      - script.stop_cleaning
+      - script.start_cleaning

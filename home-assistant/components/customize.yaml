@@ -1,0 +1,106 @@
+sensor.nowa_huta_bzn:
+  friendly_name: "Benzen"
+sensor.nowa_huta_co:
+  friendly_name: "Tlenek węgla"
+sensor.nowa_huta_no:
+  friendly_name: "Tlenek azotu"
+sensor.nowa_huta_no2:
+  friendly_name: "Dwutlenek azotu"
+sensor.nowa_huta_nox:
+  friendly_name: "Tlenki azotu"
+sensor.nowa_huta_pm10:
+  friendly_name: "Pył zawieszony PM10"
+sensor.nowa_huta_pm25:
+  friendly_name: "Pył zawieszony PM2.5"
+sensor.nowa_huta_so2:
+  friendly_name: "Dwutlenek siarki"
+
+sensor.starman_speed:
+  icon: mdi:account-star
+sensor.starman_earth_distance:
+  icon: mdi:map-marker-distance
+sensor.spacex_next_launch_day:
+  icon: mdi:rocket
+
+sensor.mean_temperature:
+  friendly_name: 'Temperatura'
+  icon: mdi:temperature-celsius
+
+sensor.dark_sky_temperature:
+  friendly_name: 'Kraków Temperatura'
+  icon: mdi:temperature-celsius
+
+sensor.dark_sky_humidity:
+  friendly_name: 'Kraków Wilgotność'
+  icon: mdi:water-percent
+
+sensor.mean_humidity:
+  friendly_name: 'Wilgotność'
+  icon: mdi:water-percent
+
+sensor.mean_pressure:
+  friendly_name: 'Ciśnienie'
+  icon: mdi:diving-helmet
+
+sensor.mean_aqi:
+  friendly_name: 'AQI'
+  icon: mdi:skull-crossbones
+
+sensor.chinese_air_quality_index:
+  friendly_name: 'Kraków AQI'
+  icon: mdi:skull-crossbones
+
+sensor.corridor_temperature:
+  friendly_name: 'Temperatura'
+  icon: mdi:temperature-celsius
+
+sensor.living_room_temperature:
+  friendly_name: 'Temperatura'
+  icon: mdi:temperature-celsius
+
+sensor.living_room_humidity:
+  friendly_name: 'Wilgotność'
+  icon: mdi:water-percent
+
+sensor.bedroom_temperature:
+  friendly_name: 'Temperatura'
+  icon: mdi:temperature-celsius
+
+sensor.bedroom_humidity:
+  friendly_name: 'Wilgotność'
+  icon: mdi:water-percent
+
+sensor.vistula_water_level:
+  friendly_name: 'Poziom Wisły'
+  icon: mdi:cup-water
+
+sensor.power_consumption:
+  icon: mdi:flash-circle
+
+binary_sensor.balcone_door:
+  friendly_name: 'Drzwi na balkon'
+  icon: mdi:glassdoor
+
+sensor.paliwo_95:
+  friendly_name: 'Benzyna'
+  icon: mdi:oil
+
+cover.desk:
+  friendly_name: 'Biurko do pracy'
+  icon: mdi:desktop-mac-dashboard
+
+sensor.dark_sky_uv_index:
+  friendly_name: 'UV Indeks'
+
+sensor.dark_sky_pressure:
+  friendly_name: 'Ciśnienie'
+
+binary_sensor.bathroom_door:
+  icon: 'mdi:door'
+
+binary_sensor.main_door:
+  icon: 'mdi:door'
+
+light.work_ambient_desk:
+  friendly_name: 'Work Desk back'
+  icon: 'mdi:led-strip'

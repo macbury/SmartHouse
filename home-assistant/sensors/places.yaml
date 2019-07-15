@@ -1,0 +1,31 @@
+- platform: google_geocode
+  name: geocode_arek
+  origin: device_tracker.arek
+  options: street_number, street, city
+  display_zone: hide
+  api_key: !env_var HOME_ASSISTANT_GOOGLE_CODE_API_KEY 
+- platform: google_geocode
+  name: geocode_ola
+  origin: device_tracker.ola
+  options: street_number, street, city
+  display_zone: hide
+  api_key: !env_var HOME_ASSISTANT_GOOGLE_CODE_API_KEY 
+
+- platform: template
+  sensors:
+    city_arek:
+      unit_of_measurement: 'city'
+      value_template: >-
+        {% if state_attr('sensor.geocode_arek', 'City') == None %}
+          Kraków
+        {% else %}
+          {{ state_attr('sensor.geocode_arek', 'City') }}
+        {% endif %}
+    city_ola:
+      unit_of_measurement: 'city'
+      value_template: >-
+        {% if state_attr('sensor.geocode_ola', 'City') == None %}
+          Kraków
+        {% else %}
+          {{ state_attr('sensor.geocode_ola', 'City') }}
+        {% endif %}
