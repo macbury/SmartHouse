@@ -1,4 +1,4 @@
-FROM homeassistant/home-assistant:0.95.4
+FROM homeassistant/home-assistant:0.96.0
 
 ENV TZ 'Europe/Warsaw'
 RUN echo $TZ > /etc/timezone && \
