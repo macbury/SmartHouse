@@ -1,7 +1,7 @@
 ## Vacuum
 ![Vacuum Card in action](vacuum.png)
 
-[More info here](/Software/Vacuum)
+[More info here](/SmartHouse/HomeAssistant/Lovelace/)
 
 ## Air Purifier
 ![Air Purifier](air_purifier.gif)

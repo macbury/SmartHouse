@@ -51,19 +51,19 @@
         {{ states.sensor.stat_window_luminance_mean.state | float >= 5000 }}
     dishwasher:
       friendly_name: "Zmywarka"
-      entity_id: sensor.washing_machine_power
+      entity_id: sensor.washing_machine_current
       device_class: power
       icon_template: mdi:dishwasher
       delay_off: 
-        minutes: 5
+        seconds: 30
       value_template: >-
-        {{ states.sensor.washing_machine_power.state | float > 0 }}
+        {{ states.sensor.washing_machine_current.state | float > 0.0 }}
     washer:
       friendly_name: "Pralka"
       entity_id: sensor.washer_power
       device_class: power
       icon_template: mdi:washing-machine
       delay_off: 
-        minutes: 3
+        minutes: 1
       value_template: >-
-        {{ states.sensor.washer_power.state | float > 10 }}
+        {{ states.sensor.washer_current.state | float > 0.04 }}
