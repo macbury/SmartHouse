@@ -63,7 +63,6 @@
     # Wallpaper and stuff
     - type: custom:dynamic-wallpaper
       entity: sun.sun
-    - type: custom:compact-custom-header
     - break
     - type: entities
       title: Telewizor

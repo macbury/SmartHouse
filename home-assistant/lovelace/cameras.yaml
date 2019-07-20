@@ -26,4 +26,3 @@
     #     - image_processing.tensorflow_living_room
     - type: custom:dynamic-wallpaper
       entity: sun.sun
-    - type: custom:compact-custom-header

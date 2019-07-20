@@ -60,6 +60,5 @@
       filter:
         include:
           - entity_id: "switch.*"
-    - type: custom:compact-custom-header
     - type: custom:dynamic-wallpaper
       entity: sun.sun

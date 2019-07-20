@@ -24,4 +24,3 @@
       entity: sensor.back_from_work_transit
     - type: custom:dynamic-wallpaper
       entity: sun.sun
-    - type: custom:compact-custom-header

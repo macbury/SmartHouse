@@ -56,4 +56,3 @@
     #       label: 'Ola Praca'
     - type: custom:dynamic-wallpaper
       entity: sun.sun
-    - type: custom:compact-custom-header

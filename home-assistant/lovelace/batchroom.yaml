@@ -41,4 +41,3 @@
     - break
     - type: custom:dynamic-wallpaper
       entity: sun.sun
-    - type: custom:compact-custom-header

@@ -47,6 +47,5 @@
       show_progress: false
       group: false
     - break
-    - type: custom:compact-custom-header
     - type: custom:dynamic-wallpaper
       entity: sun.sun

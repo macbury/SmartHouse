@@ -32,6 +32,8 @@ resources:
     type: js
 {% endfor %}
 
+cch:
+
 title: Smart House
 views:
   - title: Dashboard

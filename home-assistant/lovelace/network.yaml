@@ -73,4 +73,3 @@
       code: !env_var HOME_ASSISTANT_SSID_QR_CODE
     - type: custom:dynamic-wallpaper
       entity: sun.sun
-    - type: custom:compact-custom-header
