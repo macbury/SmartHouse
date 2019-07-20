@@ -89,3 +89,4 @@ vscode/**/*
 :2evscode
 .pip_progress
 docs/SmartHouse.png
+sonoff/certs/

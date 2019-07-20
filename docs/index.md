@@ -20,7 +20,7 @@ I will try to update this documentation, maybe this will inspire/help somebody :
 <div style="text-align: center">
     <figure>
         <div>
-            <a href="SmartHouse.png"><img src="SmartHouse.png" alt="Smart House technology diagram"></a>
+            <a href="https://www.draw.io/#Uhttps%3A%2F%2Fmacbury.github.io%2FSmartHouse%2FSmartHouse.xml"><img src="SmartHouse.png" alt="Smart House technology diagram"></a>
         </div>
         <figcaption>
             <p><strong>Technology diagram (<a href="SmartHouse.png">Click for bigger version</a>). Made with <a href="https://www.draw.io/">Draw.io</a> (<a href="SmartHouse.xml">XML</a> source file).</strong></p>

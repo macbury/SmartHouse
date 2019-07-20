@@ -57,5 +57,5 @@ markdown_extensions:
 copyright: 'Copyright &copy; 2019 Buras Arkadiusz'
 site_author: 'Arkadiusz Buras'
 site_name: MacBury Smart House
-site_url: 'https://macbury.github.io/SmartHouseMVP'
+site_url: 'https://macbury.github.io/SmartHouse'
 site_description: 'All stuff that is needed to run my smart house'
