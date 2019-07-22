@@ -25,3 +25,19 @@
     - service: notify.all
       data:
         message: '/giphy cat food'
+  
+- alias: Switch on corridor lights after cat shitter is opened
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.cat_shitter_door
+      to: 'on'
+      from: 'off'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: 'sun.sun'
+        state: 'below_horizon'
+  action:
+    - service: light.turn_on
+      entity_id: binary_sensor.cat_shitter_door

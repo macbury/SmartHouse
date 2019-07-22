@@ -40,6 +40,7 @@
       show_header_toggle: false
       entities:
         - binary_sensor.main_door
+        - binary_sensor.cat_shitter_door
     # - type: custom:courtain-card
     #   entity: cover.desk
     #   height:

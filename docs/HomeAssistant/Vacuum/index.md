@@ -56,6 +56,8 @@ You can specify what vacuum should be controlled, from where to fetch map camera
       icon: mdi:door-closed
 ```
 
+<iframe width="960" height="480" src="https://www.youtube.com/embed/qP3p4F6qskM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ### Zone Cleanup Panel 
 With newest firmware update Xiaomi introduced **Map Saving**. This feature makes planned zone cleanup to actually work(before after few cleanings, robot did reset the map and need to scan the whole apartament again). To help me with preparing zone cleanup, I written a simple tool that takes generated map and allows me to select zones for cleaning:
 
