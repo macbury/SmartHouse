@@ -40,4 +40,5 @@
         state: 'below_horizon'
   action:
     - service: light.turn_on
-      entity_id: light.corridor
+      data:
+        entity_id: light.corridor
