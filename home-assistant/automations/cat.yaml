@@ -40,4 +40,4 @@
         state: 'below_horizon'
   action:
     - service: light.turn_on
-      entity_id: binary_sensor.cat_shitter_door
+      entity_id: light.corridor
