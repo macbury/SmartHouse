@@ -19,11 +19,6 @@ ha_plex:
   title: "Plex"
   url: '/plex/web/index.html'
   icon: 'mdi:plex'
-ha_qnap:
-  require_admin: true
-  title: "QNAP"
-  url: "https://mr-pickle.here/"
-  icon: 'mdi:nas'
 ha_transmission:
   title: "Transmission"
   url: !env_var HOME_ASSISTANT_TRANSMISSION_URL

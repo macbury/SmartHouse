@@ -1,5 +1,6 @@
 exclude:
   entities:
+    - sensor.time_left_to_food
     - sensor.to_work_transit
     - sensor.back_from_work_transit
     - sensor.date_time

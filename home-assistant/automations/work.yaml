@@ -69,3 +69,41 @@
       data:
         message: '@Arek Lunching mutafaka!'
 
+- alias: Tell me what food will be in 30 minutes delivered to my at work
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.arek_jedzenie
+    value_template: '{{  states.sensor.arek_jedzenie.attributes.time_left }}'
+    below: 1800
+  condition:
+    - condition: state
+      entity_id: person.arek
+      state: codesthq
+    - condition: state
+      entity_id: sensor.arek_jedzenie
+      state: 'on'
+  action:
+    - service: notify.telegram_arek
+      data_template:
+        title: 'Praca'
+        message: "Za pół godziny, przy dobrych mocach posejdona strawa twa będzie {{ states.sensor.arek_jedzenie.attributes.meal }}"
+
+- alias: Notify me that food was delivered
+  trigger:
+    - platform: state
+      entity_id: sensor.arek_jedzenie
+      from: 'on'
+      to: 'off'
+  condition:
+    - condition: state
+      entity_id: person.arek
+      state: codesthq
+  action:
+    - service: notify.telegram_arek
+      data_template:
+        title: 'Praca'
+        message: >
+          Swarożycu uświęć te ofiarne napoje i strawy,
+          by Twej mocy nabrały i byśmy spożywając je bliżsi Bogom byli.
+          Przyjm w swe ciało zioła święte, niech oczyszczą to miejsce
+          i przyniosą wszystko to co dobre, dla nas i dla naszych rodzin.

@@ -82,9 +82,6 @@ services:
     volumes:
       - ./postgresql/:/docker-entrypoint-initdb.d/
       - .docker/data/postgresql:/data
-  sonoff:
-    build: ./sonoff/
-    network_mode: host
   home-assistant:
     build: ./home-assistant/
     extra_hosts:
@@ -102,7 +99,6 @@ services:
       - TZ=Europe/Warsaw
       - HOME_ASSISTANT_DB_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:4101/${POSTGRES_DB}
     depends_on:
-      - sonoff
       - transmission
       - sonarr
       - plex
@@ -221,6 +217,14 @@ services:
       - .env.dpodcast
     depends_on:
       - redis
+  esphome:
+    image: esphome/esphome:latest
+    volumes:
+      - .docker/data/esphome:/config
+      - /etc/localtime:/etc/localtime:ro
+    network_mode: host
+    # devices:
+    #   - /dev/ttyUSB0
   # bt-mqtt-gateway:
   #   build: ./bt-mqtt-gateway/
   #   privileged: true

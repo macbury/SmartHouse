@@ -54,6 +54,7 @@ class LunchingSensor(Entity):
     self._meal = None
     self._deliver_from = None
     self._deliver_to = None
+    self._time_left = None
 
   @property
   def name(self):
@@ -73,7 +74,8 @@ class LunchingSensor(Entity):
     return {
       'meal': self._meal,
       'deliver_to': self._deliver_to,
-      'deliver_from': self._deliver_from
+      'deliver_from': self._deliver_from,
+      'time_left': self._time_left
     }
 
   def extract_deilver_date(self, text):
@@ -82,6 +84,7 @@ class LunchingSensor(Entity):
     if match:
       self._deliver_from = today.replace(hour=int(match.group(1)), minute=int(match.group(2)), second=0, microsecond=0)
       self._deliver_to = today.replace(hour=int(match.group(3)), minute=int(match.group(4)), second=0, microsecond=0)
+      self._time_left = round((self._deliver_to - today).total_seconds())
 
   @util.Throttle(MIN_TIME_BETWEEN_SCANS, MIN_TIME_BETWEEN_FORCED_SCANS)
   async def async_update(self):
@@ -99,6 +102,7 @@ class LunchingSensor(Entity):
           _LOGGER.debug("No data to update: {}".format(data))
           self._deliver_from = None
           self._deliver_to = None
+          self._time_left = None
           self._meal = None
     except (asyncio.TimeoutError, aiohttp.ClientError, IndexError) as error:
       _LOGGER.error("Failed getting devices: %s", error)

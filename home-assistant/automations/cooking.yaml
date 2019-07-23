@@ -1,0 +1,8 @@
+- alias: Switch on cooking light if phone is connected to kitchen alexa
+  trigger:
+    platform: template
+    value_template: '{{ is_state_attr("media_player.kitchen", "source", "Galaxy S10") }}'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.cooking

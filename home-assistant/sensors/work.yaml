@@ -1,0 +1,5 @@
+- platform: template
+  sensors:
+    ordered_food:
+      value_template: '{{ states.sensor.arek_jedzenie.attributes.meal }}'
+
