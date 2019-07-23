@@ -96,8 +96,9 @@ views:
     path: network
     cards: !include network.yaml
 
-  - title: Smart House
+  - title: System
     panel: true
-    path: smart-house
-    icon: mdi:glasses
-    cards: !include smart-home.yaml
+    path: system
+    icon: mdi:server-security
+    cards: !include system.yaml
+

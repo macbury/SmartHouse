@@ -41,19 +41,6 @@
       entities:
         - binary_sensor.main_door
         - binary_sensor.cat_shitter_door
-    # - type: custom:courtain-card
-    #   entity: cover.desk
-    #   height:
-    #     min: 68
-    #     max: 128
-    #   presets:
-    #     - target: 100
-    #       label: 'Arek Praca'
-    #     - target: 170
-    #       label: 'Arek Majsterkowanie'
-    #     - target: 120
-    #       label: 'Ola Stanie'
-    #     - target: 60
-    #       label: 'Ola Praca'
+
     - type: custom:dynamic-wallpaper
       entity: sun.sun

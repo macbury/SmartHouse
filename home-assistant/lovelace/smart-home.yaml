@@ -2,12 +2,6 @@
   layout: horizontal
   max_columns: 3
   cards:
-    - type: entities
-      title: System
-      show_header_toggle: false
-      entities:
-        - sensor.uptime
-
     - type: custom:monster-card
       card:
         type: entities
