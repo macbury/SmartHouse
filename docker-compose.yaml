@@ -6,6 +6,19 @@ services:
       - 6379:6379
     volumes:
       - .docker/data/redis:/data
+  bazzar:
+    image: linuxserver/bazarr:latest
+    network_mode: host
+    environment: 
+      PUID: 0
+      PGID: 0
+      TZ: "Europe/Warsaw"
+    ports:
+      - 6767:6767
+    volumes:
+      - .docker/data/bazzar:/config
+      - /mnt/MoviesAndTV:/tv
+      - /mnt/Movies:/movies
   sonarr:
     image: linuxserver/sonarr
     ports:
@@ -225,12 +238,4 @@ services:
     network_mode: host
     # devices:
     #   - /dev/ttyUSB0
-  # bt-mqtt-gateway:
-  #   build: ./bt-mqtt-gateway/
-  #   privileged: true
-  #   env_file:
-  #     - '.env.home-assistant'
-  #   depends_on:
-  #     - mqtt
-  #   volumes:
-  #     - ./bt-mqtt-gateway/config.yaml:/opt/bt-mqtt-gateway/config.yaml
+

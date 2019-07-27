@@ -28,6 +28,10 @@ ha_sonarr:
   title: "Sonarr"
   url: "/sonarr"
   icon: 'mdi:radar'
+ha_bazarr:
+  title: "Bazzar"
+  url: "/bazarr"
+  icon: 'mdi:subtitles'
 ha_nextcloud:
   require_admin: true
   title: "Nextcloud"

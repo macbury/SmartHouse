@@ -82,8 +82,11 @@ Pretty nice media server. [Plex](https://www.plex.tv/) is running on HomeAssista
 ### IFTT
 [IFTT](https://ifttt.com/discover) is used for triggering stuff using webhooks that don't expose APIs
 
-### Sonarr and Transmission
-[Sonarr](https://sonarr.tv/) and [Transmission](https://transmissionbt.com/) is used for tracking TV shows and Music. If a new show appear it is automatically downloaded using transmission. After download is completed stuff is moved to my NAS and Plex reindex everything
+### Sonarr, Bazarr and Transmission
+[Sonarr](https://sonarr.tv/) and [Transmission](https://transmissionbt.com/) is used for tracking TV shows and Music. If a new show appear it is automatically downloaded using transmission. After download is completed stuff is moved to my NAS and Plex reindex everything. [Bazarr](https://www.bazarr.media/) is then used for finding polish subtitles.
+
+### ESPHome
+[ESPHome](https://esphome.io/) is a system to control your ESP8266/ESP32 by simple yet powerful configuration files and control them remotely through Home Automation systems.
 
 ### Firefly III
 [Firefly III](https://firefly-iii.org/) is budget managment software.

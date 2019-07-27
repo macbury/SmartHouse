@@ -34,4 +34,4 @@
       data:
         entity_id: light.gatewa_ambient_light
         rgb_color: [0, 190, 255]
-        brightness: 5
+        brightness: 1

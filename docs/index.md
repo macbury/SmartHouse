@@ -13,7 +13,11 @@
 
 __This page is still under heavy development. Beware of changes :P__
 
-Here lies all configuration used in my House. At the center of all lies [Home Assistant](https://home-assistant.io) that controls all hardware in my house.
+Here are all my configurations used in my Smart House. At the center of all is [Home Assistant](https://home-assistant.io) that controls all hardware in my house.
+
+* [Screenshots of the UI](HomeAssistant/Screens/)
+* [The hardware](Hardware/)
+* [The software](Software/Overview)
 
 I will try to update this documentation, maybe this will inspire/help somebody :P
 

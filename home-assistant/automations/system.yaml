@@ -1,0 +1,21 @@
+- alias: Switch rack fan if system is too hot
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.corridor_pawlacz_temperature
+    above: 28
+    for:
+      minutes: 5
+  action:
+    - service: switch.turn_on
+      entity_id: switch.rack_fan
+
+- alias: Switch rack fan if system is cool
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.corridor_pawlacz_temperature
+    below: 28
+    for:
+      minutes: 5
+  action:
+    - service: switch.turn_off
+      entity_id: switch.rack_fan
