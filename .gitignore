@@ -90,3 +90,4 @@ vscode/**/*
 .pip_progress
 docs/SmartHouse.png
 sonoff/certs/
+.AppleDouble
