@@ -1,4 +1,4 @@
 usb_path: /dev/ttyACM0
 network_key: !env_var HOME_ASSISTANT_ZWAVE_KEY
 debug: false
-autoheal: false
+autoheal: true

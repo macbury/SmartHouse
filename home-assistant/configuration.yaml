@@ -80,6 +80,7 @@ updater:
 wake_on_lan:
 weather: !include components/weather.yaml
 websocket_api:
+wwlln:
 # X
 xiaomi_aqara: !include components/xiaomi_aqara.yaml
 # Y
