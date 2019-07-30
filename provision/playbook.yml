@@ -646,13 +646,13 @@
         job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house backup' >> /tmp/backup.log 2>&1"
     - name: Switch off media server
       cron:
-        name: "backup"
+        name: "media_off"
         hour: "1"
         minute: "0"
         job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house media stop' >> /tmp/backup.log 2>&1"
     - name: Switch on media server
       cron:
-        name: "backup"
+        name: "media_on"
         hour: "9"
         minute: "0"
         job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house media start' >> /tmp/backup.log 2>&1"
