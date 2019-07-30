@@ -5,11 +5,6 @@
       include_vars:
         file: vars.yml
 
-- hosts: master
-  become: yes
-  roles:
-     - role: ansible-ipfs
-
 - hosts: vacuum
   become: yes
   tasks:
@@ -477,18 +472,18 @@
         dest: /lib/systemd/system/pihole.service
       notify:
         - reload systemctl
-    - name: Create support.service
-      template:
-        src: ./lib/systemd/system/support.service.j2
-        dest: /lib/systemd/system/support.service
-      notify:
-        - reload systemctl
-    - name: Create media.service
-      template:
-        src: ./lib/systemd/system/media.service.j2
-        dest: /lib/systemd/system/media.service
-      notify:
-        - reload systemctl
+    # - name: Create support.service
+    #   template:
+    #     src: ./lib/systemd/system/support.service.j2
+    #     dest: /lib/systemd/system/support.service
+    #   notify:
+    #     - reload systemctl
+    # - name: Create media.service
+    #   template:
+    #     src: ./lib/systemd/system/media.service.j2
+    #     dest: /lib/systemd/system/media.service
+    #   notify:
+    #     - reload systemctl
     - name: Append domain to /etc/hosts
       lineinfile:
         dest: /etc/hosts

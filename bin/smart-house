@@ -41,7 +41,7 @@ function smart_house_command_help() {
 "
 }
 
-source "./scripts/smart-house.sh"
+source "${SMART_HOUSE_DIR}/scripts/smart-house.sh"
 
 function main() {
   if [ -z ${SMART_HOUSE_DIR+x} ];

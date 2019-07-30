@@ -205,13 +205,13 @@ function smart_house_execute_command() {
 }
 
 function smart_house_command_media() {
-  source "./scripts/media.sh"
+  source "${SMART_HOUSE_DIR}/scripts/media.sh"
 }
 
 function smart_house_command_pihole() {
-  source "./scripts/pihole.sh"
+  source "${SMART_HOUSE_DIR}/scripts/pihole.sh"
 }
 
 function smart_house_command_support() {
-  source "./scripts/support.sh"
+  source "${SMART_HOUSE_DIR}/scripts/support.sh"
 }
