@@ -1,0 +1,88 @@
+version: '3.5'
+services:
+  redis:
+    image: redis:4.0.10
+    ports:
+      - 6379:6379
+    volumes:
+      - .docker/data/redis:/data
+  calendar:
+    image: nextcloud:latest
+    ports:
+      - 4111:80
+    env_file:
+      - '.env.nextcloud'
+    volumes:
+      - .docker/data/nextcloud:/var/www/html
+  mqtt:
+    restart: unless-stopped
+    image: eclipse-mosquitto:latest
+    ports:
+      - 0.0.0.0:4105:1883
+    volumes:
+      - .docker/data/mosquitto:/mosquitto/data
+      - .docker/log/mosquitto.log:/mosquitto/log/mosquitto.log
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+  influxdb:
+    restart: unless-stopped
+    image: influxdb:latest
+    ports:
+      - "0.0.0.0:8086:8086"
+    volumes:
+      - .docker/data/influxdb:/var/lib/influxdb
+    env_file:
+      - '.env.influxdb'
+  database:
+    image: postgres:9.6.10-alpine
+    restart: unless-stopped
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - 0.0.0.0:4101:5432
+    environment:
+      PGDATA: /data
+    env_file:
+      - '.env.postgresql'
+    volumes:
+      - ./postgresql/:/docker-entrypoint-initdb.d/
+      - .docker/data/postgresql:/data
+  grafana:
+    image: grafana/grafana:5.4.2
+    restart: unless-stopped
+    user: "472"
+    env_file:
+      - '.env.grafana'
+      - '.env.influxdb'
+      - '.env.local'
+    environment:
+      GF_SERVER_DOMAIN: "${HOME_ASSISTANT_DOMAIN}"
+      GF_SERVER_ROOT_URL: "https://${HOME_ASSISTANT_DOMAIN}/grafana/"
+    ports:
+      - "127.0.0.1:4100:3000"
+    volumes:
+      - .docker/data/grafana:/var/lib/grafana
+    depends_on:
+      - influxdb
+  glances:
+    restart: unless-stopped
+    image: nicolargo/glances
+    environment:
+      - GLANCES_OPT=-w
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./glances/:/glances/conf/
+    ports:
+      - 4108:61208
+  vacuum:
+    build: ./vacuum/
+    volumes:
+      - .docker/data/vacuum:/app/public
+    ports:
+      - 10005:3000
+  esphome:
+    image: esphome/esphome:latest
+    volumes:
+      - .docker/data/esphome:/config
+      - /etc/localtime:/etc/localtime:ro
+    network_mode: host
+
