@@ -3,8 +3,8 @@
 sudo cryptsetup luksOpen {{encrypted_disk}} smart-house && sudo mount /dev/mapper/smart-house /smart-house
 sync
 smart-house media mount
-smart-house pihole restart
-smart-house support restart
-smart-house media restart
+smart-house pihole start
+smart-house support start
+smart-house media start
 smart-house restart
 sudo systemctl restart fail2ban

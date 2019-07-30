@@ -36,8 +36,7 @@ services:
       - ./appdaemon:/conf
   busix:
     image: macbury/busix:latest
-    ports:
-      - 10008:5000
+    network_mode: host
     env_file:
       - '.env.busix'
 
