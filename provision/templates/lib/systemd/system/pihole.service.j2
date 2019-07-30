@@ -1,0 +1,17 @@
+[Unit]
+ConditionPathExists=/smart-house/.env.home-assistant
+Description=Smart House PiHole
+Requires=docker.service
+After=docker.service
+
+[Service]
+Environment=SMART_HOUSE_DIR=/smart-house
+Restart=always
+User=root
+StandardOutput=syslog
+StandardError=syslog
+
+ExecStart=/usr/bin/zsh -l -c "/smart-house/bin/smart-house pihole up"
+
+[Install]
+WantedBy=multi-user.target

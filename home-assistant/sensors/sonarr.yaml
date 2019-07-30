@@ -1,6 +1,6 @@
 - platform: sonarr
   api_key: !env_var HOME_ASSISTANT_SONARR_API_KEY
-  host: sonarr
+  host: localhost
   urlbase: /sonarr
   monitored_conditions:
     - upcoming
