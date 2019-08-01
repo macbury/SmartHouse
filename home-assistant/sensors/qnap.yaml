@@ -11,5 +11,3 @@
     - memory_percent_used
     - network_tx
     - network_rx
-    - drive_temp
-    - volume_percentage_used

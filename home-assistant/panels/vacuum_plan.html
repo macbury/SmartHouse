@@ -115,7 +115,7 @@
 
           this.content.addEventListener('mousedown', (e) => {
             e.preventDefault()
-            this.current.x = this.origin.x = e.clientX + this.content.scrollLeft;
+            this.current.x = this.origin.x = e.clientX + this.content.scrollLeft - 64;
             this.current.y = this.origin.y = e.clientY + this.content.scrollTop - 64;
             this.drag = true;
             this.draw()
@@ -129,8 +129,8 @@
           this.content.addEventListener('mousemove', (e) => {
             if (this.drag) {
               e.preventDefault()
-              this.current.x = e.clientX + this.content.scrollLeft
-              this.current.y = e.clientY + this.content.scrollTop - 64
+              this.current.x = e.clientX + this.content.scrollLeft - 64;
+              this.current.y = e.clientY + this.content.scrollTop - 64;
             }
             this.draw()
           }, false);

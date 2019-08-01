@@ -1,0 +1,20 @@
+- alias: 'Change spotify source to soundbar if alexa starts play music'
+  trigger:
+    platform: state
+    entity_id: media_player.living_room
+    to: 'playing'
+  action:
+    - service: media_player.turn_on
+      entity_id: media_player.soundbar
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.spotify
+        source: 'wifi'
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.spotify
+        source: 'Soundbar'
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.soundbar
+        volume_level: 0.25

@@ -4,19 +4,6 @@ find_vacuum:
     - service: vacuum.locate
       entity_id:  vacuum.main_vacuum
 
-clean_bedroom:
-  alias: 'Clean bedroom'
-  sequence:
-    - service: vacuum.set_fan_speed
-      data:
-        entity_id:  vacuum.main_vacuum
-        fan_speed: Balanced
-    - service: vacuum.send_command
-      data:
-        entity_id:  vacuum.main_vacuum
-        command: app_zoned_clean
-        params: [[23109, 22188, 26670, 25226, 1]]
-
 clean_bathroom:
   alias: 'Clean bathroom'
   sequence:
@@ -28,7 +15,8 @@ clean_bathroom:
       data:
         entity_id: vacuum.main_vacuum
         command: app_zoned_clean
-        params: [[27592, 25052, 29534, 27119, 1]]
+        params:
+          - [21491, 23981, 23433, 26272, 3]
 
 clean_kitchen:
   alias: 'Clean kitchen'
@@ -42,8 +30,10 @@ clean_kitchen:
         entity_id: vacuum.main_vacuum
         command: app_zoned_clean
         params: 
-          - [24579, 25201, 26123, 26745, 1]
-          - [25874, 25575, 27667, 26969, 1]
+          - [24927, 25102, 26621, 25874, 1]
+          - [23433, 24031, 27044, 25351, 1]
+          - [23657, 25002, 24579, 26147, 1]
+          - [23508, 24205, 26720, 24902, 2]
 
 clean_corridor:
   alias: 'Clean corridor'
@@ -57,10 +47,9 @@ clean_corridor:
         entity_id: vacuum.main_vacuum
         command: app_zoned_clean
         params:
-          - [26471, 23757, 27542, 25948, 1]
-          - [27168, 23782, 31053, 25251, 1]
-          - [29758, 24828, 31153, 25998, 1]
-          - [26944, 23732, 28563, 25326, 3]
+          - [19947, 25351, 21366, 27442, 3]
+          - [21142, 25973, 24703, 27492, 1]
+          - [22711, 26670, 24579, 27268, 2]
 
 clean_living_room:
   alias: 'Clean living room'
@@ -74,10 +63,26 @@ clean_living_room:
         entity_id: vacuum.main_vacuum
         command: app_zoned_clean
         params:
-          - [27816, 22238, 29634, 23931, 1]
-          - [27318, 18478, 29609, 22437, 1]
-          - [26396, 18403, 27891, 21192, 1]
-          - [23607, 19723, 26745, 22337, 1]
+          - [21715, 27119, 22786, 28638, 1]
+          - [22188, 27965, 23856, 31053, 1]
+          - [21117, 30879, 24753, 33021, 1]
+          - [23682, 30157, 25126, 31178, 1]
+          - [24653, 29086, 25276, 30655, 1]
+          - [25126, 29559, 27492, 31252, 1]
+
+clean_bedroom:
+  alias: 'Clean bedroom'
+  sequence:
+    - service: vacuum.set_fan_speed
+      data:
+        entity_id:  vacuum.main_vacuum
+        fan_speed: Balanced
+    - service: vacuum.send_command
+      data:
+        entity_id:  vacuum.main_vacuum
+        command: app_zoned_clean
+        params:
+          - [24230, 25824, 27691, 29011, 3]
 
 stop_cleaning:
   sequence:

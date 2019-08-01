@@ -41,6 +41,24 @@
       device_class: cold
       max_samples: 6
 
+# - platform: bayesian
+#   prior: 0.1
+#   observations:
+#     - entity_id: 'binary_sensor.dishwasher'
+#       prior: 0.1
+#       name: 'Cleaning dishes'
+#       prob_given_true: 0.6
+#       prob_given_false: 0.2
+#       platform: 'state'
+#       to_state: 'on'
+#     - entity_id: 'binary_sensor.washer'
+#       prior: 0.1
+#       name: 'Cleaning clothes'
+#       prob_given_true: 0.6
+#       prob_given_false: 0.2
+#       platform: 'state'
+#       to_state: 'on'
+
 - platform: template
   sensors:
     too_bright:
