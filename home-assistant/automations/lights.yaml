@@ -30,6 +30,12 @@
       entity_id: binary_sensor.bathroom_door
       from: 'off'
       to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.bathroom
+        state: 'off'
   action:
     - service: light.turn_on
       entity_id: light.bathroom

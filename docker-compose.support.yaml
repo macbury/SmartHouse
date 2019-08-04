@@ -85,4 +85,3 @@ services:
       - .docker/data/esphome:/config
       - /etc/localtime:/etc/localtime:ro
     network_mode: host
-
