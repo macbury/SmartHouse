@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 SUBCOMMAND=${1}
+shift 1
+SUBCOMMAND_ARGS=${@}
 
 function support_command_up() {
   docker-compose --file docker-compose.support.yaml --project-name support up
@@ -23,6 +25,10 @@ function support_command_stop() {
 
 function support_command_restart() {
   sudo systemctl restart support;
+}
+
+function support_command_docker-compose() {
+  eval "docker-compose --file docker-compose.support.yaml --project-name support ${SUBCOMMAND_ARGS}"
 }
 
 function support_command_help() {

@@ -39,7 +39,7 @@ services:
       - .docker/data/transmission:/config
       - /mnt:/data
       - /mnt/MoviesAndTV:/tv
-      - /home/downloads:/downloads
+      - /smart-house/tmp:/downloads
   plex:
     network_mode: host
     image: plexinc/pms-docker

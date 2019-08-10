@@ -344,6 +344,18 @@
     certbot_create_if_missing: true
     certbot_certs:
       - domains:
+        - "notes.{{ domain }}"
+
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.certbot
+  vars:
+    certbot_auto_renew: false
+    certbot_admin_email: "{{ email }}"
+    certbot_create_if_missing: true
+    certbot_certs:
+      - domains:
         - "{{ domain }}"
 
 # Nginx
@@ -363,6 +375,13 @@
       template:
         src: ./etc/nginx/sites-enabled/firefly.conf.j2
         dest: /etc/nginx/sites-enabled/firefly.conf
+      notify:
+        - reload nginx
+        - restart nginx
+    - name: Create /etc/nginx/sites-enabled/notes.conf
+      template:
+        src: ./etc/nginx/sites-enabled/notes.conf.j2
+        dest: /etc/nginx/sites-enabled/notes.conf
       notify:
         - reload nginx
         - restart nginx
@@ -618,210 +637,210 @@
         executable: /usr/bin/pip3
         requirements: '/smart-house/requirements.txt'
 
-# # Setup cron
-- hosts: master
-  become: yes
-  tasks:
-    - name: Add crontab entry for health-check
-      cron:
-        name: "health-check"
-        minute: "*/15"
-        job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house health-check' >> /tmp/health-check.log 2>&1"
-    - name: Add crontab entry for refreshing dns
-      cron:
-        name: "ddns"
-        minute: "*/15"
-        job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house ddns' >> /tmp/ddns.log 2>&1"
-    - name: Add crontab entry for certs
-      cron:
-        name: "certs"
-        hour: "4"
-        minute: "0"
-        job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house certbot' >> /tmp/certbot.log 2>&1"
-    - name: Add crontab entry for backup
-      cron:
-        name: "backup"
-        hour: "1"
-        minute: "0"
-        job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house backup' >> /tmp/backup.log 2>&1"
-    - name: Switch off media server
-      cron:
-        name: "media_off"
-        hour: "1"
-        minute: "0"
-        job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house media stop' >> /tmp/backup.log 2>&1"
-    - name: Switch on media server
-      cron:
-        name: "media_on"
-        hour: "9"
-        minute: "0"
-        job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house media start' >> /tmp/backup.log 2>&1"
-    - name: Cleanup docker shit
-      cron:
-        name: 'docker'
-        hour: "3"
-        minute: "0"
-        job: "/usr/bin/zsh -l -c 'docker system prune -f'"
-    - name: Cleanup old logs
-      cron:
-        name: 'logs'
-        hour: "22"
-        minute: "0"
-        job: '/usr/bin/zsh -l -c "rm /tmp/*.log"'
-    - name: Cleanup covers
-      cron:
-        name: 'cover'
-        hour: "2"
-        minute: "0"
-        job: '/usr/bin/zsh -l -c "rm /tmp/cover_*"'
-# # Setup mosquitto passwd
-- hosts: master
-  become: yes
-  tasks:
-    - name: Install mosquitto
-      apt:
-        name: mosquitto
-    - name: Disable mosquitto service on ubuntu desktop
-      service:
-        name: mosquitto
-        state: stopped
-    - name: Creates mosquitto docker directory
-      file:
-        path: /smart-house/.docker/data/mosquitto
-        state: directory
-        owner: "1883"
-        group: "1883"
-    - name: Create mosquitto/users.db
-      file:
-        path: /smart-house/.docker/data/mosquitto/users.db
-        state: touch
-        owner: "1883"
-        group: "1883"
-    - name: Create mosquitto.log
-      file:
-        path: /smart-house/.docker/log/mosquitto.log
-        state: touch
-        owner: "1883"
-        group: "1883"
+# # # Setup cron
+# - hosts: master
+#   become: yes
+#   tasks:
+#     - name: Add crontab entry for health-check
+#       cron:
+#         name: "health-check"
+#         minute: "*/15"
+#         job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house health-check' >> /tmp/health-check.log 2>&1"
+#     - name: Add crontab entry for refreshing dns
+#       cron:
+#         name: "ddns"
+#         minute: "*/15"
+#         job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house ddns' >> /tmp/ddns.log 2>&1"
+#     - name: Add crontab entry for certs
+#       cron:
+#         name: "certs"
+#         hour: "4"
+#         minute: "0"
+#         job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house certbot' >> /tmp/certbot.log 2>&1"
+#     - name: Add crontab entry for backup
+#       cron:
+#         name: "backup"
+#         hour: "1"
+#         minute: "0"
+#         job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house backup' >> /tmp/backup.log 2>&1"
+#     - name: Switch off media server
+#       cron:
+#         name: "media_off"
+#         hour: "1"
+#         minute: "0"
+#         job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house media stop' >> /tmp/backup.log 2>&1"
+#     - name: Switch on media server
+#       cron:
+#         name: "media_on"
+#         hour: "9"
+#         minute: "0"
+#         job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house media start' >> /tmp/backup.log 2>&1"
+#     - name: Cleanup docker shit
+#       cron:
+#         name: 'docker'
+#         hour: "3"
+#         minute: "0"
+#         job: "/usr/bin/zsh -l -c 'docker system prune -f'"
+#     - name: Cleanup old logs
+#       cron:
+#         name: 'logs'
+#         hour: "22"
+#         minute: "0"
+#         job: '/usr/bin/zsh -l -c "rm /tmp/*.log"'
+#     - name: Cleanup covers
+#       cron:
+#         name: 'cover'
+#         hour: "2"
+#         minute: "0"
+#         job: '/usr/bin/zsh -l -c "rm /tmp/cover_*"'
+# # # Setup mosquitto passwd
+# - hosts: master
+#   become: yes
+#   tasks:
+#     - name: Install mosquitto
+#       apt:
+#         name: mosquitto
+#     - name: Disable mosquitto service on ubuntu desktop
+#       service:
+#         name: mosquitto
+#         state: stopped
+#     - name: Creates mosquitto docker directory
+#       file:
+#         path: /smart-house/.docker/data/mosquitto
+#         state: directory
+#         owner: "1883"
+#         group: "1883"
+#     - name: Create mosquitto/users.db
+#       file:
+#         path: /smart-house/.docker/data/mosquitto/users.db
+#         state: touch
+#         owner: "1883"
+#         group: "1883"
+#     - name: Create mosquitto.log
+#       file:
+#         path: /smart-house/.docker/log/mosquitto.log
+#         state: touch
+#         owner: "1883"
+#         group: "1883"
 
-# # Setup AFP
-- hosts: master
-  become: yes
-  roles:
-    - role: brianhartsock.netatalk
-  vars:
-    netatalk_shares:
-      - /smart-house "Config" allow:macbury cnidscheme:cdb"
+# # # Setup AFP
+# - hosts: master
+#   become: yes
+#   roles:
+#     - role: brianhartsock.netatalk
+#   vars:
+#     netatalk_shares:
+#       - /smart-house "Config" allow:macbury cnidscheme:cdb"
 
-# # Install kiosk on panel
-- hosts: panel
-  tasks:
-    - name: Create kiosk.service
-      template:
-        src: ./lib/systemd/system/kiosk.service.j2
-        dest: /lib/systemd/system/kiosk.service
-      notify:
-        - reload systemctl
-    - name: Clone smart-house repo
-      git:
-        repo: 'git@github.com:macbury/SmartHouse.git'
-        dest: /smart-house
-        accept_hostkey: yes
-        update: yes
-    - name: Install electron
-      shell: 'cd /smart-house/panel && npm install'
-# # Gnome
-- hosts: panel
-  tasks:
-    - name: Download GNOME Shell gestures extensions
-      get_url:
-        url: "https://extensions.gnome.org/extension-data/disable-gestures%40mattbell.com.au.v2.shell-extension.zip"
-        dest: "/tmp/disable-gesture.zip"
-    - name: Create GNOME gestures extension directories
-      file:
-        path: /home/{{ ansible_user }}/.local/share/gnome-shell/extensions/disable-gestures@mattbell.com.au
-        state: directory
-    - name: Unzip GNOME gestures extensions
-      unarchive:
-        src: "/tmp/disable-gesture.zip"
-        dest: "/home/{{ ansible_user }}/.local/share/gnome-shell/extensions/disable-gestures@mattbell.com.au"
-        remote_src: yes
-    - name: Enable gnome gestures extension
-      shell: 'gnome-shell-extension-tool -e disable-gestures@mattbell.com.au'
-      ignore_errors: yes
-    - name: Download GNOME Shell onboard extensions
-      get_url:
-        url: "https://extensions.gnome.org/extension-data/onboard%40simon.schumann.web.de.v4.shell-extension.zip"
-        dest: "/tmp/onboard.zip"
-    - name: Create GNOME onboard extension directories
-      file:
-        path: /home/{{ ansible_user }}/.local/share/gnome-shell/extensions/onboardintegration@simon.schumann.web.de
-        state: directory
-    - name: Unzip GNOME onboard extensions
-      unarchive:
-        src: "/tmp/disable-gesture.zip"
-        dest: "/home/{{ ansible_user }}/.local/share/gnome-shell/extensions/onboardintegration@simon.schumann.web.de"
-        remote_src: yes
-    - name: Enable gnome onboard extension
-      shell: 'gnome-shell-extension-tool -e onboardintegration@simon.schumann.web.de'
-      ignore_errors: yes
+# # # Install kiosk on panel
+# - hosts: panel
+#   tasks:
+#     - name: Create kiosk.service
+#       template:
+#         src: ./lib/systemd/system/kiosk.service.j2
+#         dest: /lib/systemd/system/kiosk.service
+#       notify:
+#         - reload systemctl
+#     - name: Clone smart-house repo
+#       git:
+#         repo: 'git@github.com:macbury/SmartHouse.git'
+#         dest: /smart-house
+#         accept_hostkey: yes
+#         update: yes
+#     - name: Install electron
+#       shell: 'cd /smart-house/panel && npm install'
+# # # Gnome
+# - hosts: panel
+#   tasks:
+#     - name: Download GNOME Shell gestures extensions
+#       get_url:
+#         url: "https://extensions.gnome.org/extension-data/disable-gestures%40mattbell.com.au.v2.shell-extension.zip"
+#         dest: "/tmp/disable-gesture.zip"
+#     - name: Create GNOME gestures extension directories
+#       file:
+#         path: /home/{{ ansible_user }}/.local/share/gnome-shell/extensions/disable-gestures@mattbell.com.au
+#         state: directory
+#     - name: Unzip GNOME gestures extensions
+#       unarchive:
+#         src: "/tmp/disable-gesture.zip"
+#         dest: "/home/{{ ansible_user }}/.local/share/gnome-shell/extensions/disable-gestures@mattbell.com.au"
+#         remote_src: yes
+#     - name: Enable gnome gestures extension
+#       shell: 'gnome-shell-extension-tool -e disable-gestures@mattbell.com.au'
+#       ignore_errors: yes
+#     - name: Download GNOME Shell onboard extensions
+#       get_url:
+#         url: "https://extensions.gnome.org/extension-data/onboard%40simon.schumann.web.de.v4.shell-extension.zip"
+#         dest: "/tmp/onboard.zip"
+#     - name: Create GNOME onboard extension directories
+#       file:
+#         path: /home/{{ ansible_user }}/.local/share/gnome-shell/extensions/onboardintegration@simon.schumann.web.de
+#         state: directory
+#     - name: Unzip GNOME onboard extensions
+#       unarchive:
+#         src: "/tmp/disable-gesture.zip"
+#         dest: "/home/{{ ansible_user }}/.local/share/gnome-shell/extensions/onboardintegration@simon.schumann.web.de"
+#         remote_src: yes
+#     - name: Enable gnome onboard extension
+#       shell: 'gnome-shell-extension-tool -e onboardintegration@simon.schumann.web.de'
+#       ignore_errors: yes
 
-# # Fail2Ban setup
-- hosts: master
-  become: yes
-  roles:
-    - role: nickjj.fail2ban
-  handlers:
-    - name: restart fail2ban
-      service:
-        name: fail2ban
-        state: restarted
-  tasks:
-    - name: Copy filter nginx-http-auth.conf to fail2ban
-      template:
-        force: yes
-        src: ./etc/fail2ban/filter.d/nginx-http-auth.conf
-        dest: /etc/fail2ban/filter.d/nginx-http-auth.conf
-      notify:
-        - restart fail2ban
-    - name: Copy filter nginx-badbots.conf to fail2ban
-      template:
-        force: yes
-        src: ./etc/fail2ban/filter.d/nginx-badbots.conf
-        dest: /etc/fail2ban/filter.d/nginx-badbots.conf
-      notify:
-        - restart fail2ban
-    - name: Copy filter nginx-forbidden.conf to fail2ban
-      template:
-        force: yes
-        src: ./etc/fail2ban/filter.d/nginx-forbidden.conf
-        dest: /etc/fail2ban/filter.d/nginx-forbidden.conf
-      notify:
-        - restart fail2ban
-    - name: Copy filter ha.conf to fail2ban
-      template:
-        force: yes
-        src: ./etc/fail2ban/filter.d/ha.conf
-        dest: /etc/fail2ban/filter.d/ha.conf
-      notify:
-        - restart fail2ban
-    - name: Copy filter mosquitto-auth.conf to fail2ban
-      template:
-        force: yes
-        src: ./etc/fail2ban/filter.d/mosquitto-auth.conf
-        dest: /etc/fail2ban/filter.d/mosquitto-auth.conf
-      notify:
-        - restart fail2ban
-    - name: Copy jail ha.conf to fail2ban
-      template:
-        force: yes
-        src: ./etc/fail2ban/jail.d/ha.conf
-        dest: /etc/fail2ban/jail.d/ha.conf
-      notify:
-        - restart fail2ban
-    - name: Create symbolic link for fail2ban
-      become: yes
-      file:
-        src: "/var/log/fail2ban.log"
-        dest: "/smart-house/.docker/log/fail2ban.log"
-        state: link
+# # # Fail2Ban setup
+# - hosts: master
+#   become: yes
+#   roles:
+#     - role: nickjj.fail2ban
+#   handlers:
+#     - name: restart fail2ban
+#       service:
+#         name: fail2ban
+#         state: restarted
+#   tasks:
+#     - name: Copy filter nginx-http-auth.conf to fail2ban
+#       template:
+#         force: yes
+#         src: ./etc/fail2ban/filter.d/nginx-http-auth.conf
+#         dest: /etc/fail2ban/filter.d/nginx-http-auth.conf
+#       notify:
+#         - restart fail2ban
+#     - name: Copy filter nginx-badbots.conf to fail2ban
+#       template:
+#         force: yes
+#         src: ./etc/fail2ban/filter.d/nginx-badbots.conf
+#         dest: /etc/fail2ban/filter.d/nginx-badbots.conf
+#       notify:
+#         - restart fail2ban
+#     - name: Copy filter nginx-forbidden.conf to fail2ban
+#       template:
+#         force: yes
+#         src: ./etc/fail2ban/filter.d/nginx-forbidden.conf
+#         dest: /etc/fail2ban/filter.d/nginx-forbidden.conf
+#       notify:
+#         - restart fail2ban
+#     - name: Copy filter ha.conf to fail2ban
+#       template:
+#         force: yes
+#         src: ./etc/fail2ban/filter.d/ha.conf
+#         dest: /etc/fail2ban/filter.d/ha.conf
+#       notify:
+#         - restart fail2ban
+#     - name: Copy filter mosquitto-auth.conf to fail2ban
+#       template:
+#         force: yes
+#         src: ./etc/fail2ban/filter.d/mosquitto-auth.conf
+#         dest: /etc/fail2ban/filter.d/mosquitto-auth.conf
+#       notify:
+#         - restart fail2ban
+#     - name: Copy jail ha.conf to fail2ban
+#       template:
+#         force: yes
+#         src: ./etc/fail2ban/jail.d/ha.conf
+#         dest: /etc/fail2ban/jail.d/ha.conf
+#       notify:
+#         - restart fail2ban
+#     - name: Create symbolic link for fail2ban
+#       become: yes
+#       file:
+#         src: "/var/log/fail2ban.log"
+#         dest: "/smart-house/.docker/log/fail2ban.log"
+#         state: link

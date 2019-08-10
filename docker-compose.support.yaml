@@ -46,6 +46,12 @@ services:
     volumes:
       - ./postgresql/:/docker-entrypoint-initdb.d/
       - .docker/data/postgresql:/data
+  mysql:
+    image: mysql:latest
+    env_file: 
+      - '.env.mysql'
+    volumes:
+      - .docker/data/mysql:/var/lib/mysql
   grafana:
     image: grafana/grafana:5.4.2
     restart: unless-stopped
@@ -85,3 +91,13 @@ services:
       - .docker/data/esphome:/config
       - /etc/localtime:/etc/localtime:ro
     network_mode: host
+  notes:
+    build: ./notes/
+    ports:
+      - 12005:3000
+    links:
+      - mysql
+    env_file:
+      - '.env.notes'
+      - '.env.mysql'
+    

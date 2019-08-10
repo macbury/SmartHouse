@@ -73,7 +73,7 @@ function smart_house_command_backup() {
   systemctl stop support;
   systemctl stop media;
   echo $BACKUP_FILE
-  zip -1 -r $BACKUP_FILE $SMART_HOUSE_DIR -x"*.log" -x"*.backups" -x"smart-house/.docker/data/plex/config/Library/Application Support/Plex Media Server/Cache/**/*" -x"smart-house/.docker/data/plex/config/Library/Application Support/Plex Media Server/Media/**/*" -x"*.AppleDouble" -x"smart-house/.docker/data/dpodcast";
+  zip -1 -r $BACKUP_FILE $SMART_HOUSE_DIR -x"smart-house/tmp" -x"*.log" -x"*.backups" -x"smart-house/.docker/data/plex/config/Library/Application Support/Plex Media Server/Cache/**/*" -x"smart-house/.docker/data/plex/config/Library/Application Support/Plex Media Server/Media/**/*" -x"*.AppleDouble" -x"smart-house/.docker/data/dpodcast";
   systemctl start support;
   systemctl start smart-house;
   mount_share "homes"
@@ -115,6 +115,7 @@ function smart_house_command_docs() {
 function smart_house_command_ddns() {
   bin/ddns.py $MAIN_DOMAIN $HOME_ASSISTANT_SUBDOMAIN 1;
   bin/ddns.py $MAIN_DOMAIN budget.$HOME_ASSISTANT_SUBDOMAIN 1;
+  bin/ddns.py $MAIN_DOMAIN notes.$HOME_ASSISTANT_SUBDOMAIN 0;
   bin/ddns.py $MAIN_DOMAIN $HOME_ASSISTANT_VPNDOMAIN 0;
 }
 

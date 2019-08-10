@@ -91,3 +91,5 @@ vscode/**/*
 docs/SmartHouse.png
 sonoff/certs/
 .AppleDouble
+.env.mysql
+.env.notes
