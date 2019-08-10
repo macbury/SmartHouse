@@ -27,8 +27,7 @@ from homeassistant.components.media_player.const import (
 )
 
 from homeassistant.components.media_player import (
-  MediaPlayerDevice,
-  MEDIA_PLAYER_SCHEMA
+  MediaPlayerDevice
 )
 
 from homeassistant.const import (

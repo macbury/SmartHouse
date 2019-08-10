@@ -11,8 +11,7 @@ import logging
 import urllib.parse
 import voluptuous as vol
 from homeassistant import util
-from homeassistant.components.media_player import (MEDIA_PLAYER_SCHEMA,
-                                                   MediaPlayerDevice)
+from homeassistant.components.media_player import (MediaPlayerDevice)
 from homeassistant.components.media_player.const import (
     DOMAIN,
     MEDIA_TYPE_MUSIC,
@@ -50,8 +49,8 @@ _LOGGER = logging.getLogger(__name__)
 
 DEPENDENCIES = [ALEXA_DOMAIN]
 
-ALEXA_TTS_SCHEMA = MEDIA_PLAYER_SCHEMA.extend({
-    vol.Required(ATTR_MESSAGE): cv.string,
+ALEXA_TTS_SCHEMA = vol.Schema({
+  vol.Required(ATTR_MESSAGE): cv.string,
 })
 
 
