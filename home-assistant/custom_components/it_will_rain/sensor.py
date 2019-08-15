@@ -72,7 +72,8 @@ class ItWillRain(Entity):
     self._state = STATE_OFF
 
     for forecast in forecasts[0:9]:
-      precipitation = float(forecast['precipitation'])
-      if precipitation and precipitation >= 0.0:
-        self._state = STATE_ON
+      if forecast['precipitation']:
+        precipitation = float(forecast['precipitation'])
+        if precipitation and precipitation >= 0.0:
+          self._state = STATE_ON
       

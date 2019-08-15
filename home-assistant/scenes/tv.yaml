@@ -1,0 +1,9 @@
+- name: Watching tv
+  entities:
+    light.tv_stand: true
+    light.main: false
+    light.dinner_table: false
+    light.work_desk: false
+    light.work_ambient_desk: false
+    cover.living_room: closed
+    media_player.tv: true

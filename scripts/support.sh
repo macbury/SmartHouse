@@ -16,15 +16,18 @@ function support_command_logs() {
 }
 
 function support_command_start() {
+  mount_share "homes";
   sudo systemctl start support;
 }
 
 function support_command_stop() {
   sudo systemctl stop support;
+  unmount_share "homes";
 }
 
 function support_command_restart() {
-  sudo systemctl restart support;
+  support_command_stop;
+  support_command_start;
 }
 
 function support_command_docker-compose() {

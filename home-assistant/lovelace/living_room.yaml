@@ -54,6 +54,7 @@
         - cover.living_room
         - binary_sensor.balcone_door
         - sensor.transmission_status
+        - scene.watching_tv
     # - type: custom:thermostat-card
     #   entity: climate.living_room
     #   target_temperature: input_number.living_room_target_temperature

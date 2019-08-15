@@ -76,13 +76,11 @@ function smart_house_command_backup() {
   zip -1 -r $BACKUP_FILE $SMART_HOUSE_DIR -x"smart-house/tmp" -x"*.log" -x"*.backups" -x"smart-house/.docker/data/plex/config/Library/Application Support/Plex Media Server/Cache/**/*" -x"smart-house/.docker/data/plex/config/Library/Application Support/Plex Media Server/Media/**/*" -x"*.AppleDouble" -x"smart-house/.docker/data/dpodcast";
   systemctl start support;
   systemctl start smart-house;
-  mount_share "homes"
   mkdir -p $BACKUP_STORAGE;
   cp $BACKUP_FILE $BACKUP_STORAGE;
   echo $TIMESTAMP > .backups/performed_at.txt
   rm $BACKUP_FILE;
   find $BACKUP_STORAGE -mtime +3 -type f -delete;
-  unmount_share "homes"
 }
 
 function smart_house_command_build() {
