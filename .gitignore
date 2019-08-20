@@ -93,3 +93,4 @@ sonoff/certs/
 .AppleDouble
 .env.mysql
 .env.notes
+.env.syncserver

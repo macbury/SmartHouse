@@ -11,6 +11,10 @@ function support_command_down() {
   docker-compose --file docker-compose.support.yaml --project-name support down
 }
 
+function support_command_docker-compose() {
+  docker-compose --file docker-compose.support.yaml --project-name support $SUBCOMMAND_ARGS
+}
+
 function support_command_logs() {
   docker-compose --file docker-compose.support.yaml --project-name support logs -f
 }
