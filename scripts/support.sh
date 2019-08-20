@@ -19,6 +19,10 @@ function support_command_logs() {
   docker-compose --file docker-compose.support.yaml --project-name support logs -f
 }
 
+function support_command_mysql() {
+  docker-compose --file docker-compose.support.yaml --project-name support run --rm mysql bash -l -c "mysql -h mysql -u root --password=$MYSQL_ROOT_PASSWORD"
+}
+
 function support_command_start() {
   mount_share "homes";
   sudo systemctl start support;
@@ -46,6 +50,8 @@ function support_command_help() {
   $ smart-house support start                                 - start all support stuff
   $ smart-house support stop                                  - stop all support stuff
   $ smart-house support restart                               - restart all support stuff
+  $ smart-house support docker-compose                        - manage docker compose
+  $ smart-house support mysql                                 - connect to mysql
   "
 }
 

@@ -1,0 +1,6 @@
+- platform: template
+  sensors:
+    arek_last_update:
+      value_template: '{{ states.device_tracker.arek.attributes.last_seen }}'
+    ola_last_update:
+      value_template: '{{ states.device_tracker.arek.attributes.last_seen }}'

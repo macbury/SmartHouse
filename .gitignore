@@ -94,3 +94,6 @@ sonoff/certs/
 .env.mysql
 .env.notes
 .env.syncserver
+orion/config.json
+.env.orion
+orion/web/**/*

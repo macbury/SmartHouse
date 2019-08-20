@@ -59,6 +59,7 @@ panel_custom: !include components/panel_custom.yaml
 person: !include components/person.yaml
 proximity: !include components/proximity.yaml
 # R
+rest_command: !include components/rest_commands.yaml
 # S
 stream:
 sun:
