@@ -93,3 +93,7 @@ sonoff/certs/
 .AppleDouble
 .env.mysql
 .env.notes
+.env.syncserver
+orion/config.json
+.env.orion
+orion/web/**/*

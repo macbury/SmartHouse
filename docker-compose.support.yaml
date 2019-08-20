@@ -1,5 +1,24 @@
 version: '3.5'
 services:
+  orion:
+    build: ./orion/
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5500:5000"
+      - "127.0.0.1:5501:8080"
+    depends_on:
+      - mysql
+      - redis
+  firefox:
+    build: ./ff-sync/
+    network_mode: host
+    restart: unless-stopped
+    env_file:
+      - '.env.syncserver'
+    environment:
+      - SYNCSERVER_SQLURI=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:4101/ffsync
+    depends_on:
+      - database
   redis:
     image: redis:4.0.10
     ports:

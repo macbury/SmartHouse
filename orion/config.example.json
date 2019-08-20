@@ -1,0 +1,14 @@
+{
+  "database": {
+    "host": "mysql",
+    "port": 3306,
+    "name": "orion",
+    "user": "orion",
+    "password": "super-secret-password"
+  },
+  "redis": {
+    "addr": "redis:6379"
+  },
+  "frontend_url": "http://orion.example.com",
+  "mapbox_access_token": "pk.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+}

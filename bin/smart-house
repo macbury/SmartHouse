@@ -56,6 +56,8 @@ function main() {
   smart_house_load_variables ".env.home-assistant";
   smart_house_load_variables ".env.crontab";
   smart_house_load_variables ".env.local";
+  smart_house_load_variables ".env.mysql";
+  smart_house_load_variables ".env.orion";
 
   cd $SMART_HOUSE_DIR;
   if ! smart_house_execute_command; then

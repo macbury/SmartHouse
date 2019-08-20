@@ -113,20 +113,20 @@ class SpotifyCoverSensor(Entity):
     cover_path = self._fetch_cover(album_id, cover_url)
     cover_json = os.path.join(tempfile.gettempdir(), 'cover_'+album_id+'.json')
 
-    if os.path.isfile(cover_json) is False:
-      from colorthief import ColorThief
+    # if os.path.isfile(cover_json) is False:
+    #   from colorthief import ColorThief
 
-      color_thief = ColorThief(cover_path)
-      pallete = color_thief.get_palette(color_count=4, quality=1)
-      colors = {
-        'dominant': pallete[0],
-        'accent_1': pallete[1],
-        'accent_2': pallete[2],
-        'accent_3': pallete[3]
-      }
-      file = open(cover_json, 'w')
-      file.write(json.dumps(colors))
-      file.close()
+    #   color_thief = ColorThief(cover_path)
+    #   pallete = color_thief.get_palette(color_count=4, quality=1)
+    #   colors = {
+    #     'dominant': pallete[0],
+    #     'accent_1': pallete[1],
+    #     'accent_2': pallete[2],
+    #     'accent_3': pallete[3]
+    #   }
+    #   file = open(cover_json, 'w')
+    #   file.write(json.dumps(colors))
+    #   file.close()
 
     return json.load(open(cover_json, 'r'))
 

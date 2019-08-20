@@ -51,6 +51,37 @@
     - service: light.turn_on
       entity_id: light.main
 
+- alias: Push Arek location to orion
+  trigger:
+    - platform: state
+      entity_id: device_tracker.arek
+    - platform: state
+      entity_id: sensor.arek_last_update
+  action:
+    service: rest_command.push_to_orion
+    data_template:
+      lat: '{{ states.device_tracker.arek.attributes.latitude }}'
+      lon: '{{ states.device_tracker.arek.attributes.longitude }}'
+      accuracy: '{{ states.device_tracker.arek.attributes.gps_accuracy }}'
+      battery: '{{ states.device_tracker.arek.attributes.battery }}'
+      device: 's10'
+      user: 'arek'
+
+- alias: Push Ola location to orion
+  trigger:
+    - platform: state
+      entity_id: device_tracker.ola
+    - platform: state
+      entity_id: sensor.ola_last_update
+  action:
+    service: rest_command.push_to_orion
+    data_template:
+      lat: '{{ states.device_tracker.ola.attributes.latitude }}'
+      lon: '{{ states.device_tracker.ola.attributes.longitude }}'
+      accuracy: '{{ states.device_tracker.ola.attributes.gps_accuracy }}'
+      battery: '{{ states.device_tracker.ola.attributes.battery }}'
+      device: 's8'
+      user: 'ola'
 
 # - alias: Inform if Arek is back in cracow
 #   trigger:

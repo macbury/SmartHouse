@@ -1,0 +1,7 @@
+# curl -i -X POST -H "Content-Type: application/json" -d '{ "_type": "location", "lat": 0.0,"lon": 0.0, "topic": "location/test/s10", "tst": 1234, "acc": 0.0, "batt": 0.0, "t": "u", "c": "m", "m": "tracker id" }' http://localhost:5500/api/publish
+
+push_to_orion:
+  url: http://localhost:5500/api/publish
+  method: POST
+  content_type:  'application/json; charset=utf-8'
+  payload: '{ "_type": "location", "lat": {{ lat }}, "lon": {{ lon }}, "topic": "location/{{ user }}/{{ device }}", "tst": {{ as_timestamp(utcnow()) }}, "acc": {{ accuracy }}, "batt": {{ battery }}, "t": "u", "conn": "m", "tid": "{{ user[0] }}" }'

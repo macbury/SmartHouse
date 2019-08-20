@@ -11,8 +11,16 @@ function support_command_down() {
   docker-compose --file docker-compose.support.yaml --project-name support down
 }
 
+function support_command_docker-compose() {
+  docker-compose --file docker-compose.support.yaml --project-name support $SUBCOMMAND_ARGS
+}
+
 function support_command_logs() {
   docker-compose --file docker-compose.support.yaml --project-name support logs -f
+}
+
+function support_command_mysql() {
+  docker-compose --file docker-compose.support.yaml --project-name support run --rm mysql bash -l -c "mysql -h mysql -u root --password=$MYSQL_ROOT_PASSWORD"
 }
 
 function support_command_start() {
@@ -42,6 +50,8 @@ function support_command_help() {
   $ smart-house support start                                 - start all support stuff
   $ smart-house support stop                                  - stop all support stuff
   $ smart-house support restart                               - restart all support stuff
+  $ smart-house support docker-compose                        - manage docker compose
+  $ smart-house support mysql                                 - connect to mysql
   "
 }
 
