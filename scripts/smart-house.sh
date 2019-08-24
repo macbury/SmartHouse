@@ -63,6 +63,15 @@ function mount_share() {
   echo $HOME_ASSISTANT_QNAP_PASSWORD | sudo sshfs -o allow_other,password_stdin $HOME_ASSISTANT_QNAP_USERNAME@192.168.1.181:/share/$share/ /mnt/$share
 }
 
+function smart_house_command_enpass() {
+  ENPASS_BACKUP_DIRECTORY="/mnt/homes/nextcloud/$(date +"%Y%m%d_%H%M%S")/";
+  ENPASS_DIRECTORY=/smart-house/.docker/data/nextcloud/data/macbury/files/Enpass;
+  mount_share "homes";
+  mkdir -p ENPASS_BACKUP_DIRECTORY;
+  cp -R $ENPASS_DIRECTORY $ENPASS_BACKUP_DIRECTORY;
+  unmount_share "homes";
+}
+
 function smart_house_command_backup() {
   BACKUP_STORAGE=/mnt/homes/SmartHouse;
   TIMESTAMP=$(date +%Y/%m/%d_%H:%M:%S);
@@ -77,10 +86,13 @@ function smart_house_command_backup() {
   systemctl start support;
   systemctl start smart-house;
   mkdir -p $BACKUP_STORAGE;
+  mount_share "homes";
   cp $BACKUP_FILE $BACKUP_STORAGE;
+  unmount_share "homes";
   echo $TIMESTAMP > .backups/performed_at.txt
   rm $BACKUP_FILE;
   find $BACKUP_STORAGE -mtime +3 -type f -delete;
+  smart_house_command_enpass;
 }
 
 function smart_house_command_build() {

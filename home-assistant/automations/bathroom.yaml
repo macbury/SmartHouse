@@ -1,0 +1,11 @@
+- alias: Close blinds in living room
+  trigger:
+    platform: event
+    event_type: xiaomi_aqara.click
+    event_data:
+      entity_id: binary_sensor.bathroom_left_button
+      click_type: single
+  action:
+    - service: cover.close_cover
+      data:
+        entity_id: cover.living_room

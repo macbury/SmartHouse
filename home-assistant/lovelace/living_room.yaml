@@ -31,6 +31,8 @@
                 fill: fade
     - type: custom:air-purifier-card
       entity: fan.living_room_air_purifier
+    - type: thermostat
+      entity: climate.kitchen
     - break
     - type: horizontal-stack
       cards:
@@ -48,18 +50,32 @@
         - type: entity-button
           entity: light.work_desk
           icon: mdi:track-light
+    - type: horizontal-stack
+      cards:
+        - type: entity-button
+          entity: cover.living_room
+          icon: mdi:arrow-down-bold-box
+          name: 'Opuść rolety'
+          tap_action:
+            action: 'call-service'
+            service: 'cover.close_cover'
+            service_data:
+              entity_id: cover.living_room
+        - type: entity-button
+          entity: cover.living_room
+          icon: mdi:arrow-up-bold-box
+          name: 'Podnieś rolety'
+          tap_action:
+            action: 'call-service'
+            service: 'cover.open_cover'
+            service_data:
+              entity_id: cover.living_room
     - type: entities
       show_header_toggle: false
       entities:
-        - cover.living_room
         - binary_sensor.balcone_door
         - sensor.transmission_status
         - scene.watching_tv
-    # - type: custom:thermostat-card
-    #   entity: climate.living_room
-    #   target_temperature: input_number.living_room_target_temperature
-    #   temperature: sensor.living_room_temperature
-    #   calendar: calendar.living_room_heating
 
     # Wallpaper and stuff
     - type: custom:dynamic-wallpaper

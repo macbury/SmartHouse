@@ -223,7 +223,7 @@ class VacuumCard extends LitElement {
         fan_speed_list: sources
       }
     } = this.entity;
-    
+
     const selected = sources.indexOf(source);
     return html`
       <paper-menu-button class='source-menu' slot='dropdown-trigger'
@@ -236,7 +236,7 @@ class VacuumCard extends LitElement {
           </span>
           <ha-icon icon="mdi:fan"></ha-icon>
         </paper-button>
-        <paper-listbox slot='dropdown-content' selected=${source}
+        <paper-listbox slot='dropdown-content' selected=${selected}
           @click='${(e) => this.handleSpeed(e)}'>
           ${sources.map(item => html`<paper-item value=${item}>${item}</paper-item>`)}
         </paper-listbox>

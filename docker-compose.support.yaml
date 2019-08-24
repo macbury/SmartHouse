@@ -33,7 +33,6 @@ services:
       - '.env.nextcloud'
     volumes:
       - .docker/data/nextcloud:/var/www/html
-      - /mnt/homes/nextcloud:/var/www/html/data/
   mqtt:
     restart: unless-stopped
     image: eclipse-mosquitto:latest

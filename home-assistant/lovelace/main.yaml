@@ -9,7 +9,7 @@
   '/local/custom-lovelace/air-purifier/card.js',
   '/local/custom-lovelace/qr-card/card.js',
   '/local/custom-lovelace/courtain/card.js',
-  '/local/custom-lovelace/thermostat/card.js'
+  '/local/custom-lovelace/thermostat-card/thermostat-card.js'
   ] %}
 
 {% set js = [

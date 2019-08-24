@@ -5,11 +5,11 @@
   action:
     - service: zwave.heal_network
 
-- alias: Ping aqara gateway
-  trigger:
-    platform: time_pattern
-    minutes: '*'
-  action:
-    - service: xiaomi_aqara.stop_ringtone
-      data:
-        gw_mac: !env_var HOME_ASSISTANT_XIAOMI_AQARA_MAC
+# - alias: Ping aqara gateway
+#   trigger:
+#     platform: time_pattern
+#     minutes: '*'
+#   action:
+#     - service: xiaomi_aqara.stop_ringtone
+#       data:
+#         gw_mac: !env_var HOME_ASSISTANT_XIAOMI_AQARA_MAC

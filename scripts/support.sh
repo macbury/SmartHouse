@@ -24,13 +24,11 @@ function support_command_mysql() {
 }
 
 function support_command_start() {
-  mount_share "homes";
   sudo systemctl start support;
 }
 
 function support_command_stop() {
   sudo systemctl stop support;
-  unmount_share "homes";
 }
 
 function support_command_restart() {

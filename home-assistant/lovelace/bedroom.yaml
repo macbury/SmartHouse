@@ -1,6 +1,6 @@
 - type: custom:layout-card
   layout: vertical
-  max_columns: 2
+  max_columns: 3
   cards:
     - type: horizontal-stack
       cards:
@@ -55,5 +55,8 @@
       show_progress: false
       show_source: full
     - break
+    - type: thermostat
+      title: Bedroom
+      entity: climate.bedroom
     - type: custom:dynamic-wallpaper
       entity: sun.sun

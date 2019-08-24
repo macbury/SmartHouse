@@ -3,11 +3,8 @@ import datetime
 
 class AdaptiveRoomHeating(hass.Hass):
   def initialize(self):
-    self.listen_state(self.on_adaptation_callback, entity = self.args['comeback_input'])
     self.listen_state(self.on_adaptation_callback, entity = self.args['outside_temperature'])
     self.listen_state(self.on_adaptation_callback, entity = self.args['family_devices'])
-    self.listen_state(self.on_adaptation_callback, entity = self.args['max_temperature'])
-    self.listen_state(self.on_adaptation_callback, entity = self.args['min_temperature'])
     self.listen_state(self.on_adaptation_callback, entity = self.args['temperature_sensor'])
     self.listen_state(self.on_adaptation_callback, entity = self.args['calendar'])
     self.adapt_temperature()
@@ -19,13 +16,10 @@ class AdaptiveRoomHeating(hass.Hass):
     try:
       return float(self.get_state(self.args['temperature_sensor']))
     except Exception as e:
-      return 20
+      return 8
 
   def anyone_in_home(self):
     return self.get_state(self.args['family_devices']) == 'home'
-
-  def comeback(self):
-    return self.get_state('input_boolean.comeback') == 'on'
 
   def heating_time(self):
     if self.get_state(self.args['calendar']) == 'on':
@@ -36,21 +30,18 @@ class AdaptiveRoomHeating(hass.Hass):
       return False
 
   def max_temperature(self):
-    return float(self.get_state(self.args['max_temperature']))
+    return float(self.args['max_temperature'])
 
   def min_temperature(self):
-    return float(self.get_state(self.args['min_temperature']))
+    return float(self.args['min_temperature'])
 
   def lower_temperature(self):
     self.log("Lowering temperature")
     self.call_service('climate/set_temperature', entity_id=self.args['climate'], temperature=7.0)
+
   def raise_temperature(self):
     self.log("Raising temperature")
     self.call_service('climate/set_temperature', entity_id=self.args['climate'], temperature=28.0)
-
-  def on_hour_callback(self, kwargs):
-    self.log("Hour callback")
-    self.adapt_temperature()
 
   def on_adaptation_callback(self, entity, attribute, old, new, kwargs):
     self.log("State callback triggered for {} from {} to {}. Adapting temperature".format(entity, old, new))
@@ -62,9 +53,6 @@ class AdaptiveRoomHeating(hass.Hass):
     if self.outside_temperature() > 20:
       self.log("Outside temperature is {}, lowering temperature".format(self.outside_temperature()))
       self.lower_temperature()
-    elif self.comeback():
-      self.log("Somebody is coming back!")
-      self.raise_temperature()
     elif self.current_temperature() >= self.max_temperature():
       self.log("It is too hot")
       self.lower_temperature()
