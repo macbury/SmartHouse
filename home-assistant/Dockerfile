@@ -34,7 +34,7 @@ RUN apt-get update && apt-get install ffmpeg libatlas-base-dev libopenjp2-7 libt
 
 RUN apt-get update && apt-get install -y libxml2-dev libxslt1-dev zlib1g-dev
 
-HEALTHCHECK --interval=60s --timeout=30s --start-period=300s --retries=3 CMD curl -f http://localhost:8123/ || exit 1
+HEALTHCHECK --interval=60s --timeout=200s --start-period=300s --retries=3 CMD curl -f http://localhost:8123/ || exit 1
 
 WORKDIR /usr/src/app
 

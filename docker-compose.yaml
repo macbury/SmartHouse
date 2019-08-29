@@ -39,4 +39,12 @@ services:
     network_mode: host
     env_file:
       - '.env.busix'
-
+  blog:
+    image: blog:latest
+    network_mode: host
+    volumes:
+      - .docker/data/blog/store:/app/public/store
+      - .docker/data/blog/system:/app/public/system
+      - .docker/data/blog/application.yml:/app/config/application.yml
+      - .docker/data/blog/database.yml:/app/config/database.yml
+      - .docker/data/blog/secrets.yml:/app/config/secrets.yml

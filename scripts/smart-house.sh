@@ -67,32 +67,41 @@ function smart_house_command_enpass() {
   ENPASS_BACKUP_DIRECTORY="/mnt/homes/nextcloud/$(date +"%Y%m%d_%H%M%S")/";
   ENPASS_DIRECTORY=/smart-house/.docker/data/nextcloud/data/macbury/files/Enpass;
   mount_share "homes";
-  mkdir -p ENPASS_BACKUP_DIRECTORY;
+  mkdir -p $ENPASS_BACKUP_DIRECTORY;
   cp -R $ENPASS_DIRECTORY $ENPASS_BACKUP_DIRECTORY;
   unmount_share "homes";
 }
 
 function smart_house_command_backup() {
+  smart_house_command_enpass;
   BACKUP_STORAGE=/mnt/homes/SmartHouse;
   TIMESTAMP=$(date +%Y/%m/%d_%H:%M:%S);
   BACKUP_FOLDER="$SMART_HOUSE_DIR/.backups/";
   BACKUP_FILE="${BACKUP_FOLDER}smart-house_$(date +"%Y%m%d_%H%M%S").zip";
   mkdir -p $BACKUP_FOLDER;
+  echo "Stoping services..."
   systemctl stop smart-house;
   systemctl stop support;
   systemctl stop media;
+  echo "Compressing data"
   echo $BACKUP_FILE
-  zip -1 -r $BACKUP_FILE $SMART_HOUSE_DIR -x"smart-house/tmp" -x"*.log" -x"*.backups" -x"smart-house/.docker/data/plex/config/Library/Application Support/Plex Media Server/Cache/**/*" -x"smart-house/.docker/data/plex/config/Library/Application Support/Plex Media Server/Media/**/*" -x"*.AppleDouble" -x"smart-house/.docker/data/dpodcast";
+  zip -1 -r $BACKUP_FILE $SMART_HOUSE_DIR -x"smart-house/tmp/**/*" -x"smart-house/.docker/data/plex/config/Library/Application Support/Plex Media Server/Metadata/**/*" -x"smart-house/tmp" -x"*.log" -x"*.backups" -x"smart-house/.docker/data/plex/config/Library/Application Support/Plex Media Server/Cache/**/*" -x"smart-house/.docker/data/plex/config/Library/Application Support/Plex Media Server/Media/**/*" -x"*.AppleDouble" -x"smart-house/.docker/data/dpodcast";
+  echo "Starting services"
   systemctl start support;
   systemctl start smart-house;
-  mkdir -p $BACKUP_STORAGE;
+  echo "Waiting for services to boot"
+  sleep 60;
+  echo "Mounting backup storage"
   mount_share "homes";
-  cp $BACKUP_FILE $BACKUP_STORAGE;
-  unmount_share "homes";
+  echo "Copy data to nas"
+  rsync -ah --progress $BACKUP_FILE $BACKUP_STORAGE;
   echo $TIMESTAMP > .backups/performed_at.txt
+  echo "Clearing old data"
   rm $BACKUP_FILE;
   find $BACKUP_STORAGE -mtime +3 -type f -delete;
   smart_house_command_enpass;
+  unmount_share "homes";
+  echo "Done"
 }
 
 function smart_house_command_build() {

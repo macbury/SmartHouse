@@ -65,6 +65,7 @@ services:
     volumes:
       - ./postgresql/:/docker-entrypoint-initdb.d/
       - .docker/data/postgresql:/data
+      - /tmp/shared:/shared
   mysql:
     image: mysql:latest
     env_file: 
