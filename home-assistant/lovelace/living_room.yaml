@@ -126,13 +126,6 @@
           group: true
 
     - type: custom:mini-media-player
-      entity: media_player.spotify
-      name: Spotify Player
-      artwork: full-cover
-      hide_power: true
-      hide_volume: false
-      show_progress: true
-    - type: custom:mini-media-player
       entity: media_player.playstation
       name: Playstation Player
       artwork: full-cover

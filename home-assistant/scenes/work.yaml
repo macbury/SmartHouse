@@ -1,9 +1,10 @@
-- name: Watching tv
+- name: Work
   entities:
-    light.tv_stand: on
+    light.tv_stand: off
     light.main: off
     light.dinner_table: off
-    light.work_desk: off
+    light.work_desk: on
     light.work_ambient_desk: off
+    switch.macmini: on
     cover.living_room: closed
     media_player.tv: on

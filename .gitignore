@@ -98,3 +98,4 @@ orion/config.json
 .env.orion
 orion/web/**/*
 blog/**/*
+.env.rss

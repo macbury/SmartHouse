@@ -64,6 +64,7 @@ rest_command: !include components/rest_commands.yaml
 stream:
 sun:
 system_health:
+shell_command: !include components/shell_command.yaml
 script: !include_dir_merge_named scripts/
 speedtestdotnet: !include components/speedtestdotnet.yaml
 switch: !include components/switch.yaml

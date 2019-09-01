@@ -1,0 +1,1 @@
+turn_off_mac_mini: bash /config/scripts/switch_off_mac_mini.sh

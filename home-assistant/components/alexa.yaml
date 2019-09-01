@@ -11,6 +11,7 @@ smart_home:
       - media_player.tv
       - media_player.playstation
       - media_player.soundbar
+      - switch.macmini
       - script.find_vacuum
       - script.clean_kitchen
       - script.clean_bedroom

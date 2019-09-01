@@ -59,39 +59,39 @@
 #       apt:
 #         name: python3-pip
 
-- hosts: master
-  become: yes
-  tasks:
-    - name: Install nginx
-      apt:
-        name: nginx
-    - name: Install cryptsetup
-      apt:
-        name: cryptsetup
-    - name: Install go
-      apt:
-        name: golang
-    - name: Install xpath stuff
-      apt:
-        name: libxml2-utils
-    - name: Install ccrypt for dustcloud
-      apt:
-        name: ccrypt
-    - name: Install dos2unix for dustcloud
-      apt:
-        name: dos2unix
-    - name: PSQL
-      apt:
-        name: postgresql-client
-    - name: smb
-      apt:
-        name: cifs-utils
-    - name: lovelace-dev
-      apt:
-        name: fswatch
-    - name: mc
-      apt:
-        name: mc
+# - hosts: master
+#   become: yes
+#   tasks:
+#     - name: Install nginx
+#       apt:
+#         name: nginx
+#     - name: Install cryptsetup
+#       apt:
+#         name: cryptsetup
+#     - name: Install go
+#       apt:
+#         name: golang
+#     - name: Install xpath stuff
+#       apt:
+#         name: libxml2-utils
+#     - name: Install ccrypt for dustcloud
+#       apt:
+#         name: ccrypt
+#     - name: Install dos2unix for dustcloud
+#       apt:
+#         name: dos2unix
+#     - name: PSQL
+#       apt:
+#         name: postgresql-client
+#     - name: smb
+#       apt:
+#         name: cifs-utils
+#     - name: lovelace-dev
+#       apt:
+#         name: fswatch
+#     - name: mc
+#       apt:
+#         name: mc
 
 - hosts: panel
   become: yes
@@ -241,148 +241,167 @@
 #         mode: '777'
 
 # Firewall setup
-- hosts: master
-  become: yes
-  roles:
-    - role: weareinteractive.ufw
-  vars:
-    ufw_logging: "off"
-    ufw_rules:
-      - { port: 53, rule: allow, comment: 'Allow PiHole DNS' }
-      - { port: 22, rule: allow, comment: 'Allow SSH' }
-      - { port: 80, rule: allow, comment: 'Allow HTTP' }
-      - { port: 443, rule: allow, comment: 'Allow HTTPS' }
-      - { port: 4105, rule: allow, comment: 'Allow MQTT' }
-      - { port: 987, rule: allow, comment: 'Allow PS4' }
-      - { port: 997, rule: allow, comment: 'Allow PS4' }
-      - { from_ip: '192.168.1.229', comment: 'Allow PS4 console access' }
-      - { port: 4001, rule: allow, comment: 'Allow IPFS swarm' }
-      - { port: 5001, rule: allow, comment: 'Allow IPFS API' }
-      - { port: 548, rule: allow, comment: 'Allow AFP' }
-      - { port: 427, rule: allow, comment: 'Allow AFP' }
-      - { port: 7000, rule: allow, comment: 'Allow mkdocs dev server' }
-      - { port: 9898, rule: allow, comment: 'Allow xiaomi aqara multicast shit' }
-      - { port: 1080, rule: allow, comment: 'Sonoff HTTP' }
-      - { port: 1081, rule: allow, comment: 'Sonoff HTTPs' }
-      - { port: 1443, rule: allow, comment: 'Sonoff Websocket' }
-      - { from_ip: '127.0.0.1/24', comment: 'Allow localhost' }
-      - { from_ip: '192.168.0.1/24', comment: 'Allow local network' }
-      - { from_ip: '10.0.0.1/24', comment: 'Allow vpn network' }
-      - { from_ip: '10.0.1.1/24', comment: 'Allow vpn network' }
-      - { from_ip: '10.0.2.1/24', comment: 'Allow vpn network' }
-      - { port: 32400, rule: allow, comment: 'Plex companion' }
-      - { port: 3005, rule: allow, comment: 'Plex companion' }
-      - { port: 5353, rule: allow, comment: 'Plex bonjur shit' }
-      - { port: 1900, rule: allow, comment: 'Plex dlna shit' }
-      - { port: 8324, rule: allow, comment: 'Plex other shit' }
-      - { port: 32469, rule: allow, comment: 'Plex other shit' }
-      - { port: 32410, rule: allow, comment: 'Plex GDM network discover' }
-      - { port: 32412, rule: allow, comment: 'Plex GDM network discover' }
-      - { port: 32413, rule: allow, comment: 'Plex GDM network discover' }
-      - { port: 32414, rule: allow, comment: 'Plex GDM network discover' }
-      - { port: 51413, rule: allow, comment: 'Transmission shit' }
-      - { port: 10005, rule: allow, from_ip: '192.168.1.222', comment: 'Allow only vacuum to access this port' }
-
-# Vnc setup
-- hosts: panel
-  handlers:
-    - name: restart avahi-daemon
-      become: yes
-      service:
-        name: avahi-daemon
-        enabled: yes
-        state: restarted
-  tasks:
-    - name: 'VPN'
-      apt:
-        name: vino
-    - name: Disable encryption, viva la mac os x
-      shell: 'dconf write /org/gnome/desktop/remote-access/require-encryption false'
-      notify:
-        - restart avahi-daemon
-
-# Node js
-- hosts: panel
-  become: yes
-  roles:
-    - role: geerlingguy.nodejs
-  vars:
-    nodejs_version: "10.x"
-
-# # letsencrypt certificate
-- hosts: master
-  become: yes
-  roles:
-    - role: geerlingguy.certbot
-  vars:
-    certbot_auto_renew: false
-    certbot_admin_email: "{{ email }}"
-    certbot_create_if_missing: true
-    certbot_certs:
-      - domains:
-        - "{{ ipfs_domain }}"
-
-- hosts: master
-  become: yes
-  roles:
-    - role: geerlingguy.certbot
-  vars:
-    certbot_auto_renew: false
-    certbot_admin_email: "{{ email }}"
-    certbot_create_if_missing: true
-    certbot_certs:
-      - domains:
-        - "budget.{{ domain }}"
-
-- hosts: master
-  become: yes
-  roles:
-    - role: geerlingguy.certbot
-  vars:
-    certbot_auto_renew: false
-    certbot_admin_email: "{{ email }}"
-    certbot_create_if_missing: true
-    certbot_certs:
-      - domains:
-        - "notes.{{ domain }}"
-
-- hosts: master
-  become: yes
-  roles:
-    - role: geerlingguy.certbot
-  vars:
-    certbot_auto_renew: false
-    certbot_admin_email: "{{ email }}"
-    certbot_create_if_missing: true
-    certbot_certs:
-      - domains:
-        - "{{ domain }}"
-
-
-- hosts: master
-  become: yes
-  roles:
-    - role: geerlingguy.certbot
-  vars:
-    certbot_auto_renew: false
-    certbot_admin_email: "{{ email }}"
-    certbot_create_if_missing: true
-    certbot_certs:
-      - domains:
-        - "macbury.ninja"
-# Nginx
 # - hosts: master
 #   become: yes
 #   roles:
-#     - role: geerlingguy.nginx
+#     - role: weareinteractive.ufw
+#   vars:
+#     ufw_logging: "off"
+#     ufw_rules:
+#       - { port: 53, rule: allow, comment: 'Allow PiHole DNS' }
+#       - { port: 22, rule: allow, comment: 'Allow SSH' }
+#       - { port: 80, rule: allow, comment: 'Allow HTTP' }
+#       - { port: 443, rule: allow, comment: 'Allow HTTPS' }
+#       - { port: 4105, rule: allow, comment: 'Allow MQTT' }
+#       - { port: 987, rule: allow, comment: 'Allow PS4' }
+#       - { port: 997, rule: allow, comment: 'Allow PS4' }
+#       - { from_ip: '192.168.1.229', comment: 'Allow PS4 console access' }
+#       - { port: 4001, rule: allow, comment: 'Allow IPFS swarm' }
+#       - { port: 5001, rule: allow, comment: 'Allow IPFS API' }
+#       - { port: 548, rule: allow, comment: 'Allow AFP' }
+#       - { port: 427, rule: allow, comment: 'Allow AFP' }
+#       - { port: 7000, rule: allow, comment: 'Allow mkdocs dev server' }
+#       - { port: 9898, rule: allow, comment: 'Allow xiaomi aqara multicast shit' }
+#       - { port: 1080, rule: allow, comment: 'Sonoff HTTP' }
+#       - { port: 1081, rule: allow, comment: 'Sonoff HTTPs' }
+#       - { port: 1443, rule: allow, comment: 'Sonoff Websocket' }
+#       - { from_ip: '127.0.0.1/24', comment: 'Allow localhost' }
+#       - { from_ip: '192.168.0.1/24', comment: 'Allow local network' }
+#       - { from_ip: '10.0.0.1/24', comment: 'Allow vpn network' }
+#       - { from_ip: '10.0.1.1/24', comment: 'Allow vpn network' }
+#       - { from_ip: '10.0.2.1/24', comment: 'Allow vpn network' }
+#       - { port: 32400, rule: allow, comment: 'Plex companion' }
+#       - { port: 3005, rule: allow, comment: 'Plex companion' }
+#       - { port: 5353, rule: allow, comment: 'Plex bonjur shit' }
+#       - { port: 1900, rule: allow, comment: 'Plex dlna shit' }
+#       - { port: 8324, rule: allow, comment: 'Plex other shit' }
+#       - { port: 32469, rule: allow, comment: 'Plex other shit' }
+#       - { port: 32410, rule: allow, comment: 'Plex GDM network discover' }
+#       - { port: 32412, rule: allow, comment: 'Plex GDM network discover' }
+#       - { port: 32413, rule: allow, comment: 'Plex GDM network discover' }
+#       - { port: 32414, rule: allow, comment: 'Plex GDM network discover' }
+#       - { port: 51413, rule: allow, comment: 'Transmission shit' }
+#       - { port: 10005, rule: allow, from_ip: '192.168.1.222', comment: 'Allow only vacuum to access this port' }
+
+# # Vnc setup
+# - hosts: panel
 #   handlers:
-#     - name: restart nginx
+#     - name: restart avahi-daemon
 #       become: yes
 #       service:
-#         name: nginx
+#         name: avahi-daemon
 #         enabled: yes
 #         state: restarted
 #   tasks:
+#     - name: 'VPN'
+#       apt:
+#         name: vino
+#     - name: Disable encryption, viva la mac os x
+#       shell: 'dconf write /org/gnome/desktop/remote-access/require-encryption false'
+#       notify:
+#         - restart avahi-daemon
+
+# # Node js
+# - hosts: panel
+#   become: yes
+#   roles:
+#     - role: geerlingguy.nodejs
+#   vars:
+#     nodejs_version: "10.x"
+
+# # # letsencrypt certificate
+# - hosts: master
+#   become: yes
+#   roles:
+#     - role: geerlingguy.certbot
+#   vars:
+#     certbot_auto_renew: false
+#     certbot_admin_email: "{{ email }}"
+#     certbot_create_if_missing: true
+#     certbot_certs:
+#       - domains:
+#         - "{{ ipfs_domain }}"
+
+# - hosts: master
+#   become: yes
+#   roles:
+#     - role: geerlingguy.certbot
+#   vars:
+#     certbot_auto_renew: false
+#     certbot_admin_email: "{{ email }}"
+#     certbot_create_if_missing: true
+#     certbot_certs:
+#       - domains:
+#         - "budget.{{ domain }}"
+
+# - hosts: master
+#   become: yes
+#   roles:
+#     - role: geerlingguy.certbot
+#   vars:
+#     certbot_auto_renew: false
+#     certbot_admin_email: "{{ email }}"
+#     certbot_create_if_missing: true
+#     certbot_certs:
+#       - domains:
+#         - "notes.{{ domain }}"
+
+# - hosts: master
+#   become: yes
+#   roles:
+#     - role: geerlingguy.certbot
+#   vars:
+#     certbot_auto_renew: false
+#     certbot_admin_email: "{{ email }}"
+#     certbot_create_if_missing: true
+#     certbot_certs:
+#       - domains:
+#         - "{{ domain }}"
+
+
+# - hosts: master
+#   become: yes
+#   roles:
+#     - role: geerlingguy.certbot
+#   vars:
+#     certbot_auto_renew: false
+#     certbot_admin_email: "{{ email }}"
+#     certbot_create_if_missing: true
+#     certbot_certs:
+#       - domains:
+#         - "macbury.ninja"
+
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.certbot
+  vars:
+    certbot_auto_renew: false
+    certbot_admin_email: "{{ email }}"
+    certbot_create_if_missing: true
+    certbot_certs:
+      - domains:
+        - {{ rss_domain }}
+# Nginx
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.nginx
+  handlers:
+    - name: restart nginx
+      become: yes
+      service:
+        name: nginx
+        enabled: yes
+        state: restarted
+  tasks:
+    - name: Create /etc/nginx/sites-enabled/rss.conf
+      template:
+        src: ./etc/nginx/sites-enabled/rss.conf.j2
+        dest: /etc/nginx/sites-enabled/rss.conf
+      notify:
+        - reload nginx
+        - restart nginx
 #     - name: Create /etc/nginx/sites-enabled/firefly.conf
 #       template:
 #         src: ./etc/nginx/sites-enabled/firefly.conf.j2

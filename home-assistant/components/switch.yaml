@@ -12,3 +12,7 @@
   start_colortemp: 3500
   sunset_colortemp: 2800
   stop_colortemp: 2200
+
+- platform: wake_on_lan
+  name: Mac Mini
+  mac_address: "D4:DC:CD:F3:FD:B6"
