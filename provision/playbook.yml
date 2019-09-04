@@ -381,7 +381,20 @@
     certbot_create_if_missing: true
     certbot_certs:
       - domains:
-        - {{ rss_domain }}
+        - "{{ rss_domain }}"
+
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.certbot
+  vars:
+    certbot_auto_renew: false
+    certbot_admin_email: "{{ email }}"
+    certbot_create_if_missing: true
+    certbot_certs:
+      - domains:
+        - "{{ airsonic_domain }}"
+
 # Nginx
 - hosts: master
   become: yes
@@ -395,13 +408,20 @@
         enabled: yes
         state: restarted
   tasks:
-    - name: Create /etc/nginx/sites-enabled/rss.conf
+    - name: Create /etc/nginx/sites-enabled/airsonic.conf
       template:
-        src: ./etc/nginx/sites-enabled/rss.conf.j2
-        dest: /etc/nginx/sites-enabled/rss.conf
+        src: ./etc/nginx/sites-enabled/airsonic.conf.j2
+        dest: /etc/nginx/sites-enabled/airsonic.conf
       notify:
         - reload nginx
         - restart nginx
+    # - name: Create /etc/nginx/sites-enabled/rss.conf
+    #   template:
+    #     src: ./etc/nginx/sites-enabled/rss.conf.j2
+    #     dest: /etc/nginx/sites-enabled/rss.conf
+    #   notify:
+    #     - reload nginx
+    #     - restart nginx
 #     - name: Create /etc/nginx/sites-enabled/firefly.conf
 #       template:
 #         src: ./etc/nginx/sites-enabled/firefly.conf.j2

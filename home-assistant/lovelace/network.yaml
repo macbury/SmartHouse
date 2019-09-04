@@ -47,7 +47,6 @@
       show_header_toggle: false
       entities:
         - sensor.transmission_status
-        - sensor.mrpickle_status
     - break
     - type: entities
       title: Internet

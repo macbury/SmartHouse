@@ -1,5 +1,15 @@
 version: '3.5'
 services:
+  airsonic:
+    image: airsonic/airsonic
+    network_mode: host
+    ports:
+      - 4040:4040
+    volumes:
+      - .docker/data/airsonic:/airsonic/data
+      - /mnt/Music/airsonic/music:/airsonic/music
+      - /mnt/Music/airsonic/playlists:/airsonic/playlists
+      - /mnt/Music/airsonic/podcasts:/airsonic/podcasts
   bazzar:
     image: linuxserver/bazarr:latest
     network_mode: host

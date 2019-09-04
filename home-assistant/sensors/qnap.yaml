@@ -1,13 +1,13 @@
-- platform: qnap
-  host: 192.168.1.181
-  username: !env_var HOME_ASSISTANT_QNAP_USERNAME
-  password: !env_var HOME_ASSISTANT_QNAP_PASSWORD
-  verify_ssl: false # Shame
-  monitored_conditions:
-    - system_temp
-    - status
-    - cpu_usage
-    - cpu_temp
-    - memory_percent_used
-    - network_tx
-    - network_rx
+# - platform: qnap
+#   host: 192.168.1.181
+#   username: !env_var HOME_ASSISTANT_QNAP_USERNAME
+#   password: !env_var HOME_ASSISTANT_QNAP_PASSWORD
+#   verify_ssl: false # Shame
+#   monitored_conditions:
+#     - system_temp
+#     - status
+#     - cpu_usage
+#     - cpu_temp
+#     - memory_percent_used
+#     - network_tx
+#     - network_rx

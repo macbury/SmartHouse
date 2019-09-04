@@ -1,7 +1,3 @@
-- platform: mjpeg
-  mjpeg_url: !env_var HOME_ASSISTANT_KITCHEN_URL
-  name: Kitchen
-
 - platform: generic
   name: Vacuum Map
   still_image_url: http://localhost:10005/map.png
@@ -12,10 +8,3 @@
   still_image_url: http://localhost:10005/map.grid.png
   framerate: 1
 
-- platform: ffmpeg
-  input: https://hoktastream1.webcamera.pl/wentzl_cam_be5c6c/wentzl_cam_be5c6c.stream/playlist.m3u8
-  name: Main Square
-
-- platform: ffmpeg
-  input: https://hoktastream2.webcamera.pl/krakow_cam_4c3e37/krakow_cam_4c3e37.stream/chunks.m3u8
-  name: Wawel
