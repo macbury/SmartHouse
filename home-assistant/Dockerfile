@@ -1,4 +1,19 @@
-FROM homeassistant/home-assistant:0.97.1
+# Notice:
+# When updating this file, please also update virtualization/Docker/Dockerfile.dev
+# This way, the development image and the production image are kept in sync.
+
+FROM python:3.7-buster
+LABEL maintainer="Paulus Schoutsen <Paulus@PaulusSchoutsen.nl>"
+
+# Uncomment any of the following lines to disable the installation.
+#ENV INSTALL_TELLSTICK no
+#ENV INSTALL_OPENALPR no
+#ENV INSTALL_FFMPEG no
+#ENV INSTALL_LIBCEC no
+#ENV INSTALL_SSOCR no
+#ENV INSTALL_DLIB no
+#ENV INSTALL_IPERF3 no
+#ENV INSTALL_LOCALES no
 
 ENV TZ 'Europe/Warsaw'
 RUN echo $TZ > /etc/timezone && \
@@ -8,39 +23,37 @@ RUN echo $TZ > /etc/timezone && \
       dpkg-reconfigure -f noninteractive tzdata && \
       apt-get clean
 
-RUN apt-get update && apt-get install ffmpeg libatlas-base-dev libopenjp2-7 libtiff5 -y git curl zip
+RUN apt-get update && apt-get install ffmpeg libatlas-base-dev libopenjp2-7 libtiff5 -y git curl zip libxml2-dev libxslt1-dev zlib1g-dev \
+                                     build-essential libxrandr-dev nmap net-tools libcurl3-dev bluetooth libglib2.0-dev libbluetooth-dev \
+                                     libsodium23 libudev-dev libmpc-dev libmpfr-dev libgmp-dev ffmpeg iperf3 \
+                                     libavformat-dev libavcodec-dev libavdevice-dev libavutil-dev libswscale-dev libswresample-dev libavfilter-dev \
+                                     cmake git swig && apt-get install -y --no-install-recommends locales && apt-get clean
 
-# RUN pip3 install tensorflow
-# WORKDIR /tmp
-# RUN git clone --depth 1 https://github.com/tensorflow/models.git tensorflow-models
-# RUN curl -OL https://github.com/google/protobuf/releases/download/v3.4.0/protoc-3.4.0-linux-x86_64.zip
-# RUN unzip -a protoc-3.4.0-linux-x86_64.zip -d protobuf
-# RUN mv protobuf/bin /tmp/tensorflow-models/research
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+RUN locale-gen
 
-# WORKDIR /tmp/tensorflow-models/research/
+VOLUME /config
 
-# RUN ./bin/protoc object_detection/protos/*.proto --python_out=.
-# RUN mkdir -p /tensorflow/object_detection
-# RUN touch /tensorflow/object_detection/__init__.py
-# RUN mv object_detection/data /tensorflow/object_detection
-# RUN mv object_detection/utils /tensorflow/object_detection
-# RUN mv object_detection/protos /tensorflow/object_detection
-
-# WORKDIR /tmp
-# RUN wget http://download.tensorflow.org/models/object_detection/faster_rcnn_inception_v2_coco_2018_01_28.tar.gz
-# RUN tar xvfz faster_rcnn_inception_v2_coco_2018_01_28.tar.gz
-# RUN cp /tmp/faster_rcnn_inception_v2_coco_2018_01_28/frozen_inference_graph.pb /tensorflow
-# RUN rm -rf /tmp/*
-
-RUN apt-get update && apt-get install -y libxml2-dev libxslt1-dev zlib1g-dev
-
-HEALTHCHECK --interval=60s --timeout=200s --start-period=300s --retries=3 CMD curl -f http://localhost:8123/ || exit 1
+RUN git clone https://github.com/home-assistant/home-assistant.git /usr/src/app
 
 WORKDIR /usr/src/app
+ENV VERSION 0.98.5
+RUN git fetch --all --tags --prune
+RUN git checkout tags/$VERSION -b current
 
+# Install hass component dependencies
+RUN pip3 install --no-cache-dir -r requirements_all.txt && \
+    pip3 install --no-cache-dir mysqlclient psycopg2 uvloop==0.12.2 cchardet cython tensorflow
+
+EXPOSE 8123
+EXPOSE 8300
+EXPOSE 51827
+
+HEALTHCHECK --interval=60s --timeout=60s --start-period=300s --retries=6 CMD curl -f http://localhost:8123/ || exit 1
 ENV TINI_VERSION v0.18.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
+
 ENTRYPOINT ["/tini", "--"]
 
 ADD ./docker-entrypoint.sh /
