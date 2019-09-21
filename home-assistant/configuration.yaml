@@ -58,6 +58,7 @@ notify: !include components/notify.yaml
 panel_custom: !include components/panel_custom.yaml
 person: !include components/person.yaml
 proximity: !include components/proximity.yaml
+pi_hole: !include components/pihole.yaml
 # R
 rest_command: !include components/rest_commands.yaml
 # S

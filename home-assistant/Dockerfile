@@ -37,7 +37,7 @@ VOLUME /config
 RUN git clone https://github.com/home-assistant/home-assistant.git /usr/src/app
 
 WORKDIR /usr/src/app
-ENV VERSION 0.98.5
+ENV VERSION 0.99.2
 RUN git fetch --all --tags --prune
 RUN git checkout tags/$VERSION -b current
 

@@ -72,3 +72,60 @@ After selecting area text area is updated with YAML that can look like this:
     command: app_zoned_clean
     params: [[27542, 20818, 28986, 22288, 1]]
 ```
+
+### Automating replacment of trash bin
+
+<iframe width="960" height="480" src="https://www.youtube.com/embed/yKVzf5N_H-Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+```yaml
+- alias: Summon vacuum to trash bin if is docked
+  trigger:
+    platform: event
+    event_type: xiaomi_aqara.click
+    event_data:
+      entity_id: binary_sensor.kitchen_summon_vacuum
+      click_type: single
+  condition:
+    - condition: state
+      entity_id: vacuum.main_vacuum
+      state: docked
+  action:
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.main_vacuum
+        command: app_goto_target
+        params: [25849, 24429]
+    - service: notify.alexa_media_kitchen
+      data:
+        message: 'Hey, vacuum take your ass near trash can!'
+        data:
+          type: announce
+          method: all
+
+- alias: Send back vacuum to its cave
+  trigger:
+    platform: event
+    event_type: xiaomi_aqara.click
+    event_data:
+      entity_id: binary_sensor.kitchen_summon_vacuum
+      click_type: single
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: vacuum.main_vacuum
+        state: cleaning
+      - condition: state
+        entity_id: vacuum.main_vacuum
+        state: idle
+  action:
+    - service: vacuum.return_to_base
+      data:
+        entity_id: vacuum.main_vacuum
+    - service: notify.alexa_media_kitchen
+      data:
+        message: 'Ok, thats is all, go back to your cave!'
+        data:
+          type: announce
+          method: all
+```
