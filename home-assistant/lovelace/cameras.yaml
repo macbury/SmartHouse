@@ -12,17 +12,17 @@
     - type: picture-entity
       entity: camera.wawel
       camera_view: 'live'
-    # - type: picture-glance
-    #   title: Salon
-    #   camera_image: camera.living_room
-    #   entity: camera.living_room
-    #   entities:
-    #     - image_processing.tensorflow_living_room
-    # - type: picture-glance
-    #   title: Salon
-    #   camera_image: camera.living_room
-    #   entity: camera.living_room
-    #   entities:
-    #     - image_processing.tensorflow_living_room
+    - type: picture-glance
+      title: Salon
+      camera_image: camera.living_room
+      entity: camera.living_room
+      entities:
+        - image_processing.tensorflow_living_room
+    - type: picture-glance
+      title: Salon
+      camera_image: camera.living_room
+      entity: camera.living_room
+      entities:
+        - image_processing.tensorflow_living_room
     - type: custom:dynamic-wallpaper
       entity: sun.sun

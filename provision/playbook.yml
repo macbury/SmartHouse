@@ -27,71 +27,73 @@
     - name: Reboot vacuum to start watch map in background
       reboot:
 
-# Packages
-# - hosts: all
-#   become: yes
-#   tasks:
-#     - name: Install sshfs
-#       apt:
-#         name: sshfs
-#     - name: Install htop
-#       apt:
-#         name: htop
-#     - name: Install ufw
-#       apt:
-#         name: ufw
-#     - name: Install zsh
-#       apt:
-#         name: zsh
-#     - name: Install git
-#       apt:
-#         name: git
-#     - name: Install zip
-#       apt:
-#         name: zip
-#     - name: Install AFP
-#       apt:
-#         name: netatalk
-#     - name: 'Python pip'
-#       apt:
-#         name: python-pip
-#     - name: 'Python pip3'
-#       apt:
-#         name: python3-pip
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install sshfs
+      apt:
+        name: sshfs
+    - name: Install htop
+      apt:
+        name: htop
+    - name: Install ufw
+      apt:
+        name: ufw
+    - name: Install zsh
+      apt:
+        name: zsh
+    - name: Install git
+      apt:
+        name: git
+    - name: Install zip
+      apt:
+        name: zip
+    - name: Install AFP
+      apt:
+        name: netatalk
+    - name: 'Python pip'
+      apt:
+        name: python-pip
+    - name: 'Python pip3'
+      apt:
+        name: python3-pip
 
-# - hosts: master
-#   become: yes
-#   tasks:
-#     - name: Install nginx
-#       apt:
-#         name: nginx
-#     - name: Install cryptsetup
-#       apt:
-#         name: cryptsetup
-#     - name: Install go
-#       apt:
-#         name: golang
-#     - name: Install xpath stuff
-#       apt:
-#         name: libxml2-utils
-#     - name: Install ccrypt for dustcloud
-#       apt:
-#         name: ccrypt
-#     - name: Install dos2unix for dustcloud
-#       apt:
-#         name: dos2unix
-#     - name: PSQL
-#       apt:
-#         name: postgresql-client
-#     - name: smb
-#       apt:
-#         name: cifs-utils
-#     - name: lovelace-dev
-#       apt:
-#         name: fswatch
-#     - name: mc
-#       apt:
-#         name: mc
+- hosts: master
+  become: yes
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+    - name: Install cryptsetup
+      apt:
+        name: cryptsetup
+    - name: Install go
+      apt:
+        name: golang
+    - name: Install xpath stuff
+      apt:
+        name: libxml2-utils
+    - name: Install ccrypt for dustcloud
+      apt:
+        name: ccrypt
+    - name: Install dos2unix for dustcloud
+      apt:
+        name: dos2unix
+    - name: PSQL
+      apt:
+        name: postgresql-client
+    - name: smb
+      apt:
+        name: cifs-utils
+    - name: samba
+      apt:
+        name: samba
+    - name: lovelace-dev
+      apt:
+        name: fswatch
+    - name: mc
+      apt:
+        name: mc
 
 - hosts: panel
   become: yes
@@ -265,6 +267,10 @@
 #       - { port: 1080, rule: allow, comment: 'Sonoff HTTP' }
 #       - { port: 1081, rule: allow, comment: 'Sonoff HTTPs' }
 #       - { port: 1443, rule: allow, comment: 'Sonoff Websocket' }
+#       - { port: 137, rule: allow, comment: 'Samba' }
+#       - { port: 138, rule: allow, comment: 'Samba' }
+#       - { port: 139, rule: allow, comment: 'Samba' }
+#       - { port: 445, rule: allow, comment: 'Samba' }
 #       - { from_ip: '127.0.0.1/24', comment: 'Allow localhost' }
 #       - { from_ip: '192.168.0.1/24', comment: 'Allow local network' }
 #       - { from_ip: '10.0.0.1/24', comment: 'Allow vpn network' }

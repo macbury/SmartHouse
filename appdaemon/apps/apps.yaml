@@ -17,16 +17,16 @@ bedroom_air:
   fallback: 5400
   mode: 'Auto'
 
-heating_living_room:
-  module: adaptive_room_heating
-  class: AdaptiveRoomHeating
-  calendar: calendar.ogrzewanie_salon
-  outside_temperature: sensor.dark_sky_temperature
-  temperature_sensor: sensor.living_room_temperature
-  family_devices: group.family
-  climate: climate.living_room
-  max_temperature: 28
-  min_temperature: 20
+# heating_living_room:
+#   module: adaptive_room_heating
+#   class: AdaptiveRoomHeating
+#   calendar: calendar.ogrzewanie_salon
+#   outside_temperature: sensor.dark_sky_temperature
+#   temperature_sensor: sensor.living_room_temperature
+#   family_devices: group.family
+#   climate: climate.living_room
+#   max_temperature: 28
+#   min_temperature: 20
 # cover:
 #   module: cover
 #   class: Blinds

@@ -19,6 +19,8 @@
     entity_id: group.family
     from: 'home'
     to: 'not_home'
+    for:
+      minutes: 5
   action:
     - service: vacuum.start
       data:
