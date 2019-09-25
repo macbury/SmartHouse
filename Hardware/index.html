@@ -1,0 +1,1101 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="All stuff that is needed to run my smart house">
+      
+      
+        <link rel="canonical" href="https://macbury.github.io/SmartHouse/Hardware/">
+      
+      
+        <meta name="author" content="Arkadiusz Buras">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.2">
+    
+    
+      
+        <title>MacBury Smart House</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.30686662.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#computers" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://macbury.github.io/SmartHouse" title="MacBury Smart House" class="md-header-nav__button md-logo">
+          
+            <img src="../logo.svg" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              MacBury Smart House
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Hardware
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/macbury/SmartHouse/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    macbury/SmartHouse
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://macbury.github.io/SmartHouse" title="MacBury Smart House" class="md-nav__button md-logo">
+      
+        <img src="../logo.svg" width="48" height="48">
+      
+    </a>
+    MacBury Smart House
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/macbury/SmartHouse/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    macbury/SmartHouse
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Software/GettingStarted/" title="Getting Started" class="md-nav__link">
+      Getting Started
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Hardware
+      </label>
+    
+    <a href="./" title="Hardware" class="md-nav__link md-nav__link--active">
+      Hardware
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#computers" class="md-nav__link">
+    Computers
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gigabyte-brix-gb-bpce-3455" class="md-nav__link">
+    Gigabyte BRIX GB-BPCE-3455
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raspberry-pi-3" class="md-nav__link">
+    Raspberry Pi 3
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#z-wave" class="md-nav__link">
+    Z-Wave
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zigbee" class="md-nav__link">
+    ZigBee
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#philips-hue" class="md-nav__link">
+    Philips Hue
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xiaomi" class="md-nav__link">
+    Xiaomi
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wi-fi-network" class="md-nav__link">
+    Wi-Fi Network
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Home Assistant
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Home Assistant
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../HomeAssistant/Screens/" title="Screens" class="md-nav__link">
+      Screens
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../HomeAssistant/PresenceDetection/" title="Presence Detection" class="md-nav__link">
+      Presence Detection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../HomeAssistant/Components/" title="Custom Components" class="md-nav__link">
+      Custom Components
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../HomeAssistant/Lovelace/" title="Lovelace" class="md-nav__link">
+      Lovelace
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../HomeAssistant/Vacuum/" title="Vacuum" class="md-nav__link">
+      Vacuum
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../HomeAssistant/AppDaemon/" title="AppDaemon" class="md-nav__link">
+      AppDaemon
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../HomeAssistant/VoiceControl/" title="Voice Control" class="md-nav__link">
+      Voice Control
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Software
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Software
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Software/Overview/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Software/Nginx/" title="Nginx" class="md-nav__link">
+      Nginx
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Software/Development/" title="Development" class="md-nav__link">
+      Development
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Software/Upgrading/" title="Upgrading" class="md-nav__link">
+      Upgrading
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Software/ControlScript/" title="Control Scripts" class="md-nav__link">
+      Control Scripts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Software/Ports/" title="Ports" class="md-nav__link">
+      Ports
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Software/Encryption/" title="Encryption" class="md-nav__link">
+      Encryption
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Software/Backup/" title="Backup" class="md-nav__link">
+      Backup
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Services
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Services
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Services/UpTimeRobot/" title="Uptime Robot" class="md-nav__link">
+      Uptime Robot
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      DIY
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        DIY
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../DIY/RiggadLamp/" title="Riggad Lamp" class="md-nav__link">
+      Riggad Lamp
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../DIY/LedStrips/" title="Led Strips" class="md-nav__link">
+      Led Strips
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../DIY/CatFeeder/" title="Cat Feeder" class="md-nav__link">
+      Cat Feeder
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../References/" title="References" class="md-nav__link">
+      References
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#computers" class="md-nav__link">
+    Computers
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gigabyte-brix-gb-bpce-3455" class="md-nav__link">
+    Gigabyte BRIX GB-BPCE-3455
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raspberry-pi-3" class="md-nav__link">
+    Raspberry Pi 3
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#z-wave" class="md-nav__link">
+    Z-Wave
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zigbee" class="md-nav__link">
+    ZigBee
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#philips-hue" class="md-nav__link">
+    Philips Hue
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xiaomi" class="md-nav__link">
+    Xiaomi
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wi-fi-network" class="md-nav__link">
+    Wi-Fi Network
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/macbury/SmartHouse/edit/master/docs/Hardware/index.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                  <h1>Hardware</h1>
+                
+                <p>This is the list of all hardware that is present in my smart house.</p>
+<h2 id="computers">Computers<a class="headerlink" href="#computers" title="Permanent link">&para;</a></h2>
+<h3 id="gigabyte-brix-gb-bpce-3455">Gigabyte BRIX GB-BPCE-3455<a class="headerlink" href="#gigabyte-brix-gb-bpce-3455" title="Permanent link">&para;</a></h3>
+<p>I needed something more powerfull than RaspberryPi to host all services running my Smart House. <a href="https://www.gigabyte.com/Mini-PcBarebone/GB-BPCE-3455-rev-10#ov">Gigabyte BRIX GB-BPCE-3455</a> can be extended by normal hard drive and RAM (in my case 8GB RAM and 250GB SSD). The Intel Celeron inside this small box have enought power to even transcode 4K video(plex in docker) and small amount of machine learning.</p>
+<h3 id="raspberry-pi-3">Raspberry Pi 3<a class="headerlink" href="#raspberry-pi-3" title="Permanent link">&para;</a></h3>
+<p>This small computer is used mainly for DIY stuff like <a href="/DIY/CatFeeder">cat feeder</a> and <a href="/DIY/BluetoothGateway">Gateway</a> . First version of my smart house run on one of these, but quickly my requirements outgrown its computing power.</p>
+<h2 id="z-wave">Z-Wave<a class="headerlink" href="#z-wave" title="Permanent link">&para;</a></h2>
+<p>My adventure with <a href="https://www.z-wave.com/">Z-Wave</a> started with <a href="https://products.z-wavealliance.org/products/93">Danfoss Thermostats</a>, after one winter, I received astronomical bill for heating. Interaction with all Z-Wave devices is done using <a href="https://aeotec.com/z-wave-usb-stick">Aeotec Z-Stick Gen5</a> that is plugged to my Gigabyte BRIX. The cool thing about this setup is that each device is from different manufacturer and they work together. Currently my arsenal of Z-Wave devices consits:</p>
+<table>
+<thead>
+<tr>
+<th>Device</th>
+<th align="center">Quantity</th>
+<th>Component</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://aeotec.com/z-wave-usb-stick">Aeotec Z-Stick Gen5</a></td>
+<td align="center">1</td>
+<td><a href="https://www.home-assistant.io/components/zwave/">Z-Wave</a></td>
+<td>Main Z-Wave Hub as usb dongle</td>
+</tr>
+<tr>
+<td><a href="https://products.z-wavealliance.org/products/93">Danfoss Z-Wave Thermostats</a></td>
+<td align="center">3</td>
+<td><a href="https://www.home-assistant.io/components/climate.zwave/">Z-Wave Climate</a></td>
+<td>Used for controlling temperature in rooms</td>
+</tr>
+<tr>
+<td><a href="https://shop.zwave.eu/products/sensors/door-window-sensors/1567/neo-coolcam-door/window-sensor">NEO Coolcam - Door/Window Sensor</a></td>
+<td align="center">5</td>
+<td><a href="https://www.home-assistant.io/components/binary_sensor.zwave/">Z-Wave Binary Sensor </a></td>
+<td>Used for detecting what doors are open/closed</td>
+</tr>
+<tr>
+<td><a href="https://shop.zwave.eu/detail/index/sArticle/1764">NEO Coolcam - Motion Sensor</a></td>
+<td align="center">2</td>
+<td><a href="https://www.home-assistant.io/components/binary_sensor.zwave/">Z-Wave Binary Sensor </a></td>
+<td>For detecting cat movement and some light automations</td>
+</tr>
+<tr>
+<td><a href="https://www.aliexpress.com/item/NEO-COOLCAM-Z-wave-Flood-Water-Leak-Alarm-Sensor-Water-Leakage-Sensor-Z-wave-Sensor-Alarm/32787289062.html">NEO Coolcam - Flood Water Leak Alarm Senso</a></td>
+<td align="center">1</td>
+<td><a href="https://www.home-assistant.io/components/binary_sensor.zwave/">Z-Wave Binary Sensor</a></td>
+<td>For detecting leakage in bathroom</td>
+</tr>
+<tr>
+<td><a href="https://manuals.fibaro.com/relay-switch/">Fibaro Relay Switch</a></td>
+<td align="center">8</td>
+<td><a href="https://www.home-assistant.io/components/switch.zwave/">Z-Wave Switch</a></td>
+<td>Controling lights and switches</td>
+</tr>
+<tr>
+<td><a href="https://manuals.fibaro.com/roller-shutter-3/">Roller Shutter 3</a></td>
+<td align="center">1</td>
+<td><a href="https://www.home-assistant.io/components/zwave/">Z-Wave Cover</a></td>
+<td>Controling living room blinds</td>
+</tr>
+<tr>
+<td><a href="https://www.aliexpress.com/item/NEO-COOLCAM-Z-wave-EU-Smart-Power-Plug-Socket-Home-Automation-Alarm-System-home-Compatible-with/32787926055.html">NEO Coolcam - Power Plug</a></td>
+<td align="center">2</td>
+<td><a href="https://www.home-assistant.io/components/zwave/">Z-Wave switch</a></td>
+<td>Used for detecting if AGD stuff is working</td>
+</tr>
+</tbody>
+</table>
+<h2 id="zigbee">ZigBee<a class="headerlink" href="#zigbee" title="Permanent link">&para;</a></h2>
+<h3 id="philips-hue">Philips Hue<a class="headerlink" href="#philips-hue" title="Permanent link">&para;</a></h3>
+<p>I`m using <a href="https://www.amazon.com/gp/product/B014H2P42K/">Philips Hue Hub Gen 2</a> for controlling my <a href="https://www.ikea.com/us/en/catalog/categories/departments/home_electronics/36812/">TRÅDFRI</a> lights. The default gateway from Ikea was buggy as hell. After few hours it stopped responding and only fix was to restart it by plugging device from power.</p>
+<table>
+<thead>
+<tr>
+<th>Device</th>
+<th align="center">Quantity</th>
+<th>Component</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.ikea.com/us/en/catalog/products/80339436/">TRÅDFRI Bulb</a></td>
+<td align="center">2</td>
+<td><a href="https://www.home-assistant.io/components/hue/">Hue</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="xiaomi">Xiaomi<a class="headerlink" href="#xiaomi" title="Permanent link">&para;</a></h3>
+<p>Currently most of my sensors is Xiaomi, so I need to use their Gateway to integrate them with Home Assistant. It does intergrate with its ecosystem pretty ok, with support for playing a sound and it also has a rgb led which will change colours on events like upcoming rain, etc. Gateway has blocked access to network(this is still chines company duh.)</p>
+<table>
+<thead>
+<tr>
+<th>Device</th>
+<th align="center">Quantity</th>
+<th>Component</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.mi.com/global/air2/">Mi Air Purifier 2</a></td>
+<td align="center">1</td>
+<td><a href="https://www.home-assistant.io/components/fan.xiaomi_miio/">Xiaomi Air Purifier</a></td>
+<td>Air purifier in bedroom room</td>
+</tr>
+<tr>
+<td><a href="https://www.xiaomistore.pk/mi-air-purifier-2s.html">Mi Air Purifier 2s</a></td>
+<td align="center">1</td>
+<td><a href="https://www.home-assistant.io/components/fan.xiaomi_miio/">Xiaomi Air Purifier</a></td>
+<td>Air purifier in living room</td>
+</tr>
+<tr>
+<td><a href="https://www.aqara.com/en/smart_hub-product.html">Xiaomi Aqara Hub</a></td>
+<td align="center">1</td>
+<td><a href="https://www.home-assistant.io/components/xiaomi_aqara/">Xiaomi Gateway (Aqara)</a></td>
+<td>Used for communication with wirless switches and temperature sensors</td>
+</tr>
+<tr>
+<td><a href="https://www.aqara.com/en/86plug.html">Xiaomi Aqara Wireless Remote Switch</a></td>
+<td align="center">6</td>
+<td><a href="https://www.home-assistant.io/components/switch.xiaomi_aqara/">Xiaomi Switch</a></td>
+<td>These switches are used for triggering various automations</td>
+</tr>
+<tr>
+<td><a href="https://xiaomi-mi.co.uk/mi-smart-home/xiaomi-mijia-roborock-robot-vacuum-cleaner-2-white/">Xiaomi Mijia Roborock Vacuum Cleaner 2</a></td>
+<td align="center">1</td>
+<td><a href="https://www.home-assistant.io/components/vacuum.xiaomi_miio/">Xiaomi Mi Robot Vacuum</a></td>
+<td>Automated to run at specific times based on presence detection.</td>
+</tr>
+<tr>
+<td><a href="https://xiaomi-mi.co.uk/mi-smart-home/xiaomi-mijia-roborock-robot-vacuum-cleaner-2-white/">Xiaomi Mijia Roborock Vacuum Cleaner 2</a></td>
+<td align="center">1</td>
+<td><a href="https://www.home-assistant.io/components/vacuum.xiaomi_miio/">Xiaomi Mi Robot Vacuum</a></td>
+<td>Automated to run at specific times based on presence detection.</td>
+</tr>
+<tr>
+<td><a href="https://www.amazon.com/OUKU-Xiaomi-Temperature-Humidity-Sensor/dp/B078T7PDTR">Xiaomi Aqara Temperature Humidity Sensor</a></td>
+<td align="center">3</td>
+<td><a href="https://www.home-assistant.io/components/xiaomi_aqara/">Xiaomi Aqara</a></td>
+<td>For sampling temperature and humidity in rooms without air purifiers(they have humidity and temperature sensors inside them)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="wi-fi-network">Wi-Fi Network<a class="headerlink" href="#wi-fi-network" title="Permanent link">&para;</a></h2>
+<p>And here are all devices that are connected over Wi-Fi network:</p>
+<table>
+<thead>
+<tr>
+<th>Device</th>
+<th align="center">Quantity</th>
+<th>Connection</th>
+<th>Home Assistant</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.amazon.com/gp/product/B01DFKC2SO">Amazon Echo DOT</a></td>
+<td align="center">3</td>
+<td>WiFi</td>
+<td><a href="https://www.home-assistant.io/components/alexa/">Alexa / Amazon Echo</a></td>
+<td>The Alexa devices are used as interface to interact with HomeAssistant</td>
+</tr>
+<tr>
+<td><a href="https://www.playstation.com/en-us/explore/ps4/">Playstation 4</a></td>
+<td align="center">1</td>
+<td>WiFi</td>
+<td><a href="https://www.home-assistant.io/components/ps4/">PS4</a></td>
+<td>For playing and watching stuff that requires DVD/Blurays</td>
+</tr>
+<tr>
+<td><a href="https://www.samsung.com/us/televisions-home-theater/home-theater/sound-bars/samsung-hw-k650-soundbar-w-wireless-subwoofer-hw-k650-za/">HW-K650 Soundbar w/ Wireless Subwoofer</a></td>
+<td align="center">1</td>
+<td>WiFi</td>
+<td><a href="https://github.com/macbury/ha_samsung_multi_room">ha_samsung_multi_room</a></td>
+<td>Some sound goodies control stuff</td>
+</tr>
+<tr>
+<td><a href="https://www.lg.com/pl/telewizory/lg-55SK8100PLA">LG webOS TV 55SK8100PLA</a></td>
+<td align="center">1</td>
+<td>WiFi</td>
+<td><a href="https://www.home-assistant.io/components/media_player.webostv/">LG webOS Smart TV </a></td>
+<td>Watching movies, showing Home Assistant panel and notifications</td>
+</tr>
+<tr>
+<td><a href="https://www.asus.com/us/Networking/RTAC56U/">Router Asus RT-AC56U</a></td>
+<td align="center">1</td>
+<td>WiFi</td>
+<td><a href="https://www.home-assistant.io/components/asuswrt/">Asuswrt</a></td>
+<td>Network, remote access through VPN</td>
+</tr>
+<tr>
+<td><a href="https://www.qnap.com/en-us/product/ts-228">QNAP TS-228</a></td>
+<td align="center">1</td>
+<td>Ethernet</td>
+<td><a href="https://www.home-assistant.io/components/sensor.qnap/">QNAP Sensor </a></td>
+<td>Main storage array for backups, TimeMachine and photos</td>
+</tr>
+<tr>
+<td><a href="https://www.ikea.com/pl/pl/catalog/products/60385636/">RIGGAD Lamp</a></td>
+<td align="center">1</td>
+<td>Wi-Fi</td>
+<td><a href="https://www.home-assistant.io/components/light.mqtt/">MQTT Light</a></td>
+<td>Lamp with wirless charging. Additionaly I have replaced default bulb with <a href="https://www.adafruit.com/product/1463">NeoPixel Ring</a> and <a href="https://wiki.wemos.cc/products:d1:d1_mini">WeMos D1 mini</a>. <a href="https://www.youtube.com/watch?v=iVw9GvY-IWI">See this in action</a></td>
+</tr>
+<tr>
+<td><a href="https://www.linak.com/business-areas/desks/office-desks/">Linak Desk</a></td>
+<td align="center">1</td>
+<td>Bluetooth</td>
+<td><a href="https://www.home-assistant.io/components/cover.mqtt/">MQTT Cover</a></td>
+<td>Nice desk with ability to adjust height</td>
+</tr>
+</tbody>
+</table>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../Software/GettingStarted/" title="Getting Started" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Getting Started
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../HomeAssistant/Screens/" title="Screens" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Screens
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 Buras Arkadiusz
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
+    
+      <a href="http://macbury.ninja" class="md-footer-social__link fa fa-globe"></a>
+    
+      <a href="https://github.com/macbury/SmartHouse/" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/macbury" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://www.linkedin.com/in/arkadiusz-buras-83041810/" class="md-footer-social__link fa fa-linkedin"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.c648116f.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      
+    
+  </body>
+</html>
