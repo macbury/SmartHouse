@@ -26,6 +26,9 @@ jobs:
         run: |
           xvfb-run -a drawio docs/SmartHouse.xml -o docs/SmartHouse.png
           mkdocs build -v
-      - name: GitHub Pages Deploy
-        uses: maxheld83/ghpages@v0.2.1
-
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v2.4.0
+        env:
+          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: ./site
