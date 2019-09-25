@@ -1,4 +1,4 @@
-- alias: Switch on living room light and cover on sunset
+- alias: Close blinds on sunset
   trigger:
     - platform: sun
       event: sunset
@@ -13,6 +13,22 @@
     - service: cover.close_cover
       data:
         entity_id: cover.living_room
+
+- alias: Switch on tv stand room light 
+  trigger:
+    - platform: sun
+      event: sunset
+      offset: "-00:05:00"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: 'group.family'
+        state: 'home'
+      - condition: state
+        entity_id: light.main
+        state: 'off'
+  action:
     - service: light.turn_on
       data:
         entity_id: light.tv_stand

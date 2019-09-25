@@ -1,15 +1,3 @@
-- alias: Refresh blinds if they draw power
-  trigger:
-    - platform: time_pattern
-      seconds: '*/10'
-  action:
-    - service: zwave.refresh_node
-      data:
-        node_id: 25
-    - service: zwave.refresh_entity
-      data:
-        node_id: cover.living_room
-
 - alias: Open blinds if humans come home
   trigger:
     - platform: state

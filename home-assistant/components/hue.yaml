@@ -1,5 +1,5 @@
 bridges:
-  - host: 192.168.1.248
+  - host: 192.168.0.23
     allow_unreachable: true
     allow_hue_groups: true
     filename: hue_main.conf
