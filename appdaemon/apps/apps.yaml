@@ -8,6 +8,11 @@ living_room_air:
   balcone_door: binary_sensor.balcone_door
   mode: 'Auto'
 
+batteries:
+  module: battery
+  class: BatteryWatcher
+  threshold: 20
+
 bedroom_air:
   module: air_purifier_ai
   class: AirPurifierAI
