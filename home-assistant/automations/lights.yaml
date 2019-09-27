@@ -24,6 +24,16 @@
     - service: light.turn_off
       entity_id: light.coffee
 
+- alias: Switch off main ligt if tv stand on
+  trigger:
+    - platform: state
+      entity_id: light.tv_stand
+      from: 'off'
+      to: 'on'
+  action:
+    - service: light.turn_off
+      entity_id: light.main
+
 - alias: Switch on bathroom lights after door is opened
   trigger:
     - platform: state
