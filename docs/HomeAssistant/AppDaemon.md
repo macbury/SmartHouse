@@ -24,6 +24,9 @@ My apartament is in block from 1960. Some of inside installation is pretty ancie
 
 __TODO: Write more about this__
 
+### Baterry report
+[This](https://github.com/macbury/SmartHouse/blob/master/appdaemon/apps/battery.py) automation checks everyday at 6PM if there are devices with low battery level and sends notification.
+
 ### Humidifier
 
 __TODO: Write more about this__
