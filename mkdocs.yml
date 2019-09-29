@@ -13,6 +13,7 @@ nav:
   - Software:
     - Overview: Software/Overview.md
     - Nginx: Software/Nginx.md
+    - 'Pihole & Cloudflare': Software/PiHole.md
     - Development: Software/Development.md
     - Upgrading: Software/Upgrading.md 
     - Control Scripts: Software/ControlScript.md

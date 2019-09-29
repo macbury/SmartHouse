@@ -52,9 +52,6 @@
 ### Appdaemon
 [Appdaemon](https://appdaemon.readthedocs.io/en/stable/) is pretty decent extension for HomeAssistant automations. At some level I needed to [put more logic to automations](/Software/AppDaemon) and YAML files become unreadable for puny human.
 
-### PiHole
-Everybody is tracking you, Google, Russia(damn you Putin), China(damn you commies) and others. [PiHole](https://pi-hole.net/) is nice software that blocks Ads/Trackin site on the DNS level. Additionaly I have mapped on my router Google DNS like 8.8.8.8 to point to PiHole instance.
-
 ### PostgreSQL
 [PostgreSQL](https://www.postgresql.org/) is main database used by HomeAssistant, Nextcloud and Firefly iii. Alternative would be eating glass or MySQL.
 
