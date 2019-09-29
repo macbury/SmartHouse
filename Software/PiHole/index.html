@@ -13,7 +13,7 @@
         <meta name="description" content="All stuff that is needed to run my smart house">
       
       
-        <link rel="canonical" href="https://macbury.github.io/SmartHouse/DIY/CatFeeder/">
+        <link rel="canonical" href="https://macbury.github.io/SmartHouse/Software/PiHole/">
       
       
         <meta name="author" content="Arkadiusz Buras">
@@ -42,7 +42,7 @@
     
     
       
-        <title>Cat Feeder - MacBury Smart House</title>
+        <title>Pihole & Cloudflare - MacBury Smart House</title>
       
     
     
@@ -87,7 +87,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#page-in-progress-p" tabindex="1" class="md-skip">
+      <a href="#pihole-cloudflare" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -113,7 +113,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Cat Feeder
+                Pihole & Cloudflare
               
             </span>
           
@@ -236,7 +236,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Software/GettingStarted/" title="Getting Started" class="md-nav__link">
+    <a href="../GettingStarted/" title="Getting Started" class="md-nav__link">
       Getting Started
     </a>
   </li>
@@ -366,10 +366,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
     
     <label class="md-nav__link" for="nav-5">
       Software
@@ -387,7 +389,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Software/Overview/" title="Overview" class="md-nav__link">
+    <a href="../Overview/" title="Overview" class="md-nav__link">
       Overview
     </a>
   </li>
@@ -399,7 +401,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Software/Nginx/" title="Nginx" class="md-nav__link">
+    <a href="../Nginx/" title="Nginx" class="md-nav__link">
       Nginx
     </a>
   </li>
@@ -409,11 +411,51 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../../Software/PiHole/" title="Pihole & Cloudflare" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Pihole & Cloudflare
+      </label>
+    
+    <a href="./" title="Pihole & Cloudflare" class="md-nav__link md-nav__link--active">
       Pihole & Cloudflare
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pihole-cloudflare" class="md-nav__link">
+    PiHole &amp; Cloudflare
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+        <li class="md-nav__item">
+          <a href="#__comments" title="Comments" class="md-nav__link md-nav__link--active">
+            Comments
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -423,7 +465,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Software/Development/" title="Development" class="md-nav__link">
+    <a href="../Development/" title="Development" class="md-nav__link">
       Development
     </a>
   </li>
@@ -435,7 +477,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Software/Upgrading/" title="Upgrading" class="md-nav__link">
+    <a href="../Upgrading/" title="Upgrading" class="md-nav__link">
       Upgrading
     </a>
   </li>
@@ -447,7 +489,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Software/ControlScript/" title="Control Scripts" class="md-nav__link">
+    <a href="../ControlScript/" title="Control Scripts" class="md-nav__link">
       Control Scripts
     </a>
   </li>
@@ -459,7 +501,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Software/Ports/" title="Ports" class="md-nav__link">
+    <a href="../Ports/" title="Ports" class="md-nav__link">
       Ports
     </a>
   </li>
@@ -471,7 +513,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Software/Encryption/" title="Encryption" class="md-nav__link">
+    <a href="../Encryption/" title="Encryption" class="md-nav__link">
       Encryption
     </a>
   </li>
@@ -483,7 +525,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Software/Backup/" title="Backup" class="md-nav__link">
+    <a href="../Backup/" title="Backup" class="md-nav__link">
       Backup
     </a>
   </li>
@@ -534,12 +576,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
     
     <label class="md-nav__link" for="nav-7">
       DIY
@@ -557,7 +597,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../RiggadLamp/" title="Riggad Lamp" class="md-nav__link">
+    <a href="../../DIY/RiggadLamp/" title="Riggad Lamp" class="md-nav__link">
       Riggad Lamp
     </a>
   </li>
@@ -569,7 +609,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../LedStrips/" title="Led Strips" class="md-nav__link">
+    <a href="../../DIY/LedStrips/" title="Led Strips" class="md-nav__link">
       Led Strips
     </a>
   </li>
@@ -579,58 +619,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Cat Feeder
-      </label>
-    
-    <a href="./" title="Cat Feeder" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../../DIY/CatFeeder/" title="Cat Feeder" class="md-nav__link">
       Cat Feeder
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#page-in-progress-p" class="md-nav__link">
-    Page in progress :P
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gen-1" class="md-nav__link">
-    Gen 1
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-        <li class="md-nav__item">
-          <a href="#__comments" title="Comments" class="md-nav__link md-nav__link--active">
-            Comments
-          </a>
-        </li>
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -670,15 +663,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#page-in-progress-p" class="md-nav__link">
-    Page in progress :P
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gen-1" class="md-nav__link">
-    Gen 1
+  <a href="#pihole-cloudflare" class="md-nav__link">
+    PiHole &amp; Cloudflare
   </a>
   
 </li>
@@ -705,14 +691,70 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/macbury/SmartHouse/edit/master/docs/DIY/CatFeeder/index.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/macbury/SmartHouse/edit/master/docs/Software/PiHole.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                  <h1>Cat Feeder</h1>
+                  <h1>Pihole & Cloudflare</h1>
                 
-                <h2 id="page-in-progress-p">Page in progress :P<a class="headerlink" href="#page-in-progress-p" title="Permanent link">&para;</a></h2>
-<h2 id="gen-1">Gen 1<a class="headerlink" href="#gen-1" title="Permanent link">&para;</a></h2>
-<p><iframe width="960" height="315" src="https://www.youtube-nocookie.com/embed/XM9isy4HUUo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+                <h2 id="pihole-cloudflare">PiHole &amp; Cloudflare<a class="headerlink" href="#pihole-cloudflare" title="Permanent link">&para;</a></h2>
+<p>Everybody is tracking you, Google, Russia(damn you Putin), China(damn you commies) and others. <a href="https://pi-hole.net/">PiHole</a> is nice software that blocks Ads/Trackin site on the DNS level. Additionaly I have mapped on my router Google DNS like 8.8.8.8 to point to PiHole instance.</p>
+<p>Also to increase security I also configured dns over https. Now everytime any device in my network hits Pihole dns server, it will use secure dns over https to resolve domain. <a href="https://docs.pi-hole.net/guides/dns-over-https/">There is a nice tutorial how to do this</a> and this how my ansible configuration script looks like:</p>
+<div class="codehilite"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">master</span>
+  <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+  <span class="nt">handlers</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">restart cloudflared</span>
+      <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+      <span class="nt">service</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cloudflared</span>
+        <span class="nt">enabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+        <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">restarted</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">reload systemctl</span>
+      <span class="nt">become</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+      <span class="nt">command</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">systemctl daemon-reload</span>
+  <span class="nt">tasks</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Check if cloudflared already installed</span>
+      <span class="nt">command</span><span class="p">:</span> <span class="s">&#39;cloudflared</span><span class="nv"> </span><span class="s">-v&#39;</span>
+      <span class="nt">register</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">is_cloudflared_installed</span>
+      <span class="nt">ignore_errors</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Download cloudflared</span>
+      <span class="nt">when</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">is_cloudflared_installed is failed</span>
+      <span class="nt">get_url</span><span class="p">:</span>
+        <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb</span>
+        <span class="nt">dest</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/tmp/cloudflared-stable-linux-amd64.deb</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Install cloudflared</span>
+      <span class="nt">when</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">is_cloudflared_installed is failed</span>
+      <span class="nt">apt</span><span class="p">:</span>
+        <span class="nt">deb</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/tmp/cloudflared-stable-linux-amd64.deb</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Ensure group &quot;cloudflared&quot; exists</span>
+      <span class="nt">group</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cloudflared</span>
+        <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Adding user cloudflared</span>
+      <span class="nt">user</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cloudflared</span>
+        <span class="nt">group</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cloudflared</span>
+        <span class="nt">create_home</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">no</span>
+        <span class="nt">shell</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/usr/sbin/nologin</span>
+        <span class="nt">append</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create /etc/default/cloudflared</span>
+      <span class="nt">template</span><span class="p">:</span>
+        <span class="nt">src</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./etc/default/cloudflared.j2</span>
+        <span class="nt">dest</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/default/cloudflared</span>
+        <span class="nt">owner</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cloudflared</span>
+        <span class="nt">group</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cloudflared</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Change file ownership for /usr/local/bin/cloudflared</span>
+      <span class="nt">file</span><span class="p">:</span>
+        <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/usr/local/bin/cloudflared</span>
+        <span class="nt">owner</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cloudflared</span>
+        <span class="nt">group</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cloudflared</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create cloudflared.service</span>
+      <span class="nt">template</span><span class="p">:</span>
+        <span class="nt">src</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./lib/systemd/system/cloudflared.service.j2</span>
+        <span class="nt">dest</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/lib/systemd/system/cloudflared.service</span>
+      <span class="nt">notify</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">reload systemctl</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">restart cloudflared</span>
+</pre></div>
                 
                   
                 
@@ -725,9 +767,9 @@
   <div id="disqus_thread"></div>
   <script>
     var disqus_config = function () {
-      this.page.url = "https://macbury.github.io/SmartHouse/DIY/CatFeeder/";
+      this.page.url = "https://macbury.github.io/SmartHouse/Software/PiHole/";
       this.page.identifier =
-        "/DIY/CatFeeder/";
+        "/Software/PiHole/";
     };
     (function() {
       var d = document, s = d.createElement("script");
@@ -749,7 +791,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../LedStrips/" title="Led Strips" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../Nginx/" title="Nginx" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -758,19 +800,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Led Strips
+                Nginx
               </span>
             </div>
           </a>
         
         
-          <a href="../../References/" title="References" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../Development/" title="Development" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                References
+                Development
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
