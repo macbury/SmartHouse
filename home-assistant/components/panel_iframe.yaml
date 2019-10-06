@@ -37,3 +37,8 @@ ha_nextcloud:
   title: "Nextcloud"
   url: "/nextcloud/"
   icon: 'mdi:calendar-multiselect'
+ha_graylog:
+  require_admin: true
+  title: ha_graylog
+  url: "/graylog"
+  icon: "mdi:math-log"
