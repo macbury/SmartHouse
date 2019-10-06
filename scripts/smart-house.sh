@@ -238,3 +238,7 @@ function smart_house_command_pihole() {
 function smart_house_command_support() {
   source "${SMART_HOUSE_DIR}/scripts/support.sh"
 }
+
+function smart_house_command_health() {
+  source "${SMART_HOUSE_DIR}/scripts/health.sh"
+}

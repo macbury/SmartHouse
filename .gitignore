@@ -13,6 +13,7 @@
 .env.crontab
 .env.home-assistant
 .env.local
+.env.graylog
 .env.dpodcast
 .DS_Store
 .backups/**/*

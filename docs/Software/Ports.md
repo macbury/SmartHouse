@@ -5,7 +5,7 @@ Port mapping for services that are running in docker
 | Redis | 6379 |
 | MQTT | 4105 |
 | NextCloud | 4111 |
-| Influxdb | 8086 |
+| Influxdb | 18086 |
 | Postgresql | 4101 |
 | Home-Assistant | 4102 |
 | Grafana | 4100 |

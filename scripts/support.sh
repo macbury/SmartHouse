@@ -16,7 +16,7 @@ function support_command_docker-compose() {
 }
 
 function support_command_logs() {
-  docker-compose --file docker-compose.support.yaml --project-name support logs -f
+  docker-compose --file docker-compose.support.yaml --project-name support logs --tail=100 -f
 }
 
 function support_command_mysql() {

@@ -542,21 +542,21 @@
 #         - reload nginx
 #         - restart nginx
 # Home Assistant
-# - hosts: master
-#   become: yes
-#   handlers:
-#     - name: reload systemctl
-#       become: yes
-#       command: systemctl daemon-reload
-#     - name: restart systemd-resolved
-#       service:
-#         name: systemd-resolved
-#         state: restarted
-#     - name: reload afp
-#       service:
-#         name: netatalk
-#         state: restarted
-#   tasks:
+- hosts: master
+  become: yes
+  handlers:
+    - name: reload systemctl
+      become: yes
+      command: systemctl daemon-reload
+    - name: restart systemd-resolved
+      service:
+        name: systemd-resolved
+        state: restarted
+    - name: reload afp
+      service:
+        name: netatalk
+        state: restarted
+  tasks:
 #     - name: Fallback resolver to pihole and then try cloudflare on boot
 #       become: yes
 #       shell: 'ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf'
@@ -618,6 +618,12 @@
 #         dest: /lib/systemd/system/support.service
 #       notify:
 #         - reload systemctl
+    - name: Create health.service
+      template:
+        src: ./lib/systemd/system/health.service.j2
+        dest: /lib/systemd/system/health.service
+      notify:
+        - reload systemctl
 #     - name: Create media.service
 #       template:
 #         src: ./lib/systemd/system/media.service.j2

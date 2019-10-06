@@ -9,6 +9,10 @@ function pihole_command_stop() {
   sudo systemctl stop pihole
 }
 
+function pihole_command_status() {
+  sudo systemctl status pihole
+}
+
 function pihole_command_restart() {
   sudo systemctl restart pihole
 }

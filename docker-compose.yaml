@@ -1,3 +1,4 @@
+# Main home assistant docker compose services thingy, fuck i need a coffee, my engrish soo bad
 version: '3.5'
 services:
   home-assistant:
@@ -22,6 +23,10 @@ services:
       - /tmp:/tmp
     devices:
       - ${HOME_ASSISTANT_ZWAVE_DEV}:/dev/ttyACM0
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
   appdaemon:
     image: acockburn/appdaemon:latest
     restart: unless-stopped
@@ -34,17 +39,7 @@ services:
       - DASH_URL=http://localhost:15050
     volumes:
       - ./appdaemon:/conf
-  busix:
-    image: macbury/busix:latest
-    network_mode: host
-    env_file:
-      - '.env.busix'
-  blog:
-    image: blog:latest
-    network_mode: host
-    volumes:
-      - .docker/data/blog/store:/app/public/store
-      - .docker/data/blog/system:/app/public/system
-      - .docker/data/blog/application.yml:/app/config/application.yml
-      - .docker/data/blog/database.yml:/app/config/database.yml
-      - .docker/data/blog/secrets.yml:/app/config/secrets.yml
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201

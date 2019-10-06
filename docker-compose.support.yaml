@@ -1,3 +1,4 @@
+# Supporting services, like database that always must be online
 version: '3.5'
 services:
   orion:
@@ -9,6 +10,10 @@ services:
     depends_on:
       - mysql
       - redis
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
   firefox:
     build: ./ff-sync/
     network_mode: host
@@ -19,12 +24,20 @@ services:
       - SYNCSERVER_SQLURI=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:4101/ffsync
     depends_on:
       - database
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
   redis:
     image: redis:4.0.10
     ports:
       - 6379:6379
     volumes:
       - .docker/data/redis:/data
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
   calendar:
     image: nextcloud:latest
     ports:
@@ -33,6 +46,10 @@ services:
       - '.env.nextcloud'
     volumes:
       - .docker/data/nextcloud:/var/www/html
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
   mqtt:
     restart: unless-stopped
     image: eclipse-mosquitto:latest
@@ -42,15 +59,23 @@ services:
       - .docker/data/mosquitto:/mosquitto/data
       - .docker/log/mosquitto.log:/mosquitto/log/mosquitto.log
       - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
   influxdb:
     restart: unless-stopped
     image: influxdb:latest
     ports:
-      - "0.0.0.0:8086:8086"
+      - "0.0.0.0:18086:8086"
     volumes:
       - .docker/data/influxdb:/var/lib/influxdb
     env_file:
       - '.env.influxdb'
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
   database:
     image: postgres:9.6.10-alpine
     restart: unless-stopped
@@ -66,12 +91,20 @@ services:
       - ./postgresql/:/docker-entrypoint-initdb.d/
       - .docker/data/postgresql:/data
       - /tmp/shared:/shared
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
   mysql:
     image: mysql:latest
     env_file: 
       - '.env.mysql'
     volumes:
       - .docker/data/mysql:/var/lib/mysql
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
   grafana:
     image: grafana/grafana:5.4.2
     restart: unless-stopped
@@ -89,6 +122,10 @@ services:
       - .docker/data/grafana:/var/lib/grafana
     depends_on:
       - influxdb
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
   glances:
     restart: unless-stopped
     image: nicolargo/glances
@@ -99,18 +136,30 @@ services:
       - ./glances/:/glances/conf/
     ports:
       - 4108:61208
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
   vacuum:
     build: ./vacuum/
     volumes:
       - .docker/data/vacuum:/app/public
     ports:
       - 10005:3000
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
   esphome:
     image: esphome/esphome:latest
     volumes:
       - .docker/data/esphome:/config
       - /etc/localtime:/etc/localtime:ro
     network_mode: host
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
   notes:
     build: ./notes/
     ports:
@@ -120,6 +169,10 @@ services:
     env_file:
       - '.env.notes'
       - '.env.mysql'
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
   rss:
     image: miniflux/miniflux:latest
     restart: unless-stopped
@@ -129,3 +182,29 @@ services:
       - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/miniflux?sslmode=disable
     env_file:
       - '.env.rss'
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
+  busix:
+    image: macbury/busix:latest
+    network_mode: host
+    env_file:
+      - '.env.busix'
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
+  blog:
+    image: blog:latest
+    network_mode: host
+    volumes:
+      - .docker/data/blog/store:/app/public/store
+      - .docker/data/blog/system:/app/public/system
+      - .docker/data/blog/application.yml:/app/config/application.yml
+      - .docker/data/blog/database.yml:/app/config/database.yml
+      - .docker/data/blog/secrets.yml:/app/config/secrets.yml
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201

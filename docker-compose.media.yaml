@@ -1,3 +1,4 @@
+# All media services, that don't need to be always online
 version: '3.5'
 services:
   airsonic:
@@ -10,6 +11,10 @@ services:
       - /mnt/Music/airsonic/music:/airsonic/music
       - /mnt/Music/airsonic/playlists:/airsonic/playlists
       - /mnt/Music/airsonic/podcasts:/airsonic/podcasts
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
   bazzar:
     image: linuxserver/bazarr:latest
     network_mode: host
@@ -23,6 +28,10 @@ services:
       - .docker/data/bazzar:/config
       - /mnt/MoviesAndTV:/tv
       - /mnt/Movies:/movies
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
   sonarr:
     image: linuxserver/sonarr
     ports:
@@ -35,6 +44,10 @@ services:
       - .docker/data/sonarr:/config
       - /mnt/MoviesAndTV:/tv
       - /home/downloads:/downloads
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
   transmission:
     image: linuxserver/transmission:latest
     restart: unless-stopped
@@ -50,6 +63,10 @@ services:
       - /mnt:/data
       - /mnt/MoviesAndTV:/tv
       - /smart-house/tmp:/downloads
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
   plex:
     network_mode: host
     image: plexinc/pms-docker
@@ -59,6 +76,10 @@ services:
       - .docker/data/plex/config:/config
       - .docker/data/plex/transcode:/transcode
       - /mnt:/data
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
   ytdl:
     restart: unless-stopped
     image: macbury/yt-music-download-helper:latest
@@ -67,4 +88,7 @@ services:
     volumes:
       - /tmp:/download
       - /mnt/Music:/output
-
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201

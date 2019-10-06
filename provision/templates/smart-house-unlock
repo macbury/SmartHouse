@@ -2,6 +2,7 @@
 
 sudo cryptsetup luksOpen {{encrypted_disk}} smart-house && sudo mount /dev/mapper/smart-house /smart-house
 sync
+smart-house health start
 smart-house media mount
 smart-house pihole start
 smart-house support start
