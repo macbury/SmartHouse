@@ -65,7 +65,7 @@
       device_class: power
       icon_template: mdi:dishwasher
       delay_off: 
-        minutes: 5
+        minutes: 15
       value_template: >-
         {{ states.sensor.washing_machine_current.state | float > 0.0 }}
     washer:
@@ -74,6 +74,6 @@
       device_class: power
       icon_template: mdi:washing-machine
       delay_off: 
-        minutes: 10
+        minutes: 35
       value_template: >-
         {{ states.sensor.washer_current.state | float > 0.04 }}
