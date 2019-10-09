@@ -7,6 +7,11 @@ class AdaptiveRoomHeating(hass.Hass):
     self.listen_state(self.on_adaptation_callback, entity = self.args['family_devices'])
     self.listen_state(self.on_adaptation_callback, entity = self.args['temperature_sensor'])
     self.listen_state(self.on_adaptation_callback, entity = self.args['calendar'])
+    if 'main_light' in self.args:
+      self.log('Has support for main light')
+      self.listen_state(self.on_adaptation_callback, entity = self.args['main_light'])
+    else:
+      self.log('Dont have support for main light')
     self.adapt_temperature()
 
   def outside_temperature(self):
@@ -35,6 +40,12 @@ class AdaptiveRoomHeating(hass.Hass):
   def min_temperature(self):
     return float(self.args['min_temperature'])
 
+  def main_light_on(self):
+    if 'main_light' in self.args:
+      return self.get_state(self.args['main_light']) == 'on'
+    else:
+      return False
+
   def lower_temperature(self):
     self.log("Lowering temperature")
     self.call_service('climate/set_temperature', entity_id=self.args['climate'], temperature=7.0)
@@ -48,9 +59,11 @@ class AdaptiveRoomHeating(hass.Hass):
     self.adapt_temperature()
 
   def adapt_temperature(self):
-    self.heating_time()
     self.log("Adapting temperature, Current temp is: {}, outside is: {}".format(self.current_temperature(), self.outside_temperature()))
-    if self.outside_temperature() > 20:
+    if self.main_light_on():
+      self.log("Main light is on, increasing temperature")
+      self.raise_temperature()
+    elif self.outside_temperature() > 20:
       self.log("Outside temperature is {}, lowering temperature".format(self.outside_temperature()))
       self.lower_temperature()
     elif self.current_temperature() >= self.max_temperature():

@@ -310,6 +310,7 @@
 #       - { port: 53, rule: allow, comment: 'Allow PiHole DNS' }
 #       - { port: 22, rule: allow, comment: 'Allow SSH' }
 #       - { port: 80, rule: allow, comment: 'Allow HTTP' }
+#       - { port: 1514, rule: allow, comment: 'Allow SysLog UDP' }
 #       - { port: 443, rule: allow, comment: 'Allow HTTPS' }
 #       - { port: 4105, rule: allow, comment: 'Allow MQTT' }
 #       - { port: 987, rule: allow, comment: 'Allow PS4' }

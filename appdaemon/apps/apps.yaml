@@ -30,7 +30,7 @@ heating_living_room:
   temperature_sensor: sensor.living_room_temperature
   family_devices: group.family
   climate: climate.living_room
-  max_temperature: 28
+  max_temperature: 24
   min_temperature: 20
 
 heating_kitchen:
@@ -38,21 +38,22 @@ heating_kitchen:
   class: AdaptiveRoomHeating
   calendar: calendar.ogrzewanie_kuchnia
   outside_temperature: sensor.dark_sky_temperature
-  temperature_sensor: sensor.living_room_temperature
+  temperature_sensor: sensor.kitchen_temperature
   family_devices: group.family
   climate: climate.kitchen
-  max_temperature: 28
+  max_temperature: 24
   min_temperature: 20
 
 heating_bedroom:
   module: adaptive_room_heating
   class: AdaptiveRoomHeating
-  calendar: calendar.oczyszczacz_sypialnia
+  calendar: calendar.ogrzewanie_sypialnia
   outside_temperature: sensor.dark_sky_temperature
-  temperature_sensor: sensor.living_room_temperature
+  temperature_sensor: sensor.bedroom_temperature
   family_devices: group.family
   climate: climate.bedroom
-  max_temperature: 28
+  main_light: light.bedroom
+  max_temperature: 24
   min_temperature: 20
 
 # cover:
