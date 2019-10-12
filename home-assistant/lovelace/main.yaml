@@ -102,3 +102,8 @@ views:
     icon: mdi:server-security
     cards: !include system.yaml
 
+  - title: Briefing
+    path: briefing
+    panel: true
+    icon: mdi:cast
+    cards: !include briefing.yaml

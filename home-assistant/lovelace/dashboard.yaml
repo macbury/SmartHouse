@@ -5,7 +5,7 @@
     - type: horizontal-stack
       cards:
         - type: picture-entity
-          state_image: 
+          state_image:
             home: /local/presence/ola/home.png
             not_home: /local/presence/ola/away.png
             codesthq: /local/presence/ola/codesthq.png
@@ -13,7 +13,7 @@
           aspect_ratio: 16x10
           entity: person.ola
         - type: picture-entity
-          state_image: 
+          state_image:
             home: /local/presence/arek/home.png
             not_home: /local/presence/arek/away.png
             codesthq: /local/presence/arek/codesthq.png

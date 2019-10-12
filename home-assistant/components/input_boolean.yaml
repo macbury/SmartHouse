@@ -1,3 +1,8 @@
 comeback:
   name: "Wracam"
   initial: off
+
+pizza:
+  name: 'Pizza'
+  icon: mdi:pizza
+  initial: off
