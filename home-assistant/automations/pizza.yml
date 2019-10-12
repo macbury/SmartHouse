@@ -1,0 +1,9 @@
+- alias: Switch off pizza mode after 4 hours
+  trigger:
+    platform: state
+    entity_id: input_boolean.pizza
+    for:
+      hours: 4
+  action:
+    service: input_boolean.turn_off
+    entity_id: input_boolean.pizza

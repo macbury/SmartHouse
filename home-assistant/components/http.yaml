@@ -13,3 +13,5 @@ trusted_networks:
   - 172.20.0.0/24
 ip_ban_enabled: false
 login_attempts_threshold: 20
+cors_allowed_origins:
+  - https://cast.home-assistant.io

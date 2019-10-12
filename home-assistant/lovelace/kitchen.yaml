@@ -8,13 +8,8 @@
           entity: light.kitchen
           icon: mdi:ceiling-light
         - type: entity-button
-          entity: input_boolean.pizza
+          entity: switch.pizza
           icon: mdi:pizza
-          tap_action:
-            service: input_boolean.toggle
-            action: call-service
-            service_data:
-              entity_id: input_boolean.pizza
     - type: horizontal-stack
       cards:
         - type: entity-button

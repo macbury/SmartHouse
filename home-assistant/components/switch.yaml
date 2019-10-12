@@ -16,3 +16,16 @@
 - platform: wake_on_lan
   name: Mac Mini
   mac_address: "D4:DC:CD:F3:FD:B6"
+
+- platform: template
+  switches:
+    pizza:
+      value_template: "{{ is_state('input_boolean.pizza', 'on') }}"
+      turn_on:
+        service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.pizza
+      turn_off:
+        service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.pizza
