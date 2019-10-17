@@ -1,24 +1,10 @@
 # All media services, that don't need to be always online
 version: '3.5'
 services:
-  airsonic:
-    image: airsonic/airsonic
-    network_mode: host
-    ports:
-      - 4040:4040
-    volumes:
-      - .docker/data/airsonic:/airsonic/data
-      - /mnt/Music/airsonic/music:/airsonic/music
-      - /mnt/Music/airsonic/playlists:/airsonic/playlists
-      - /mnt/Music/airsonic/podcasts:/airsonic/podcasts
-    logging:
-      driver: gelf
-      options:
-        gelf-address: udp://localhost:12201
   bazzar:
     image: linuxserver/bazarr:latest
     network_mode: host
-    environment: 
+    environment:
       PUID: 0
       PGID: 0
       TZ: "Europe/Warsaw"
@@ -31,12 +17,13 @@ services:
     logging:
       driver: gelf
       options:
+        tag: bazzar
         gelf-address: udp://localhost:12201
   sonarr:
     image: linuxserver/sonarr
     ports:
       - 8989:8989
-    environment: 
+    environment:
       PUID: 0
       PGID: 0
       TZ: "Europe/Warsaw"
@@ -47,6 +34,7 @@ services:
     logging:
       driver: gelf
       options:
+        tag: sonarr
         gelf-address: udp://localhost:12201
   transmission:
     image: linuxserver/transmission:latest
@@ -54,7 +42,7 @@ services:
     ports:
       - 8112:9091
       - 51413:51413/udp
-    environment: 
+    environment:
       PUID: 0
       PGID: 0
       TZ: "Europe/Warsaw"
@@ -66,19 +54,21 @@ services:
     logging:
       driver: gelf
       options:
+        tag: transmission
         gelf-address: udp://localhost:12201
   plex:
     network_mode: host
     image: plexinc/pms-docker
     env_file:
       - .env.plex
-    volumes: 
+    volumes:
       - .docker/data/plex/config:/config
       - .docker/data/plex/transcode:/transcode
       - /mnt:/data
     logging:
       driver: gelf
       options:
+        tag: plex
         gelf-address: udp://localhost:12201
   ytdl:
     restart: unless-stopped
@@ -91,4 +81,18 @@ services:
     logging:
       driver: gelf
       options:
+        tag: ytdl
         gelf-address: udp://localhost:12201
+  podjira:
+    restart: unless-stopped
+    image: macbury/podjira:latest
+    network_mode: host
+    volumes:
+      - .docker/data/podjira/:/app/storage
+    logging:
+      driver: gelf
+      options:
+        tag: podjira
+        gelf-address: udp://localhost:12201
+    env_file:
+      - .env.podcast

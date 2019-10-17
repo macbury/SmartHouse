@@ -13,6 +13,7 @@ services:
     logging:
       driver: gelf
       options:
+        tag: orion
         gelf-address: udp://localhost:12201
   firefox:
     build: ./ff-sync/
@@ -27,6 +28,7 @@ services:
     logging:
       driver: gelf
       options:
+        tag: firefox
         gelf-address: udp://localhost:12201
   redis:
     image: redis:4.0.10
@@ -37,6 +39,7 @@ services:
     logging:
       driver: gelf
       options:
+        tag: redis
         gelf-address: udp://localhost:12201
   calendar:
     image: nextcloud:latest
@@ -49,6 +52,7 @@ services:
     logging:
       driver: gelf
       options:
+        tag: calendar
         gelf-address: udp://localhost:12201
   mqtt:
     restart: unless-stopped
@@ -62,6 +66,7 @@ services:
     logging:
       driver: gelf
       options:
+        tag: mqtt
         gelf-address: udp://localhost:12201
   influxdb:
     restart: unless-stopped
@@ -75,6 +80,7 @@ services:
     logging:
       driver: gelf
       options:
+        tag: influxdb
         gelf-address: udp://localhost:12201
   database:
     image: postgres:9.6.10-alpine
@@ -94,16 +100,18 @@ services:
     logging:
       driver: gelf
       options:
+        tag: database
         gelf-address: udp://localhost:12201
   mysql:
     image: mysql:latest
-    env_file: 
+    env_file:
       - '.env.mysql'
     volumes:
       - .docker/data/mysql:/var/lib/mysql
     logging:
       driver: gelf
       options:
+        tag: mysql
         gelf-address: udp://localhost:12201
   grafana:
     image: grafana/grafana:5.4.2
@@ -125,6 +133,7 @@ services:
     logging:
       driver: gelf
       options:
+        tag: grafana
         gelf-address: udp://localhost:12201
   glances:
     restart: unless-stopped
@@ -139,6 +148,7 @@ services:
     logging:
       driver: gelf
       options:
+        tag: glances
         gelf-address: udp://localhost:12201
   vacuum:
     build: ./vacuum/
@@ -149,6 +159,7 @@ services:
     logging:
       driver: gelf
       options:
+        tag: vacuum
         gelf-address: udp://localhost:12201
   esphome:
     image: esphome/esphome:latest
@@ -159,6 +170,7 @@ services:
     logging:
       driver: gelf
       options:
+        tag: esphome
         gelf-address: udp://localhost:12201
   notes:
     build: ./notes/
@@ -172,6 +184,7 @@ services:
     logging:
       driver: gelf
       options:
+        tag: notes
         gelf-address: udp://localhost:12201
   rss:
     image: miniflux/miniflux:latest
@@ -185,6 +198,7 @@ services:
     logging:
       driver: gelf
       options:
+        tag: rss
         gelf-address: udp://localhost:12201
   busix:
     image: macbury/busix:latest
@@ -194,6 +208,7 @@ services:
     logging:
       driver: gelf
       options:
+        tag: busix
         gelf-address: udp://localhost:12201
   blog:
     image: blog:latest
@@ -207,4 +222,5 @@ services:
     logging:
       driver: gelf
       options:
+        tag: blog
         gelf-address: udp://localhost:12201

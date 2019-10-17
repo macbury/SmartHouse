@@ -83,12 +83,15 @@ function smart_house_command_backup() {
   systemctl stop smart-house;
   systemctl stop support;
   systemctl stop media;
+  systemctl stop health;
   echo "Compressing data"
   echo $BACKUP_FILE
   zip -1 -r $BACKUP_FILE $SMART_HOUSE_DIR -x"smart-house/tmp/**/*" -x"smart-house/.docker/data/plex/config/Library/Application Support/Plex Media Server/Metadata/**/*" -x"smart-house/tmp" -x"*.log" -x"*.backups" -x"smart-house/.docker/data/plex/config/Library/Application Support/Plex Media Server/Cache/**/*" -x"smart-house/.docker/data/plex/config/Library/Application Support/Plex Media Server/Media/**/*" -x"*.AppleDouble" -x"smart-house/.docker/data/dpodcast";
   echo "Starting services"
   systemctl start support;
   systemctl start smart-house;
+  systemctl start media;
+  systemctl start health;
   echo "Waiting for services to boot"
   sleep 60;
   echo "Mounting backup storage"
@@ -133,9 +136,10 @@ function smart_house_command_docs() {
 
 function smart_house_command_ddns() {
   bin/ddns.py $MAIN_DOMAIN $HOME_ASSISTANT_SUBDOMAIN 1;
-  bin/ddns.py $MAIN_DOMAIN budget.$HOME_ASSISTANT_SUBDOMAIN 1;
   bin/ddns.py $MAIN_DOMAIN notes.$HOME_ASSISTANT_SUBDOMAIN 0;
   bin/ddns.py $MAIN_DOMAIN $HOME_ASSISTANT_VPNDOMAIN 0;
+  bin/ddns.py $MAIN_DOMAIN podcast.$HOME_ASSISTANT_SUBDOMAIN 0;
+  bin/ddns.py $MAIN_DOMAIN rss.$HOME_ASSISTANT_SUBDOMAIN 0;
 }
 
 function smart_house_command_certbot() {

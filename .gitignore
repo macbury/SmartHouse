@@ -2,6 +2,7 @@
 .docker/log/**/*
 *.log
 .env
+.env.podcast
 .env.nextcloud
 .env.firefly
 .env.plex

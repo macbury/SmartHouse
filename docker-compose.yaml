@@ -26,6 +26,7 @@ services:
     logging:
       driver: gelf
       options:
+        tag: homeassistant
         gelf-address: udp://localhost:12201
   appdaemon:
     image: acockburn/appdaemon:latest
@@ -42,4 +43,5 @@ services:
     logging:
       driver: gelf
       options:
+        tag: appdaemon
         gelf-address: udp://localhost:12201

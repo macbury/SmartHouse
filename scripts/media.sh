@@ -28,6 +28,10 @@ function media_command_logs() {
   docker-compose --file docker-compose.media.yaml --project-name media logs -f
 }
 
+function media_command_migrate-podjira() {
+  docker-compose --file docker-compose.media.yaml --project-name media run podjira bin/rails db:create db:migrate db:seed
+}
+
 function media_command_start() {
   media_command_mount;
   sudo systemctl start media;

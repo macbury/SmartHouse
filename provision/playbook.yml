@@ -447,38 +447,31 @@
 #       - domains:
 #         - "{{ rss_domain }}"
 
-# - hosts: master
-#   become: yes
-#   roles:
-#     - role: geerlingguy.certbot
-#   vars:
-#     certbot_auto_renew: false
-#     certbot_admin_email: "{{ email }}"
-#     certbot_create_if_missing: true
-#     certbot_certs:
-#       - domains:
-#         - "{{ airsonic_domain }}"
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.certbot
+  vars:
+    certbot_auto_renew: false
+    certbot_admin_email: "{{ email }}"
+    certbot_create_if_missing: true
+    certbot_certs:
+      - domains:
+        - "{{ podcast_domain }}"
 
-# # Nginx
-# - hosts: master
-#   become: yes
-#   roles:
-#     - role: geerlingguy.nginx
-#   handlers:
-#     - name: restart nginx
-#       become: yes
-#       service:
-#         name: nginx
-#         enabled: yes
-#         state: restarted
-#   tasks:
-#     - name: Create /etc/nginx/sites-enabled/airsonic.conf
-#       template:
-#         src: ./etc/nginx/sites-enabled/airsonic.conf.j2
-#         dest: /etc/nginx/sites-enabled/airsonic.conf
-#       notify:
-#         - reload nginx
-#         - restart nginx
+# Nginx
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.nginx
+  handlers:
+    - name: restart nginx
+      become: yes
+      service:
+        name: nginx
+        enabled: yes
+        state: restarted
+  tasks:
     # - name: Create /etc/nginx/sites-enabled/rss.conf
     #   template:
     #     src: ./etc/nginx/sites-enabled/rss.conf.j2
@@ -521,6 +514,13 @@
 #       notify:
 #         - reload nginx
 #         - restart nginx
+    - name: Create /etc/nginx/sites-enabled/podcast.conf
+      template:
+        src: ./etc/nginx/sites-enabled/podcast.conf.j2
+        dest: /etc/nginx/sites-enabled/podcast.conf
+      notify:
+        - reload nginx
+        - restart nginx
 #     - name: Create /etc/nginx/sites-enabled/honeytap.conf
 #       template:
 #         src: ./etc/nginx/sites-enabled/default.conf.j2
@@ -625,6 +625,7 @@
         dest: /lib/systemd/system/health.service
       notify:
         - reload systemctl
+
 #     - name: Create media.service
 #       template:
 #         src: ./lib/systemd/system/media.service.j2
@@ -769,11 +770,6 @@
 # - hosts: master
 #   become: yes
 #   tasks:
-#     - name: Add crontab entry for health-check
-#       cron:
-#         name: "health-check"
-#         minute: "*/15"
-#         job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house health-check' >> /tmp/health-check.log 2>&1"
 #     - name: Add crontab entry for refreshing dns
 #       cron:
 #         name: "ddns"
@@ -791,18 +787,6 @@
 #         hour: "1"
 #         minute: "0"
 #         job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house backup' >> /tmp/backup.log 2>&1"
-#     - name: Switch off media server
-#       cron:
-#         name: "media_off"
-#         hour: "1"
-#         minute: "0"
-#         job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house media stop' >> /tmp/backup.log 2>&1"
-#     - name: Switch on media server
-#       cron:
-#         name: "media_on"
-#         hour: "9"
-#         minute: "0"
-#         job: "/usr/bin/zsh -l -c 'SMART_HOUSE_DIR=/smart-house smart-house media start' >> /tmp/backup.log 2>&1"
 #     - name: Cleanup docker shit
 #       cron:
 #         name: 'docker'
