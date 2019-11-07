@@ -28,10 +28,6 @@
       hide_volume: true
       show_progress: false
       show_source: full
-    - type: entities
-      show_header_toggle: false
-      entities:
-        - binary_sensor.dishwasher
     - break
     - type: custom:vacuum-card
       entity: vacuum.main_vacuum

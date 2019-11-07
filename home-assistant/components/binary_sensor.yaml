@@ -59,15 +59,6 @@
       icon_template: mdi:weather-sunny-alert
       value_template: >-
         {{ states.sensor.stat_window_luminance_mean.state | float >= 5000 }}
-    dishwasher:
-      friendly_name: "Zmywarka"
-      entity_id: sensor.washing_machine_current
-      device_class: power
-      icon_template: mdi:dishwasher
-      delay_off: 
-        minutes: 15
-      value_template: >-
-        {{ states.sensor.washing_machine_current.state | float > 0.0 }}
     washer:
       friendly_name: "Pralka"
       entity_id: sensor.washer_power

@@ -29,6 +29,8 @@ server {
     proxy_set_header Host $http_host;
     proxy_set_header X-NginX-Proxy true;
     proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Sendfile-Type X-Accel-Redirect;
+    proxy_set_header X-Accel-Mapping /smart-house/.docker/data/podjira/=/storage/;
   }
 
   error_page 404 403 @error;

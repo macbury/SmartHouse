@@ -103,7 +103,7 @@ function smart_house_command_backup() {
   rm $BACKUP_FILE;
   find $BACKUP_STORAGE -mtime +3 -type f -delete;
   smart_house_command_enpass;
-  unmount_share "homes";
+  #unmount_share "homes";
   echo "Done"
 }
 

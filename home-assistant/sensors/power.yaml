@@ -15,6 +15,5 @@
             float(states.sensor.fibaro_system_fgs223_double_relay_power.state)+
             float(states.sensor.fibaro_system_fgs223_double_relay_power.state)+
             float(states.sensor.washer_power.state)+
-            float(states.sensor.washing_machine_power.state)+
             float(states.sensor.cover_power.state)
         }}

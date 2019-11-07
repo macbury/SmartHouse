@@ -25,6 +25,31 @@
     - service: light.turn_off
       entity_id: light.gatewa_ambient_light
 
+- alias: Switch on hall balls light in corridor on movement
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.hall_pir
+      from: 'off'
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: 'sun.sun'
+        state: 'below_horizon'
+      - condition: state
+        entity_id: light.corridor
+        state: 'off'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.hall_balls
+    - wait_template: "{{ is_state('binary_sensor.hall_pir', 'off') }}"
+      timeout: '00:01:00'
+      continue_on_timeout: true
+    - service: light.turn_off
+      entity_id: light.hall_balls
+
 - alias: Ping me if main doors are open
   trigger:
     - platform: state

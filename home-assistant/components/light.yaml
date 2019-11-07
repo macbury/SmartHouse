@@ -15,6 +15,10 @@
   entity_id: switch.coffee_light
 
 - platform: switch
+  name: Hall Balls
+  entity_id: switch.hall_balls
+
+- platform: switch
   name: Dinner table
   entity_id: switch.dinner_table_light
 
