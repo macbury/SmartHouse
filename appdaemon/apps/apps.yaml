@@ -30,7 +30,7 @@ heating_living_room:
   temperature_sensor: sensor.living_room_temperature
   family_devices: group.family
   climate: climate.living_room
-  max_temperature: 24.5
+  max_temperature: 24
   min_temperature: 20
 
 heating_kitchen:
@@ -41,7 +41,7 @@ heating_kitchen:
   temperature_sensor: sensor.kitchen_temperature
   family_devices: group.family
   climate: climate.kitchen
-  max_temperature: 27
+  max_temperature: 24
   min_temperature: 20
   main_light: input_boolean.pizza
 
@@ -54,7 +54,7 @@ heating_bedroom:
   family_devices: group.family
   climate: climate.bedroom
   main_light: light.bedroom
-  max_temperature: 24
+  max_temperature: 25
   min_temperature: 20
 
 # cover:

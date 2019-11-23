@@ -447,6 +447,18 @@
 #       - domains:
 #         - "{{ rss_domain }}"
 
+# - hosts: master
+#   become: yes
+#   roles:
+#     - role: geerlingguy.certbot
+#   vars:
+#     certbot_auto_renew: false
+#     certbot_admin_email: "{{ email }}"
+#     certbot_create_if_missing: true
+#     certbot_certs:
+#       - domains:
+#         - "{{ podcast_domain }}"
+
 - hosts: master
   become: yes
   roles:
@@ -457,7 +469,8 @@
     certbot_create_if_missing: true
     certbot_certs:
       - domains:
-        - "{{ podcast_domain }}"
+        - "{{ monio_domain }}"
+
 
 # Nginx
 - hosts: master
@@ -514,10 +527,17 @@
 #       notify:
 #         - reload nginx
 #         - restart nginx
-    - name: Create /etc/nginx/sites-enabled/podcast.conf
+    # - name: Create /etc/nginx/sites-enabled/podcast.conf
+    #   template:
+    #     src: ./etc/nginx/sites-enabled/podcast.conf.j2
+    #     dest: /etc/nginx/sites-enabled/podcast.conf
+    #   notify:
+    #     - reload nginx
+    #     - restart nginx
+    - name: Create /etc/nginx/sites-enabled/monio.conf
       template:
-        src: ./etc/nginx/sites-enabled/podcast.conf.j2
-        dest: /etc/nginx/sites-enabled/podcast.conf
+        src: ./etc/nginx/sites-enabled/monio.conf.j2
+        dest: /etc/nginx/sites-enabled/monio.conf
       notify:
         - reload nginx
         - restart nginx

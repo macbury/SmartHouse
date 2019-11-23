@@ -18,6 +18,9 @@
         - type: entity-button
           entity: light.coffee
           icon: mdi:coffee
+    - type: light
+      entity: light.gatewa_ambient_light
+      icon: mdi:spotlight-beam
     - type: custom:mini-media-player
       entity: media_player.kitchen
       name: 'Alexa'

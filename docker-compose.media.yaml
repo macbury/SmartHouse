@@ -96,3 +96,16 @@ services:
         gelf-address: udp://localhost:12201
     env_file:
       - .env.podcast
+  monio:
+    restart: unless-stopped
+    image: macbury/mon.io:3
+    network_mode: host
+    volumes:
+      - .docker/data/monio/:/app/storage
+    logging:
+      driver: gelf
+      options:
+        tag: monio
+        gelf-address: udp://localhost:12201
+    env_file:
+      - .env.monio

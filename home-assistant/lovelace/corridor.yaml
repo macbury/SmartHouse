@@ -9,9 +9,6 @@
           icon: mdi:ceiling-light
           icon_height: '153px'
         - type: light
-          entity: light.gatewa_ambient_light
-          icon: mdi:spotlight-beam
-        - type: light
           entity: light.hall_balls
           icon: mdi:spotlight-beam
     - type: horizontal-stack
