@@ -2,7 +2,7 @@
 version: '3.5'
 services:
   home-assistant:
-    build: ./home-assistant/
+    image: homeassistant/home-assistant:0.102.1
     extra_hosts:
       - "outside:${HOME_ASSISTANT_IP}"
     env_file:
@@ -23,11 +23,11 @@ services:
       - /tmp:/tmp
     devices:
       - ${HOME_ASSISTANT_ZWAVE_DEV}:/dev/ttyACM0
-    logging:
-      driver: gelf
-      options:
-        tag: homeassistant
-        gelf-address: udp://localhost:12201
+    # logging:
+    #   driver: gelf
+    #   options:
+    #     tag: homeassistant
+    #     gelf-address: udp://localhost:12201
   appdaemon:
     image: acockburn/appdaemon:latest
     restart: unless-stopped
@@ -40,8 +40,8 @@ services:
       - DASH_URL=http://localhost:15050
     volumes:
       - ./appdaemon:/conf
-    logging:
-      driver: gelf
-      options:
-        tag: appdaemon
-        gelf-address: udp://localhost:12201
+    # logging:
+    #   driver: gelf
+    #   options:
+    #     tag: appdaemon
+    #     gelf-address: udp://localhost:12201
