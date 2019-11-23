@@ -1,8 +1,29 @@
 - alias: Switch on cooking light if phone is connected to kitchen alexa
   trigger:
-    platform: template
-    value_template: '{{ is_state_attr("media_player.kitchen", "source", "Galaxy S10") }}'
+    - platform: template
+      value_template: '{{ is_state_attr("media_player.kitchen", "source", "Galaxy S10") }}'
+    - platform: template
+      value_template: '{{ is_state_attr("media_player.kitchen", "source", "PATELNIA") }}'
   action:
     - service: light.turn_on
       data:
         entity_id: light.cooking
+    - delay: '00:00:05'
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.kitchen # adjust volume of alexa device
+        volume_level: 0.8
+
+- alias: Switch iff cooking light if phone is disconnected from kitchen alexa
+  trigger:
+    - platform: template
+      value_template: '{{ is_state_attr("media_player.kitchen", "source", "Local Speaker") }}'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: light.cooking
+    - delay: '00:00:05'
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.kitchen # adjust volume of alexa device
+        volume_level: 0.3
