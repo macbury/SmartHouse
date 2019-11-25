@@ -38,3 +38,31 @@
           @Arek, następny tramwaj za 10 min({{ states.sensor.to_work_transit.attributes.departures[0].time['formatted'] }})!
           Kolejny będzie o {{ states.sensor.to_work_transit.attributes.departures[1].time['formatted'] }}
 
+- alias: Nag me at in work about next train
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.back_from_work_transit
+    below: 600
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: 'person.arek'
+        state: 'codesthq'
+      - condition: time
+        # At least one of the following is required.
+        after: '16:30:00'
+        before: '17:30:00'
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+  action:
+    - service: notify.all
+      data:
+        message: >
+          @Arek, następny tramwaj za 10 min({{ states.sensor.back_from_work_transit.attributes.departures[0].time['formatted'] }})!
+          Kolejny będzie o {{ states.sensor.back_from_work_transit.attributes.departures[1].time['formatted'] }}
+
