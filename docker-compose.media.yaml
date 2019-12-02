@@ -58,7 +58,7 @@ services:
         gelf-address: udp://localhost:12201
   plex:
     network_mode: host
-    image: plexinc/pms-docker
+    image: plexinc/pms-docker:1.18.2.2058-e67a4e892
     env_file:
       - .env.plex
     volumes:
@@ -98,7 +98,7 @@ services:
       - .env.podcast
   monio:
     restart: unless-stopped
-    image: macbury/mon.io:3
+    image: macbury/mon.io:9
     network_mode: host
     volumes:
       - .docker/data/monio/:/app/storage
