@@ -98,7 +98,7 @@ services:
       - .env.podcast
   monio:
     restart: unless-stopped
-    image: macbury/mon.io:9
+    image: macbury/mon.io:13
     network_mode: host
     volumes:
       - .docker/data/monio/:/app/storage

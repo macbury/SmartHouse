@@ -59,12 +59,3 @@
       icon_template: mdi:weather-sunny-alert
       value_template: >-
         {{ states.sensor.stat_window_luminance_mean.state | float >= 5000 }}
-    washer:
-      friendly_name: "Pralka"
-      entity_id: sensor.washer_power
-      device_class: power
-      icon_template: mdi:washing-machine
-      delay_off: 
-        minutes: 35
-      value_template: >-
-        {{ states.sensor.washer_current.state | float > 0.04 }}

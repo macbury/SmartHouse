@@ -1,19 +1,1 @@
 
-
-- alias: Notify wife that clothes washing is complete
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.washer
-      to: 'off'
-      from: 'on'
-  action:
-    - service: notify.alexa_media_living_room
-      data:
-        message: 'Hey wife, loundry is finished!'
-        data:
-          type: announce
-          method: all
-    - delay: '00:00:15'
-    - service: notify.all
-      data:
-        message: '@Ola, pranie się skończyło!'

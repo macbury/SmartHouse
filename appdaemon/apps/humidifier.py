@@ -2,7 +2,7 @@ import appdaemon.plugins.hass.hassapi as hass
 
 class HumidifierController(hass.Hass):
   def initialize(self):
-    self.log("Started")
+    self.log("Started!")
 
     self.humidifer_id = self.args['humidifer']
     self.max_humidity = self.args['max_humidity']
@@ -19,7 +19,7 @@ class HumidifierController(hass.Hass):
     self.adapt()
 
   def current(self):
-    return int(self.get_state(self.args['humidity_sensor']))
+    return float(self.get_state(self.args['humidity_sensor']))
 
   def anyone_in_home(self):
     state = self.get_state(self.args['family_devices'])

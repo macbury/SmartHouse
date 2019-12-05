@@ -76,6 +76,7 @@
         - binary_sensor.balcone_door
         - sensor.transmission_status
         - scene.watching_tv
+        - switch.living_room_humidifier
 
     # Wallpaper and stuff
     - type: custom:dynamic-wallpaper

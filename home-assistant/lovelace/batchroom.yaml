@@ -36,7 +36,6 @@
     - type: entities
       show_header_toggle: false
       entities:
-        - binary_sensor.washer
         - binary_sensor.bathroom_door
     - break
     - type: custom:dynamic-wallpaper

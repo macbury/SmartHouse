@@ -13,8 +13,7 @@ class AirPurifierAI(hass.Hass):
     
     if 'alt_mode_entity' in self.args:
       self.log("Watching entity: {}".format(self.args['alt_mode_entity']))
-      self.listen_state(self.on_adaptation_callback, entity = self.args['alt_mode_entity'], new = "on")
-      self.listen_state(self.on_adaptation_callback, entity = self.args['alt_mode_entity'], new = "off", old="on", immediate=True, duration=self.args['fallback'])
+      self.listen_state(self.on_adaptation_callback, entity = self.args['alt_mode_entity'])
     self.log("Finished configuration")
     self.adapt_air_purifier_mode()
 
