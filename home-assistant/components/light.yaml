@@ -7,6 +7,10 @@
   entity_id: switch.bathroom_light
 
 - platform: switch
+  name: Christmas
+  entity_id: switch.christmas
+
+- platform: switch
   name: Bedroom
   entity_id: switch.bedroom_light
 

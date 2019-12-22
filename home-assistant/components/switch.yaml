@@ -19,6 +19,16 @@
 
 - platform: template
   switches:
+    giggid:
+      value_template: "{{ is_state('input_boolean.giggid', 'on') }}"
+      turn_on:
+        service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.giggid
+      turn_off:
+        service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.giggid
     pizza:
       value_template: "{{ is_state('input_boolean.pizza', 'on') }}"
       turn_on:

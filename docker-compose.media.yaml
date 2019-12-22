@@ -14,11 +14,6 @@ services:
       - .docker/data/bazzar:/config
       - /mnt/MoviesAndTV:/tv
       - /mnt/Movies:/movies
-    logging:
-      driver: gelf
-      options:
-        tag: bazzar
-        gelf-address: udp://localhost:12201
   sonarr:
     image: linuxserver/sonarr
     ports:
@@ -31,11 +26,6 @@ services:
       - .docker/data/sonarr:/config
       - /mnt/MoviesAndTV:/tv
       - /home/downloads:/downloads
-    logging:
-      driver: gelf
-      options:
-        tag: sonarr
-        gelf-address: udp://localhost:12201
   transmission:
     image: linuxserver/transmission:latest
     restart: unless-stopped
@@ -51,61 +41,20 @@ services:
       - /mnt:/data
       - /mnt/MoviesAndTV:/tv
       - /smart-house/tmp:/downloads
-    logging:
-      driver: gelf
-      options:
-        tag: transmission
-        gelf-address: udp://localhost:12201
   plex:
     network_mode: host
-    image: plexinc/pms-docker:1.18.2.2058-e67a4e892
+    image: plexinc/pms-docker:1.18.3.2156-349e9837e
     env_file:
       - .env.plex
     volumes:
       - .docker/data/plex/config:/config
       - .docker/data/plex/transcode:/transcode
       - /mnt:/data
-    logging:
-      driver: gelf
-      options:
-        tag: plex
-        gelf-address: udp://localhost:12201
-  ytdl:
-    restart: unless-stopped
-    image: macbury/yt-music-download-helper:latest
-    ports:
-      - 9292:9292
-    volumes:
-      - /tmp:/download
-      - /mnt/Music:/output
-    logging:
-      driver: gelf
-      options:
-        tag: ytdl
-        gelf-address: udp://localhost:12201
-  podjira:
-    restart: unless-stopped
-    image: macbury/podjira:latest
-    network_mode: host
-    volumes:
-      - .docker/data/podjira/:/app/storage
-    logging:
-      driver: gelf
-      options:
-        tag: podjira
-        gelf-address: udp://localhost:12201
-    env_file:
-      - .env.podcast
   monio:
     restart: unless-stopped
-    image: macbury/mon.io:13
+    image: macbury/mon.io:latest
     network_mode: host
     volumes:
       - .docker/data/monio/:/app/storage
-    logging:
-      driver: gelf
-      options:
-        tag: monio
-        gelf-address: udp://localhost:12201
     env_file:
       - .env.monio

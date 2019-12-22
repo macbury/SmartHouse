@@ -6,3 +6,8 @@ pizza:
   name: 'Pizza'
   icon: mdi:pizza
   initial: off
+
+giggid:
+  name: 'giggid'
+  icon: mdi:account-arrow-left
+  initial: off

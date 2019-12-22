@@ -77,6 +77,7 @@
         - sensor.transmission_status
         - scene.watching_tv
         - switch.living_room_humidifier
+        - light.christmas
 
     # Wallpaper and stuff
     - type: custom:dynamic-wallpaper

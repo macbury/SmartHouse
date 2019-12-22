@@ -23,11 +23,6 @@ services:
       - /tmp:/tmp
     devices:
       - ${HOME_ASSISTANT_ZWAVE_DEV}:/dev/ttyACM0
-    # logging:
-    #   driver: gelf
-    #   options:
-    #     tag: homeassistant
-    #     gelf-address: udp://localhost:12201
   appdaemon:
     image: acockburn/appdaemon:latest
     restart: unless-stopped
@@ -40,8 +35,3 @@ services:
       - DASH_URL=http://localhost:15050
     volumes:
       - ./appdaemon:/conf
-    # logging:
-    #   driver: gelf
-    #   options:
-    #     tag: appdaemon
-    #     gelf-address: udp://localhost:12201

@@ -55,7 +55,7 @@ heating_bedroom:
   temperature_sensor: sensor.bedroom_temperature
   family_devices: group.family
   climate: climate.bedroom
-  main_light: light.bedroom
+  main_light: input_boolean.giggid
   max_temperature: 25
   min_temperature: 20
 
@@ -63,11 +63,11 @@ humidifier_living_room:
   module: humidifier
   class: HumidifierController
   humidifer: switch.living_room_humidifier
-  max_humidity: 50
-  min_humidity: 40
+  max_humidity: 48
+  min_humidity: 45
   family_devices: group.family
   calendar: calendar.ogrzewanie_salon
-  humidity_sensor: sensor.corridor_humidity
+  humidity_sensor: sensor.living_room_humidity
 # cover:
 #   module: cover
 #   class: Blinds

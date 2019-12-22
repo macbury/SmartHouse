@@ -44,6 +44,9 @@
       entity: light.bedroom
       icon: mdi:ceiling-light
       icon_height: '159px'
+    - type: entity-button
+      entity: switch.giggid
+      icon: mdi:account-arrow-left
     - type: custom:mini-media-player
       entity: media_player.bedroom
       name: 'Alexa'

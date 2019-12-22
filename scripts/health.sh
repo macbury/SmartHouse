@@ -2,7 +2,7 @@
 SUBCOMMAND=${1}
 
 function health_command_up() {
-  docker-compose --file docker-compose.health.yaml --project-name health up
+  echo "depracated"
 }
 
 function health_command_down() {
@@ -10,7 +10,7 @@ function health_command_down() {
 }
 
 function health_command_logs() {
-  docker-compose --file docker-compose.health.yaml --project-name health logs -f
+  echo "depracated"
 }
 
 function health_command_start() {
