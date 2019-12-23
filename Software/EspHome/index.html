@@ -627,6 +627,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#how-to-add-new-device" class="md-nav__link">
+    How to add new device
+  </a>
+  
+</li>
+      
       
       
       
@@ -670,6 +677,8 @@
 
 
 <p>https://github.com/esp8266/Arduino/blob/master/variants/d1_mini/pins_arduino.h#L37</p>
+<h2 id="how-to-add-new-device">How to add new device<a class="headerlink" href="#how-to-add-new-device" title="Permanent link">&para;</a></h2>
+<p>Visit web ui under http://192.168.1.12:6052. Go through the creator proces. After that you should see new item in the dashboard. Hit compile, wait for whole process to finish. You should see download button. Click it and download *.bin file. Then using https://github.com/esphome/esphome-flasher burn it to the ESP. Now next upload should be done OTA. After booting copy its ip and add new esphome integration in HomeAssistant and paste ip of D1 wemos.</p>
                 
                   
                 
