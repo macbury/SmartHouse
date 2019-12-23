@@ -307,6 +307,7 @@
 #   vars:
 #     ufw_logging: "off"
 #     ufw_rules:
+#       - { port: 6052, rule: allow, comment: 'Allow EspHome webui' }
 #       - { port: 53, rule: allow, comment: 'Allow PiHole DNS' }
 #       - { port: 22, rule: allow, comment: 'Allow SSH' }
 #       - { port: 80, rule: allow, comment: 'Allow HTTP' }
