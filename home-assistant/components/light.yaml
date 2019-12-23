@@ -7,12 +7,16 @@
   entity_id: switch.bathroom_light
 
 - platform: switch
-  name: Christmas
+  name: Christmas tree
   entity_id: switch.christmas
 
 - platform: switch
   name: Bedroom
   entity_id: switch.bedroom_light
+
+- platform: switch
+  name: Christmas balls
+  entity_id: switch.christmas_balls
 
 - platform: switch
   name: Coffee

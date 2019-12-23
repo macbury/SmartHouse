@@ -70,14 +70,14 @@
             service: 'cover.open_cover'
             service_data:
               entity_id: cover.living_room
-    - type: entities
-      show_header_toggle: false
-      entities:
-        - binary_sensor.balcone_door
-        - sensor.transmission_status
-        - scene.watching_tv
-        - switch.living_room_humidifier
-        - light.christmas
+    - type: horizontal-stack
+      cards:
+        - type: entity-button
+          entity: light.christmas_balls
+          icon: mdi:led-strip-variant
+        - type: entity-button
+          entity: light.christmas_tree
+          icon: mdi:pine-tree
 
     # Wallpaper and stuff
     - type: custom:dynamic-wallpaper
@@ -136,3 +136,10 @@
       show_progress: false
       show_source: false
       toggle_power: true
+    - type: entities
+      show_header_toggle: false
+      entities:
+        - binary_sensor.balcone_door
+        - sensor.transmission_status
+        - scene.watching_tv
+        - switch.living_room_humidifier
