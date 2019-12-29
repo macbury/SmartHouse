@@ -5,15 +5,18 @@ class AirPurifierAI(hass.Hass):
   def initialize(self):
     self.log("Started service...")
     self.fan_id = self.args['fan_id']
+    self.update_handle = None
     self.log("Current fan: {}".format(self.fan_id))
     self.listen_state(self.on_adaptation_callback, entity = self.args['family_devices'])
     self.listen_state(self.on_adaptation_callback, entity = self.args['calendar'])
+
     if 'balcone_door' in self.args:
       self.listen_state(self.on_adaptation_callback, entity = self.args['balcone_door'])
     
     if 'alt_mode_entity' in self.args:
       self.log("Watching entity: {}".format(self.args['alt_mode_entity']))
       self.listen_state(self.on_adaptation_callback, entity = self.args['alt_mode_entity'])
+
     self.log("Finished configuration")
     self.adapt_air_purifier_mode()
 
@@ -58,6 +61,7 @@ class AirPurifierAI(hass.Hass):
     else:
       self.log("Switching to {} mode".format(self.args['mode']))
       self.call_service('fan/set_speed', entity_id=self.fan_id, speed=self.args['mode'])
+
   def turn_on(self):
     self.log("Turning on air purifier")
     self.call_service('fan/turn_on', entity_id=self.fan_id)
@@ -65,6 +69,12 @@ class AirPurifierAI(hass.Hass):
   def on_adaptation_callback(self, entity, attribute, old, new, kwargs):
     self.log("State callback triggered for {} from {} to {}. Adapting air quality".format(entity, old, new))
     self.adapt_air_purifier_mode()
+  
+  def future_turn_on(self):
+    self.log("Future Adapting speed")
+    self.turn_on()
+    self.switch_to_mode()
+    self.update_handle = None
 
   def adapt_air_purifier_mode(self):
     if self.anyone_in_home():
@@ -73,9 +83,14 @@ class AirPurifierAI(hass.Hass):
         self.log("Balcone door is opened")
         self.turn_off()
       elif self.cleaning_time():
-        self.turn_on()
-        self.log("Adapting speed")
-        self.switch_to_mode()
+        if self.update_handle is not None:
+          self.cancel_timer(self.update_handle)
+        if self.alt_mode_entity_working():
+          self.log("Will adapt now")
+          self.future_turn_on()
+        else:
+          self.log("Will adapt speed in 10 minutes")
+          self.update_handle = self.run_in(self.future_turn_on, 10 * 60)
       else:
         self.log("Turning off...")
         self.turn_off()

@@ -58,13 +58,6 @@
       entity_id: sensor.arek_jedzenie
       state: 'off'
   action:
-    - service: notify.alexa_media_living_room
-      data:
-        message: "Wife, Order stuff on lunching!"
-        data:
-          type: announce
-          method: all
-    - delay: '00:00:15'
     - service: notify.all
       data:
         message: '@Arek Lunching mutafaka!'

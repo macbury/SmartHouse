@@ -56,14 +56,14 @@ heating_bedroom:
   family_devices: group.family
   climate: climate.bedroom
   main_light: input_boolean.giggid
-  max_temperature: 25
-  min_temperature: 20
+  max_temperature: 24
+  min_temperature: 22
 
 humidifier_living_room:
   module: humidifier
   class: HumidifierController
   humidifer: switch.living_room_humidifier
-  max_humidity: 48
+  max_humidity: 50
   min_humidity: 45
   family_devices: group.family
   calendar: calendar.ogrzewanie_salon
