@@ -1,6 +1,6 @@
-ha_pihole:
+ads:
   title: "PiHole"
-  url: '/pihole/'
+  url: !env_var ADS_GUARD_URL
   icon: 'mdi:pi-hole'
 ha_ytdl:
   title: "Youtube Downloader"

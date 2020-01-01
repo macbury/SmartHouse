@@ -1,0 +1,48 @@
+# Ensure tmpfs
+- hosts: all
+  become: yes
+  tasks:
+    - name: Make /tmp as tmpfs
+      mount:
+        boot: yes
+        src: tmpfs
+        fstype: 'tmpfs'
+        path: '/tmp'
+        state: mounted
+        opts: 'rw,nodev,nosuid,size=200M'
+
+# Encrypt disk
+- hosts: master
+  become: yes
+  tasks:
+    - name: Check if already encrypted
+      command: 'grep "/dev/mapper/smart-house" /etc/fstab'
+      register: is_encrypted
+      ignore_errors: True
+    - name: Unmount smart-house
+      when: is_encrypted is failed
+      mount:
+        path: "/smart-house"
+        src: "{{encrypted_disk}}"
+        state: unmounted
+    - name: Encrypting smart house partition
+      when: is_encrypted is failed
+      shell: echo {{ disk_password }} | cryptsetup --verbose --batch-mode luksFormat {{encrypted_disk}}
+    - name: Open encrypted disk
+      when: is_encrypted is failed
+      shell: echo {{ disk_password }} | cryptsetup luksOpen {{encrypted_disk}} smart-house
+    - name: mkfs on {{encrypted_disk}}
+      when: is_encrypted is failed
+      command: 'mkfs.ext4 -L smart-house /dev/mapper/smart-house'
+    - name: Mount smart-house
+      mount:
+        path: "/smart-house"
+        src: "/dev/mapper/smart-house"
+        state: mounted
+        opts: 'sync,rw,noauto'
+        fstype: 'ext4'
+    - name: Create smart-house-unlock script
+      template:
+        src: ./smart-house-unlock
+        dest: /usr/bin/smart-house-unlock
+        mode: '777'

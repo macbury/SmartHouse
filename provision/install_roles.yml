@@ -5,5 +5,3 @@
 - src: geerlingguy.nodejs
 - src: petermosmans.customize-gnome
 - src: brianhartsock.netatalk
-- src: https://github.com/jeffbr13/ansible-ipfs
-  name: ansible-ipfs

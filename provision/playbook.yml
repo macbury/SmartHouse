@@ -5,411 +5,21 @@
       include_vars:
         file: vars.yml
 
-- hosts: vacuum
-  become: yes
-  tasks:
-    - name: Install curl
-      apt:
-        name: curl
-    - name: Create /root/watch_map.sh
-      template:
-        src: ./root/watch_map.sh
-        dest: /root/watch_map.sh
-    - name: Create /root/upload_map.sh
-      template:
-        src: ./root/upload_map.sh
-        dest: /root/upload_map.sh
-    - name: Add crontab entry for health-check
-      cron:
-        name: "start watch map script"
-        reboot: true
-        job: "sh /root/watch_map.sh >> /tmp/watch_map.log 2>&1"
-    - name: Reboot vacuum to start watch map in background
-      reboot:
+# - name: Basic packages
+#   import_playbook: playbooks/packages.yaml
 
-- hosts: all
-  become: yes
-  tasks:
-    - name: Install sshfs
-      apt:
-        name: sshfs
-    - name: Install htop
-      apt:
-        name: htop
-    - name: Install ufw
-      apt:
-        name: ufw
-    - name: Install zsh
-      apt:
-        name: zsh
-    - name: Install git
-      apt:
-        name: git
-    - name: Install zip
-      apt:
-        name: zip
-    - name: Install AFP
-      apt:
-        name: netatalk
-    - name: 'Python pip'
-      apt:
-        name: python-pip
-    - name: 'Python pip3'
-      apt:
-        name: python3-pip
+# - name: House keeping
+#   import_playbook: playbooks/housekeeping.yaml
 
-- hosts: master
-  become: yes
-  tasks:
-    - name: Install nginx
-      apt:
-        name: nginx
-    - name: Install cryptsetup
-      apt:
-        name: cryptsetup
-    - name: Install go
-      apt:
-        name: golang
-    - name: Install xpath stuff
-      apt:
-        name: libxml2-utils
-    - name: Install ccrypt for dustcloud
-      apt:
-        name: ccrypt
-    - name: Install dos2unix for dustcloud
-      apt:
-        name: dos2unix
-    - name: PSQL
-      apt:
-        name: postgresql-client
-    - name: smb
-      apt:
-        name: cifs-utils
-    - name: samba
-      apt:
-        name: samba
-    - name: lovelace-dev
-      apt:
-        name: fswatch
-    - name: mc
-      apt:
-        name: mc
+# - name: Basic firewall rules
+#   import_playbook: playbooks/firewall.yaml
 
-- hosts: panel
-  become: yes
-  tasks:
-    - name: Install onboard
-      apt:
-        name: onboard
-    - name: 'Controling backlight'
-      apt:
-        name: xbacklight
-    - name: 'Dconf editor'
-      apt:
-        name: dconf-editor
+# - name: Ad blocking stuff
+#   import_playbook: playbooks/ads/ads.yaml
 
-# # Make a /tmp as tmpfs
-- hosts: all
-  become: yes
-  tasks:
-    - name: Make /tmp as tmpfs
-      mount:
-        boot: yes
-        src: tmpfs
-        fstype: 'tmpfs'
-        path: '/tmp'
-        state: mounted
-        opts: 'rw,nodev,nosuid,size=200M'
+# - name: Install notes
+#   import_playbook: playbooks/notes/notes.yaml
 
-# install packages
-- hosts: gateway
-  become: yes
-  tasks:
-    - apt:
-        name: build-essential
-    - apt:
-        name: git
-    - apt:
-        name: python3
-    - apt:
-        name: python3-pip
-    - apt:
-        name: python3-wheel
-    - apt:
-        name: bluetooth
-    - apt:
-        name: bluez
-    - apt:
-        name: libglib2.0-dev
-    - apt:
-        name: libzbar-dev
-    - apt:
-        name: libzbar0
-    - apt:
-        name: libssl-dev
-
-# install gateways
-- hosts: gateway
-  handlers:
-    - name: restart mqtt2rf
-      become: yes
-      service:
-        name: mqtt2rf
-        enabled: yes
-        state: restarted
-    - name: restart bt-mqtt-gateway
-      become: yes
-      service:
-        name: bt-mqtt-gateway
-        enabled: yes
-        state: restarted
-  tasks:
-    - name: Clone bt-mqtt-gateway repo
-      git:
-        repo: 'https://github.com/zewelor/bt-mqtt-gateway.git'
-        dest: /home/pi/bt-mqtt-gateway
-        accept_hostkey: yes
-        update: yes
-    - name: Clone mqtt2rf repo
-      git:
-        repo: 'git@github.com:macbury/mqtt2rf.git'
-        dest: /home/pi/mqtt2rf
-        accept_hostkey: yes
-        update: yes
-    - name: 'Install pip3 packages'
-      become: yes
-      pip:
-        executable: /usr/bin/pip3
-        requirements: '/home/pi/mqtt2rf/requirements.txt'
-    - name: 'Install pip3 packages'
-      become: yes
-      pip:
-        executable: /usr/bin/pip3
-        requirements: '/home/pi/bt-mqtt-gateway/requirements.txt'
-    - name: Create mqtt2rf configuration
-      template:
-        src: ./home/pi/mqtt2rf/config.yaml.j2
-        dest: /home/pi/mqtt2rf/config.yaml
-    - name: Copy systemd configuration for bt-mqtt-gateway
-      become: yes
-      copy:
-        src: ./etc/systemd/bt-mqtt-gateway.service
-        dest: /lib/systemd/system/bt-mqtt-gateway.service
-      notify:
-        - reload systemctl
-        - restart bt-mqtt-gateway
-    - name: Copy systemd configuration for mqtt2rf
-      become: yes
-      copy:
-        src: /home/pi/mqtt2rf/systemd/mqtt2rf.service
-        dest: /lib/systemd/system/mqtt2rf.service
-      notify:
-        - reload systemctl
-        - restart mqtt2rf
-
-# Dns Over Https
-- hosts: master
-  become: yes
-  handlers:
-    - name: restart cloudflared
-      become: yes
-      service:
-        name: cloudflared
-        enabled: yes
-        state: restarted
-    - name: reload systemctl
-      become: yes
-      command: systemctl daemon-reload
-  tasks:
-    - name: Check if cloudflared already installed
-      command: 'cloudflared -v'
-      register: is_cloudflared_installed
-      ignore_errors: True
-    - name: Download cloudflared
-      when: is_cloudflared_installed is failed
-      get_url:
-        url: https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
-        dest: /tmp/cloudflared-stable-linux-amd64.deb
-    - name: Install cloudflared
-      when: is_cloudflared_installed is failed
-      apt:
-        deb: /tmp/cloudflared-stable-linux-amd64.deb
-    - name: Ensure group "cloudflared" exists
-      group:
-        name: cloudflared
-        state: present
-    - name: Adding user cloudflared
-      user:
-        name: cloudflared
-        group: cloudflared
-        create_home: no
-        shell: /usr/sbin/nologin
-        append: yes
-    - name: Create /etc/default/cloudflared
-      template:
-        src: ./etc/default/cloudflared.j2
-        dest: /etc/default/cloudflared
-        owner: cloudflared
-        group: cloudflared
-    - name: Change file ownership for /usr/local/bin/cloudflared
-      file:
-        path: /usr/local/bin/cloudflared
-        owner: cloudflared
-        group: cloudflared
-    - name: Create cloudflared.service
-      template:
-        src: ./lib/systemd/system/cloudflared.service.j2
-        dest: /lib/systemd/system/cloudflared.service
-      notify:
-        - reload systemctl
-        - restart cloudflared
-# Disk encryption
-# - hosts: master
-#   become: yes
-#   tasks:
-#     - name: Check if already encrypted
-#       command: 'grep "/dev/mapper/smart-house" /etc/fstab'
-#       register: is_encrypted
-#       ignore_errors: True
-#     - name: Unmount smart-house
-#       when: is_encrypted is failed
-#       mount:
-#         path: "/smart-house"
-#         src: "{{encrypted_disk}}"
-#         state: unmounted
-#     - name: Encrypting smart house partition
-#       when: is_encrypted is failed
-#       shell: echo {{ disk_password }} | cryptsetup --verbose --batch-mode luksFormat {{encrypted_disk}}
-#     - name: Open encrypted disk
-#       when: is_encrypted is failed
-#       shell: echo {{ disk_password }} | cryptsetup luksOpen {{encrypted_disk}} smart-house
-#     - name: mkfs on {{encrypted_disk}}
-#       when: is_encrypted is failed
-#       command: 'mkfs.ext4 -L smart-house /dev/mapper/smart-house'
-#     - name: Mount smart-house
-#       mount:
-#         path: "/smart-house"
-#         src: "/dev/mapper/smart-house"
-#         state: mounted
-#         opts: 'sync,rw,noauto'
-#         fstype: 'ext4'
-#     - name: Create smart-house-unlock script
-#       template:
-#         src: ./smart-house-unlock
-#         dest: /usr/bin/smart-house-unlock
-#         mode: '777'
-
-# Firewall setup
-# - hosts: master
-#   become: yes
-#   roles:
-#     - role: weareinteractive.ufw
-#   vars:
-#     ufw_logging: "off"
-#     ufw_rules:
-#       - { port: 6052, rule: allow, comment: 'Allow EspHome webui' }
-#       - { port: 53, rule: allow, comment: 'Allow PiHole DNS' }
-#       - { port: 22, rule: allow, comment: 'Allow SSH' }
-#       - { port: 80, rule: allow, comment: 'Allow HTTP' }
-#       - { port: 1514, rule: allow, comment: 'Allow SysLog UDP' }
-#       - { port: 443, rule: allow, comment: 'Allow HTTPS' }
-#       - { port: 4105, rule: allow, comment: 'Allow MQTT' }
-#       - { port: 987, rule: allow, comment: 'Allow PS4' }
-#       - { port: 997, rule: allow, comment: 'Allow PS4' }
-#       - { from_ip: '192.168.1.229', comment: 'Allow PS4 console access' }
-#       - { port: 4001, rule: allow, comment: 'Allow IPFS swarm' }
-#       - { port: 5001, rule: allow, comment: 'Allow IPFS API' }
-#       - { port: 548, rule: allow, comment: 'Allow AFP' }
-#       - { port: 427, rule: allow, comment: 'Allow AFP' }
-#       - { port: 7000, rule: allow, comment: 'Allow mkdocs dev server' }
-#       - { port: 9898, rule: allow, comment: 'Allow xiaomi aqara multicast shit' }
-#       - { port: 1080, rule: allow, comment: 'Sonoff HTTP' }
-#       - { port: 1081, rule: allow, comment: 'Sonoff HTTPs' }
-#       - { port: 1443, rule: allow, comment: 'Sonoff Websocket' }
-#       - { port: 137, rule: allow, comment: 'Samba' }
-#       - { port: 138, rule: allow, comment: 'Samba' }
-#       - { port: 139, rule: allow, comment: 'Samba' }
-#       - { port: 445, rule: allow, comment: 'Samba' }
-#       - { from_ip: '127.0.0.1/24', comment: 'Allow localhost' }
-#       - { from_ip: '192.168.0.1/24', comment: 'Allow local network' }
-#       - { from_ip: '10.0.0.1/24', comment: 'Allow vpn network' }
-#       - { from_ip: '10.0.1.1/24', comment: 'Allow vpn network' }
-#       - { from_ip: '10.0.2.1/24', comment: 'Allow vpn network' }
-#       - { port: 32400, rule: allow, comment: 'Plex companion' }
-#       - { port: 3005, rule: allow, comment: 'Plex companion' }
-#       - { port: 5353, rule: allow, comment: 'Plex bonjur shit' }
-#       - { port: 1900, rule: allow, comment: 'Plex dlna shit' }
-#       - { port: 8324, rule: allow, comment: 'Plex other shit' }
-#       - { port: 32469, rule: allow, comment: 'Plex other shit' }
-#       - { port: 32410, rule: allow, comment: 'Plex GDM network discover' }
-#       - { port: 32412, rule: allow, comment: 'Plex GDM network discover' }
-#       - { port: 32413, rule: allow, comment: 'Plex GDM network discover' }
-#       - { port: 32414, rule: allow, comment: 'Plex GDM network discover' }
-#       - { port: 51413, rule: allow, comment: 'Transmission shit' }
-#       - { port: 10005, rule: allow, from_ip: '192.168.1.222', comment: 'Allow only vacuum to access this port' }
-
-# # Vnc setup
-# - hosts: panel
-#   handlers:
-#     - name: restart avahi-daemon
-#       become: yes
-#       service:
-#         name: avahi-daemon
-#         enabled: yes
-#         state: restarted
-#   tasks:
-#     - name: 'VPN'
-#       apt:
-#         name: vino
-#     - name: Disable encryption, viva la mac os x
-#       shell: 'dconf write /org/gnome/desktop/remote-access/require-encryption false'
-#       notify:
-#         - restart avahi-daemon
-
-# # Node js
-# - hosts: panel
-#   become: yes
-#   roles:
-#     - role: geerlingguy.nodejs
-#   vars:
-#     nodejs_version: "10.x"
-
-# # # letsencrypt certificate
-# - hosts: master
-#   become: yes
-#   roles:
-#     - role: geerlingguy.certbot
-#   vars:
-#     certbot_auto_renew: false
-#     certbot_admin_email: "{{ email }}"
-#     certbot_create_if_missing: true
-#     certbot_certs:
-#       - domains:
-#         - "{{ ipfs_domain }}"
-
-# - hosts: master
-#   become: yes
-#   roles:
-#     - role: geerlingguy.certbot
-#   vars:
-#     certbot_auto_renew: false
-#     certbot_admin_email: "{{ email }}"
-#     certbot_create_if_missing: true
-#     certbot_certs:
-#       - domains:
-#         - "budget.{{ domain }}"
-
-# - hosts: master
-#   become: yes
-#   roles:
-#     - role: geerlingguy.certbot
-#   vars:
-#     certbot_auto_renew: false
-#     certbot_admin_email: "{{ email }}"
-#     certbot_create_if_missing: true
-#     certbot_certs:
-#       - domains:
-#         - "notes.{{ domain }}"
 
 # - hosts: master
 #   become: yes
@@ -460,32 +70,33 @@
 #       - domains:
 #         - "{{ podcast_domain }}"
 
-- hosts: master
-  become: yes
-  roles:
-    - role: geerlingguy.certbot
-  vars:
-    certbot_auto_renew: false
-    certbot_admin_email: "{{ email }}"
-    certbot_create_if_missing: true
-    certbot_certs:
-      - domains:
-        - "{{ monio_domain }}"
+# - hosts: master
+#   become: yes
+#   roles:
+#     - role: geerlingguy.certbot
+#   vars:
+#     certbot_auto_renew: false
+#     certbot_admin_email: "{{ email }}"
+#     certbot_create_if_missing: true
+#     certbot_certs:
+#       - domains:
+#         - "{{ monio_domain }}"
+
 
 
 # Nginx
-- hosts: master
-  become: yes
-  roles:
-    - role: geerlingguy.nginx
-  handlers:
-    - name: restart nginx
-      become: yes
-      service:
-        name: nginx
-        enabled: yes
-        state: restarted
-  tasks:
+# - hosts: master
+#   become: yes
+#   roles:
+#     - role: geerlingguy.nginx
+#   handlers:
+#     - name: restart nginx
+#       become: yes
+#       service:
+#         name: nginx
+#         enabled: yes
+#         state: restarted
+#   tasks:
     # - name: Create /etc/nginx/sites-enabled/rss.conf
     #   template:
     #     src: ./etc/nginx/sites-enabled/rss.conf.j2
@@ -493,13 +104,6 @@
     #   notify:
     #     - reload nginx
     #     - restart nginx
-#     - name: Create /etc/nginx/sites-enabled/firefly.conf
-#       template:
-#         src: ./etc/nginx/sites-enabled/firefly.conf.j2
-#         dest: /etc/nginx/sites-enabled/firefly.conf
-#       notify:
-#         - reload nginx
-#         - restart nginx
 #     - name: Create /etc/nginx/sites-enabled/notes.conf
 #       template:
 #         src: ./etc/nginx/sites-enabled/notes.conf.j2
@@ -514,13 +118,6 @@
 #       notify:
 #         - reload nginx
 #         - restart nginx
-#     - name: Create /etc/nginx/sites-enabled/ipfs.conf
-#       template:
-#         src: ./etc/nginx/sites-enabled/ipfs.conf.j2
-#         dest: /etc/nginx/sites-enabled/ipfs.conf
-#       notify:
-#         - reload nginx
-#         - restart nginx
 #     - name: Create /etc/nginx/sites-enabled/home-assistant.conf
 #       template:
 #         src: ./etc/nginx/sites-enabled/home-assistant.conf.j2
@@ -528,20 +125,14 @@
 #       notify:
 #         - reload nginx
 #         - restart nginx
-    # - name: Create /etc/nginx/sites-enabled/podcast.conf
+    # - name: Create /etc/nginx/sites-enabled/monio.conf
     #   template:
-    #     src: ./etc/nginx/sites-enabled/podcast.conf.j2
-    #     dest: /etc/nginx/sites-enabled/podcast.conf
+    #     src: ./etc/nginx/sites-enabled/monio.conf.j2
+    #     dest: /etc/nginx/sites-enabled/monio.conf
     #   notify:
     #     - reload nginx
     #     - restart nginx
-    - name: Create /etc/nginx/sites-enabled/monio.conf
-      template:
-        src: ./etc/nginx/sites-enabled/monio.conf.j2
-        dest: /etc/nginx/sites-enabled/monio.conf
-      notify:
-        - reload nginx
-        - restart nginx
+
 #     - name: Create /etc/nginx/sites-enabled/honeytap.conf
 #       template:
 #         src: ./etc/nginx/sites-enabled/default.conf.j2
@@ -564,21 +155,21 @@
 #         - reload nginx
 #         - restart nginx
 # Home Assistant
-- hosts: master
-  become: yes
-  handlers:
-    - name: reload systemctl
-      become: yes
-      command: systemctl daemon-reload
-    - name: restart systemd-resolved
-      service:
-        name: systemd-resolved
-        state: restarted
-    - name: reload afp
-      service:
-        name: netatalk
-        state: restarted
-  tasks:
+# - hosts: master
+#   become: yes
+#   handlers:
+#     - name: reload systemctl
+#       become: yes
+#       command: systemctl daemon-reload
+#     - name: restart systemd-resolved
+#       service:
+#         name: systemd-resolved
+#         state: restarted
+#     - name: reload afp
+#       service:
+#         name: netatalk
+#         state: restarted
+#   tasks:
 #     - name: Fallback resolver to pihole and then try cloudflare on boot
 #       become: yes
 #       shell: 'ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf'
@@ -640,12 +231,12 @@
 #         dest: /lib/systemd/system/support.service
 #       notify:
 #         - reload systemctl
-    - name: Create health.service
-      template:
-        src: ./lib/systemd/system/health.service.j2
-        dest: /lib/systemd/system/health.service
-      notify:
-        - reload systemctl
+    # - name: Create health.service
+    #   template:
+    #     src: ./lib/systemd/system/health.service.j2
+    #     dest: /lib/systemd/system/health.service
+    #   notify:
+    #     - reload systemctl
 
 #     - name: Create media.service
 #       template:

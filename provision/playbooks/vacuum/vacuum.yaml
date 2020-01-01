@@ -1,0 +1,23 @@
+# Install map script for vacuum
+
+- hosts: vacuum
+  become: yes
+  tasks:
+    - name: Install curl
+      apt:
+        name: curl
+    - name: Create /root/watch_map.sh
+      template:
+        src: watch_map.sh
+        dest: /root/watch_map.sh
+    - name: Create /root/upload_map.sh
+      template:
+        src: upload_map.sh
+        dest: /root/upload_map.sh
+    - name: Add crontab entry for health-check
+      cron:
+        name: "start watch map script"
+        reboot: true
+        job: "sh /root/watch_map.sh >> /tmp/watch_map.log 2>&1"
+    - name: Reboot vacuum to start watch map in background
+      reboot:
