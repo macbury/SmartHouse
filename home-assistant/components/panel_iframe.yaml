@@ -1,6 +1,6 @@
-ha_pihole:
+ads:
   title: "PiHole"
-  url: '/pihole/'
+  url: !env_var ADS_GUARD_URL
   icon: 'mdi:pi-hole'
 ha_ytdl:
   title: "Youtube Downloader"
@@ -37,8 +37,3 @@ ha_nextcloud:
   title: "Nextcloud"
   url: "/nextcloud/"
   icon: 'mdi:calendar-multiselect'
-ha_graylog:
-  require_admin: true
-  title: ha_graylog
-  url: "/graylog"
-  icon: "mdi:math-log"
