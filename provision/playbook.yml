@@ -17,6 +17,9 @@
 # - name: Ad blocking stuff
 #   import_playbook: playbooks/ads/ads.yaml
 
+# - name: Speed test help tool
+#   import_playbook: playbooks/speedtest/speedtest.yaml
+
 # - name: Install notes
 #   import_playbook: playbooks/notes/notes.yaml
 

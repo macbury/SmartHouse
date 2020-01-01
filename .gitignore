@@ -102,3 +102,4 @@ orion/config.json
 orion/web/**/*
 blog/**/*
 .env.rss
+.env.speedtest
