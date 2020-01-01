@@ -2,122 +2,127 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
      <loc>https://macbury.github.io/SmartHouse/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/Software/GettingStarted/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/Hardware/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/HomeAssistant/Screens/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/HomeAssistant/PresenceDetection/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/HomeAssistant/Components/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/HomeAssistant/Lovelace/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/HomeAssistant/Vacuum/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/HomeAssistant/AppDaemon/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/HomeAssistant/VoiceControl/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/Software/Overview/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/Software/Nginx/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/Software/PiHole/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://macbury.github.io/SmartHouse/Software/EspHome/</loc>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/Software/Development/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/Software/Upgrading/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/Software/ControlScript/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/Software/Ports/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/Software/Encryption/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/Software/Backup/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/Services/UpTimeRobot/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/DIY/RiggadLamp/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/DIY/LedStrips/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/DIY/CatFeeder/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://macbury.github.io/SmartHouse/References/</loc>
-     <lastmod>2019-12-29</lastmod>
+     <lastmod>2020-01-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
