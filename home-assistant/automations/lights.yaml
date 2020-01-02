@@ -99,3 +99,21 @@
     service: notify.all
     data_template:
       message: "Światło w łazience świeci się długo..."
+
+
+- alias: Switch on corridor lights after pantry is opened
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.door_pantry
+      to: 'on'
+      from: 'off'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: 'sun.sun'
+        state: 'below_horizon'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.corridor

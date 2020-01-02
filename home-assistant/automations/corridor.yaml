@@ -88,6 +88,10 @@
         entity_id: light.gatewa_ambient_light
         rgb_color: [255, 255, 36]
         brightness: 50
+    - service: light.turn_on
+      entity_id: light.hall_balls
     - delay: '00:00:45'
     - service: light.turn_off
       entity_id: light.gatewa_ambient_light
+    - service: light.turn_off
+      entity_id: light.hall_balls

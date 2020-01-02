@@ -41,6 +41,7 @@
       entities:
         - binary_sensor.main_door
         - binary_sensor.cat_shitter_door
+        - binary_sensor.door_pantry
 
     - type: custom:dynamic-wallpaper
       entity: sun.sun
