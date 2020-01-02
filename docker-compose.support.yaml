@@ -144,3 +144,9 @@ services:
       - .docker/data/blog/application.yml:/app/config/application.yml
       - .docker/data/blog/database.yml:/app/config/database.yml
       - .docker/data/blog/secrets.yml:/app/config/secrets.yml
+  speedtest:
+    image: macbury/speedtest:latest
+    env_file:
+      - '.env.speedtest'
+    ports:
+      - 6888:80

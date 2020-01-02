@@ -19,24 +19,21 @@ function pihole_command_restart() {
 
 function pihole_command_up() {
   docker run \
-    --name pihole \
-    --cap-add NET_ADMIN \
+    --name adguardhome \
+    -v "$SMART_HOUSE_DIR/.docker/data/adguard/work:/opt/adguardhome/work" \
+    -v "$SMART_HOUSE_DIR/.docker/data/adguard/conf:/opt/adguardhome/conf" \
+    --net=host \
+    --rm \
     -p 53:53/tcp \
     -p 53:53/udp \
-    -p 4104:80 \
-    -e TZ="Europe/Warsaw" \
-    -e VIRTUAL_HOST="https://${HOME_ASSISTANT_DOMAIN}/pihole/" \
-    -e PROXY_LOCATION="pihole" \
-    -e VIRTUAL_PORT="443" \
-    -e ServerIP="192.168.1.12" \
-    --env-file="$SMART_HOUSE_DIR/.env.pihole" \
-    --env-file="$SMART_HOUSE_DIR/.env.local" \
-    -v "$SMART_HOUSE_DIR/.docker/data/pihole/pihole:/etc/pihole" \
-    -v "$SMART_HOUSE_DIR/.docker/data/pihole/dnsmasq.d:/etc/dnsmasq.d/" \
-    --dns=127.0.0.1 \
-    --dns=1.1.1.1 \
-    --rm \
-    pihole/pihole:latest
+    -p 67:67/udp \
+    -p 68:68/tcp \
+    -p 68:68/udp \
+    -p 6080:80/tcp \
+    -p 6443:443/tcp \
+    -p 853:853/tcp \
+    -p 6300:3000/tcp \
+    adguard/adguardhome
 }
 
 function pihole_command_help() {

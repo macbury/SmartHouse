@@ -87,3 +87,6 @@ Pretty nice media server. [Plex](https://www.plex.tv/) is running on HomeAssista
 
 ### Firefly III
 [Firefly III](https://firefly-iii.org/) is budget managment software.
+
+### Librespeed
+Self hosted [speedtest](https://github.com/librespeed/speedtest) tool, for debugging wifi performance in house
