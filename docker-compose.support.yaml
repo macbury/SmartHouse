@@ -1,6 +1,12 @@
 # Supporting services, like database that always must be online
 version: '3.5'
 services:
+  gotify:
+    image: gotify/server:latest
+    ports:
+      - "0.0.0.0:5580:80"
+    volumes:
+      - .docker/data/gotify:/app/data
   orion:
     build: ./orion/
     restart: unless-stopped

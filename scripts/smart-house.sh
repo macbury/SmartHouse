@@ -139,7 +139,10 @@ function smart_house_command_ddns() {
   bin/ddns.py $MAIN_DOMAIN notes.$HOME_ASSISTANT_SUBDOMAIN 0;
   bin/ddns.py $MAIN_DOMAIN $HOME_ASSISTANT_VPNDOMAIN 0;
   bin/ddns.py $MAIN_DOMAIN podcast.$HOME_ASSISTANT_SUBDOMAIN 0;
-  bin/ddns.py $MAIN_DOMAIN rss.$HOME_ASSISTANT_SUBDOMAIN 0;
+  bin/ddns.py $MAIN_DOMAIN rss 0;
+  bin/ddns.py $MAIN_DOMAIN ads 0;
+  bin/ddns.py $MAIN_DOMAIN gotify 0;
+  bin/ddns.py $MAIN_DOMAIN monio 0;
 }
 
 function smart_house_command_certbot() {
