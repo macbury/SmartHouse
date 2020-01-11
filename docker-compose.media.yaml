@@ -26,24 +26,9 @@ services:
       - .docker/data/sonarr:/config
       - /mnt/MoviesAndTV:/tv
       - /home/downloads:/downloads
-  transmission:
-    image: linuxserver/transmission:latest
-    restart: unless-stopped
-    ports:
-      - 8112:9091
-      - 51413:51413/udp
-    environment:
-      PUID: 0
-      PGID: 0
-      TZ: "Europe/Warsaw"
-    volumes:
-      - .docker/data/transmission:/config
-      - /mnt:/data
-      - /mnt/MoviesAndTV:/tv
-      - /smart-house/tmp:/downloads
   plex:
     network_mode: host
-    image: plexinc/pms-docker:1.18.3.2156-349e9837e
+    image: plexinc/pms-docker:latest
     env_file:
       - .env.plex
     volumes:
@@ -58,3 +43,15 @@ services:
       - .docker/data/monio/:/app/storage
     env_file:
       - .env.monio
+  torrents:
+    image: linuxserver/deluge:latest
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Warsaw
+      - DELUGE_LOGLEVEL=info #optional
+    volumes:
+      - .docker/data/deluge/config:/config
+      - /mnt:/data
+    restart: unless-stopped

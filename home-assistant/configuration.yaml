@@ -72,7 +72,6 @@ switch: !include components/switch.yaml
 sensor: !include_dir_merge_list sensors/
 scene: !include_dir_merge_list scenes/
 # T
-transmission: !include components/transmission.yaml
 tts:
   - platform: google_translate
     service_name: google_say

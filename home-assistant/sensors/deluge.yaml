@@ -1,0 +1,4 @@
+- platform: deluge
+  host: 0.0.0.0
+  monitored_variables:
+    - current_status

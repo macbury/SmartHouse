@@ -1,5 +1,0 @@
-host: localhost
-port: 8112
-username: macbury
-password: !env_var HOME_ASSISTANT_TRANSMISSION_PASSWORD
-scan_interval: 15

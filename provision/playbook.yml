@@ -23,8 +23,11 @@
 # - name: Install notes
 #   import_playbook: playbooks/notes/notes.yaml
 
-- name: Install gotify
-  import_playbook: playbooks/gotify/gotify.yaml
+# - name: Install gotify
+#   import_playbook: playbooks/gotify/gotify.yaml
+
+- name: Install torrents
+  import_playbook: playbooks/torrents/torrents.yaml
 
 # - hosts: master
 #   become: yes
