@@ -156,3 +156,13 @@ services:
       - '.env.speedtest'
     ports:
       - 6888:80
+  monio:
+    restart: unless-stopped
+    image: macbury/mon.io:latest
+    network_mode: host
+    volumes:
+      - .docker/data/monio/:/app/storage
+    env_file:
+      - .env.monio
+    depends_on:
+      - database

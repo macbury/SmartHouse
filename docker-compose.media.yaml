@@ -25,7 +25,7 @@ services:
     volumes:
       - .docker/data/sonarr:/config
       - /mnt/MoviesAndTV:/tv
-      - /home/downloads:/downloads
+      - /mnt/UsbDisk:/downloads
   plex:
     network_mode: host
     image: plexinc/pms-docker:latest
@@ -35,14 +35,6 @@ services:
       - .docker/data/plex/config:/config
       - .docker/data/plex/transcode:/transcode
       - /mnt:/data
-  monio:
-    restart: unless-stopped
-    image: macbury/mon.io:latest
-    network_mode: host
-    volumes:
-      - .docker/data/monio/:/app/storage
-    env_file:
-      - .env.monio
   torrents:
     image: linuxserver/deluge:latest
     network_mode: host

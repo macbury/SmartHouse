@@ -1,3 +1,12 @@
+- hosts: master
+  become: yes
+  roles:
+    - role: weareinteractive.ufw
+  vars:
+    ufw_reset: no
+    ufw_logging: "off"
+    ufw_rules:
+      - { port: 8112, rule: allow, comment: 'Allow Sonarr access to deluge' }
 # Nginx
 - hosts: master
   become: yes

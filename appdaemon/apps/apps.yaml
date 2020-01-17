@@ -57,7 +57,7 @@ heating_bedroom:
   climate: climate.bedroom
   main_light: input_boolean.giggid
   max_temperature: 24
-  min_temperature: 22
+  min_temperature: 23
 
 humidifier_living_room:
   module: humidifier

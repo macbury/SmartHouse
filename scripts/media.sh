@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 SUBCOMMAND=${1}
-declare -a MEDIA_SHARES=("MoviesAndTV" "Movies" "Multimedia" "Download" "Music" "homes")
+declare -a MEDIA_SHARES=("MoviesAndTV" "Movies" "Multimedia" "Music" "homes" "UsbDisk" )
 
 function media_command_mount() {
   for share in "${MEDIA_SHARES[@]}"
