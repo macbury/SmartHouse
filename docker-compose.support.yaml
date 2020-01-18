@@ -166,3 +166,12 @@ services:
       - .env.monio
     depends_on:
       - database
+  youtube:
+    build: ./youtube/
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:7883:3000"
+    volumes:
+      - .docker/data/invidious/config.yml:/invidious/config/config.yml
+    depends_on:
+      - database

@@ -26,8 +26,11 @@
 # - name: Install gotify
 #   import_playbook: playbooks/gotify/gotify.yaml
 
-- name: Install torrents
-  import_playbook: playbooks/torrents/torrents.yaml
+# - name: Install torrents
+#   import_playbook: playbooks/torrents/torrents.yaml
+
+- name: Install youtube client
+  import_playbook: playbooks/youtube/youtube.yaml
 
 # - hosts: master
 #   become: yes

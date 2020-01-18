@@ -143,6 +143,7 @@ function smart_house_command_ddns() {
   bin/ddns.py $MAIN_DOMAIN ads 0;
   bin/ddns.py $MAIN_DOMAIN gotify 0;
   bin/ddns.py $MAIN_DOMAIN monio 0;
+  bin/ddns.py $MAIN_DOMAIN youtube 0;
 }
 
 function smart_house_command_certbot() {
