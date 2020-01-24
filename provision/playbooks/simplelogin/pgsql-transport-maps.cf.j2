@@ -1,0 +1,8 @@
+# postgres config
+hosts = localhost:4101
+user = simplelogin
+password = {{ simplelogin_password }}
+dbname = simplelogin
+
+# forward to smtp:127.0.0.1:20381 for custom domain AND email domain
+query = SELECT 'smtp:127.0.0.1:20381' FROM custom_domain WHERE domain = '%s' AND verified=true UNION SELECT 'smtp:127.0.0.1:20381' WHERE '%s' = '{{ simplelogin_domain }}' LIMIT 1;

@@ -29,8 +29,11 @@
 # - name: Install torrents
 #   import_playbook: playbooks/torrents/torrents.yaml
 
-- name: Install youtube client
-  import_playbook: playbooks/youtube/youtube.yaml
+# - name: Install simple client
+#   import_playbook: playbooks/youtube/youtube.yaml
+
+- name: Install simplelogin client
+  import_playbook: playbooks/simplelogin/simplelogin.yaml
 
 # - hosts: master
 #   become: yes

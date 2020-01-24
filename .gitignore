@@ -2,6 +2,7 @@
 .docker/log/**/*
 *.log
 .env
+.env.simplelogin
 .env.monio
 .env.podcast
 .env.nextcloud

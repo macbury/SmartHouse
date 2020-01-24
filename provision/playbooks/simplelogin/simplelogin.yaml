@@ -1,0 +1,95 @@
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.certbot
+  vars:
+    certbot_auto_renew: false
+    certbot_admin_email: "{{ email }}"
+    certbot_create_if_missing: true
+    certbot_certs:
+      - domains:
+        - "{{ simplelogin_domain }}"
+
+
+- hosts: master
+  become: yes
+  roles:
+    - role: weareinteractive.ufw
+  vars:
+    ufw_reset: no
+    ufw_logging: "off"
+    ufw_rules:
+      - { port: 25, rule: allow, comment: 'Allow postfix' }
+
+- hosts: master
+  become: yes
+  tasks:
+    - name: Install postfix
+      apt:
+        name: postfix
+    - name: Install postfix postgres support
+      apt:
+        name: postfix-pgsql
+
+- hosts: master
+  become: yes
+  roles:
+    - role: oefenweb.postfix
+  vars:
+    postfix_raw_options:
+      - |
+        myhostname = {{ simplelogin_domain }}
+        mydomain = {{ simplelogin_domain }}
+        myorigin = {{ simplelogin_domain }}
+        mydestination = localhost
+        mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 240.0.0.0/24
+        relay_domains = pgsql:/etc/postfix/pgsql-relay-domains.cf
+        transport_maps = pgsql:/etc/postfix/pgsql-transport-maps.cf
+        smtpd_delay_reject = yes
+        smtpd_helo_required = yes
+        smtpd_helo_restrictions = permit_mynetworks, reject_non_fqdn_helo_hostname, reject_invalid_helo_hostname, permit
+        smtpd_sender_restrictions = permit_mynetworks, reject_non_fqdn_sender, reject_unknown_sender_domain, permit
+        smtpd_recipient_restrictions = reject_unauth_pipelining, reject_non_fqdn_recipient, reject_unknown_recipient_domain, permit_mynetworks, reject_unauth_destination, reject_rbl_client zen.spamhaus.org, reject_rbl_client bl.spamcop.net, permit
+
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.nginx
+  handlers:
+    - name: restart nginx
+      become: yes
+      service:
+        name: nginx
+        enabled: yes
+        state: restarted
+  tasks:
+    - name: Create /etc/nginx/sites-enabled/simple-login.conf
+      template:
+        src: simple-login.conf.j2
+        dest: /etc/nginx/sites-enabled/simple-login.conf
+      notify:
+        - reload nginx
+        - restart nginx
+
+- hosts: master
+  become: yes
+  handlers:
+    - name: restart postfix
+      become: yes
+      service:
+        name: postfix
+        enabled: yes
+        state: restarted
+  tasks:
+    - name: Create /etc/postfix/pgsql-relay-domains.cf
+      template:
+        src: pgsql-relay-domains.cf.j2
+        dest: /etc/postfix/pgsql-relay-domains.cf
+      notify:
+        - restart postfix
+    - name: Create /etc/postfix/pgsql-transport-maps.cf
+      template:
+        src: pgsql-transport-maps.cf.j2
+        dest: /etc/postfix/pgsql-transport-maps.cf
+      notify:
+        - restart postfix
