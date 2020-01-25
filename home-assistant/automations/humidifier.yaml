@@ -1,0 +1,27 @@
+- alias: Send notification about humidifier water is out
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.living_room_humidifier_current
+      below: 0.01
+    - platform: state
+      entity_id: switch.living_room_humidifier
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: 'switch.living_room_humidifier'
+        state: 'on'
+      - condition: numeric_state
+        entity_id: sensor.living_room_humidifier_current
+        below: 0.01
+  action:
+    - service: notify.alexa_media_living_room
+      data:
+        message: 'Living room humidifier needs refill!, Shut up puss, it is not about you'
+        data:
+          type: announce
+          method: all
+    - service: notify.all
+      data:
+        message: 'Living room humidifier needs refill!'
