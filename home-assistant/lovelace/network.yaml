@@ -28,12 +28,15 @@
             points: true
             fill: fade
     - type: entities
-      title: PiHole
+      title: AdGuard
       show_header_toggle: false
       entities:
-        - sensor.pi_hole_dns_queries_today
-        - sensor.pi_hole_ads_blocked_today
-        - sensor.pi_hole_dns_unique_clients
+        - sensor.adguard_average_processing_speed
+        - sensor.adguard_dns_queries
+        - sensor.adguard_dns_queries_blocked
+        - sensor.adguard_dns_queries_blocked_ratio
+        - switch.adguard_parental_control
+        - switch.adguard_protection
     - type: custom:monster-card
       card:
         type: entities
@@ -42,11 +45,6 @@
         include:
           - entity_id: "sensor.breaches_*"
             state: '> 0'
-    - type: entities
-      title: Nas i Transmission
-      show_header_toggle: false
-      entities:
-        - sensor.transmission_status
     - break
     - type: entities
       title: Internet

@@ -14,7 +14,7 @@
         entity_id: media_player.kitchen # adjust volume of alexa device
         volume_level: 0.8
 
-- alias: Switch iff cooking light if phone is disconnected from kitchen alexa
+- alias: Switch off cooking light if phone is disconnected from kitchen alexa
   trigger:
     - platform: template
       value_template: '{{ is_state_attr("media_player.kitchen", "source", "Local Speaker") }}'

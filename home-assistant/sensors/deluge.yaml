@@ -1,4 +1,6 @@
-- platform: deluge
-  host: 0.0.0.0
-  monitored_variables:
-    - current_status
+# - platform: deluge
+#   host: 0.0.0.0
+#   username: deluge
+#   password: ''
+#   monitored_variables:
+#     - current_status

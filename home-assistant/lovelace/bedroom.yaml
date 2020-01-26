@@ -32,21 +32,24 @@
     - type: custom:air-purifier-card
       entity: fan.bedroom_air_purifier
     - break
+    # - type: horizontal-stack
+    #   cards:
+    #     - type: light
+    #       entity: light.arek_szafka
+    #       icon: mdi:desk-lamp
+    #     - type: light
+    #       entity: light.ola_szafka
+    #       icon: mdi:desk-lamp
     - type: horizontal-stack
       cards:
-        - type: light
-          entity: light.arek_szafka
-          icon: mdi:desk-lamp
-        - type: light
-          entity: light.ola_szafka
-          icon: mdi:desk-lamp
-    - type: entity-button
-      entity: light.bedroom
-      icon: mdi:ceiling-light
-      icon_height: '159px'
-    - type: entity-button
-      entity: switch.giggid
-      icon: mdi:account-arrow-left
+        - type: entity-button
+          entity: light.bedroom
+          icon: mdi:ceiling-light
+          icon_height: '159px'
+        - type: entity-button
+          entity: switch.giggid
+          icon: mdi:account-arrow-left
+
     - type: custom:mini-media-player
       entity: media_player.bedroom
       name: 'Alexa'
@@ -57,7 +60,6 @@
       hide_volume: true
       show_progress: false
       show_source: full
-    - break
     - type: thermostat
       title: Bedroom
       entity: climate.bedroom

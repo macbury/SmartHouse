@@ -53,6 +53,17 @@
     - type: horizontal-stack
       cards:
         - type: entity-button
+          entity: light.christmas_balls
+          icon: mdi:led-strip-variant
+        - type: entity-button
+          entity: light.christmas_tree
+          icon: mdi:pine-tree
+        - type: entity-button
+          entity: switch.living_room_humidifier
+          icon: mdi:air-humidifier
+    - type: horizontal-stack
+      cards:
+        - type: entity-button
           entity: cover.living_room
           icon: mdi:arrow-down-bold-box
           name: 'Opuść rolety'
@@ -70,14 +81,6 @@
             service: 'cover.open_cover'
             service_data:
               entity_id: cover.living_room
-    - type: horizontal-stack
-      cards:
-        - type: entity-button
-          entity: light.christmas_balls
-          icon: mdi:led-strip-variant
-        - type: entity-button
-          entity: light.christmas_tree
-          icon: mdi:pine-tree
 
     # Wallpaper and stuff
     - type: custom:dynamic-wallpaper
@@ -136,10 +139,3 @@
       show_progress: false
       show_source: false
       toggle_power: true
-    - type: entities
-      show_header_toggle: false
-      entities:
-        - binary_sensor.balcone_door
-        - sensor.transmission_status
-        - scene.watching_tv
-        - switch.living_room_humidifier

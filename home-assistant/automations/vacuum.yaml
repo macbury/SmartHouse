@@ -40,7 +40,7 @@
     - condition: template
       value_template: '{{ states.vacuum.main_vacuum.attributes.cleaning_count % 10 == 0 }}'
   action:
-    - service: notify.telegram_arek
+    - service: notify.slack
       data:
         title: 'Odkurzacz'
         message: "Wyrzuć śmieci z pojemnika odkurzacza"

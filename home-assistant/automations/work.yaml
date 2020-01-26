@@ -9,7 +9,7 @@
       entity_id: person.arek
       state: codesthq
   action:
-    - service: notify.telegram_arek
+    - service: notify.gotify
       data:
         title: 'Praca'
         message: "Fajrant, czas spierdalać do domu!"
@@ -20,7 +20,7 @@
     entity_id: person.ola
     to: 'codesthq'
   action:
-    - service: notify.telegram_arek
+    - service: notify.gotify
       data:
         title: 'Praca'
         message: "Ola jest pod biurem"
@@ -58,7 +58,7 @@
       entity_id: sensor.arek_jedzenie
       state: 'off'
   action:
-    - service: notify.all
+    - service: notify.lunching
       data:
         message: '@Arek Lunching mutafaka!'
 
@@ -76,7 +76,7 @@
       entity_id: sensor.arek_jedzenie
       state: 'on'
   action:
-    - service: notify.telegram_arek
+    - service: notify.lunching
       data_template:
         title: 'Praca'
         message: "Za pół godziny, przy dobrych mocach posejdona strawa twa będzie {{ states.sensor.arek_jedzenie.attributes.meal }}"
@@ -92,7 +92,7 @@
       entity_id: person.arek
       state: codesthq
   action:
-    - service: notify.telegram_arek
+    - service: notify.lunching
       data_template:
         title: 'Praca'
         message: >
