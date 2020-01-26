@@ -1,5 +1,9 @@
+wiki:
+  title: "Wiki"
+  url: https://macbury.github.io/SmartHouse/
+  icon: 'mdi:pi-hole'
 ads:
-  title: "PiHole"
+  title: "AdGuard"
   url: !env_var ADS_GUARD_URL
   icon: 'mdi:pi-hole'
 ha_ytdl:
