@@ -42,7 +42,7 @@
     
     
       
-        <title>Pihole & Cloudflare - MacBury Smart House</title>
+        <title>AdGuard - MacBury Smart House</title>
       
     
     
@@ -87,7 +87,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#pihole-cloudflare" tabindex="1" class="md-skip">
+      <a href="#adguard" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -113,7 +113,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Pihole & Cloudflare
+                AdGuard
               
             </span>
           
@@ -420,11 +420,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Pihole & Cloudflare
+        AdGuard
       </label>
     
-    <a href="./" title="Pihole & Cloudflare" class="md-nav__link md-nav__link--active">
-      Pihole & Cloudflare
+    <a href="./" title="AdGuard" class="md-nav__link md-nav__link--active">
+      AdGuard
     </a>
     
       
@@ -436,9 +436,29 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#adguard" class="md-nav__link">
+    AdGuard
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#old-dns-adblock-solution" class="md-nav__link">
+    Old DNS Adblock solution
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#pihole-cloudflare" class="md-nav__link">
     PiHole &amp; Cloudflare
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -456,6 +476,18 @@
   
 </nav>
     
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Degoogling/" title="DeGoogling" class="md-nav__link">
+      DeGoogling
+    </a>
   </li>
 
         
@@ -675,9 +707,29 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#adguard" class="md-nav__link">
+    AdGuard
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#old-dns-adblock-solution" class="md-nav__link">
+    Old DNS Adblock solution
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#pihole-cloudflare" class="md-nav__link">
     PiHole &amp; Cloudflare
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -706,9 +758,20 @@
                   <a href="https://github.com/macbury/SmartHouse/edit/master/docs/Software/PiHole.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                  <h1>Pihole & Cloudflare</h1>
+                  <h1>AdGuard</h1>
                 
-                <h2 id="pihole-cloudflare">PiHole &amp; Cloudflare<a class="headerlink" href="#pihole-cloudflare" title="Permanent link">&para;</a></h2>
+                <h2 id="adguard">AdGuard<a class="headerlink" href="#adguard" title="Permanent link">&para;</a></h2>
+<p>Currently I have moved to <a href="https://adguard.com/en/adguard-home/overview.html">AdGuard Home</a> solution for DNS based AdBlocking. <a href="https://github.com/AdguardTeam/AdGuardHome/wiki/Docker">Their software</a> can run also inside docker. The main advantages of AdGuard are:</p>
+<ul>
+<li>Less restrictive default ad guard rules - PiHole in default configuration did break login with Apple ID on mac os x and, there were small issues with android phone</li>
+<li>You can convert <a href="https://github.com/gorhill/uBlock/">uBlock</a> rules into AdGuard rules</li>
+<li>Rules are just a regexp!</li>
+<li>It is much faster and uses less resources</li>
+<li>There is a nifty ui where you can define your own mapping for local ip(Like I want to all devices in my home see HomeAssistant instance under address https://home-assistant.here)</li>
+<li>Supports DNS over https!</li>
+</ul>
+<h2 id="old-dns-adblock-solution">Old DNS Adblock solution<a class="headerlink" href="#old-dns-adblock-solution" title="Permanent link">&para;</a></h2>
+<h3 id="pihole-cloudflare">PiHole &amp; Cloudflare<a class="headerlink" href="#pihole-cloudflare" title="Permanent link">&para;</a></h3>
 <p>Everybody is tracking you, Google, Russia(damn you Putin), China(damn you commies) and others. <a href="https://pi-hole.net/">PiHole</a> is nice software that blocks Ads/Trackin site on the DNS level. Additionaly I have mapped on my router Google DNS like 8.8.8.8 to point to PiHole instance.</p>
 <p>Also to increase security I also configured dns over https. Now everytime any device in my network hits Pihole dns server, it will use secure dns over https to resolve domain. <a href="https://docs.pi-hole.net/guides/dns-over-https/">There is a nice tutorial how to do this</a> and this how my ansible configuration script looks like:</p>
 <div class="codehilite"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">master</span>
@@ -819,13 +882,13 @@
           </a>
         
         
-          <a href="../EspHome/" title="EspHome" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../Degoogling/" title="DeGoogling" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                EspHome
+                DeGoogling
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
