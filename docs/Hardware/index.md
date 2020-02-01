@@ -54,7 +54,13 @@ And here are all devices that are connected over Wi-Fi network:
 | [Playstation 4](https://www.playstation.com/en-us/explore/ps4/) | 1 | WiFi | [PS4](https://www.home-assistant.io/components/ps4/) | For playing and watching stuff that requires DVD/Blurays |
 | [HW-K650 Soundbar w/ Wireless Subwoofer](https://www.samsung.com/us/televisions-home-theater/home-theater/sound-bars/samsung-hw-k650-soundbar-w-wireless-subwoofer-hw-k650-za/) | 1 | WiFi | [ha_samsung_multi_room](https://github.com/macbury/ha_samsung_multi_room) | Some sound goodies control stuff |
 | [LG webOS TV 55SK8100PLA](https://www.lg.com/pl/telewizory/lg-55SK8100PLA) | 1 | WiFi | [LG webOS Smart TV ](https://www.home-assistant.io/components/media_player.webostv/) | Watching movies, showing Home Assistant panel and notifications |
-| [Router Asus RT-AC56U](https://www.asus.com/us/Networking/RTAC56U/) | 1 | WiFi | [Asuswrt](https://www.home-assistant.io/components/asuswrt/) | Network, remote access through VPN |
+| [Netgear Switch GS108GE](https://www.netgear.com/support/product/GS108.aspx) | 1 | Ethernet | - | Asus lyra has only two ethernet ports. |
+| [Mesh network router Asus Lyra](https://www.asus.com/us/Networking/Lyra/) | 1 | WiFi | [Asuswrt](https://www.home-assistant.io/components/asuswrt/) | Network, remote access through VPN |
 | [QNAP TS-228](https://www.qnap.com/en-us/product/ts-228) | 1 | Ethernet | [QNAP Sensor ](https://www.home-assistant.io/components/sensor.qnap/) | Main storage array for backups, TimeMachine and photos |
 | [RIGGAD Lamp](https://www.ikea.com/pl/pl/catalog/products/60385636/) | 1 | Wi-Fi | [MQTT Light](https://www.home-assistant.io/components/light.mqtt/) | Lamp with wirless charging. Additionaly I have replaced default bulb with [NeoPixel Ring](https://www.adafruit.com/product/1463) and [WeMos D1 mini](https://wiki.wemos.cc/products:d1:d1_mini). [See this in action](https://www.youtube.com/watch?v=iVw9GvY-IWI) |
 | [Linak Desk](https://www.linak.com/business-areas/desks/office-desks/) | 1 | Bluetooth | [MQTT Cover](https://www.home-assistant.io/components/cover.mqtt/) | Nice desk with ability to adjust height |
+
+## Depracated/Old hardware
+| Device  | Quantity | Connection | Home Assistant | Notes |
+| ------------- | :---: | ------------- | ------------- | ------------- |
+| [Router Asus RT-AC56U](https://www.asus.com/us/Networking/RTAC56U/) | 1 | WiFi | [Asuswrt](https://www.home-assistant.io/components/asuswrt/) | Network, remote access through VPN |
