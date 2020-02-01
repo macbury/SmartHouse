@@ -1,0 +1,9 @@
+- platform: deluge
+  host: localhost
+  name: torrent
+  username: admin
+  password: !env_var HOME_ASSISTANT_DELUGE_PASSWORD
+  monitored_variables:
+    - 'current_status'
+    - 'download_speed'
+    - 'upload_speed'
