@@ -159,6 +159,13 @@ class AirPurifierCard extends LitElement {
     });
   }
 
+  callXiaomiService(service, options = {}) {
+    this.hass.callService('xiaomi_miio', service, {
+      entity_id: this.config.entity,
+      ...options
+    });
+  }
+
   renderAQI(aqi) {
     let prefix = '';
     if (aqi < 10) {
@@ -220,7 +227,7 @@ class AirPurifierCard extends LitElement {
       this.callService('set_speed', { speed: 'Favorite' })
     }, 500)
     setTimeout(() => {
-      this.callService('xiaomi_miio_set_favorite_level', { level })
+      this.callXiaomiService('set_favorite_level', { level })
     }, 1000)
   }
 
