@@ -9,7 +9,7 @@
         name: darkblue
     - service: automation.turn_on
       data:
-        entity_id: group.all_automations
+        entity_id: all
     - delay: '00:00:45'
     - service: notify.all
       data:
@@ -17,7 +17,7 @@
         message: 'Home assistant finished booting'
     - service: automation.turn_on
       data:
-        entity_id: group.all_automations
+        entity_id: all
 
 - alias: Update notifications
   trigger:

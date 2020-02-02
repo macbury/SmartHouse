@@ -62,5 +62,3 @@
       filter:
         include:
           - entity_id: "zwave.*"
-    - type: custom:dynamic-wallpaper
-      entity: sun.sun

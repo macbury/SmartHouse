@@ -29,8 +29,6 @@
     - break
 
     - type: "custom:weather-card"
-      entity_weather: weather.dark_sky
-      entity_sun: sun.sun
     - type: horizontal-stack
       cards:
         - type: custom:mini-graph-card

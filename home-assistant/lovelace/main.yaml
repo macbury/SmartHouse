@@ -4,11 +4,9 @@
   '/local/custom_ui/kkm-card.js',
   '/local/custom-lovelace/compact-custom-header.js',
   '/local/custom-lovelace/vacuum/card.js',
-  '/local/custom-lovelace/linak-desk/card.js',
   '/local/custom-lovelace/transit/card.js',
   '/local/custom-lovelace/air-purifier/card.js',
   '/local/custom-lovelace/qr-card/card.js',
-  '/local/custom-lovelace/courtain/card.js',
   '/local/custom-lovelace/thermostat-card/thermostat-card.js'
   ] %}
 
@@ -16,7 +14,6 @@
   '/local/custom-lovelace/qr-card/qrcode.js',
   '/local/custom_ui/weather-card.js',
   '/local/custom_ui/monster-card.js',
-  '/local/custom_ui/dynamic-wallpaper.js',
   '/local/custom-lovelace/light-card.js',
   '/local/custom-lovelace/card-tools.js',
   '/local/custom-lovelace/layout-card.js'

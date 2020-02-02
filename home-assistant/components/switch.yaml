@@ -1,7 +1,3 @@
-- platform: wake_on_lan
-  name: tv
-  mac_address: "04:4E:AF:7A:CA:3A"
-
 - platform: flux
   lights:
     - light.arek_szafka
@@ -13,9 +9,6 @@
   sunset_colortemp: 2800
   stop_colortemp: 2200
 
-- platform: wake_on_lan
-  name: Mac Mini
-  mac_address: "D4:DC:CD:F3:FD:B6"
 
 - platform: template
   switches:

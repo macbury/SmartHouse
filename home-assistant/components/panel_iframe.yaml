@@ -1,15 +1,11 @@
 wiki:
   title: "Wiki"
   url: https://macbury.github.io/SmartHouse/
-  icon: 'mdi:pi-hole'
+  icon: 'mdi:file-document-box-search-outline'
 ads:
   title: "AdGuard"
   url: !env_var ADS_GUARD_URL
-  icon: 'mdi:pi-hole'
-ha_ytdl:
-  title: "Youtube Downloader"
-  url: '/ytdl/'
-  icon: 'mdi:youtube-subscription'
+  icon: 'mdi:shield-home'
 ha_grafana:
   title: "Grafana"
   url: '/grafana/'

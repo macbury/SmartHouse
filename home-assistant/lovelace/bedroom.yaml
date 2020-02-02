@@ -63,5 +63,3 @@
     - type: thermostat
       title: Bedroom
       entity: climate.bedroom
-    - type: custom:dynamic-wallpaper
-      entity: sun.sun

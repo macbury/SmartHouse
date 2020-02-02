@@ -81,5 +81,3 @@
                 fill: fade
     - type: thermostat
       entity: climate.kitchen
-    - type: custom:dynamic-wallpaper
-      entity: sun.sun

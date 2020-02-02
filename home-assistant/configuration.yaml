@@ -82,6 +82,7 @@ updater:
 # W
 wake_on_lan:
 weather: !include components/weather.yaml
+webostv: !include components/webostv.yaml
 websocket_api:
 wwlln:
 # X

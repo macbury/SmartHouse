@@ -17,9 +17,9 @@
   action:
     - service: light.turn_off
       data:
-        entity_id: 'group.all_lights'
+        entity_id: all
     - service: fan.turn_off
-      entity_id: group.all_fans
+      entity_id: all
     - service: media_player.turn_off
       entity_id:
         - media_player.tv

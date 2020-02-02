@@ -54,5 +54,3 @@
       filter:
         include:
           - entity_id: "switch.*"
-    - type: custom:dynamic-wallpaper
-      entity: sun.sun

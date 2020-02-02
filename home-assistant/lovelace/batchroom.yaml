@@ -38,5 +38,3 @@
       entities:
         - binary_sensor.bathroom_door
     - break
-    - type: custom:dynamic-wallpaper
-      entity: sun.sun

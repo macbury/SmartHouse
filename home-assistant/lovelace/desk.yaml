@@ -52,5 +52,3 @@
       show_progress: false
       group: false
     - break
-    - type: custom:dynamic-wallpaper
-      entity: sun.sun

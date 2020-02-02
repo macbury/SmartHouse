@@ -83,8 +83,6 @@
               entity_id: cover.living_room
 
     # Wallpaper and stuff
-    - type: custom:dynamic-wallpaper
-      entity: sun.sun
     - break
     - type: entities
       title: Telewizor

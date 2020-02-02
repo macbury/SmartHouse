@@ -8,8 +8,5 @@
           entity_id: sensor.arek_karta_miejsca
         - type: custom:transit-card
           entity: sensor.to_work_transit
-    - type: "custom:weather-card"
-      entity_weather: weather.dark_sky
-      entity_sun: sun.sun
     - type: custom:qr-card
       code: !env_var HOME_ASSISTANT_SSID_QR_CODE

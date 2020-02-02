@@ -24,5 +24,3 @@
       entity: camera.living_room
       entities:
         - image_processing.tensorflow_living_room
-    - type: custom:dynamic-wallpaper
-      entity: sun.sun
