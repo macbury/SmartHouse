@@ -227,7 +227,7 @@ class AirPurifierCard extends LitElement {
       this.callService('set_speed', { speed: 'Favorite' })
     }, 500)
     setTimeout(() => {
-      this.callXiaomiService('set_favorite_level', { level })
+      this.callXiaomiService('fan_set_favorite_level', { level })
     }, 1000)
   }
 

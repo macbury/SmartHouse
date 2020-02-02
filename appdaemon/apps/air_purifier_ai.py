@@ -47,7 +47,7 @@ class AirPurifierAI(hass.Hass):
 
   def update_speed(self, speed):
     self.log("Setting speed to: {}".format(speed))
-    self.call_service('xiaomi_miio.set_favorite_level', entity_id=self.fan_id, level=speed)
+    self.call_service('xiaomi_miio.fan_set_favorite_level', entity_id=self.fan_id, level=speed)
     self.call_service('fan/set_speed', entity_id=self.fan_id, speed='Auto')
 
   def turn_off(self):
