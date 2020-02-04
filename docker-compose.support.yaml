@@ -178,11 +178,6 @@ services:
       - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/miniflux?sslmode=disable
     env_file:
       - '.env.rss'
-  busix:
-    image: macbury/busix:latest
-    network_mode: host
-    env_file:
-      - '.env.busix'
   blog:
     image: blog:latest
     network_mode: host

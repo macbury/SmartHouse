@@ -1,4 +1,4 @@
-default: !env_var HOME_ASSISTANT_LOGGER error
+default: error
 logs:
   homeassistant.components.http.ban: warning
   # xiaomi_gateway: debug

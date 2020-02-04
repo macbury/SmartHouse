@@ -1,13 +1,9 @@
-- platform: public_transit
+- platform: mmpk
   name: back_from_work_transit
-  from: "Białucha"
-  to: "Wzgórza Krzesławickie"
-  count: 5
-  endpoint: "http://localhost:5000/api"
+  stop_id: 130
+  direction: 'Wzgórza K.'
 
-- platform: public_transit
+- platform: mmpk
   name: to_work_transit
-  from: "Wzgórza Krzesławickie"
-  to: "Bronowice Małe"
-  count: 3
-  endpoint: "http://localhost:5000/api"
+  stop_id: 2685
+  direction: 'Bronowice Małe'

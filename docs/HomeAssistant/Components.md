@@ -1,6 +1,20 @@
 ## My Components
 Here are components developed by me.
 
+### MPKK
+
+This custom component fetches information from [Cracow live transport system](http://www.ttss.krakow.pl/) with information when next train or bus will be on specified
+
+``` YAML
+sensor:
+  - platform: mmpk
+    name: 'Jarzebiny'
+    stop_id: 2685
+    direction: 'Bronowice Małe'
+```
+
+You can install it from this [repository](https://github.com/macbury/ha_mpk_krakow)
+
 ### It will rain
 
 This simple sensor just checks forecast for next few hours, and switches on if there is chance of rain. I use this with simple automation, to notify about next rain by switching blue light:
@@ -51,18 +65,6 @@ This component fetch information about my train card from [www.mpk.krakow.pl](ht
   city_card: 12345678
 ```
 
-### PublicTransit
-
-Public transit uses data collected by [busix](https://github.com/macbury/busix) software that scraps Cracow public transit webpage and extracts departures of buses and trains. You can specify in component starting line stop and target line stop and system will refresh and calculate next departure. There is also custom lovelace component for displaying data. 
-
-``` yaml
-- platform: public_transit
-  name: work
-  from: "Białucha"
-  to: "Wzgórza Krzesławickie"
-  endpoint: "http://busix:5000/api"
-```
-
 ### Lunching
 
 Used for fetching information from [lunching.pl](http://lunching.pl) about what did I order to eat in work. Sensor contains information when food will be delivered and what was ordered.
@@ -105,6 +107,22 @@ This platform extracts colors from currently played song cover. If proper scene 
 ```
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/8wh9JsnNPxU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Depracated components
+
+These are components written by me and have been removed from my setup
+
+### PublicTransit
+
+Public transit uses data collected by [busix](https://github.com/macbury/busix) software that scraps Cracow public transit webpage and extracts departures of buses and trains. You can specify in component starting line stop and target line stop and system will refresh and calculate next departure. There is also custom lovelace component for displaying data. 
+
+``` yaml
+- platform: public_transit
+  name: work
+  from: "Białucha"
+  to: "Wzgórza Krzesławickie"
+  endpoint: "http://busix:5000/api"
+```
 
 ## Third party components
 

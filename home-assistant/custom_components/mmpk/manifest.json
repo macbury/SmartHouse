@@ -1,0 +1,11 @@
+{
+  "domain": "mmpk",
+  "name": "mpkk",
+  "documentation": "https://macbury.github.io/SmartHouse/",
+  "requirements": [
+  ],
+  "dependencies": [],
+  "codeowners": [
+    "@macbury"
+  ]
+}
