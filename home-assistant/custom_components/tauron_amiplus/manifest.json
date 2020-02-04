@@ -1,0 +1,8 @@
+{
+  "domain": "tauron_amiplus",
+  "name": "Tauron AMIplus",
+  "documentation": "https://github.com/PiotrMachowski/Home-Assistant-custom-components-Tauron-AMIplus",
+  "dependencies": [],
+  "codeowners": ["PiotrMachowski"],
+  "requirements": ["requests"]
+}

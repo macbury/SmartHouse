@@ -127,10 +127,12 @@ class PublicTransportSensor(Entity):
   async def async_update(self):
     try:
       with async_timeout.timeout(TIMEOUT, loop=self.hass.loop):
+        _LOGGER.error("POST: {}".format(self.endpoint))
         variables = { "from": self.from_stop, "to": self.to_stop, "count": self.count }
         response = await self.websession.post(self.endpoint, data={ "query": QUERY, "variables": json.dumps(variables) })
-        data = await response.json()
-        _LOGGER.debug("Updating sensor: {}".format(data))
-        self.extract(data['data'])
+        data = await response.text()
+        _LOGGER.error("Updating sensor: {}".format(data))
+        self.extract(json.loads(data)['data'])
     except (asyncio.TimeoutError, aiohttp.ClientError, IndexError) as error:
       _LOGGER.error("Failed getting devices: %s", error)
+      self.departures = []

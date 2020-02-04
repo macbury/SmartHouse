@@ -1,0 +1,5 @@
+{
+    "domain": "uilogs",
+    "name": "UI Logs",
+    "codeowners": ["@ludeeus"]
+}

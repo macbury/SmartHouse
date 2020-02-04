@@ -1,3 +1,15 @@
+- platform: burze_dzis
+  api_key: !env_var HOME_ASSISTANT_BURZE_DZIS
+  warnings:
+    - frost_warning
+    - heat_warning
+    - wind_warning
+    - precipitation_warning
+    - storm_warning
+    - tornado_warning
+  storms_nearby:
+    radius: 20
+
 - platform: iss
   show_on_map: false
 
