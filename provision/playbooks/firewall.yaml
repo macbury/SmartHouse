@@ -6,6 +6,7 @@
     ufw_reset: yes
     ufw_logging: "off"
     ufw_rules:
+      - { port: 3128, rule: allow, comment: 'squid' }
       - { port: 6052, rule: allow, comment: 'Allow EspHome webui' }
       - { port: 22, rule: allow, comment: 'Allow SSH' }
       - { port: 80, rule: allow, comment: 'Allow HTTP' }

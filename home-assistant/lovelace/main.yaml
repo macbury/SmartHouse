@@ -1,18 +1,18 @@
 {% set modules = [
-  '/local/js/mini-graph-card-bundle.js',
-  '/local/js/mini-media-player-bundle.js',
+  '/community_plugin/mini-graph-card/mini-graph-card-bundle.js',
+  '/community_plugin/mini-media-player/mini-media-player-bundle.js',
   '/local/custom_ui/kkm-card.js',
   '/local/custom-lovelace/compact-custom-header.js',
   '/local/custom-lovelace/vacuum/card.js',
   '/local/custom-lovelace/transit/card.js',
   '/local/custom-lovelace/air-purifier/card.js',
   '/local/custom-lovelace/qr-card/card.js',
-  '/local/custom-lovelace/thermostat-card/thermostat-card.js'
+  '/local/custom-lovelace/thermostat-card/thermostat-card.js',
+  '/community_plugin/weather-card/weather-card.js'
   ] %}
 
 {% set js = [
   '/local/custom-lovelace/qr-card/qrcode.js',
-  '/local/custom_ui/weather-card.js',
   '/local/custom_ui/monster-card.js',
   '/local/custom-lovelace/light-card.js',
   '/local/custom-lovelace/card-tools.js',

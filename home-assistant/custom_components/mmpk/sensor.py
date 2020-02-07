@@ -35,9 +35,8 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
 _LOGGER = logging.getLogger(__name__)
 
 def addSecs(tm, secs):
-  fulldate = datetime(100, 1, 1, tm.hour, tm.minute, tm.second)
-  fulldate = fulldate + timedelta(seconds=secs)
-  return fulldate.time()
+  fulldate = tm + timedelta(seconds=secs)
+  return fulldate
 
 def setup_platform(hass, config, add_devices, discovery_info=None):
   stop_id = config.get(CONF_STOP_ID)
@@ -100,7 +99,7 @@ class PublicTransportSensor(Entity):
       _LOGGER.debug("Found route: {}".format(direction))
       if direction == self.direction:
         route_id = departure['patternText']
-        time = addSecs(datetime.now().time(), departure['actualRelativeTime'])
+        time = addSecs(datetime.now(), departure['actualRelativeTime'])
         _LOGGER.debug("Adding route: {}".format(route_id))
 
         deps.append({
@@ -108,7 +107,7 @@ class PublicTransportSensor(Entity):
           'direction': direction,
           'relativeTime': departure['actualRelativeTime'],
           'time': {
-            'date': time
+            'date': time.isoformat()
           }
         })
 

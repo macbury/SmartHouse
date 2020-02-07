@@ -1,4 +1,4 @@
-- platform: burze_dzis
+- platform: burze_dzis_net
   api_key: !env_var HOME_ASSISTANT_BURZE_DZIS
   warnings:
     - frost_warning
