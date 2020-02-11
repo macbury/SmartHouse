@@ -1,6 +1,5 @@
 name: tv
 host: 192.168.1.141
-standby_connection: true
 turn_on_action:
   service: wake_on_lan.send_magic_packet
   data:

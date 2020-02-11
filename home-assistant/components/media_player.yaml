@@ -7,6 +7,7 @@
   host: 192.168.1.227
   max_volume: 20
 
-
-
-- platform: plex
+- platform: emby
+  host: localhost
+  api_key: !env_var HOME_ASSISTANT_EMBY
+  port: 8096 

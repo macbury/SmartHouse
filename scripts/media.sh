@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 SUBCOMMAND=${1}
-declare -a MEDIA_SHARES=("MoviesAndTV" "Movies" "Multimedia" "Music" "homes" "UsbDisk" )
+declare -a MEDIA_SHARES=("homes")
 
 function media_command_mount() {
   for share in "${MEDIA_SHARES[@]}"
@@ -34,12 +34,10 @@ function media_command_migrate-podjira() {
 }
 
 function media_command_start() {
-  media_command_mount;
   sudo systemctl start media;
 }
 
 function media_command_stop() {
-  media_command_unmount;
   sudo systemctl stop media;
 }
 

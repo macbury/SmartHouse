@@ -1,6 +1,17 @@
 # Supporting services, like database that always must be online
 version: '3.5'
 services:
+  # photoprism:
+  #   image: photoprism/photoprism:latest
+  #   restart: unless-stopped
+  #   environment:
+  #     PHOTOPRISM_ADMIN_PASSWORD: "photoprism"
+  #   volumes:
+  #     - /mnt/Multimedia:/home/photoprism/Pictures/Originals
+  #     - .docker/data/photoprism/cache:/home/photoprism/.cache/photoprism 
+  #     - .docker/data/photoprism/db:/home/photoprism/.local/share/photoprism/resources/database
+  #   ports:
+  #     - 2342:2342
   simple-login-crontab:
     image: simplelogin/app:1.0.0
     network_mode: host

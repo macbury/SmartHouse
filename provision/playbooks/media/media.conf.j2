@@ -1,0 +1,50 @@
+upstream media {
+  server 127.0.0.1:8096 fail_timeout=0;
+}
+
+server {
+  listen 80;
+  listen [::]:80;
+  server_name {{ media_domain }};
+  return 301 https://$server_name$request_uri;
+}
+
+server {
+  listen 443 ssl;
+  ssl        on;
+  ssl_certificate /etc/letsencrypt/live/{{ media_domain }}/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/{{ media_domain }}/privkey.pem;
+  server_name {{ media_domain }};
+
+  location / {
+    proxy_pass         http://media;
+    proxy_http_version 1.1;
+
+    # Ensuring it can use websockets
+    proxy_set_header   Upgrade $http_upgrade;
+    proxy_set_header   Connection "upgrade";
+    proxy_set_header   X-Real-IP $remote_addr;
+    proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header   X-Forwarded-Proto http;
+    proxy_redirect     http:// $scheme://;
+
+    # The proxy must preserve the host because media verifies the host with the origin
+    # for WebSocket connections
+    proxy_set_header   Host $http_host;
+
+    # These sets the timeout so that the websocket can stay alive
+    proxy_connect_timeout   7m;
+    proxy_send_timeout      7m;
+    proxy_read_timeout      7m;
+  }
+
+  error_page 404 403 @error;
+
+  location @error {
+    root /var/www;
+    try_files /403.html /403.html;
+  }
+
+  client_max_body_size 50M;
+  keepalive_timeout 10;
+}

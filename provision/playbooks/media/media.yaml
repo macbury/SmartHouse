@@ -1,0 +1,43 @@
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.certbot
+  vars:
+    certbot_auto_renew: false
+    certbot_admin_email: "{{ email }}"
+    certbot_create_if_missing: true
+    certbot_certs:
+      - domains:
+        - "{{ media_domain }}"
+
+# Nginx
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.nginx
+  handlers:
+    - name: restart nginx
+      become: yes
+      service:
+        name: nginx
+        enabled: yes
+        state: restarted
+  tasks:
+    - name: Create /etc/nginx/sites-enabled/media.conf
+      template:
+        src: media.conf.j2
+        dest: /etc/nginx/sites-enabled/media.conf
+      notify:
+        - reload nginx
+        - restart nginx
+
+- hosts: master
+  become: yes
+  roles:
+    - role: weareinteractive.ufw
+  vars:
+    ufw_reset: no
+    ufw_logging: "off"
+    ufw_rules:
+      - { port: 7359, rule: allow, comment: 'Emby port' }
+      - { port: 1900, rule: allow, comment: 'Emby port' }

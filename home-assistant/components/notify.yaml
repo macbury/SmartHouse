@@ -1,6 +1,6 @@
 - platform: webostv
   name: tv_notifications
-  host: lg.here
+  host: 192.168.1.141
 
 - platform: slack
   name: slack

@@ -14,6 +14,9 @@
 # - name: Basic firewall rules
 #   import_playbook: playbooks/firewall.yaml
 
+- name: Install docker
+  import_playbook: playbooks/docker/docker.yaml
+
 # - name: Ad blocking stuff
 #   import_playbook: playbooks/ads/ads.yaml
 
@@ -32,8 +35,14 @@
 # - name: Install simple client
 #   import_playbook: playbooks/youtube/youtube.yaml
 
-- name: Install simplelogin client
-  import_playbook: playbooks/simplelogin/simplelogin.yaml
+# - name: Install simplelogin client
+#   import_playbook: playbooks/simplelogin/simplelogin.yaml
+
+# - name: Install media emby
+#   import_playbook: playbooks/media/media.yaml
+
+# - name: Install media photos
+#   import_playbook: playbooks/photos/photos.yaml
 
 # - hosts: master
 #   become: yes
@@ -197,30 +206,6 @@
 #         dest: /etc/systemd/resolved.conf
 #       notify:
 #         - restart systemd-resolved
-#     - name: Ensure a locale exists
-#       locale_gen:
-#         name: en_GB.UTF-8
-#         state: present
-#     - name: Adding docker apt-key
-#       apt_key:
-#         url: https://download.docker.com/linux/ubuntu/gpg
-#         state: present
-#     - name: 'Adding repository'
-#       apt_repository:
-#         repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }}  stable
-#         state: present
-#     - name: Update repositories cache and install "docker-ce" package
-#       apt:
-#         name: docker-ce
-#         update_cache: yes
-#     - name: 'Docker compose'
-#       pip:
-#         name: docker-compose
-#     - name: Adding user {{ ansible_user }} to group docker
-#       user:
-#         name: '{{ ansible_user }}'
-#         group: docker
-#         append: yes
 #     - name: Creates app directory
 #       file:
 #         path: /smart-house

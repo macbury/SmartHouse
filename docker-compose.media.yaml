@@ -1,19 +1,47 @@
 # All media services, that don't need to be always online
 version: '3.5'
+
+volumes:  
+  music:   
+    driver: cifs 
+    driver_opts:
+      share: mr-pickle.here/Music
+  movies:   
+    driver: cifs 
+    driver_opts:
+      share: mr-pickle.here/Movies
+  tv:   
+    driver: cifs 
+    driver_opts:
+      share: mr-pickle.here/MoviesAndTV
+  photos:   
+    driver: cifs 
+    driver_opts:
+      share: mr-pickle.here/Multimedia
+  downloads:
+    driver: cifs 
+    driver_opts:
+      share: mr-pickle.here/UsbDisk
+
 services:
-  bazzar:
-    image: linuxserver/bazarr:latest
-    network_mode: host
-    environment:
-      PUID: 0
-      PGID: 0
-      TZ: "Europe/Warsaw"
+  emby:
+    image: emby/embyserver:latest
     ports:
-      - 6767:6767
+      - 8096:8096
+    environment:
+      - UID=1000
+      - GID=100 
+      - GIDLIST=100,44
+      - TZ=Warsaw
+    devices:
+      - /dev/dri:/dev/dri
     volumes:
-      - .docker/data/bazzar:/config
-      - /mnt/MoviesAndTV:/tv
-      - /mnt/Movies:/movies
+      - .docker/data/emby/config:/config
+      - movies:/mnt/Movies
+      - tv:/mnt/MoviesAndTV
+      - photos:/mnt/Multimedia
+      - music:/mnt/Music
+      - downloads:/mnt/UsbDisk
   sonarr:
     image: linuxserver/sonarr
     ports:
@@ -24,17 +52,8 @@ services:
       TZ: "Europe/Warsaw"
     volumes:
       - .docker/data/sonarr:/config
-      - /mnt/MoviesAndTV:/tv
-      - /mnt/UsbDisk:/downloads
-  plex:
-    network_mode: host
-    image: plexinc/pms-docker:latest
-    env_file:
-      - .env.plex
-    volumes:
-      - .docker/data/plex/config:/config
-      - .docker/data/plex/transcode:/transcode
-      - /mnt:/data
+      - tv:/tv
+      - downloads:/downloads
   torrents:
     image: linuxserver/deluge:latest
     network_mode: host
@@ -45,5 +64,8 @@ services:
       - DELUGE_LOGLEVEL=info #optional
     volumes:
       - .docker/data/deluge/config:/config
-      - /mnt:/data
+      - movies:/data/Movies
+      - tv:/data/MoviesAndTV
+      - music:/data/Music
+      - downloads:/data/UsbDisk
     restart: unless-stopped
