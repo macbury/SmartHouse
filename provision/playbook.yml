@@ -14,8 +14,8 @@
 # - name: Basic firewall rules
 #   import_playbook: playbooks/firewall.yaml
 
-- name: Install docker
-  import_playbook: playbooks/docker/docker.yaml
+# - name: Install docker
+#   import_playbook: playbooks/docker/docker.yaml
 
 # - name: Ad blocking stuff
 #   import_playbook: playbooks/ads/ads.yaml
@@ -40,6 +40,9 @@
 
 # - name: Install media emby
 #   import_playbook: playbooks/media/media.yaml
+
+- name: Install nextcloud
+  import_playbook: playbooks/nextcloud/nextcloud.yaml
 
 # - name: Install media photos
 #   import_playbook: playbooks/photos/photos.yaml

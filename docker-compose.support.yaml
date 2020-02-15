@@ -1,17 +1,7 @@
 # Supporting services, like database that always must be online
 version: '3.5'
+
 services:
-  # photoprism:
-  #   image: photoprism/photoprism:latest
-  #   restart: unless-stopped
-  #   environment:
-  #     PHOTOPRISM_ADMIN_PASSWORD: "photoprism"
-  #   volumes:
-  #     - /mnt/Multimedia:/home/photoprism/Pictures/Originals
-  #     - .docker/data/photoprism/cache:/home/photoprism/.cache/photoprism 
-  #     - .docker/data/photoprism/db:/home/photoprism/.local/share/photoprism/resources/database
-  #   ports:
-  #     - 2342:2342
   simple-login-crontab:
     image: simplelogin/app:1.0.0
     network_mode: host
@@ -85,14 +75,16 @@ services:
       - 6379:6379
     volumes:
       - .docker/data/redis:/data
-  calendar:
-    image: nextcloud:latest
+  nextcloud:
+    build: ./nextcloud/
     ports:
-      - 4111:80
+      - 4333:80
     env_file:
       - '.env.nextcloud'
     volumes:
-      - .docker/data/nextcloud:/var/www/html
+      - .docker/data/nextcloud_next:/var/www/html
+    depends_on:
+      - database
   mqtt:
     restart: unless-stopped
     image: eclipse-mosquitto:latest

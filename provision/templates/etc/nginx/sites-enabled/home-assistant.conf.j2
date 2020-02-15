@@ -6,36 +6,16 @@ upstream grafana {
   server 127.0.0.1:4100 fail_timeout=0;
 }
 
-upstream pihole {
-  server 127.0.0.1:4104 fail_timeout=0;
-}
-
 upstream glances {
   server 127.0.0.1:4108 fail_timeout=0;
-}
-
-upstream nextcloud {
-  server 127.0.0.1:4111 fail_timeout=0;
-}
-
-upstream plex {
-  server 127.0.0.1:32400 fail_timeout=0;
-}
-
-upstream torrent {
-  server 127.0.0.1:8112 fail_timeout=0;
 }
 
 upstream sonarr {
   server 127.0.0.1:8989 fail_timeout=0;
 }
 
-upstream bazarr {
-  server 127.0.0.1:6767 fail_timeout=0;
-}
-
-upstream ytdl {
-  server 127.0.0.1:9292 fail_timeout=0;
+upstream lidarr {
+  server 127.0.0.1:18686 fail_timeout=0;
 }
 
 server {
@@ -53,13 +33,6 @@ server {
   server_name {{ domain }};
   
 
-  location ~ /ipfs/(.*)$ {
-    rewrite ^ https://{{ ipfs_domain }}/$request_uri permanent;
-  }
-
-  location ~ /ipns/(.*)$ {
-    rewrite ^ https://{{ ipfs_domain }}/$request_uri permanent;
-  }
 
   location /api/alexa/flash_briefings {
     proxy_set_header Host $host;
@@ -170,21 +143,6 @@ server {
     proxy_set_header Connection "upgrade";
   }
 
-
-  location /transmission {
-    allow 192.168.0.0/16;
-    allow 10.0.0.0/16;
-    deny all;
-    proxy_pass          http://torrent;
-    proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
-    proxy_redirect      off;
-    proxy_buffering     off;
-    proxy_set_header    Host            $host;
-    proxy_set_header    X-Real-IP       $remote_addr;
-    proxy_pass_header X-Transmission-Session-Id;
-    proxy_hide_header X-Frame-Options;
-  }
-
   location /sonarr {
     allow 192.168.0.0/16;
     allow 10.0.0.0/16;
@@ -200,79 +158,19 @@ server {
     proxy_set_header Connection "upgrade";
   }
 
-  location /bazarr/ {
+  location /lidarr {
     allow 192.168.0.0/16;
     allow 10.0.0.0/16;
     deny all;
 
-    proxy_pass              http://bazarr/bazarr/;
-    proxy_set_header        X-Real-IP               $remote_addr;
-    proxy_set_header        Host                    $http_host;
-    proxy_set_header        X-Forwarded-For         $proxy_add_x_forwarded_for;
-    proxy_set_header        X-Forwarded-Proto       $scheme;
-    proxy_http_version      1.1;
-    proxy_set_header        Upgrade                 $http_upgrade;
-    proxy_set_header        Connection              "Upgrade";
-    proxy_redirect off;
-  }
-
-  location /nextcloud/remote.php/dav/ {
-    rewrite  ^/nextcloud/(.*)  /$1 break;
-    proxy_pass http://nextcloud/;
+    proxy_pass http://lidarr;
     proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
-    proxy_hide_header X-Frame-Options;
-  }
-
-  location /nextcloud/ {
-    allow 192.168.0.0/16;
-    allow 10.0.0.0/16;
-    allow 172.0.0.0/16;
-    allow 172.17.0.0/16;
-    allow 172.30.0.0/16;
-    deny all;
-
-    rewrite  ^/nextcloud/(.*)  /$1 break;
-    proxy_pass http://nextcloud/;
-    proxy_set_header Host $host;
-
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection "upgrade";
-    proxy_hide_header X-Frame-Options;
-  }
-
-  location /plex {
-    return 301 $scheme://$host/plex/;
-  }
-
-  location ^~ /plex/ {
-    allow 192.168.0.0/16;
-    allow 10.0.0.0/16;
-    deny all;
-    set $upstream_plex plex;
-    rewrite /plex(.*) $1 break;
-    proxy_pass http://$upstream_plex;
-
-    proxy_set_header X-Plex-Client-Identifier $http_x_plex_client_identifier;
-    proxy_set_header X-Plex-Device $http_x_plex_device;
-    proxy_set_header X-Plex-Device-Name $http_x_plex_device_name;
-    proxy_set_header X-Plex-Platform $http_x_plex_platform;
-    proxy_set_header X-Plex-Platform-Version $http_x_plex_platform_version;
-    proxy_set_header X-Plex-Product $http_x_plex_product;
-    proxy_set_header X-Plex-Token $http_x_plex_token;
-    proxy_set_header X-Plex-Version $http_x_plex_version;
-    proxy_set_header X-Plex-Nocache $http_x_plex_nocache;
-    proxy_set_header X-Plex-Provides $http_x_plex_provides;
-    proxy_set_header X-Plex-Device-Vendor $http_x_plex_device_vendor;
-    proxy_set_header X-Plex-Model $http_x_plex_model;
-  }
-
-  if ($http_referer ~* /plex) {
-    rewrite ^/web/(.*) /plex/web/$1? redirect;
   }
 
   location /glances {
@@ -288,22 +186,6 @@ server {
     proxy_set_header X-Forwarded-Proto $scheme;
   }
 
-  location /ytdl {
-    return 301 https://$server_name/ytdl/;
-  }
-
-  location /ytdl/ {
-    allow 192.168.0.0/16;
-    allow 10.0.0.0/16;
-    deny all;
-
-    rewrite /ytdl/(.*) /$1 break;
-    proxy_pass http://ytdl/;
-    proxy_set_header Host $http_host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-  }
 
   error_page 404 403 @error;
 

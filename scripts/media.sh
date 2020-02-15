@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 SUBCOMMAND=${1}
-declare -a MEDIA_SHARES=("homes")
+declare -a MEDIA_SHARES=("UsbDisk")
 
 function media_command_mount() {
   for share in "${MEDIA_SHARES[@]}"
@@ -14,15 +14,14 @@ function media_command_unmount() {
   do
     unmount_share $share
   done
-
 }
+
 function media_command_up() {
-  media_command_mount;
   docker-compose --file docker-compose.media.yaml --project-name media up
 }
 
 function media_command_down() {
-  docker-compose --file docker-compose.media.yaml --project-name media down
+  docker-compose --file docker-compose.media.yaml --project-name media down --remove-orphans
 }
 
 function media_command_logs() {

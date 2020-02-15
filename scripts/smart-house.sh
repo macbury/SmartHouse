@@ -65,7 +65,7 @@ function mount_share() {
 
 function smart_house_command_enpass() {
   ENPASS_BACKUP_DIRECTORY="/mnt/homes/nextcloud/$(date +"%Y%m%d_%H%M%S")/";
-  ENPASS_DIRECTORY=/smart-house/.docker/data/nextcloud/data/macbury/files/Enpass;
+  ENPASS_DIRECTORY=/smart-house/.docker/data/nextcloud_next/data/macbury/files/Enpass;
   mount_share "homes";
   mkdir -p $ENPASS_BACKUP_DIRECTORY;
   cp -R $ENPASS_DIRECTORY $ENPASS_BACKUP_DIRECTORY;

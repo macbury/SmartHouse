@@ -18,7 +18,7 @@ volumes:
     driver: cifs 
     driver_opts:
       share: mr-pickle.here/Multimedia
-  downloads:
+  downloads:   
     driver: cifs 
     driver_opts:
       share: mr-pickle.here/UsbDisk
@@ -41,7 +41,23 @@ services:
       - tv:/mnt/MoviesAndTV
       - photos:/mnt/Multimedia
       - music:/mnt/Music
-      - downloads:/mnt/UsbDisk
+  lidarr:
+    image: linuxserver/lidarr
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Europe/Warsaw
+      - UMASK_SET=022 #optional
+    volumes:
+      - .docker/data/lidarr:/config
+      - music:/music
+      - downloads:/downloads
+    ports:
+      - "0.0.0.0:18686:8686"
+    restart: unless-stopped
+    depends_on:
+      - torrents
+      - emby
   sonarr:
     image: linuxserver/sonarr
     ports:
@@ -54,12 +70,15 @@ services:
       - .docker/data/sonarr:/config
       - tv:/tv
       - downloads:/downloads
+    depends_on:
+      - torrents
+      - emby
   torrents:
     image: linuxserver/deluge:latest
     network_mode: host
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=0
+      - PGID=0
       - TZ=Warsaw
       - DELUGE_LOGLEVEL=info #optional
     volumes:

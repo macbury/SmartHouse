@@ -73,17 +73,16 @@
             fill: fade
         - type: custom:mini-graph-card
           entities:
-            - sensor.dark_sky_uv_index
+            - sensor.co2_intensity_50_09_20_06
           line_color: '#fc9700'
-          hours_to_show: 12
+          hours_to_show: 24
           points_per_hour: 1
           animate: true
           hour24: true
           extrema: true
-          lower_bound: 0
-          upper_bound: 12
           show:
-            graph: bar
+            points: true
+            fill: fade
     - break
 
     - type: horizontal-stack

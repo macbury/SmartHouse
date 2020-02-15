@@ -1,7 +1,7 @@
 living_room_air:
   module: air_purifier_ai
   class: AirPurifierAI
-  calendar: calendar.oczyszczacz_salon
+  calendar: calendar.salon_env
   fan_id: 'fan.living_room_air_purifier'
   family_devices: 'group.family'
   fallback: 5400
@@ -9,6 +9,27 @@ living_room_air:
   alt_mode_entity: switch.living_room_humidifier
   mode: 'Auto'
   alt_mode: 'Silent'
+
+humidifier_living_room:
+  module: humidifier
+  class: HumidifierController
+  humidifer: switch.living_room_humidifier
+  max_humidity: 50
+  min_humidity: 45
+  family_devices: group.family
+  calendar: calendar.salon_env
+  humidity_sensor: sensor.living_room_humidity
+
+heating_living_room:
+  module: adaptive_room_heating
+  class: AdaptiveRoomHeating
+  calendar: calendar.salon_env
+  outside_temperature: sensor.dark_sky_temperature
+  temperature_sensor: sensor.living_room_temperature
+  family_devices: group.family
+  climate: climate.living_room
+  max_temperature: 24
+  min_temperature: 20
 
 batteries:
   module: battery
@@ -18,39 +39,16 @@ batteries:
 bedroom_air:
   module: air_purifier_ai
   class: AirPurifierAI
-  calendar: calendar.oczyszczacz_sypialnia
+  calendar: calendar.sypialnia_env
   fan_id: 'fan.bedroom_air_purifier'
   family_devices: 'group.family'
   fallback: 5400
   mode: 'Auto'
 
-heating_living_room:
-  module: adaptive_room_heating
-  class: AdaptiveRoomHeating
-  calendar: calendar.ogrzewanie_salon
-  outside_temperature: sensor.dark_sky_temperature
-  temperature_sensor: sensor.living_room_temperature
-  family_devices: group.family
-  climate: climate.living_room
-  max_temperature: 24
-  min_temperature: 20
-
-heating_kitchen:
-  module: adaptive_room_heating
-  class: AdaptiveRoomHeating
-  calendar: calendar.ogrzewanie_kuchnia
-  outside_temperature: sensor.dark_sky_temperature
-  temperature_sensor: sensor.kitchen_temperature
-  family_devices: group.family
-  climate: climate.kitchen
-  max_temperature: 24
-  min_temperature: 20
-  main_light: input_boolean.pizza
-
 heating_bedroom:
   module: adaptive_room_heating
   class: AdaptiveRoomHeating
-  calendar: calendar.ogrzewanie_sypialnia
+  calendar: calendar.sypialnia_env
   outside_temperature: sensor.dark_sky_temperature
   temperature_sensor: sensor.bedroom_temperature
   family_devices: group.family
@@ -59,20 +57,17 @@ heating_bedroom:
   max_temperature: 24
   min_temperature: 23
 
-humidifier_living_room:
-  module: humidifier
-  class: HumidifierController
-  humidifer: switch.living_room_humidifier
-  max_humidity: 50
-  min_humidity: 45
+heating_kitchen:
+  module: adaptive_room_heating
+  class: AdaptiveRoomHeating
+  calendar: calendar.kuchnia_env
+  outside_temperature: sensor.dark_sky_temperature
+  temperature_sensor: sensor.kitchen_temperature
   family_devices: group.family
-  calendar: calendar.ogrzewanie_salon
-  humidity_sensor: sensor.living_room_humidity
-# cover:
-#   module: cover
-#   class: Blinds
-#   luminance_entity_id: sensor.stat_window_luminance_mean
-#   close_treshold: 6000
-#   blinds_entity_id: cover.living_room
-#   calendar_entity_id: calendar.zaluzje
-#   family_group_entity_id: group.family
+  climate: climate.kitchen
+  max_temperature: 24
+  min_temperature: 20
+  main_light: input_boolean.pizza
+
+
+

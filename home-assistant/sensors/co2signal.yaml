@@ -1,0 +1,2 @@
+- platform: co2signal
+  token: !env_var HOME_ASSISTANT_CO2SIGNAL_KEY
