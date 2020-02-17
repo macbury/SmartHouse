@@ -41,11 +41,14 @@
 # - name: Install media emby
 #   import_playbook: playbooks/media/media.yaml
 
-- name: Install nextcloud
-  import_playbook: playbooks/nextcloud/nextcloud.yaml
+# - name: Install nextcloud
+#   import_playbook: playbooks/nextcloud/nextcloud.yaml
 
 # - name: Install media photos
 #   import_playbook: playbooks/photos/photos.yaml
+
+- name: Install cat feeder
+  import_playbook: playbooks/cat_feeder/cat.yaml
 
 # - hosts: master
 #   become: yes

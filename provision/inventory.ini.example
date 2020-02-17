@@ -9,3 +9,6 @@
 
 [vacuum]
 192.168.1.222 ansible_connection=ssh        ansible_user=root           ansible_port=22
+
+[cat_feeder]
+192.168.1.222 ansible_connection=ssh        ansible_user=root           ansible_port=22

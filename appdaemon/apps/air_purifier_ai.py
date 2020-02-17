@@ -85,7 +85,10 @@ class AirPurifierAI(hass.Hass):
       elif self.cleaning_time():
         if self.update_handle is not None:
           self.cancel_timer(self.update_handle)
-        if self.alt_mode_entity_working():
+        if 'alt_mode_entity' not in self.args:
+          self.log("Will adapt now")
+          self.future_turn_on()
+        elif self.alt_mode_entity_working():
           self.log("Will adapt now")
           self.future_turn_on()
         else:

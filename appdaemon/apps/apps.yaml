@@ -54,8 +54,8 @@ heating_bedroom:
   family_devices: group.family
   climate: climate.bedroom
   main_light: input_boolean.giggid
-  max_temperature: 24
-  min_temperature: 23
+  max_temperature: 25
+  min_temperature: 24
 
 heating_kitchen:
   module: adaptive_room_heating

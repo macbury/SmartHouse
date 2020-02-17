@@ -1,5 +1,5 @@
 upstream nc {
-  server 127.0.0.1:4333 fail_timeout=0;
+  server 127.0.0.1:4333 fail_timeout=5;
 }
 
 server {
@@ -16,7 +16,10 @@ server {
   ssl_certificate_key /etc/letsencrypt/live/{{ nextcloud_domain }}/privkey.pem;
   server_name {{ nextcloud_domain }};
 
-  location /remote.php/dav/ {
+  add_header X-Frame-Options "SAMEORIGIN";
+  add_header X-XSS-Protection "1; mode=block";
+
+  location ~ ^/(remote.php|ocs/v2.php|ocs/v1.php|status.php|oc/status.php) {
     proxy_pass         http://nc;
     proxy_http_version 1.1;
 
@@ -74,6 +77,6 @@ server {
     try_files /403.html /403.html;
   }
 
-  client_max_body_size 50M;
+  client_max_body_size 250M;
   keepalive_timeout 10;
 }

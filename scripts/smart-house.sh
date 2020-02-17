@@ -20,6 +20,10 @@ function smart_house_validate_command() {
   fi
 }
 
+function smart_house_command_bans() {
+  fail2ban-client status | grep "Jail list:" | sed "s/ //g" | awk '{split($2,a,",");for(i in a) system("fail2ban-client status " a[i])}' | grep "Status\|IP list";
+}
+
 function smart_house_command_restart() {
   smart_house_command_stop;
   smart_house_command_start;

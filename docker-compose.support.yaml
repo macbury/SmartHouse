@@ -85,6 +85,7 @@ services:
       - .docker/data/nextcloud_next:/var/www/html
     depends_on:
       - database
+      - redis
   mqtt:
     restart: unless-stopped
     image: eclipse-mosquitto:latest
