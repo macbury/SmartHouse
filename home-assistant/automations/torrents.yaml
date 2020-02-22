@@ -7,3 +7,18 @@
     data_template:
       title: "Transmission"
       message: "Torrent downloaded!"
+
+# - alias: 'Add torrent'
+#   trigger:
+#     - platform: event
+#       event_type: telegram_command
+#       event_data:
+#         command: '/t'
+#         chat_id: 66368059
+#   action:
+#     - service: notify.telegram_arek
+#       data_template:
+#         message: Hold on, adding yer stuff...
+#     - service: transmission.add_torrent
+#       data_template:
+#         torrent: '{{ trigger.event.data.args | join(" ") }}'

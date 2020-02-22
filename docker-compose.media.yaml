@@ -31,7 +31,7 @@ services:
     environment:
       - UID=1000
       - GID=100 
-      - GIDLIST=100,44
+      - GIDLIST=100,44,1
       - TZ=Warsaw
     devices:
       - /dev/dri:/dev/dri
