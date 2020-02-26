@@ -29,7 +29,9 @@
     - name: wiringpi
       apt:
         name: wiringpi
-
+    - name: git
+      apt:
+        name: git
 - hosts: cat_feeder
   become: yes
   roles:

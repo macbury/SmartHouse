@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" id="viewport-meta" content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+  <title>You should not pass</title>
+  <style>
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html,
+  body {
+    overflow: hidden;
+    pointer-events: none;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+  }
+
+  body {
+    background: #111;
+    color: #bbb;
+    cursor: default;
+    font: normal 300%/1.5 monospace;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  i {
+    display: block;
+    -webkit-box-flex: 0;
+        -ms-flex: none;
+            flex: none;
+    font-style: normal;
+    text-align: center;
+    width: 1.125em;
+  }
+
+  .back {
+    -ms-flex-line-pack: start;
+        align-content: flex-start;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+
+  .back i {
+    opacity: 0.4;
+  }
+
+  .text {
+    left: 3.375em;
+    position: absolute;
+    top: 3em;
+    width: 10.125em;
+  }
+  .text span {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .text span.fourzerofour i {
+    color: red !important;
+  }
+  .text i {
+    background-color: #111;
+    color: #fff;
+  }
+
+  </style>
+  <script
+    src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+    crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="back"></div>
+  <div class="text">
+    <span>
+      <i>Y</i>
+      <i>O</i>
+      <i>U</i>
+      <i> </i>
+      <i>S</i>
+      <i>H</i>
+      <i>A</i>
+      <i>L</i>
+      <i>L</i>
+      <i> </i>
+      <i>N</i>
+      <i>O</i>
+      <i>T</i>
+      <i> </i>
+      <i>P</i>
+      <i>A</i>
+      <i>S</i>
+      <i>S</i>
+    </span>
+    <span class="fourzerofour"><i>4</i><i>0</i><i>3</i></span>
+  </div>
+
+  <script>
+
+  function digits(){
+    var num = Math.round(($(document).width()*$(document).height())/(58*43)),
+        arr = [];
+    for (var i = 0, l = num; i < l; i++) {
+      arr.push('<i>'+Math.floor((Math.random() * 2) + 0)+'</i>');
+    }
+    $('.back').append(arr);
+  }
+
+  function tamper() {
+    var d = $(".back i"),
+        e = d.eq(Math.floor((Math.random() * d.length)));
+    if ( e.html() == 1 ) {
+      e.html('0');
+    } else {
+      e.html('1');
+    }
+  }
+
+  setInterval(function () {
+    tamper();
+  }, 100);
+
+  $(window).on('load resize', function () {
+    digits(function () {
+      tamper();
+    });
+  });
+
+  </script>
+
+</body>
+</html>
