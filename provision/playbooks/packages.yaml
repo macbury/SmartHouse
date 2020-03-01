@@ -30,6 +30,9 @@
     - name: 'Python pip3'
       apt:
         name: python3-pip
+    - name: 'Python pip3'
+      apt:
+        name: smbclient
 
 - hosts: master
   become: yes

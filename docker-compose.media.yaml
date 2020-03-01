@@ -1,28 +1,6 @@
 # All media services, that don't need to be always online
 version: '3.5'
 
-volumes:  
-  music:   
-    driver: cifs 
-    driver_opts:
-      share: mr-pickle.here/Music
-  movies:   
-    driver: cifs 
-    driver_opts:
-      share: mr-pickle.here/Movies
-  tv:   
-    driver: cifs 
-    driver_opts:
-      share: mr-pickle.here/MoviesAndTV
-  photos:   
-    driver: cifs 
-    driver_opts:
-      share: mr-pickle.here/Multimedia
-  downloads:   
-    driver: cifs 
-    driver_opts:
-      share: mr-pickle.here/UsbDisk
-
 services:
   emby:
     image: emby/embyserver:latest
@@ -31,27 +9,27 @@ services:
     environment:
       - UID=1000
       - GID=100 
-      - GIDLIST=100,44,1
+      - GIDLIST=100,44,1,0,1003
       - TZ=Warsaw
     devices:
       - /dev/dri:/dev/dri
     volumes:
       - .docker/data/emby/config:/config
-      - movies:/mnt/Movies
-      - tv:/mnt/MoviesAndTV
-      - photos:/mnt/Multimedia
-      - music:/mnt/Music
+      - /mnt/Movies:/mnt/Movies
+      - /mnt/MoviesAndTV:/mnt/MoviesAndTV
+      - /mnt/Multimedia:/mnt/Multimedia
+      - /mnt/Music:/mnt/Music
   lidarr:
     image: linuxserver/lidarr
     environment:
       - PUID=0
-      - PGID=0
+      - PGID=1003
       - TZ=Europe/Warsaw
       - UMASK_SET=022 #optional
     volumes:
       - .docker/data/lidarr:/config
-      - music:/music
-      - downloads:/downloads
+      - /mnt/Music:/music
+      - /mnt/UsbDisk:/downloads
     ports:
       - "0.0.0.0:18686:8686"
     restart: unless-stopped
@@ -64,12 +42,12 @@ services:
       - 8989:8989
     environment:
       PUID: 0
-      PGID: 0
+      PGID: 1003
       TZ: "Europe/Warsaw"
     volumes:
       - .docker/data/sonarr:/config
-      - tv:/tv
-      - downloads:/downloads
+      - /mnt/MoviesAndTV:/tv
+      - /mnt/UsbDisk:/downloads
     depends_on:
       - torrents
       - emby
@@ -78,13 +56,13 @@ services:
     network_mode: host
     environment:
       - PUID=0
-      - PGID=0
+      - PGID=1003
       - TZ=Warsaw
       - DELUGE_LOGLEVEL=info #optional
     volumes:
       - .docker/data/deluge/config:/config
-      - movies:/data/Movies
-      - tv:/data/MoviesAndTV
-      - music:/data/Music
-      - downloads:/data/UsbDisk
+      - /mnt/Movies:/data/Movies
+      - /mnt/MoviesAndTV:/data/MoviesAndTV
+      - /mnt/Music:/data/Music
+      - /mnt/UsbDisk:/data/UsbDisk
     restart: unless-stopped

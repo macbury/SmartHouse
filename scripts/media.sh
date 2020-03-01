@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 SUBCOMMAND=${1}
-declare -a MEDIA_SHARES=("UsbDisk")
+declare -a MEDIA_SHARES=("UsbDisk" "Movies" "MoviesAndTV" "Music")
 
 function media_command_mount() {
   for share in "${MEDIA_SHARES[@]}"
@@ -26,10 +26,6 @@ function media_command_down() {
 
 function media_command_logs() {
   docker-compose --file docker-compose.media.yaml --project-name media logs -f
-}
-
-function media_command_migrate-podjira() {
-  docker-compose --file docker-compose.media.yaml --project-name media run podjira bin/rails db:create db:migrate db:seed
 }
 
 function media_command_start() {
