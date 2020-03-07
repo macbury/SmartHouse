@@ -71,3 +71,9 @@
       icon_template: mdi:weather-sunny-alert
       value_template: >-
         {{ states.sensor.stat_window_luminance_mean.state | float >= 5000 }}
+
+- platform: mqtt
+  name: Puss Feeder Motion Detected
+  state_topic: 'home/kitchen/puss_feeder/motion'
+  availability_topic: home/kitchen/puss_feeder
+  off_delay: 10

@@ -79,5 +79,18 @@
               show:
                 points: true
                 fill: fade
+    - type: picture-glance
+      title: Puss Feeder
+      entity: binary_sensor.puss_feeder_motion_detected
+      state_filter:
+        "on": brightness(110%) saturate(1.2)
+        "off": brightness(50%) hue-rotate(45deg)
+      entities:
+        - light.puss_feeder_light
+        - calendar.cat_feed_schedule
+        - binary_sensor.puss_feeder_motion_detected
+        - script.feed_the_cat
+      camera_image: camera.him_cam
+      
     - type: thermostat
       entity: climate.kitchen

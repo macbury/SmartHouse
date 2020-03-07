@@ -13,119 +13,136 @@
       - { port: 445, rule: allow, comment: 'Samba' }
       - { port: 80, rule: allow, comment: 'MotionEye UI' }
       - { port: 8081, rule: allow, comment: 'MotionEye Stream' }
+      - { port: 61208, rule: allow, comment: 'Glances' }
+
+# - hosts: cat_feeder
+#   become: yes
+#   tasks:
+#     - name: cifs
+#       apt:
+#         name: cifs-utils
+#     - name: samba
+#       apt:
+#         name: samba
+#     - name: htop
+#       apt:
+#         name: htop
+#     - name: wiringpi
+#       apt:
+#         name: wiringpi
+#     - name: git
+#       apt:
+#         name: git
+# - hosts: cat_feeder
+#   become: yes
+#   roles:
+#     - role: mikolak-net.raspi_config
+#   vars:
+#       raspi_config_expanded_filesystem: yes
+#       raspi_config_locale: en_US.UTF-8
+#       raspi_config_hostname: CatFeeder
+#       raspi_config_enable_camera: yes
+
+# - hosts: cat_feeder
+#   become: yes
+#   tasks:
+#     - name: ffmpeg
+#       apt:
+#         name: ffmpeg
+#     - name: libmariadb3
+#       apt:
+#         name: libmariadb3
+#     - name: libpq5
+#       apt:
+#         name: libpq5
+#     - name: libmicrohttpd12
+#       apt:
+#         name: libmicrohttpd12
+#     - name: python-pip
+#       apt:
+#         name: python-pip
+#     - name: python-dev
+#       apt:
+#         name: python-dev
+#     - name: libssl-dev
+#       apt:
+#         name: libssl-dev
+#     - name: libcurl4-openssl-dev
+#       apt:
+#         name: libcurl4-openssl-dev
+#     - name: libjpeg-dev
+#       apt:
+#         name: libjpeg-dev
+#     - name: libz-dev
+#       apt:
+#         name: libz-dev
+#     - name: Download motion eye
+#       get_url:
+#         url: https://github.com/Motion-Project/motion/releases/download/release-4.2.2/pi_buster_motion_4.2.2-1_armhf.deb
+#         dest: "/tmp/motioneye.deb"
+#     - name: Install motioneye
+#       apt: 
+#         deb: /tmp/motioneye.deb
+#       sudo: true
+#     - name: 'motioneye pip package'
+#       pip:
+#         name: motioneye
 
 - hosts: cat_feeder
   become: yes
   tasks:
-    - name: cifs
-      apt:
-        name: cifs-utils
-    - name: samba
-      apt:
-        name: samba
-    - name: htop
-      apt:
-        name: htop
-    - name: wiringpi
-      apt:
-        name: wiringpi
-    - name: git
-      apt:
-        name: git
-- hosts: cat_feeder
-  become: yes
-  roles:
-    - role: mikolak-net.raspi_config
-  vars:
-      raspi_config_expanded_filesystem: yes
-      raspi_config_locale: en_US.UTF-8
-      raspi_config_hostname: CatFeeder
-      raspi_config_enable_camera: yes
-
-- hosts: cat_feeder
-  become: yes
-  tasks:
-    - name: ruby
-      apt:
-        name: ruby
-    - name: ruby-dev
-      apt:
-        name: ruby-dev
-
-- hosts: cat_feeder
-  become: yes
-  tasks:
-    - name: ffmpeg
-      apt:
-        name: ffmpeg
-    - name: libmariadb3
-      apt:
-        name: libmariadb3
-    - name: libpq5
-      apt:
-        name: libpq5
-    - name: libmicrohttpd12
-      apt:
-        name: libmicrohttpd12
-    - name: python-pip
-      apt:
-        name: python-pip
-    - name: python-dev
-      apt:
-        name: python-dev
-    - name: libssl-dev
-      apt:
-        name: libssl-dev
-    - name: libcurl4-openssl-dev
-      apt:
-        name: libcurl4-openssl-dev
-    - name: libjpeg-dev
-      apt:
-        name: libjpeg-dev
-    - name: libz-dev
-      apt:
-        name: libz-dev
-    - name: Download motion eye
-      get_url:
-        url: https://github.com/Motion-Project/motion/releases/download/release-4.2.2/pi_buster_motion_4.2.2-1_armhf.deb
-        dest: "/tmp/motioneye.deb"
-    - name: Install motioneye
-      apt: 
-        deb: /tmp/motioneye.deb
-      sudo: true
-    - name: 'motioneye pip package'
-      pip:
-        name: motioneye
-
-- hosts: cat_feeder
-  become: yes
-  handlers:
-    - name: reload systemctl
+    - name: Clone pussificator repo
+      git:
+        repo: git@github.com:macbury/pussificator.git
+        dest: /pussificator
+        accept_hostkey: yes
+        update: no
+    - name: Install pussificator dependencies
       become: yes
-      command: systemctl daemon-reload
-    - name: restart motioneye
-      service:
-        name: motioneye
-        state: restarted
-  tasks:
-    - name: Creates motione eye dir
-      file:
-        path: /etc/motioneye/
-        state: directory
-    - name: Creates motione media dir
-      file:
-        path: /home/pi/motion_eye
-        state: directory
-        owner: "pi"
-        group: "pi"
-    - name: Create motion eye config
-      template:
-        src: ./motioneye.conf
-        dest: /etc/motioneye/motioneye.conf
-    - name: Create motioneye.service
-      template:
-        src: ./motioneye.service
-        dest: /lib/systemd/system/motioneye.service
-      notify:
-        - reload systemctl
-        - restart motioneye
+      pip:
+        executable: /usr/bin/pip3
+        requirements: /pussificatorrequirements.txt
+# - hosts: cat_feeder
+#   become: yes
+#   tasks:
+#     - name: Creates motione eye dir
+#       file:
+#         path: /etc/motioneye/
+#         state: directory
+#     - name: Creates motione media dir
+#       file:
+#         path: /home/pi/motion_eye
+#         state: directory
+#         owner: "pi"
+#         group: "pi"
+#     - name: Create motion eye config
+#       template:
+#         src: ./motioneye.conf
+#         dest: /etc/motioneye/motioneye.conf
+#     - name: Create motioneye.service
+#       template:
+#         src: ./motioneye.service
+#         dest: /lib/systemd/system/motioneye.service
+#     - name: enable motioneye service
+#       systemd:
+#         name: motioneye
+#         state: started
+#         enabled: yes
+#         daemon_reload: yes
+
+# - hosts: cat_feeder
+#   become: yes
+#   tasks:
+#     - name: 'Install glances'
+#       pip:
+#         name: glances
+#     - name: Create glances.service
+#       template:
+#         src: ./glances.service
+#         dest: /lib/systemd/system/glances.service
+#     - name: enable glances service
+#       systemd:
+#         name: glances
+#         state: started
+#         enabled: yes
+#         daemon_reload: yes

@@ -23,3 +23,4 @@ smart_home:
       - script.clean_bathroom
       - script.stop_cleaning
       - script.start_cleaning
+      - script.feed_the_cat

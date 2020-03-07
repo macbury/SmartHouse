@@ -52,12 +52,18 @@
 
 - platform: mqtt
   schema: json
-  command_topic: 'home/living_room/led_strip/desk/set'
-  state_topic: 'home/living_room/led_strip/desk'
-  name: work_ambient_desk
+  availability_topic: home/kitchen/puss_feeder
+  command_topic: 'home/kitchen/puss_feeder/light/set'
+  state_topic: 'home/kitchen/puss_feeder/light'
+  name: Puss Feeder Light
   qos: 1
   rgb: true
-  retain: false
+  retain: true
+  effect: true
   brightness: true
-  # effect_list: !include led_strip_effects.yaml
-  # effect_value_template: '{{ json_value.effect }}'
+  effect_list:
+    - Connecting
+    - Countdown
+    - Success
+    - Manual
+    - None

@@ -9,6 +9,11 @@
   sunset_colortemp: 2800
   stop_colortemp: 2200
 
+- platform: mqtt
+  name: Dispense Food
+  availability_topic: home/kitchen/puss_feeder
+  command_topic: "home/kitchen/puss_feeder/dispense_food/set"
+  state_topic: "home/kitchen/puss_feeder/dispense_food"
 
 - platform: template
   switches:

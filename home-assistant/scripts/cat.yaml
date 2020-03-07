@@ -1,0 +1,6 @@
+feed_the_cat:
+  alias: 'Feed the cat'
+  sequence:
+    - service: notify.all
+      data:
+        message: 'Dispensing food for the fooker'
