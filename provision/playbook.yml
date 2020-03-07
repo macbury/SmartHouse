@@ -47,8 +47,8 @@
 # - name: Install media photos
 #   import_playbook: playbooks/photos/photos.yaml
 
-- name: Install cat feeder
-  import_playbook: playbooks/cat_feeder/cat.yaml
+# - name: Install cat feeder
+#   import_playbook: playbooks/cat_feeder/cat.yaml
 
 # - hosts: master
 #   become: yes

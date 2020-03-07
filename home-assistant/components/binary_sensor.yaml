@@ -75,5 +75,4 @@
 - platform: mqtt
   name: Puss Feeder Motion Detected
   state_topic: 'home/kitchen/puss_feeder/motion'
-  availability_topic: home/kitchen/puss_feeder
   off_delay: 10

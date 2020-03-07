@@ -52,7 +52,6 @@
 
 - platform: mqtt
   schema: json
-  availability_topic: home/kitchen/puss_feeder
   command_topic: 'home/kitchen/puss_feeder/light/set'
   state_topic: 'home/kitchen/puss_feeder/light'
   name: Puss Feeder Light

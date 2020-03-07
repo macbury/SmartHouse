@@ -42,3 +42,16 @@
     - service: light.turn_on
       data:
         entity_id: light.corridor
+
+- alias: Feed the cat
+  trigger:
+    - platform: state
+      entity_id: 'binary_sensor.iss'
+      from: 'off'
+      to: 'on'
+    - platform: state
+      entity_id: calendar.cat_feed_schedule
+      from: 'off'
+      to: 'on'
+  action:
+    - service: script.feed_the_cat

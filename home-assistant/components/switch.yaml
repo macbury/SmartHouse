@@ -11,7 +11,6 @@
 
 - platform: mqtt
   name: Dispense Food
-  availability_topic: home/kitchen/puss_feeder
   command_topic: "home/kitchen/puss_feeder/dispense_food/set"
   state_topic: "home/kitchen/puss_feeder/dispense_food"
 

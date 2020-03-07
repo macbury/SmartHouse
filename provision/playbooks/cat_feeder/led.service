@@ -1,0 +1,17 @@
+[Unit]
+Description=Servo Service
+After=network.target ntpdate.service
+
+[Service]
+Environment=PATH=/pussificator:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=/usr/bin/python3 -u src/led.py
+WorkingDirectory=/pussificator/
+StandardOutput=inherit
+StandardError=inherit
+StartLimitBurst=1000
+Restart=always
+RestartSec=90
+User=root
+
+[Install]
+WantedBy=multi-user.target
