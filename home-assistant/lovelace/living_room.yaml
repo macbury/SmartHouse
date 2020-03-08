@@ -56,9 +56,6 @@
           entity: light.christmas_balls
           icon: mdi:led-strip-variant
         - type: entity-button
-          entity: light.christmas_tree
-          icon: mdi:pine-tree
-        - type: entity-button
           entity: switch.living_room_humidifier
           icon: mdi:air-humidifier
     - type: horizontal-stack

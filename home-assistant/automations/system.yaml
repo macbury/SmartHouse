@@ -19,3 +19,14 @@
   action:
     - service: switch.turn_off
       entity_id: switch.rack_fan
+
+- alias: Restart router
+  trigger:
+    platform: time
+    at: '02:50:00'
+  action:
+    - service: switch.turn_off
+      entity_id: switch.router
+    - delay: '0:00:10'
+    - service: switch.turn_on
+      entity_id: switch.router

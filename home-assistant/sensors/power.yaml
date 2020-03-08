@@ -15,5 +15,6 @@
             float(states.sensor.fibaro_system_fgs223_double_relay_power.state)+
             float(states.sensor.fibaro_system_fgs223_double_relay_power.state)+
             float(states.sensor.living_room_humidifier_current.state)+
+            float(states.sensor.router_power_status.state)+
             float(states.sensor.cover_power.state)
         }}

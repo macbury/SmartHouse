@@ -1,6 +1,6 @@
 default: error
 logs:
   homeassistant.components.http.ban: warning
-  # xiaomi_gateway: debug
-  # homeassistant.components.xiaomi_aqara: debug
-  # homeassistant.components.switch.xiaomi_aqara: debug
+  xiaomi_gateway: debug
+  homeassistant.components.xiaomi_aqara: debug
+  homeassistant.components.switch.xiaomi_aqara: debug

@@ -30,6 +30,7 @@ from custom_components.hacs.setup import (
 )
 
 from custom_components.hacs.globals import get_hacs
+
 from custom_components.hacs.helpers.network import internet_connectivity_check
 
 SCHEMA = hacs_base_config_schema()

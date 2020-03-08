@@ -56,6 +56,7 @@
         "exist": "{item} že obstaja",
         "generic": "Ali si prepričan?",
         "home_assistant_is_restarting": "Počakaj, Home Assistant se zdaj znova zaganja.",
+        "home_assistant_version_not_correct": "Uporabljate Home Assistant verzije '{haversion}', vendar to skladišče zahteva nameščeno najmanj različico '{minversion}'.",
         "no": "Ne",
         "no_upgrades": "Ni nadgradenj",
         "ok": "V redu",
