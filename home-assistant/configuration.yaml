@@ -2,7 +2,6 @@
 api:
 asuswrt: !include components/asuswrt.yaml
 alexa: !include components/alexa.yaml
-alexa_media: !include components/alexa_media.yaml
 automation: !include_dir_merge_list automations/
 # B
 binary_sensor: !include components/binary_sensor.yaml

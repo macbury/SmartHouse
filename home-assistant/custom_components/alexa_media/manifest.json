@@ -1,8 +1,15 @@
 {
   "domain": "alexa_media",
   "name": "Alexa Media Player",
-  "documentation": "https://github.com/keatontaylor/alexa_media_player/wiki",
+  "config_flow": true,
+  "documentation": "https://github.com/custom-components/alexa_media_player/wiki",
   "dependencies": [],
-  "codeowners": ["@keatontaylor", "@alandtse"],
-  "requirements": ["alexapy==0.5.0"]
+  "codeowners": [
+    "keatontaylor",
+    "alandtse"
+  ],
+  "requirements": [
+    "alexapy==1.5.1"
+  ],
+  "homeassistant": "0.96.0"
 }
