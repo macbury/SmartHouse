@@ -1,5 +1,5 @@
 - type: custom:layout-card
-  layout: vertical
+  layout: horizontal
   max_columns: 3
   cards:
     - type: horizontal-stack

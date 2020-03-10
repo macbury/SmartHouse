@@ -44,5 +44,6 @@
       - { port: 32412, rule: allow, comment: 'Plex GDM network discover' }
       - { port: 32413, rule: allow, comment: 'Plex GDM network discover' }
       - { port: 32414, rule: allow, comment: 'Plex GDM network discover' }
-      - { port: 51413, rule: allow, comment: 'Transmission shit' }
+      - { port: 58846, rule: allow, comment: 'Deluge shit' }
       - { port: 10005, rule: allow, from_ip: '192.168.1.222', comment: 'Allow only vacuum to access this port' }
+     
