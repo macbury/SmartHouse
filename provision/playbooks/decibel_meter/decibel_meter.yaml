@@ -31,6 +31,9 @@
     - name: git
       apt:
         name: git
+    - name: libffi-dev
+      apt:
+        name: libffi-dev
 
 - hosts: decibel_meter
   become: yes
@@ -71,3 +74,31 @@
         dest: /etc/asound.conf
     - name: Configure sound driver
       script: ./configure-driver.sh
+
+- hosts: decibel_meter
+  tasks:
+    - name: Clone decibel repo
+      git:
+        repo: https://github.com/macbury/decibel_meter.git
+        dest: /decibel_meter
+        accept_hostkey: yes
+        update: no
+
+- hosts: decibel_meter
+  become: yes
+  tasks:
+    - name: Install dependencies
+      become: yes
+      pip:
+        executable: /usr/bin/pip
+        requirements: /decibel_meter/requirements.txt
+    - name: Create meter.service
+      template:
+        src: ./meter.service
+        dest: /lib/systemd/system/meter.service
+    - name: enable meter service
+      systemd:
+        name: meter
+        state: started
+        enabled: yes
+        daemon_reload: yes

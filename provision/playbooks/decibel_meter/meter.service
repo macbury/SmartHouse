@@ -1,0 +1,17 @@
+[Unit]
+Description=Meter Service
+After=network.target ntpdate.service
+
+[Service]
+Environment=PATH=/decibel_meter:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=/usr/bin/python -u src/meter.py
+WorkingDirectory=/decibel_meter/
+StandardOutput=inherit
+StandardError=inherit
+StartLimitBurst=1000
+Restart=always
+RestartSec=90
+User=root
+
+[Install]
+WantedBy=multi-user.target
