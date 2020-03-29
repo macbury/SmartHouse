@@ -28,7 +28,7 @@ heating_living_room:
   temperature_sensor: sensor.living_room_temperature
   family_devices: group.family
   climate: climate.living_room
-  max_temperature: 24
+  max_temperature: 25
   min_temperature: 20
 
 batteries:

@@ -32,14 +32,14 @@
     - type: custom:air-purifier-card
       entity: fan.bedroom_air_purifier
     - break
-    # - type: horizontal-stack
-    #   cards:
-    #     - type: light
-    #       entity: light.arek_szafka
-    #       icon: mdi:desk-lamp
-    #     - type: light
-    #       entity: light.ola_szafka
-    #       icon: mdi:desk-lamp
+    - type: horizontal-stack
+      cards:
+        - type: light
+          entity: light.arek_szafka
+          icon: mdi:desk-lamp
+        - type: light
+          entity: light.ola_szafka
+          icon: mdi:desk-lamp
     - type: horizontal-stack
       cards:
         - type: entity-button

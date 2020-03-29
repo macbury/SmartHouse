@@ -1,3 +1,18 @@
+- alias: Motion trigger
+  trigger:
+    - platform: webhook
+      webhook_id: kitchen_cat_feeder_motion
+  action:
+    - service: light.turn_on
+      entity_id: light.puss_feeder_light
+      data:
+        effect: Manual
+        brightness: 255
+        rgb_color: [255, 255, 255]
+
+    - delay: '00:01:00'
+    - service: light.turn_off
+      entity_id: light.puss_feeder_light
 - alias: Notify puny humans about feeding of the overlord
   trigger:
     - platform: state

@@ -1,0 +1,73 @@
+- hosts: decibel_meter
+  become: yes
+  roles:
+    - role: weareinteractive.ufw
+  vars:
+    ufw_reset: yes
+    ufw_logging: "off"
+    ufw_rules:
+      - { port: 22, rule: allow, comment: 'Allow SSH' }
+      - { port: 137, rule: allow, comment: 'Samba' }
+      - { port: 138, rule: allow, comment: 'Samba' }
+      - { port: 139, rule: allow, comment: 'Samba' }
+      - { port: 445, rule: allow, comment: 'Samba' }
+      - { port: 61208, rule: allow, comment: 'Glances' }
+
+- hosts: decibel_meter
+  become: yes
+  tasks:
+    - name: cifs
+      apt:
+        name: cifs-utils
+    - name: samba
+      apt:
+        name: samba
+    - name: htop
+      apt:
+        name: htop
+    - name: wiringpi
+      apt:
+        name: wiringpi
+    - name: git
+      apt:
+        name: git
+
+- hosts: decibel_meter
+  become: yes
+  roles:
+    - role: mikolak-net.raspi_config
+  vars:
+      raspi_config_expanded_filesystem: yes
+      raspi_config_locale: en_US.UTF-8
+      raspi_config_hostname: DecibelMeter
+      raspi_config_enable_camera: yes
+
+- hosts: decibel_meter
+  become: yes
+  tasks:
+    - name: 'Install glances'
+      pip:
+        name: glances
+    - name: 'Install bottle'
+      pip:
+        name: bottle
+    - name: Create glances.service
+      template:
+        src: ./glances.service
+        dest: /lib/systemd/system/glances.service
+    - name: enable glances service
+      systemd:
+        name: glances
+        state: started
+        enabled: yes
+        daemon_reload: yes
+
+- hosts: decibel_meter
+  become: yes
+  tasks:
+    - name: Create asound confg
+      template:
+        src: ./asound.conf
+        dest: /etc/asound.conf
+    - name: Configure sound driver
+      script: ./configure-driver.sh

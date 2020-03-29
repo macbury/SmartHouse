@@ -21,6 +21,7 @@
           aspect_ratio: 16x10
           entity: person.arek
     - type: map
+      dark_mode: true
       default_zoom: 17
       entities:
         - device_tracker.arek
@@ -71,11 +72,53 @@
           show:
             points: true
             fill: fade
+    - type: horizontal-stack
+      cards:
         - type: custom:mini-graph-card
           entities:
+            - sensor.beer_flu_current
             - sensor.poland_coronavirus_current
           line_color: '#9c27b0'
-          hours_to_show: 336
+          name: 'Aktywnie'
+          hours_to_show: 168
+          animate: true
+          hour24: false
+          points_per_hour: 0.05
+          show:
+            points: true
+            fill: fade
+        - type: custom:mini-graph-card
+          entities:
+            - sensor.beer_flu_quarantine
+          line_color: '#9c27b0'
+          name: 'W kwarantannie'
+          hours_to_show: 168
+          animate: true
+          hour24: false
+          points_per_hour: 0.05
+          show:
+            points: true
+            fill: fade
+    - type: horizontal-stack
+      cards:
+        - type: custom:mini-graph-card
+          name: 'W szpitalu'
+          entities:
+            - sensor.beer_flu_hospital
+          line_color: '#9c27b0'
+          hours_to_show: 168
+          animate: true
+          hour24: false
+          points_per_hour: 0.05
+          show:
+            points: true
+            fill: fade
+        - type: custom:mini-graph-card
+          name: 'Testy'
+          entities:
+            - sensor.beer_flu_tests
+          line_color: '#9c27b0'
+          hours_to_show: 168
           animate: true
           hour24: false
           points_per_hour: 0.05

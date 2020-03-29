@@ -50,6 +50,9 @@
 # - name: Install cat feeder
 #   import_playbook: playbooks/cat_feeder/cat.yaml
 
+- name: Install Decibel Meter
+  import_playbook: playbooks/decibel_meter/decibel_meter.yaml
+
 # - hosts: master
 #   become: yes
 #   roles:

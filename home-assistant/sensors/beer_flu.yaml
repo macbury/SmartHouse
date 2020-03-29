@@ -1,0 +1,34 @@
+- platform: scrape
+  resource: https://koronawirusunas.pl/
+  name: beer_flu_current
+  select: ".badge-danger"
+  value_template: '{{ value | float }}'
+  unit_of_measurement: people
+
+- platform: scrape
+  resource: https://koronawirusunas.pl/
+  name: beer_flu_quarantine
+  select: ".badge-info"
+  value_template: '{{ value | float }}'
+  unit_of_measurement: people
+
+- platform: scrape
+  resource: https://koronawirusunas.pl/
+  name: beer_flu_deaths
+  select: ".badge-dark"
+  value_template: '{{ value | float }}'
+  unit_of_measurement: bodies
+
+- platform: scrape
+  resource: https://koronawirusunas.pl/
+  name: beer_flu_tests
+  select: ".badge-testy"
+  value_template: '{{ value | float }}'
+  unit_of_measurement: people
+
+- platform: scrape
+  resource: https://koronawirusunas.pl/
+  name: beer_flu_hospital
+  select: ".badge-szpital"
+  value_template: '{{ value | float }}'
+  unit_of_measurement: people

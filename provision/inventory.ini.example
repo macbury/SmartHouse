@@ -12,3 +12,6 @@
 
 [cat_feeder]
 192.168.1.222 ansible_connection=ssh        ansible_user=root           ansible_port=22
+
+[decibel_meter]
+192.168.1.169 ansible_connection=ssh        ansible_user=pi        ansible_port=22

@@ -13,3 +13,5 @@ First generation of the cat feeder was simple MVP created using some cardboard, 
 ![header](header.jpg)
 
 More docs here
+
+https://github.com/macbury/pussificator
