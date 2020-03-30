@@ -29,6 +29,9 @@
 # - name: Install gotify
 #   import_playbook: playbooks/gotify/gotify.yaml
 
+- name: Install grocy
+  import_playbook: playbooks/grocy/grocy.yaml
+
 # - name: Install torrents
 #   import_playbook: playbooks/torrents/torrents.yaml
 
@@ -50,8 +53,8 @@
 # - name: Install cat feeder
 #   import_playbook: playbooks/cat_feeder/cat.yaml
 
-- name: Install Decibel Meter
-  import_playbook: playbooks/decibel_meter/decibel_meter.yaml
+# - name: Install Decibel Meter
+#   import_playbook: playbooks/decibel_meter/decibel_meter.yaml
 
 # - hosts: master
 #   become: yes

@@ -134,3 +134,14 @@
       show_progress: false
       show_source: false
       toggle_power: true
+    - type: custom:mini-graph-card
+      entities:
+        - sensor.living_room_noise_level
+      line_color: '#ffecb3'
+      hours_to_show: 1
+      points_per_hour: 30
+      animate: true
+      hour24: true
+      show:
+        points: true
+        fill: fade
