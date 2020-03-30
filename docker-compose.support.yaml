@@ -2,6 +2,16 @@
 version: '3.5'
 
 services:
+  grocy:
+    image: linuxserver/grocy:latest
+    ports:
+      - '59000:80'
+    volumes:
+      - .docker/data/grocy2:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Warsaw
   simple-login-crontab:
     image: simplelogin/app:1.0.0
     network_mode: host
