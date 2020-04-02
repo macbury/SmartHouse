@@ -3,7 +3,7 @@ version: '3.5'
 
 services:
   grocy:
-    image: linuxserver/grocy:latest
+    image: linuxserver/grocy:local
     ports:
       - '59000:80'
     volumes:

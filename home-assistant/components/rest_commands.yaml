@@ -5,3 +5,11 @@ push_to_orion:
   method: POST
   content_type:  'application/json; charset=utf-8'
   payload: '{ "_type": "location", "lat": {{ lat }}, "lon": {{ lon }}, "topic": "location/{{ user }}/{{ device }}", "tst": {{ as_timestamp(utcnow()) }}, "acc": {{ accuracy }}, "batt": {{ battery }}, "t": "u", "conn": "m", "tid": "{{ user[0] }}" }'
+
+# curl -XPOST -H "Content-type: application/json" -d '{"wake": true, "wakeTime": 180}' 'http://192.168.1.237:2971/api/command'
+
+wake_nexus:
+  url: http://192.168.1.237:2971/api/command
+  method: POST
+  content_type: 'application/json; charset=utf-8'
+  payload: '{"wake": true, "wakeTime": 20}'

@@ -21,3 +21,8 @@
   username: pi
   password: !env_var HOME_ASSISTANT_HIM_CAM_PASSWORD
   name: him_cam
+
+
+- platform: mjpeg
+  mjpeg_url: http://192.168.1.237:2971/camera/stream
+  name: Nexus 7

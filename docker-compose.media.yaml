@@ -3,7 +3,7 @@ version: '3.5'
 
 services:
   emby:
-    image: emby/embyserver:4.4.0.22
+    image: emby/embyserver:4.5.0.3
     ports:
       - 8096:8096
     environment:
