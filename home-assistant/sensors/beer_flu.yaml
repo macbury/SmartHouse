@@ -1,34 +1,23 @@
-- platform: scrape
-  resource: https://koronawirusunas.pl/
+
+
+- platform: mqtt
+  state_topic: "poland/beer_flu/zakazenia"
   name: beer_flu_current
-  select: ".badge-danger"
-  value_template: '{{ value | float }}'
   unit_of_measurement: people
 
-- platform: scrape
-  resource: https://koronawirusunas.pl/
-  name: beer_flu_quarantine
-  select: ".badge-info"
-  value_template: '{{ value | float }}'
-  unit_of_measurement: people
-
-- platform: scrape
-  resource: https://koronawirusunas.pl/
-  name: beer_flu_deaths
-  select: ".badge-dark"
-  value_template: '{{ value | float }}'
-  unit_of_measurement: bodies
-
-- platform: scrape
-  resource: https://koronawirusunas.pl/
-  name: beer_flu_tests
-  select: ".badge-testy"
-  value_template: '{{ value | float }}'
-  unit_of_measurement: people
-
-- platform: scrape
-  resource: https://koronawirusunas.pl/
+- platform: mqtt
+  state_topic: "poland/beer_flu/hospitalizacja"
   name: beer_flu_hospital
-  select: ".badge-szpital"
-  value_template: '{{ value | float }}'
   unit_of_measurement: people
+
+- platform: mqtt
+  state_topic: "poland/beer_flu/zgony"
+  name: beer_flu_deaths
+  unit_of_measurement: people
+
+- platform: mqtt
+  state_topic: "poland/beer_flu/testy"
+  name: beer_flu_tests
+  unit_of_measurement: people
+
+

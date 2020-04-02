@@ -1,0 +1,14 @@
+{
+  "domain": "nodered",
+  "name": "Node-RED",
+  "documentation": "https://github.com/zachowj/node-red",
+  "dependencies": [],
+  "config_flow": true,
+  "codeowners": [
+    "@zachowj"
+  ],
+  "requirements": [
+    "integrationhelper"
+  ],
+  "homeassistant": "0.96.0"
+}

@@ -1,0 +1,18 @@
+- platform: mqtt
+  state_topic: "poland/zboza/price"
+  name: 'Cena Zboża'
+  icon: 'mdi:barley'
+  unit_of_measurement: 'zł netto/tonę'
+
+- platform: mqtt
+  state_topic: "poland/wieprzowina/price"
+  name: 'Cena Wieprzowina'
+  icon: 'mdi:pig'
+  unit_of_measurement: 'zł/kg'
+
+- platform: mqtt
+  state_topic: "poland/wolowina/price"
+  name: 'Cena Wołowina'
+  icon: 'mdi:cow'
+  unit_of_measurement: 'zł/kg'
+

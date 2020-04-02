@@ -29,8 +29,11 @@
 # - name: Install gotify
 #   import_playbook: playbooks/gotify/gotify.yaml
 
-- name: Install grocy
-  import_playbook: playbooks/grocy/grocy.yaml
+# - name: Install grocy
+#   import_playbook: playbooks/grocy/grocy.yaml
+
+- name: Install node-red
+  import_playbook: playbooks/node-red/node-red.yaml
 
 # - name: Install torrents
 #   import_playbook: playbooks/torrents/torrents.yaml
