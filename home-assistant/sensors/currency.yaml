@@ -1,0 +1,8 @@
+- platform: currencylayer
+  api_key: !env_var HOME_ASSISTANT_CURRENCY_LAYER
+  base: PLN
+  quote:
+    - EUR
+    - USD
+    - GBP
+    - XBT

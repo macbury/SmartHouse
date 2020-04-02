@@ -2,8 +2,16 @@
 version: '3.5'
 
 services:
+  node-red:
+    image: nodered/node-red:latest
+    ports:
+      - 51880:1880
+    environment:
+      - TZ=Europe/Warsaw
+    volumes:
+      - .docker/data/node-red:/data      
   grocy:
-    image: linuxserver/grocy:latest
+    image: linuxserver/grocy:local
     ports:
       - '59000:80'
     volumes:

@@ -1,3 +1,12 @@
+- alias: Switch on nexus screen on movement
+  trigger:
+    - platform: state
+      from: 'off'
+      to: 'on'
+      entity_id: binary_sensor.kitchen_movement
+  action:
+    - service: rest_command.wake_nexus
+
 - alias: Switch on cooking light if phone is connected to kitchen alexa
   trigger:
     - platform: template
