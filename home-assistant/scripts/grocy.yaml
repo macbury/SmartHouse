@@ -1,0 +1,14 @@
+consume_pepsi:
+  alias: 'Consume pepsi'
+  sequence:
+    - service: grocy.consume_product
+      data:
+        product_id: 65
+        transaction_type: CONSUME
+        amount: 1
+    - service: notify.alexa_media_kitchen
+      data:
+        message: 'Congratulations! You have consumed one pepsi'
+        data:
+          type: announce
+          method: all

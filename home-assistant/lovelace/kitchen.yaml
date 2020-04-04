@@ -23,8 +23,8 @@
         - type: light
           entity: light.gatewa_ambient_light
           icon: mdi:spotlight-beam
-        - type: light
-          entity: light.puss_feeder_light
+        - type: entity-button
+          entity: script.quick_feed_the_cat
           icon: mdi:cat
     - type: custom:mini-media-player
       entity: media_player.kitchen
