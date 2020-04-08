@@ -32,8 +32,11 @@
 # - name: Install grocy
 #   import_playbook: playbooks/grocy/grocy.yaml
 
-- name: Install node-red
-  import_playbook: playbooks/node-red/node-red.yaml
+# - name: Install node-red
+#   import_playbook: playbooks/node-red/node-red.yaml
+
+- name: Install rss-bridge
+  import_playbook: playbooks/rss_bridge/rss_bridge.yaml
 
 # - name: Install torrents
 #   import_playbook: playbooks/torrents/torrents.yaml

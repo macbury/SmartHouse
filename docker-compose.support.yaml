@@ -2,6 +2,10 @@
 version: '3.5'
 
 services:
+  rss-bridge:
+    image: rssbridge/rss-bridge:latest
+    ports:
+      - '59900:80'
   node-red:
     image: nodered/node-red:latest
     ports:
@@ -11,7 +15,7 @@ services:
     volumes:
       - .docker/data/node-red:/data      
   grocy:
-    image: linuxserver/grocy:local
+    image: linuxserver/grocy:latest
     ports:
       - '59000:80'
     volumes:

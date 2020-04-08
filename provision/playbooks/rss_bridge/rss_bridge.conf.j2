@@ -1,0 +1,26 @@
+upstream rss_bridge {
+  server 127.0.0.1:59900 fail_timeout=0;
+}
+
+server {
+  listen 80;
+  listen [::]:80;
+  server_name {{ rss_bridge_domain }};
+
+  location / {
+    allow 192.168.0.0/16;
+    allow 10.0.0.0/16;
+    deny all;
+    proxy_pass http://rss_bridge/;
+  }
+
+  error_page 404 403 @error;
+
+  location @error {
+    root /var/www;
+    try_files /403.html /403.html;
+  }
+
+  client_max_body_size 50M;
+  keepalive_timeout 10;
+}
