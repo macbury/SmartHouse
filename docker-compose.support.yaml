@@ -148,7 +148,7 @@ services:
     volumes:
       - .docker/data/mysql:/var/lib/mysql
   grafana:
-    image: grafana/grafana:5.4.2
+    image: grafana/grafana:6.5.0
     restart: unless-stopped
     user: "472"
     env_file:

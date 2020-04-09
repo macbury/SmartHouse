@@ -14,13 +14,6 @@
   force_update: true
   value_template: '{{ value_json.rxs.obs[0].msg.aqi }}'
 
-- platform: airvisual
-  api_key: !env_var HOME_ASSISTANT_AIR_VISUAL
-  show_on_map: false
-  monitored_conditions:
-    - cn
-    - us
-
 - platform: darksky
   api_key: !env_var HOME_ASSISTANT_DARKSKY_API_KEY
   monitored_conditions:
