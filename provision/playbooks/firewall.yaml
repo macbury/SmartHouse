@@ -8,7 +8,6 @@
     ufw_rules:
       - { port: 8123, rule: allow, comment: 'HomeAssistant' }
       - { port: 3128, rule: allow, comment: 'squid' }
-      - { port: 6052, rule: allow, comment: 'Allow EspHome webui' }
       - { port: 22, rule: allow, comment: 'Allow SSH' }
       - { port: 80, rule: allow, comment: 'Allow HTTP' }
       - { port: 1514, rule: allow, comment: 'Allow SysLog UDP' }

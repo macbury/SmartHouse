@@ -38,6 +38,9 @@
 - name: Install rss-bridge
   import_playbook: playbooks/rss_bridge/rss_bridge.yaml
 
+- name: Install EspHome
+  import_playbook: playbooks/esphome/esphome.yaml
+
 # - name: Install torrents
 #   import_playbook: playbooks/torrents/torrents.yaml
 

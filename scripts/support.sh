@@ -7,6 +7,10 @@ function support_command_up() {
   docker-compose --file docker-compose.support.yaml --project-name support up
 }
 
+function support_command_fix() {
+  /usr/local/bin/docker-compose --file docker-compose.support.yaml --project-name support restart influxdb
+}
+
 function support_command_down() {
   docker-compose --file docker-compose.support.yaml --project-name support down
 }
