@@ -1,8 +1,20 @@
 #!/usr/bin/env bash
 SUBCOMMAND=${1}
 
+function health_command_create-account() {
+  docker-compose --file docker-compose.health.yaml --project-name health run --rm eth geth account new --password /settings/password.txt --datadir /data
+}
+
+function health_command_eth-sh() {
+  docker-compose --file docker-compose.health.yaml --project-name health run --rm eth sh
+}
+
+function health_command_eth-console() {
+  docker-compose --file docker-compose.health.yaml --project-name health run --rm eth geth attach
+}
+
 function health_command_up() {
-  echo "depracated"
+  docker-compose --file docker-compose.health.yaml --project-name health up
 }
 
 function health_command_down() {
@@ -10,7 +22,7 @@ function health_command_down() {
 }
 
 function health_command_logs() {
-  echo "depracated"
+  docker-compose --file docker-compose.health.yaml --project-name health logs
 }
 
 function health_command_start() {

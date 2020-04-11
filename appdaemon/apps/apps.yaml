@@ -1,3 +1,13 @@
+temperature_lamp:
+  module: temperature_lamp
+  class: TemperatureLamp
+  calendar_id: calendar.salon_env
+  family_devices: 'group.family'
+  outside_temperature_id: sensor.dark_sky_apparent_temperature
+  light_id: light.status_light
+  cold_temperature: 16.0
+  hot_temperature: 28.0
+
 living_room_air:
   module: air_purifier_ai
   class: AirPurifierAI

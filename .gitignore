@@ -17,6 +17,7 @@
 .env.home-assistant
 .env.local
 .env.graylog
+.env.ethereum
 .env.dpodcast
 .DS_Store
 .backups/**/*

@@ -41,6 +41,9 @@
 - name: Install EspHome
   import_playbook: playbooks/esphome/esphome.yaml
 
+- name: Install Ethereum Private Network
+  import_playbook: playbooks/ethereum/ethereum.yaml
+
 # - name: Install torrents
 #   import_playbook: playbooks/torrents/torrents.yaml
 

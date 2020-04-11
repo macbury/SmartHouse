@@ -1,0 +1,31 @@
+
+# Nginx
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.nginx
+  handlers:
+    - name: restart nginx
+      become: yes
+      service:
+        name: nginx
+        enabled: yes
+        state: restarted
+  tasks:
+    - name: Create /etc/nginx/sites-enabled/ethereum.conf
+      template:
+        src: ethereum.conf.j2
+        dest: /etc/nginx/sites-enabled/ethereum.conf
+      notify:
+        - reload nginx
+        - restart nginx
+
+- hosts: master
+  become: yes
+  roles:
+    - role: weareinteractive.ufw
+  vars:
+    ufw_reset: no
+    ufw_logging: "off"
+    ufw_rules:
+      - { port: 30303, rule: allow, comment: 'Allow geth p2p' }

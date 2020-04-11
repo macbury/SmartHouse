@@ -1,45 +1,15 @@
-# Services that are monitoring other services health
-version: '2'
+# Small labolatory
+version: '3.5'
+
 services:
-  # MongoDB: https://hub.docker.com/_/mongo/
-  mongodb:
-    image: mongo:3
+  eth:
+    image: ethereum/client-go:alltools-v1.9.12
+    restart: unless-stopped
+    network_mode: host
     volumes:
-      - .docker/data/mongodb:/data/db
-  # Elasticsearch: https://www.elastic.co/guide/en/elasticsearch/reference/6.x/docker.html
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.2
-    environment:
-      - http.host=0.0.0.0
-      - transport.host=localhost
-      - network.host=0.0.0.0
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    mem_limit: 1g
-    volumes:
-      - .docker/data/elasticsearch:/usr/share/elasticsearch/data
-  # Graylog: https://hub.docker.com/r/graylog/graylog/
-  graylog:
-    image: graylog/graylog:3.1
+      - ./.docker/data/eth/data:/data
+      - ./.docker/data/eth/settings:/settings
+      - ./ethereum/boot.sh:/boot.sh
+    command: "./boot.sh"
     env_file:
-      - '.env.graylog'
-    links:
-      - mongodb:mongo
-      - elasticsearch
-    depends_on:
-      - mongodb
-      - elasticsearch
-    ports:
-      # Graylog web interface and REST API
-      - 9000:9000
-      # Syslog TCP
-      - 1514:1514
-      # Syslog UDP
-      - 1514:1514/udp
-      # GELF TCP
-      - 12201:12201
-      # GELF UDP
-      - 12201:12201/udp
+      - '.env.ethereum'
