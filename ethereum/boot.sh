@@ -5,6 +5,8 @@ echo "Booting..."
 mkdir -p /root/.ethereum/
 
 geth --datadir /data \
+  --nat extip:192.168.1.12 \
+  --netrestrict 192.168.254.0/24
   --metrics.influxdb \
   --metrics.influxdb.endpoint=http://0.0.0.0:18086 \
   --metrics.influxdb.database=ethereum \
