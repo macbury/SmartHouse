@@ -115,7 +115,7 @@
             fill: fade
     - type: custom:mini-graph-card
       entities:
-        - sensor.chinese_air_quality_index
+        - sensor.nowa_huta_aqi
         - sensor.mean_aqi
       line_color: '#a8a8a8'
       name: 'AQI'
