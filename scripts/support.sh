@@ -8,7 +8,8 @@ function support_command_up() {
 }
 
 function support_command_fix() {
-  /usr/local/bin/docker-compose --file docker-compose.support.yaml --project-name support restart influxdb
+  /usr/local/bin/docker-compose --file docker-compose.support.yaml --project-name support restart influxdb;
+  /usr/local/bin/docker-compose --file docker-compose.support.yaml --project-name support restart rss-bridge;
 }
 
 function support_command_down() {

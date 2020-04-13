@@ -238,3 +238,16 @@ services:
       - .docker/data/invidious/config.yml:/invidious/config/config.yml
     depends_on:
       - database
+  ytdl:
+    image: yt-music-download-helper:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:7887:3000"
+    volumes:
+      - /mnt/Music/YouTube:/output
+    environment:
+      - REDIS_URL=redis://redis:6379/5
+      - COMPLETED_PATH=/output
+      - INCOMPLETE_PATH=/download
+    depends_on:
+      - redis

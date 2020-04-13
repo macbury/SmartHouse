@@ -54,6 +54,11 @@ function smart_house_command_ps() {
   docker-compose ps
 }
 
+function smart_house_command_update-monio() {
+  docker pull macbury/mon.io:latest;
+  smart-house support restart;
+}
+
 function unmount_share() {
   declare share=$1
   sudo umount /mnt/$share
