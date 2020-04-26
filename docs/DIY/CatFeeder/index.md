@@ -2,33 +2,35 @@
 
 ![header](header.jpg)
 
-So you are laying in the bed sleeping, it is 6:00 AM and you start hearing cat scratching on the door. I know what he wants. He needs food now because once upon time, in old days I given him a food at that time, and of course that became a new standard time for feeding. This situation gived me idea to build automatic cat feeder that would remove hassle of feeding from me.
+Imagine, it is 6:00 AM Saturday morning, you are laying comfortably in the bed, sleeping nicely. Suddenly you hear cat is scratching on the door, loud meows become unbearable and your cat has infinite time to let you know what he needs. Do you know what he needs? I know what he wants. He needs food now! Right now! Because once upon time, in old days I've given him a food at that time... And of course it became a new standard time for feeding. 
+
+This situation gave me an idea to build automatic cat feeder, that would remove troublesome morning cat feeding and of course make cat happy.
 
 ### First generation
 
-First generation of the cat feeder was simple MVP created using some cardboard, simple servo and ESP WeMos. It worked by using servo to rotate by 180 degres top container to dispense food.
+First generation of the cat feeder was simple MVP created using some cardboard, simple servo and ESP WeMos. It worked using servo to rotate by 180 degrees top container to dispense food.
 
 <iframe width="960" height="415" src="https://www.youtube-nocookie.com/embed/XM9isy4HUUo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Microcontroller connected to my local WiFi and communicated with Smart Home server running HomeAssistant over MQTT protocol. This gived me ability to use HomeAssistant automation system to schedule feeding and dispensing food using Google Home commands. Scheduling for feeding was defined as speciale events in Google Calendar, which gived me ability to easliy control feeding time. 
+Microcontroller connected to my local WiFi and communicated with Smart Home server running HomeAssistant over MQTT protocol. Thanks to that, I was able to use HomeAssistant automation system to schedule feeding and dispensing food through Google Home commands. Scheduling for feeding was defined as special events in Google Calendar. It allowed me to easliy control cats feeding time and change it when needed. 
 
-Of course this implementation have its problems:
+Of course this implementation had some problems:
 
-* top container sometimes did break from servo handle and spilled whole food(i called this the jackpot effect)
-* it was ugly
-* cardboard started to deteriorate
+* sometimes top container had been breaking away from servo handle and had spilled whole food (I've been calling it "The Jackpot Effect"),
+* it didn't have the best looks,
+* cardboard started to deteriorate.
 
-As with most MVP it was used on production for 2 years until it broke.
+As with most MVP it had been used on production for 2 years until it finally broke.
 
 ### Second generation
 
-I have decided, that next cat feeder should be:
+I have decided that next cat feeder should:
 
-* build with 3d printed parts
-* use raspberry pi 3
-* have small camera for looking what cat is doing
+* be built from 3D printed parts,
+* use Raspberry Pi 3,
+* have small camera to watch, how cat is reacting and wht he is doing.
 
-The design and build I have started from designing base for food paritioning. It was printed using Creality Ender-3 and PLA transparent filament:
+I have started whole process from designing basic elements for food paritioning. Than, when designs were ready, all modeled elements were printed using Creality Ender-3 and PLA transparent filament:
 
 <iframe width="960" height="315" src="https://www.youtube-nocookie.com/embed/3vbX-7o-h1c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -39,35 +41,35 @@ After ensuring that everything is working, I proceeded to design and print rest 
 
 ![base](base.jpg)
 
-It has place for screws to install raspberry pi. Additionaly on front there is small hole to have easy access to RaspberryPi sd card.
+It has special places for screws to install Raspberry Pi. Additionaly, on the front, there is a small hole for easy access to Raspberry Pi SD card.
 
 ##### Bowl holder
 
-This plastic part is used for placing metal food bowl(of course it was printed using gold filament). It connects with base using 2 magnets
+This plastic part is used for placing metal food bowl (of course it was printed using gold filament, for cats fame and glory). It is connected with base using 2 neodymium magnets.
 
 ![parts](bowl.jpg)
 
 ##### Servo holder (Level 1)
 
-This level is used for holding servo while it rotates part on the next level, and it also has this small slope for food portion.
+This level is used for holding servo while it rotates part on the next level. It also has small slope for better food serving.
 
 ![parts](servo_holder.jpg)
 
 ##### Ration mechanism container (Level 2)
 
-This is just generic level that portions food from upper level using servo below. 
+This is just generic level that portions food from container placed above. It is rotated by servo. 
 
 ![parts](ration_container.jpg)
 
 ##### Food container holder (Level 3)
 
-This part is used for holding food container. This is only plastic part that is not 3d printed.  The reasoning was that I wanted to minimize food contact with 3d printed parts. In theory used transparent PLA plastic, don't have any toxic parts, but just to be sure I bought the cheapest cereal dispenser and took the food container part. Also it looks cool.
+This part is used for holding food container. Food container is only one plastic part that is not 3D printed. The reasoning was that I wanted to minimize food contact with 3D printed parts. In theory used transparent PLA plastic don't have any toxic contaminants, but just to be sure, I bought the cheapest cereal dispenser and took the food container part. Also, it looks really cool.
 
 ![parts](fc.jpg)
 
 ##### Housing and lid
 
-The last two parts were housing and lid. Nothing special here.
+The last two parts were housing and lid. Nothing special here, except more gold for even better looks and cats admiration.
 
 ![parts](tc.jpg)
 
@@ -81,26 +83,28 @@ The last two parts were housing and lid. Nothing special here.
 
 #### Software
 
-Raspberry PI is running raspbian provisioned using [ansible playbook](https://github.com/macbury/SmartHouse/blob/master/provision/playbooks/cat_feeder/cat.yaml) to run these services:
+Raspberry Pi is running raspbian provisioned using [ansible playbook](https://github.com/macbury/SmartHouse/blob/master/provision/playbooks/cat_feeder/cat.yaml) to run these services:
 
 ##### MotionEye
 
-Motioneye is opensource software for building your own private monitoring solution. It detects any camera connected to raspberry pi. Additionaly out of the box you get motion detection, endpoint for sharing stream and webhook support.
+Motioneye is opensource software for building your own private monitoring solution. It detects any camera connected to Raspberry Pi. Additionaly, out of the box, you get motion detection, endpoint for sharing stream and webhook support.
 
 ##### Servo service
 
-This service controls rotation of the servo. It is simple python script that connects to MQTT server running my smart house software and awaits for message triggering rotation
+This service controls rotation of the servo. It is simple python script that connects to MQTT server running my smart house software and awaits for message triggering rotation.
 
 ##### Led service
 
-As servo service, it implements protocol for light source controlled by mqtt in [HomeAssistant](https://www.home-assistant.io/integrations/light.mqtt/)
+As servo service, it implements protocol for light source controlled by MQTT in [HomeAssistant](https://www.home-assistant.io/integrations/light.mqtt/)
 
 ##### Home assistant automation
 
-And finally the HomeAssistant automation that triggers feeding. It triggers feeding in two situations:
+And finally the HomeAssistant automation that triggers feeding. 
 
-* if feeding time in calendar appears
-* if international space station is above my home location
+It triggers feeding in two situations:
+
+* if feeding time in calendar appears,
+* if International Space Station is above my home location.
 
 This automation looks like this:
 
@@ -119,3 +123,7 @@ This automation looks like this:
     - service: script.feed_the_cat
 
 ```
+
+### Summary
+
+It is obvious, that this version isn't the last one. But it serves it's purpuse - cat is well nourished and I have easier mornings :)
