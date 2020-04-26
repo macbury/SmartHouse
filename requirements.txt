@@ -1,8 +1,8 @@
 homeassistant
 requests
-Jinja2
+Jinja2>=2.10.1
 ruamel.yaml==0.15.86 
-mkdocs==1.1
+mkdocs>=1.1
 mkdocs-material
 pygments
 pymdown-extensions
