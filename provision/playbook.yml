@@ -5,8 +5,8 @@
       include_vars:
         file: vars.yml
 
-# - name: Basic packages
-#   import_playbook: playbooks/packages.yaml
+- name: Basic packages
+  import_playbook: playbooks/packages.yaml
 
 # - name: House keeping
 #   import_playbook: playbooks/housekeeping.yaml
@@ -46,6 +46,9 @@
 
 - name: Install Youtube Downloader
   import_playbook: playbooks/ytd/ytd.yaml
+
+- name: Install Youtube Downloader
+  import_playbook: playbooks/tv/tv.yaml
 
 # - name: Install torrents
 #   import_playbook: playbooks/torrents/torrents.yaml
@@ -279,34 +282,36 @@
 #         insertafter: EOF
 #         create: True
 
-# # Setup oh my zsh
-# - hosts: all
-#   become: yes
-#   tasks:
-#     - name: Updating current user
-#       user:
-#         name: '{{ ansible_user }}'
-#         append: yes
-#         shell: /usr/bin/zsh
-#     - name: Updating root user
-#       user:
-#         name: 'root'
-#         append: yes
-#         shell: /usr/bin/zsh
-#     - name: Install oh-my-zsh to current user
-#       become: no
-#       git:
-#         repo: 'https://github.com/robbyrussell/oh-my-zsh.git'
-#         dest: '~/.oh-my-zsh'
-#     - name: 'Copy ~/.zshrc'
-#       become: no
-#       shell: 'cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc'
-#     - name: Install oh-my-zsh to root
-#       git:
-#         repo: 'https://github.com/robbyrussell/oh-my-zsh.git'
-#         dest: '~/.oh-my-zsh'
-#     - name: 'Copy ~/.zshrc'
-#       shell: 'cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc'
+# Setup oh my zsh
+- hosts: 
+    - master
+    - dev
+  become: yes
+  tasks:
+    - name: Updating current user
+      user:
+        name: '{{ ansible_user }}'
+        append: yes
+        shell: /usr/bin/zsh
+    - name: Updating root user
+      user:
+        name: 'root'
+        append: yes
+        shell: /usr/bin/zsh
+    - name: Install oh-my-zsh to current user
+      become: no
+      git:
+        repo: 'https://github.com/robbyrussell/oh-my-zsh.git'
+        dest: '~/.oh-my-zsh'
+    - name: 'Copy ~/.zshrc'
+      become: no
+      shell: 'cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc'
+    - name: Install oh-my-zsh to root
+      git:
+        repo: 'https://github.com/robbyrussell/oh-my-zsh.git'
+        dest: '~/.oh-my-zsh'
+    - name: 'Copy ~/.zshrc'
+      shell: 'cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc'
 
 # # # Shell and configs
 # - hosts: master

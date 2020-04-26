@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 function smart_house_load_variables() {
   if [ ! -f ${SMART_HOUSE_DIR}/$1 ]; then
     echo "File ${SMART_HOUSE_DIR}/$1 do not exists!"

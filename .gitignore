@@ -105,3 +105,4 @@ orion/web/**/*
 blog/**/*
 .env.rss
 .env.speedtest
+.env.tv

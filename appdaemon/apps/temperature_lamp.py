@@ -20,7 +20,9 @@ class TemperatureLamp(hass.Hass):
     self.adapt()
 
   def light_time(self):
-    return self.get_state(self.calendar_id) == 'on'
+    state = self.get_state(self.calendar_id)
+    self.log("State is {} for {}".format(state, self.calendar_id))
+    return state == 'on'
 
   def on_adaptation_callback(self, entity, attribute, old, new, kwargs):
     self.log("State callback triggered for {} from {} to {}. ".format(entity, old, new))
@@ -46,9 +48,13 @@ class TemperatureLamp(hass.Hass):
 
   def adapt(self):
     self.log("Starting adaptation")
-    if self.anyone_in_home() and self.light_time():
-       self.log("People in home, switching on lamp")
-       self.call_service('light/turn_on', entity_id = self.light_id, brightness = 150, rgb_color = self.rgb_color())
+    if self.light_time():
+      if self.anyone_in_home():
+        self.log("People in home, switching on lamp")
+        self.call_service('light/turn_on', entity_id = self.light_id, brightness = 150, rgb_color = self.rgb_color())
+      else:
+        self.log("Nobody home, turning off humidifier")
+        self.call_service('light/turn_off', entity_id = self.light_id)
     else:
-      self.log("Nobody home, turning off humidifier")
+      self.log("No light time")
       self.call_service('light/turn_off', entity_id = self.light_id)

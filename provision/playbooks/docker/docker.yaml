@@ -1,5 +1,7 @@
 
-- hosts: master
+- hosts: 
+    - master
+    - dev
   become: yes
   handlers:
     - name: reload systemctl

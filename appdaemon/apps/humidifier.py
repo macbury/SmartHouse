@@ -11,12 +11,19 @@ class HumidifierController(hass.Hass):
     self.listen_state(self.on_adaptation_callback, entity = self.args['family_devices'])
     self.listen_state(self.on_adaptation_callback, entity = self.args['calendar'])
     self.listen_state(self.on_adaptation_callback, entity = self.args['humidity_sensor'])
+    self.listen_state(self.on_adaptation_callback, entity = self.args['balcone_door'])
     
     self.adapt()
 
   def on_adaptation_callback(self, entity, attribute, old, new, kwargs):
     self.log("State callback triggered for {} from {} to {}. Adapting humdity".format(entity, old, new))
     self.adapt()
+
+  def balcone_door_opened(self):
+    if 'balcone_door' in self.args:
+      return self.get_state(self.args['balcone_door']) == 'on'
+    else:
+      return False
 
   def current(self):
     return float(self.get_state(self.args['humidity_sensor']))
@@ -44,7 +51,10 @@ class HumidifierController(hass.Hass):
 
   def adapt(self):
     self.log("Starting adaptation")
-    if self.anyone_in_home() and self.work_time():
+    if self.balcone_door_opened():
+      self.log("Balcone door opened, no sense to run humidify whole city")
+      self.turn_off()
+    elif self.anyone_in_home() and self.work_time():
       if self.current() <= self.min_humidity:
         self.log("Humidity {} is below {}".format(self.current(), self.min_humidity))
         self.turn_on()

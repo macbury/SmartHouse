@@ -1,11 +1,11 @@
 temperature_lamp:
   module: temperature_lamp
   class: TemperatureLamp
-  calendar_id: calendar.salon_env
+  calendar_id: calendar.moods
   family_devices: 'group.family'
   outside_temperature_id: sensor.dark_sky_apparent_temperature
   light_id: light.status_light
-  cold_temperature: 16.0
+  cold_temperature: 14.0
   hot_temperature: 28.0
 
 living_room_air:
@@ -27,6 +27,7 @@ humidifier_living_room:
   max_humidity: 50
   min_humidity: 45
   family_devices: group.family
+  balcone_door: binary_sensor.balcone_door
   calendar: calendar.salon_env
   humidity_sensor: sensor.living_room_humidity
 

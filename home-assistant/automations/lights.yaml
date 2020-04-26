@@ -77,6 +77,12 @@
           - condition: state
             entity_id: light.ola_szafka
             state: 'off'
+          - condition: state
+            entity_id: light.arek_szafka
+            state: 'unavailable'
+          - condition: state
+            entity_id: light.ola_szafka
+            state: 'unavailable'
   action:
     - service: light.turn_on
       entity_id: light.bedroom

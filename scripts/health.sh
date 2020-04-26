@@ -25,6 +25,10 @@ function health_command_logs() {
   docker-compose --file docker-compose.health.yaml --project-name health logs
 }
 
+function health_command_build() {
+  docker-compose --file docker-compose.health.yaml --project-name health build
+}
+
 function health_command_start() {
   sudo systemctl start health;
 }
@@ -32,6 +36,7 @@ function health_command_start() {
 function health_command_stop() {
   sudo systemctl stop health;
 }
+
 
 function health_command_restart() {
   sudo systemctl restart health;
