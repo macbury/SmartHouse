@@ -2,7 +2,7 @@
 
 ![header](header.jpg)
 
-Imagine, it is 6:00 AM Saturday morning, you are laying comfortably in the bed, sleeping nicely. Suddenly you hear cat is scratching on the door, loud meows become unbearable and your cat has infinite time to let you know what he needs. Do you know what he needs? I know what he wants. He needs food now! Right now! Because once upon time, in old days I've given him a food at that time... And of course it became a new standard time for feeding. 
+Imagine, it is 6:00 AM Saturday morning, you are laying comfortably in the bed, sleeping nicely. Suddenly you hear cat is scratching on the door, loud meows become unbearable and your cat has infinite time to let you know what he needs. Do you know what he needs? I know what he wants. He needs food now! Right now! Because once upon time, in old days I've given him a food at that time... And of course it became a new standard time for feeding.
 
 This situation gave me an idea to build automatic cat feeder, that would remove troublesome morning cat feeding and of course make cat happy.
 
@@ -12,7 +12,7 @@ First generation of the cat feeder was simple MVP created using some cardboard, 
 
 <iframe width="960" height="415" src="https://www.youtube-nocookie.com/embed/XM9isy4HUUo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Microcontroller connected to my local WiFi and communicated with Smart Home server running HomeAssistant over MQTT protocol. Thanks to that, I was able to use HomeAssistant automation system to schedule feeding and dispensing food through Google Home commands. Scheduling for feeding was defined as special events in Google Calendar. It allowed me to easliy control cats feeding time and change it when needed. 
+Microcontroller connected to my local WiFi and communicated with Smart Home server running HomeAssistant over MQTT protocol. Thanks to that, I was able to use HomeAssistant automation system to schedule feeding and dispensing food through Google Home commands. Scheduling for feeding was defined as special events in Google Calendar. It allowed me to easliy control cats feeding time and change it when needed.
 
 Of course this implementation had some problems:
 
@@ -57,7 +57,7 @@ This level is used for holding servo while it rotates part on the next level. It
 
 ##### Ration mechanism container (Level 2)
 
-This is just generic level that portions food from container placed above. It is rotated by servo. 
+This is just generic level that portions food from container placed above. It is rotated by servo.
 
 ![parts](ration_container.jpg)
 
@@ -99,7 +99,7 @@ As servo service, it implements protocol for light source controlled by MQTT in 
 
 ##### Home assistant automation
 
-And finally the HomeAssistant automation that triggers feeding. 
+And finally the HomeAssistant automation that triggers feeding.
 
 It triggers feeding in two situations:
 
@@ -127,3 +127,5 @@ This automation looks like this:
 ### Summary
 
 It is obvious, that this version isn't the last one. But it serves it's purpuse - cat is well nourished and I have easier mornings :)
+
+<iframe width="960" height="315" src="https://www.youtube-nocookie.com/embed/UsKsxxO5i4k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
