@@ -1,0 +1,10 @@
+- alias: Send notification if print is completed
+  trigger:
+    - platform: state
+      entity_id: sensor.octoprint_current_state
+      from: 'Printing'
+      to: 'Operational'
+  action:
+    - service: notify.all
+      data:
+        message: 'Print is complete!'

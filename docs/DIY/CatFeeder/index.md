@@ -127,3 +127,5 @@ This automation looks like this:
 ### Summary
 
 It is obvious, that this version isn't the last one. But it serves it's purpuse - cat is well nourished and I have easier mornings :)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UsKsxxO5i4k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

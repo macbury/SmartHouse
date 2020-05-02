@@ -2,24 +2,6 @@
 version: '3.5'
 
 services:
-  telegraf:
-    image: telegraf:latest
-    volumes:
-      - ./.docker/data/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-    network_mode: host
-    restart: unless-stopped
-  eth:
-    image: ethereum/client-go:alltools-v1.9.12
-    restart: unless-stopped
-    network_mode: host
-    volumes:
-      - ./.docker/data/eth/data:/data
-      - ./.docker/data/eth/settings:/settings
-      - ./ethereum/boot.sh:/boot.sh
-    command: "./boot.sh"
-    env_file:
-      - '.env.ethereum'
-      - '.env.influxdb'
   tv:
     build: ./tv/
     restart: unless-stopped

@@ -5,8 +5,8 @@
       include_vars:
         file: vars.yml
 
-- name: Basic packages
-  import_playbook: playbooks/packages.yaml
+# - name: Basic packages
+#   import_playbook: playbooks/packages.yaml
 
 # - name: House keeping
 #   import_playbook: playbooks/housekeeping.yaml
@@ -32,23 +32,23 @@
 # - name: Install grocy
 #   import_playbook: playbooks/grocy/grocy.yaml
 
-# - name: Install node-red
-#   import_playbook: playbooks/node-red/node-red.yaml
+- name: Install node-red
+  import_playbook: playbooks/node-red/node-red.yaml
 
-- name: Install rss-bridge
-  import_playbook: playbooks/rss_bridge/rss_bridge.yaml
+# - name: Install rss-bridge
+#   import_playbook: playbooks/rss_bridge/rss_bridge.yaml
 
-- name: Install EspHome
-  import_playbook: playbooks/esphome/esphome.yaml
+# - name: Install EspHome
+#   import_playbook: playbooks/esphome/esphome.yaml
 
-- name: Install Ethereum Private Network
-  import_playbook: playbooks/ethereum/ethereum.yaml
+# - name: Install Ethereum Private Network
+#   import_playbook: playbooks/ethereum/ethereum.yaml
 
-- name: Install Youtube Downloader
-  import_playbook: playbooks/ytd/ytd.yaml
+# - name: Install Youtube Downloader
+#   import_playbook: playbooks/ytd/ytd.yaml
 
-- name: Install Youtube Downloader
-  import_playbook: playbooks/tv/tv.yaml
+# - name: Install Youtube Downloader
+#   import_playbook: playbooks/tv/tv.yaml
 
 # - name: Install torrents
 #   import_playbook: playbooks/torrents/torrents.yaml

@@ -16,6 +16,7 @@ class Dashing.Number extends Dashing.Widget
       if parseInt(@get('current')) > parseInt(@get('last')) then 'fa fa-arrow-up' else 'fa fa-arrow-down'
 
   onData: (data) ->
+    console.log('data', data)
     if data.status
       # clear existing "status-*" classes
       $(@get('node')).attr 'class', (i,c) ->

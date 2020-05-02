@@ -24,12 +24,22 @@ humidifier_living_room:
   module: humidifier
   class: HumidifierController
   humidifer: switch.living_room_humidifier
-  max_humidity: 50
+  max_humidity: 55
   min_humidity: 45
   family_devices: group.family
   balcone_door: binary_sensor.balcone_door
   calendar: calendar.salon_env
   humidity_sensor: sensor.living_room_humidity
+
+humidifier_bedroom:
+  module: humidifier
+  class: HumidifierController
+  humidifer: switch.bedroom_humidifier_switch
+  max_humidity: 60.0
+  min_humidity: 55.0
+  family_devices: group.family
+  calendar: calendar.bedroom_humidifier
+  humidity_sensor: sensor.bedroom_humidity
 
 heating_living_room:
   module: adaptive_room_heating

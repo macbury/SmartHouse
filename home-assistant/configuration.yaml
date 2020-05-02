@@ -55,6 +55,7 @@ media_player: !include components/media_player.yaml
 recorder: !include components/recorder.yaml
 notify: !include components/notify.yaml
 # O
+octoprint: !include components/octoprint.yaml
 # P
 panel_custom: !include components/panel_custom.yaml
 person: !include components/person.yaml

@@ -14,6 +14,9 @@ Dashing.on 'ready', ->
 
   contentWidth = (Dashing.widget_base_dimensions[0] + Dashing.widget_margins[0] * 2) * Dashing.numColumns
 
+  Batman.Filters.fixed = (num, f) ->
+    return parseFloat(num).toFixed(f)
+
   Batman.setImmediate ->
     $('.gridster').width(contentWidth)
     $('.gridster ul:first').gridster

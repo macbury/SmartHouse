@@ -1,6 +1,6 @@
 require_relative 'node_red'
 
-SCHEDULER.every '10s', first_in: 0 do |job|
+SCHEDULER.every '1m', first_in: 0 do |job|
   entries = NodeRed.new.unread.map do |entry|
     { name: entry.dig('feed', 'title'), body: entry.dig('title'), avatar: '' }
   end

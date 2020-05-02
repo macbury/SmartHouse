@@ -2,7 +2,7 @@ require_relative 'node_red'
 
 red = NodeRed.new
 
-SCHEDULER.every '10m', first_in: 0 do |job|
+SCHEDULER.every '10s', first_in: 0 do |job|
   data = red.poland
 
   send_event('wilgotnosc-gleby', { 
@@ -10,8 +10,8 @@ SCHEDULER.every '10m', first_in: 0 do |job|
   })
 
   data.each do |key, stats|
-    start = stats[1]['last']&.round(2)
-    last = stats[0]['last']&.round(2)
+    start = stats[1]['last'] || 0
+    last = stats[0]['last'] || 0
 
     event = "poland-#{key}"
 

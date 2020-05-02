@@ -21,8 +21,8 @@ resources = [
 def emit_ranges_for(group, data, range)
   group.each do |currency|
     valuations = data[currency]
-    start = valuations[2]['last']&.round(2)
-    last = valuations[1]['last']&.round(2)
+    start = valuations[2]['last'] || 0
+    last = valuations[1]['last'] || 0
 
     send_event("currency-#{currency}", {
       current: start, last: last
@@ -32,7 +32,7 @@ end
 
 red = NodeRed.new
 
-SCHEDULER.every '30s', first_in: 0 do |job|
+SCHEDULER.every '10s', first_in: 0 do |job|
   data = red.currencies
 
   emit_ranges_for(currency, data, -20)
