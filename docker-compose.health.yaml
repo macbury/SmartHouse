@@ -1,11 +1,11 @@
 # Small laboratory
 version: '3.5'
 
-services:
-  tv:
-    build: ./tv/
-    restart: unless-stopped
-    ports:
-      - "127.0.0.1:3030:3030"
-    env_file:
-      - '.env.tv'
+# services:
+#   tv:
+#     build: ./tv/
+#     restart: unless-stopped
+#     ports:
+#       - "127.0.0.1:3030:3030"
+#     env_file:
+#       - '.env.tv'
