@@ -3,7 +3,7 @@ version: '3.5'
 
 services:
   emby:
-    image: emby/embyserver:4.5.0.6
+    image: emby/embyserver:beta
     ports:
       - 8096:8096
     environment:
@@ -16,41 +16,10 @@ services:
     volumes:
       - .docker/data/emby/config:/config
       - /mnt/Movies:/mnt/Movies
+      - /mnt/Books:/mnt/Books
       - /mnt/MoviesAndTV:/mnt/MoviesAndTV
       - /mnt/Multimedia:/mnt/Multimedia
       - /mnt/Music:/mnt/Music
-  lidarr:
-    image: linuxserver/lidarr
-    environment:
-      - PUID=0
-      - PGID=1003
-      - TZ=Europe/Warsaw
-      - UMASK_SET=022 #optional
-    volumes:
-      - .docker/data/lidarr:/config
-      - /mnt/Music:/music
-      - /mnt/UsbDisk:/downloads
-    ports:
-      - "0.0.0.0:18686:8686"
-    restart: unless-stopped
-    depends_on:
-      - torrents
-      - emby
-  sonarr:
-    image: linuxserver/sonarr
-    ports:
-      - 8989:8989
-    environment:
-      PUID: 0
-      PGID: 1003
-      TZ: "Europe/Warsaw"
-    volumes:
-      - .docker/data/sonarr:/config
-      - /mnt/MoviesAndTV:/tv
-      - /mnt/UsbDisk:/downloads
-    depends_on:
-      - torrents
-      - emby
   torrents:
     image: linuxserver/deluge:latest
     network_mode: host

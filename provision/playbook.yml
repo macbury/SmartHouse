@@ -29,11 +29,20 @@
 # - name: Install gotify
 #   import_playbook: playbooks/gotify/gotify.yaml
 
+# - name: Install ipfs
+#   import_playbook: playbooks/ipfs/ipfs.yaml
+
+- name: Install blog
+  import_playbook: playbooks/blog/blog.yaml
+
 # - name: Install grocy
 #   import_playbook: playbooks/grocy/grocy.yaml
 
-- name: Install node-red
-  import_playbook: playbooks/node-red/node-red.yaml
+# - name: Install node-red
+#   import_playbook: playbooks/node-red/node-red.yaml
+
+# - name: Install bitcoin
+#   import_playbook: playbooks/bitcoin/bitcoin.yaml
 
 # - name: Install rss-bridge
 #   import_playbook: playbooks/rss_bridge/rss_bridge.yaml
@@ -283,35 +292,35 @@
 #         create: True
 
 # Setup oh my zsh
-- hosts: 
-    - master
-    - dev
-  become: yes
-  tasks:
-    - name: Updating current user
-      user:
-        name: '{{ ansible_user }}'
-        append: yes
-        shell: /usr/bin/zsh
-    - name: Updating root user
-      user:
-        name: 'root'
-        append: yes
-        shell: /usr/bin/zsh
-    - name: Install oh-my-zsh to current user
-      become: no
-      git:
-        repo: 'https://github.com/robbyrussell/oh-my-zsh.git'
-        dest: '~/.oh-my-zsh'
-    - name: 'Copy ~/.zshrc'
-      become: no
-      shell: 'cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc'
-    - name: Install oh-my-zsh to root
-      git:
-        repo: 'https://github.com/robbyrussell/oh-my-zsh.git'
-        dest: '~/.oh-my-zsh'
-    - name: 'Copy ~/.zshrc'
-      shell: 'cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc'
+# - hosts: 
+#     - master
+#     - dev
+#   become: yes
+#   tasks:
+#     - name: Updating current user
+#       user:
+#         name: '{{ ansible_user }}'
+#         append: yes
+#         shell: /usr/bin/zsh
+#     - name: Updating root user
+#       user:
+#         name: 'root'
+#         append: yes
+#         shell: /usr/bin/zsh
+#     - name: Install oh-my-zsh to current user
+#       become: no
+#       git:
+#         repo: 'https://github.com/robbyrussell/oh-my-zsh.git'
+#         dest: '~/.oh-my-zsh'
+#     - name: 'Copy ~/.zshrc'
+#       become: no
+#       shell: 'cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc'
+#     - name: Install oh-my-zsh to root
+#       git:
+#         repo: 'https://github.com/robbyrussell/oh-my-zsh.git'
+#         dest: '~/.oh-my-zsh'
+#     - name: 'Copy ~/.zshrc'
+#       shell: 'cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc'
 
 # # # Shell and configs
 # - hosts: master

@@ -6,6 +6,7 @@
     ufw_reset: yes
     ufw_logging: "off"
     ufw_rules:
+      - { port: 9050, rule: allow, comment: "Tor Control Port" }
       - { port: 8123, rule: allow, comment: 'HomeAssistant' }
       - { port: 3128, rule: allow, comment: 'squid' }
       - { port: 22, rule: allow, comment: 'Allow SSH' }

@@ -1,17 +1,17 @@
-upstream red {
-  server 127.0.0.1:51880 fail_timeout=0;
+upstream btc_explorer {
+  server 127.0.0.1:19080 fail_timeout=0;
 }
 
 server {
   listen 80;
   listen [::]:80;
-  server_name {{ red_domain }};
+  server_name {{ btc_explorer_domain }};
 
   location / {
     allow 192.168.0.0/16;
     allow 10.0.0.0/16;
     deny all;
-    proxy_pass http://red/;
+    proxy_pass http://btc_explorer/;
 
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;

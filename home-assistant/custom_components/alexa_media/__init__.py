@@ -45,7 +45,10 @@ from .const import (
     CONF_DEBUG,
     CONF_EXCLUDE_DEVICES,
     CONF_INCLUDE_DEVICES,
+    CONF_QUEUE_DELAY,
     DATA_ALEXAMEDIA,
+    DATA_LISTENER,
+    DEFAULT_QUEUE_DELAY,
     DOMAIN,
     ISSUE_URL,
     MIN_TIME_BETWEEN_FORCED_SCANS,
@@ -114,15 +117,20 @@ async def async_setup(hass, config, discovery_info=None):
 
     domainconfig = config.get(DOMAIN)
     for account in domainconfig[CONF_ACCOUNTS]:
-        entry_title = "{} - {}".format(account[CONF_EMAIL], account[CONF_URL])
+        entry_found = False
         _LOGGER.debug(
             "Importing config information for %s - %s from configuration.yaml",
             hide_email(account[CONF_EMAIL]),
             account[CONF_URL],
         )
-        if entry_title in configured_instances(hass):
+        if hass.config_entries.async_entries(DOMAIN):
+            _LOGGER.debug("Found existing config entries")
             for entry in hass.config_entries.async_entries(DOMAIN):
-                if entry_title == entry.title:
+                if (
+                    entry.data.get(CONF_EMAIL) == account[CONF_EMAIL]
+                    and entry.data.get(CONF_URL) == account[CONF_URL]
+                ):
+                    _LOGGER.debug("Updating existing entry")
                     hass.config_entries.async_update_entry(
                         entry,
                         data={
@@ -137,8 +145,10 @@ async def async_setup(hass, config, discovery_info=None):
                             ].total_seconds(),
                         },
                     )
+                    entry_found = True
                     break
-        else:
+        if not entry_found:
+            _LOGGER.debug("Creating new config entry")
             hass.async_create_task(
                 hass.config_entries.flow.async_init(
                     DOMAIN,
@@ -195,6 +205,12 @@ async def async_setup_entry(hass, config_entry):
             "websocket": None,
             "auth_info": None,
             "configurator": [],
+            "options": {
+                CONF_QUEUE_DELAY: config_entry.options.get(
+                    CONF_QUEUE_DELAY, DEFAULT_QUEUE_DELAY
+                )
+            },
+            DATA_LISTENER: [config_entry.add_update_listener(update_listener)],
         },
     )
     login = hass.data[DATA_ALEXAMEDIA]["accounts"][email].get(
@@ -231,7 +247,11 @@ async def setup_alexa(hass, config_entry, login_obj):
         from alexapy import AlexaAPI
 
         email: Text = login_obj.email
-        if email not in hass.data[DATA_ALEXAMEDIA]["accounts"]:
+        if (
+            email not in hass.data[DATA_ALEXAMEDIA]["accounts"]
+            or "login_successful" not in login_obj.status
+            or login_obj.session.closed
+        ):
             return
         existing_serials = _existing_serials(hass, login_obj)
         existing_entities = hass.data[DATA_ALEXAMEDIA]["accounts"][email]["entities"][
@@ -287,12 +307,17 @@ async def setup_alexa(hass, config_entry, login_obj):
                     hass.data[DATA_ALEXAMEDIA]["accounts"][email]["configurator"]
                 ):
                     raise AlexapyLoginError()
-        except (AlexapyLoginError, RuntimeError, JSONDecodeError):
+        except (AlexapyLoginError, JSONDecodeError):
             _LOGGER.debug(
-                "%s: Alexa API disconnected; attempting to relogin", hide_email(email)
+                "%s: Alexa API disconnected; attempting to relogin : status %s",
+                hide_email(email),
+                login_obj.status,
             )
-            await login_obj.login_with_cookie()
-            await test_login_status(hass, config_entry, login_obj, setup_alexa)
+            if login_obj.status and not await test_login_status(
+                hass, config_entry, login_obj, setup_alexa
+            ):
+                login_obj.status = {}
+                await login_obj.login()
             return
         except BaseException as err:
             raise UpdateFailed(f"Error communicating with API: {err}")
@@ -553,6 +578,12 @@ async def setup_alexa(hass, config_entry, login_obj):
         """
         websocket: Optional[WebsocketEchoClient] = None
         try:
+            if login_obj.session.closed:
+                _LOGGER.debug(
+                    "%s: Websocket creation aborted. Session is closed.",
+                    hide_email(email),
+                )
+                return
             websocket = WebsocketEchoClient(
                 login_obj,
                 ws_handler,
@@ -829,7 +860,7 @@ async def setup_alexa(hass, config_entry, login_obj):
             type(message),
         )
         hass.data[DATA_ALEXAMEDIA]["accounts"][email]["websocket"] = None
-        if message == "<class 'aiohttp.streams.EofStream'>":
+        if login_obj.session.closed or message == "<class 'aiohttp.streams.EofStream'>":
             hass.data[DATA_ALEXAMEDIA]["accounts"][email]["websocketerror"] = 5
             _LOGGER.debug("%s: Immediate abort on EoFstream", hide_email(email))
             return
@@ -895,6 +926,8 @@ async def async_unload_entry(hass, entry) -> bool:
     email = entry.data["email"]
     await close_connections(hass, email)
     await clear_configurator(hass, email)
+    for listener in hass.data[DATA_ALEXAMEDIA]["accounts"][email][DATA_LISTENER]:
+        listener()
     hass.data[DATA_ALEXAMEDIA]["accounts"].pop(email)
     _LOGGER.debug("Unloaded entry for %s", hide_email(email))
     return True
@@ -911,6 +944,25 @@ async def close_connections(hass, email: Text) -> None:
     login_obj = account_dict["login_obj"]
     await login_obj.close()
     _LOGGER.debug(
-        "%s: Connection closed: %s", hide_email(email), login_obj._session.closed
+        "%s: Connection closed: %s", hide_email(email), login_obj.session.closed
     )
     await clear_configurator(hass, email)
+
+
+async def update_listener(hass, config_entry):
+    """Update when config_entry options update."""
+    account = config_entry.data
+    email = account.get(CONF_EMAIL)
+    for key, old_value in hass.data[DATA_ALEXAMEDIA]["accounts"][email][
+        "options"
+    ].items():
+        hass.data[DATA_ALEXAMEDIA]["accounts"][email]["options"][
+            key
+        ] = new_value = config_entry.options.get(key)
+        if new_value != old_value:
+            _LOGGER.debug(
+                "Changing option %s from %s to %s",
+                key,
+                old_value,
+                hass.data[DATA_ALEXAMEDIA]["accounts"][email]["options"][key],
+            )

@@ -1,15 +1,5 @@
-- platform: slack
-  name: slack
-  api_key: !env_var HOME_ASSISTANT_SLACK_API_KEY
-  default_channel: '#dom'
-  icon: ':suspect:'
-
 - platform: alexa_media
   name: alexa_media
-
-- name: telegram_arek
-  platform: telegram
-  chat_id: 66368059
 
 # Push messages using gotify server https://gotify.net/docs/pushmsg
 - name: gotify
@@ -22,9 +12,14 @@
   platform: rest
   resource: !env_var HOME_ASSISTANT_GOTIFY_LUNCHING_ENDPOINT
 
+- name: ola
+  method: POST
+  platform: rest
+  resource: !env_var HOME_ASSISTANT_OLA_GOTIFY
+
 - name: all
   platform: group
   services:
-    - service: slack
+    - service: ola
     - service: gotify
     - service: tv

@@ -8,12 +8,13 @@ services:
       - '59900:80'
   node-red:
     image: nodered/node-red:latest
+    restart: unless-stopped
     ports:
       - 51880:1880
     environment:
       - TZ=Europe/Warsaw
     volumes:
-      - .docker/data/node-red:/data      
+      - .docker/data/node-red:/data
   grocy:
     image: linuxserver/grocy:latest
     ports:
@@ -204,15 +205,6 @@ services:
       - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/miniflux?sslmode=disable
     env_file:
       - '.env.rss'
-  blog:
-    image: blog:latest
-    network_mode: host
-    volumes:
-      - .docker/data/blog/store:/app/public/store
-      - .docker/data/blog/system:/app/public/system
-      - .docker/data/blog/application.yml:/app/config/application.yml
-      - .docker/data/blog/database.yml:/app/config/database.yml
-      - .docker/data/blog/secrets.yml:/app/config/secrets.yml
   speedtest:
     image: macbury/speedtest:latest
     env_file:
@@ -225,17 +217,9 @@ services:
     network_mode: host
     volumes:
       - .docker/data/monio/:/app/storage
+      - /tmp/monio-cache:/app/tmp/rails-cache
     env_file:
       - .env.monio
-    depends_on:
-      - database
-  youtube:
-    build: ./youtube/
-    restart: unless-stopped
-    ports:
-      - "127.0.0.1:7883:3000"
-    volumes:
-      - .docker/data/invidious/config.yml:/invidious/config/config.yml
     depends_on:
       - database
   ytdl:

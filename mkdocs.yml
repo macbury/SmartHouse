@@ -13,6 +13,7 @@ nav:
   - Software:
     - Overview: Software/Overview.md
     - Nginx: Software/Nginx.md
+    - Dashboard: Software/TvDashboard.md
     - AdGuard: Software/PiHole.md
     - DeGoogling: Software/Degoogling.md
     - EspHome: Software/EspHome.md

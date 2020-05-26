@@ -106,3 +106,4 @@ blog/**/*
 .env.rss
 .env.speedtest
 .env.tv
+.env.bitcoind

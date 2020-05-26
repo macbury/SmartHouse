@@ -3,9 +3,6 @@
 - platform: season
   type: astronomical
 
-- platform: cracow_air_quality
-  station_id: 7
-  name: 'nowa_huta'
 
 - platform: rest
   name: Nowa Huta AQI

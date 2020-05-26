@@ -1,15 +1,16 @@
 upstream ipfs {
-  server 127.0.0.1:8080 fail_timeout=30 max_fails=5 max_conns=20;
+  server 192.168.1.63:8080 fail_timeout=30 max_fails=5 max_conns=20;
 }
 
 upstream ipfs-api {
-  server 127.0.0.1:5001 fail_timeout=30 max_fails=5 max_conns=20;
+  server 192.168.1.63:5001 fail_timeout=30 max_fails=5 max_conns=20;
 }
+
 
 server {
   listen 80;
   listen [::]:80;
-  server_name api-{{ ipfs_domain }};
+  server_name webui-{{ ipfs_domain }};
   
   access_log /var/log/nginx/ipfs.good.log;
   error_log  /var/log/nginx/ipfs.bad.log;
@@ -49,6 +50,7 @@ server {
   keepalive_timeout 10;
 }
 
+
 server {
   listen 443 ssl;
   ssl        on;
@@ -76,6 +78,7 @@ server {
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_max_temp_file_size    0;
   }
+
 
   error_page 403 404 @error;
 

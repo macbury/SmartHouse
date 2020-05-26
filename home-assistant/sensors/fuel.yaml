@@ -1,6 +1,0 @@
-- platform: scrape
-  resource: https://www.autocentrum.pl/paliwa/ceny-paliw/malopolskie/
-  name: Paliwo 95
-  select: ".pb .price"
-  value_template: '{{ value.split("\n")[1] | replace(",", ".") | float }}'
-  unit_of_measurement: zł/l
