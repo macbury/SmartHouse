@@ -86,7 +86,7 @@ const styles = html`
       font-weight: bold;
     }
 
-    .toolbar paper-icon-button {
+    .toolbar ha-icon-button {
       color: #319ef9;
       flex-direction: column;
       width: 44px;
@@ -94,16 +94,16 @@ const styles = html`
       padding-right: 10px;
     }
 
-    .toolbar paper-icon-button:active {
+    .toolbar ha-icon-button:active {
       opacity: 0.4;
       background: rgba(0, 0, 0, 0.1);
     }
 
-    .toolbar paper-icon-button:last-child {
+    .toolbar ha-icon-button:last-child {
       margin-right: 0px;
     }
 
-    .toolbar paper-button {
+    .toolbar ha-button {
       color: #319ef9;
       flex-direction: row;
     }
@@ -236,45 +236,45 @@ class AirPurifierCard extends LitElement {
 
     return html`
       <div class="toolbar">
-        <paper-icon-button  icon="mdi:power-standby"
+        <ha-icon-button  icon="mdi:power-standby"
                             title="Power"
                             class="toolbar-split toolbar-item ${state == 'on' && 'toolbar-item-on'}"
                             @click='${(e) => this.callService('toggle')}'>
-        </paper-icon-button>
+        </ha-icon-button>
         <div class="fill-gap"></div>
 
-        <paper-icon-button  icon="mdi:weather-night"
+        <ha-icon-button  icon="mdi:weather-night"
                             title="Sleep"
                             class="toolbar-item ${mode == 'silent' && 'toolbar-item-on'}"
                             @click='${(e) => this.callService('set_speed', { speed: 'Silent' })}'>
-        </paper-icon-button>
+        </ha-icon-button>
 
-        <paper-icon-button  icon="mdi:circle-slice-3"
+        <ha-icon-button  icon="mdi:circle-slice-3"
                             title="30%"
                             class="toolbar-item ${mode == 'favorite' && favorite_level == 3 && 'toolbar-item-on'}"
                             @click='${(e) => this.setFavorite(3)}'>
-        </paper-icon-button>
+        </ha-icon-button>
 
-        <paper-icon-button  icon="mdi:circle-slice-4"
+        <ha-icon-button  icon="mdi:circle-slice-4"
                             title="50%"
                             class="toolbar-item ${mode == 'favorite' && favorite_level == 6 && 'toolbar-item-on'}"
                             @click='${(e) => this.setFavorite(6)}'>
-        </paper-icon-button>
-        <paper-icon-button  icon="mdi:circle-slice-6"
+        </ha-icon-button>
+        <ha-icon-button  icon="mdi:circle-slice-6"
                             title="70%"
                             class="toolbar-item ${mode == 'favorite' && favorite_level == 8 && 'toolbar-item-on'}"
                             @click='${(e) => this.setFavorite(8)}'>
-        </paper-icon-button>
-        <paper-icon-button  icon="mdi:circle-slice-8"
+        </ha-icon-button>
+        <ha-icon-button  icon="mdi:circle-slice-8"
                             title="100%"
                             class="toolbar-item ${mode == 'favorite' && favorite_level == 12 && 'toolbar-item-on'}"
                             @click='${(e) => this.setFavorite(12)}'>
-        </paper-icon-button>
-        <paper-icon-button  icon="mdi:brightness-auto"
+        </ha-icon-button>
+        <ha-icon-button  icon="mdi:brightness-auto"
                             title="Auto"
                             class="toolbar-item ${mode == 'auto' && 'toolbar-item-on'}"
                             @click='${(e) => this.callService('set_speed', { speed: 'Auto' })}'>
-        </paper-icon-button>
+        </ha-icon-button>
       </div>
     `
   }
