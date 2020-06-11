@@ -1,4 +1,0 @@
-- platform: lunching
-  name: Arek jedzenie
-  username: !env_var HOME_ASSISTANT_LUNCHING_USERNAME
-  password: !env_var HOME_ASSISTANT_LUNCHING_PASSWORD

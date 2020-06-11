@@ -27,39 +27,12 @@ from . import (
     hide_email,
     hide_serial,
 )
+from .const import RECURRING_PATTERN, RECURRING_PATTERN_ISO_SET
 from .helpers import add_devices, retry_async
 
 _LOGGER = logging.getLogger(__name__)
 
 LOCAL_TIMEZONE = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo
-
-RECURRING_PATTERN = {
-    None: "Never Repeat",
-    "P1D": "Every day",
-    "XXXX-WE": "Weekends",
-    "XXXX-WD": "Weekdays",
-    "XXXX-WXX-1": "Every Monday",
-    "XXXX-WXX-2": "Every Tuesday",
-    "XXXX-WXX-3": "Every Wednesday",
-    "XXXX-WXX-4": "Every Thursday",
-    "XXXX-WXX-5": "Every Friday",
-    "XXXX-WXX-6": "Every Saturday",
-    "XXXX-WXX-7": "Every Sunday",
-}
-
-RECURRING_PATTERN_ISO_SET = {
-    None: {},
-    "P1D": {1, 2, 3, 4, 5, 6, 7},
-    "XXXX-WE": {6, 7},
-    "XXXX-WD": {1, 2, 3, 4, 5},
-    "XXXX-WXX-1": {1},
-    "XXXX-WXX-2": {2},
-    "XXXX-WXX-3": {3},
-    "XXXX-WXX-4": {4},
-    "XXXX-WXX-5": {5},
-    "XXXX-WXX-6": {6},
-    "XXXX-WXX-7": {7},
-}
 
 
 async def async_setup_platform(hass, config, add_devices_callback, discovery_info=None):
@@ -180,6 +153,7 @@ class AlexaMediaNotificationSensor(Entity):
         self._all = []
         self._active = []
         self._next = None
+        self._prior_value = None
         self._timestamp: datetime.datetime = None
         self._process_raw_notifications()
 
@@ -191,6 +165,7 @@ class AlexaMediaNotificationSensor(Entity):
         )
         self._all = list(map(self._update_recurring_alarm, self._all))
         self._all = sorted(self._all, key=lambda x: x[1][self._sensor_property])
+        self._prior_value = self._next if self._active else None
         self._active = (
             list(filter(lambda x: x[1]["status"] == "ON", self._all))
             if self._all
@@ -343,9 +318,12 @@ class AlexaMediaNotificationSensor(Entity):
     @property
     def state(self):
         """Return the state of the sensor."""
+        return self._process_state(self._next)
+
+    def _process_state(self, value):
         return (
-            self._next[self._sensor_property].replace(tzinfo=LOCAL_TIMEZONE).isoformat()
-            if self._next
+            value[self._sensor_property].replace(tzinfo=LOCAL_TIMEZONE).isoformat()
+            if value
             else STATE_UNAVAILABLE
         )
 
@@ -407,6 +385,7 @@ class AlexaMediaNotificationSensor(Entity):
 
         attr = {
             "recurrence": self.recurrence,
+            "prior_value": self._process_state(self._prior_value),
             "total_active": len(self._active),
             "total_all": len(self._all),
             "sorted_active": json.dumps(self._active, default=str),
@@ -441,16 +420,19 @@ class TimerSensor(AlexaMediaNotificationSensor):
     @property
     def state(self) -> datetime.datetime:
         """Return the state of the sensor."""
+        return self._process_state(self._next)
+
+    def _process_state(self, value):
         return (
             dt.as_local(
                 super()._round_time(
                     datetime.datetime.fromtimestamp(
                         self._timestamp.timestamp()
-                        + self._next[self._sensor_property] / 1000
+                        + value[self._sensor_property] / 1000
                     )
                 )
             ).isoformat()
-            if self._next and self._timestamp
+            if value and self._timestamp
             else STATE_UNAVAILABLE
         )
 
@@ -479,15 +461,18 @@ class ReminderSensor(AlexaMediaNotificationSensor):
     @property
     def state(self):
         """Return the state of the sensor."""
+        return self._process_state(self._next)
+
+    def _process_state(self, value):
         return (
             dt.as_local(
                 super()._round_time(
                     datetime.datetime.fromtimestamp(
-                        self._next[self._sensor_property] / 1000, tz=LOCAL_TIMEZONE
+                        value[self._sensor_property] / 1000, tz=LOCAL_TIMEZONE
                     )
                 )
             ).isoformat()
-            if self._next
+            if value
             else STATE_UNAVAILABLE
         )
 

@@ -1,8 +1,3 @@
-- platform: spotify
-  client_id: !env_var HOME_ASSISTANT_SPOTIFY_CLIENT_ID
-  client_secret: !env_var HOME_ASSISTANT_SPOTIFY_CLIENT_SECRET
-  cache_path: '/config/spotify-token-cache.json'
-
 - platform: samsung_multi_room
   host: 192.168.1.227
   max_volume: 20

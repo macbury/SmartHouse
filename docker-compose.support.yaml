@@ -4,6 +4,9 @@ version: '3.5'
 services:
   rss-bridge:
     image: rssbridge/rss-bridge:latest
+    dns:
+      - 9.9.9.9
+      - 149.112.112.112
     ports:
       - '59900:80'
   node-red:
@@ -205,6 +208,9 @@ services:
       - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/miniflux?sslmode=disable
     env_file:
       - '.env.rss'
+    dns:
+      - 9.9.9.9
+      - 149.112.112.112
   speedtest:
     image: macbury/speedtest:latest
     env_file:

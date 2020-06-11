@@ -21,7 +21,6 @@ fan: !include components/fan.yaml
 ffmpeg:
 # G
 group: !include groups.yaml
-glances: !include components/glances.yaml
 # H
 homeassistant: !include components/homeassistant.yaml
 http: !include components/http.yaml

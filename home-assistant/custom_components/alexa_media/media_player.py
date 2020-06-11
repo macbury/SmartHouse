@@ -13,7 +13,6 @@ import re
 from typing import List, Text  # noqa pylint: disable=unused-import
 
 from homeassistant import util
-from homeassistant.components.media_player import MediaPlayerDevice
 from homeassistant.components.media_player.const import (
     MEDIA_TYPE_MUSIC,
     SUPPORT_NEXT_TRACK,
@@ -55,6 +54,13 @@ from . import (
 )
 from .const import DEPENDENT_ALEXA_COMPONENTS, PLAY_SCAN_INTERVAL
 from .helpers import _catch_login_errors, add_devices, retry_async
+
+try:
+    from homeassistant.components.media_player import (
+        MediaPlayerEntity as MediaPlayerDevice,
+    )
+except ImportError:
+    from homeassistant.components.media_player import MediaPlayerDevice
 
 SUPPORT_ALEXA = (
     SUPPORT_PAUSE
@@ -189,6 +195,8 @@ class AlexaClient(MediaPlayerDevice):
         self._previous_volume = None
         self._source = None
         self._source_list = []
+        self._connected_bluetooth = None
+        self._bluetooth_list = []
         self._shuffle = None
         self._repeat = None
         self._playing_parent = None
@@ -340,8 +348,10 @@ class AlexaClient(MediaPlayerDevice):
                 # takes from the event instead of the hass storage. We're
                 # setting the value twice. Architectually we should have a
                 # single authorative source of truth.
-                self._source = await self._get_source()
-                self._source_list = await self._get_source_list()
+                self._source = self._get_source()
+                self._source_list = self._get_source_list()
+                self._connected_bluetooth = self._get_connected_bluetooth()
+                self._bluetooth_list = self._get_bluetooth_list()
                 if self.hass and self.async_schedule_update_ha_state:
                     self.async_schedule_update_ha_state()
         elif "player_state" in event:
@@ -415,7 +425,7 @@ class AlexaClient(MediaPlayerDevice):
                     )
                 await _refresh_if_no_audiopush(already_refreshed)
 
-    async def _clear_media_details(self):
+    def _clear_media_details(self):
         """Set all Media Items to None."""
         # General
         self._media_duration = None
@@ -429,7 +439,7 @@ class AlexaClient(MediaPlayerDevice):
         # volume is also used for announce/tts so state should remain
         # self._media_vol_level = None
 
-    async def _set_authentication_details(self, auth):
+    def _set_authentication_details(self, auth):
         """Set Authentication based off auth."""
         self._authenticated = auth["authenticated"]
         self._can_access_prime_music = auth["canAccessPrimeMusicContent"]
@@ -450,7 +460,7 @@ class AlexaClient(MediaPlayerDevice):
         device (json): A refreshed device json from Amazon. For efficiency,
                        an individual device does not refresh if it's reported
                        as offline.
-        no_api (bool): Whether to only due a device json update and not hit the API
+        skip_api (bool): Whether to only due a device json update and not hit the API
 
         """
         if device is not None:
@@ -469,14 +479,16 @@ class AlexaClient(MediaPlayerDevice):
             self._locale = device["locale"] if "locale" in device else "en-US"
             self._timezone = device["timeZoneId"] if "timeZoneId" in device else "UTC"
             self._dnd = device["dnd"] if "dnd" in device else None
-            await self._set_authentication_details(device["auth_info"])
+            self._set_authentication_details(device["auth_info"])
         session = None
         if self.available:
             _LOGGER.debug("%s: Refreshing %s", self.account, self.name)
             if "PAIR_BT_SOURCE" in self._capabilities:
-                self._source = await self._get_source()
-                self._source_list = await self._get_source_list()
-            self._last_called = await self._get_last_called()
+                self._source = self._get_source()
+                self._source_list = self._get_source_list()
+                self._connected_bluetooth = self._get_connected_bluetooth()
+                self._bluetooth_list = self._get_bluetooth_list()
+            self._last_called = self._get_last_called()
             if self._last_called:
                 self._last_called_timestamp = self.hass.data[DATA_ALEXAMEDIA][
                     "accounts"
@@ -530,7 +542,7 @@ class AlexaClient(MediaPlayerDevice):
                 else:
                     self._playing_parent = None
                     session = await self.alexa_api.get_state()
-        await self._clear_media_details()
+        self._clear_media_details()
         # update the session if it exists
         self._session = session if session else None
         if self._session and self._session.get("playerInfo"):
@@ -560,7 +572,11 @@ class AlexaClient(MediaPlayerDevice):
                 self._media_album_name = self._session.get("infoText", {}).get(
                     "subText2"
                 )
-                self._media_image_url = self._session.get("mainArt", {}).get("url")
+                self._media_image_url = (
+                    self._session.get("mainArt", {}).get("url")
+                    if self._session.get("mainArt")
+                    else None
+                )
                 self._media_duration = self._session.get("progress", {}).get(
                     "mediaLength"
                 )
@@ -639,7 +655,7 @@ class AlexaClient(MediaPlayerDevice):
         ):
             await self.async_update()
 
-    async def _get_source(self):
+    def _get_source(self):
         source = "Local Speaker"
         if self._bluetooth_state.get("pairedDeviceList"):
             for device in self._bluetooth_state["pairedDeviceList"]:
@@ -650,7 +666,7 @@ class AlexaClient(MediaPlayerDevice):
                     return device["friendlyName"]
         return source
 
-    async def _get_source_list(self):
+    def _get_source_list(self):
         sources = []
         if self._bluetooth_state.get("pairedDeviceList"):
             for devices in self._bluetooth_state["pairedDeviceList"]:
@@ -658,7 +674,22 @@ class AlexaClient(MediaPlayerDevice):
                     sources.append(devices["friendlyName"])
         return ["Local Speaker"] + sources
 
-    async def _get_last_called(self):
+    def _get_connected_bluetooth(self):
+        source = None
+        if self._bluetooth_state.get("pairedDeviceList"):
+            for device in self._bluetooth_state["pairedDeviceList"]:
+                if device["connected"] is True:
+                    return device["friendlyName"]
+        return source
+
+    def _get_bluetooth_list(self):
+        sources = []
+        if self._bluetooth_state.get("pairedDeviceList"):
+            for devices in self._bluetooth_state["pairedDeviceList"]:
+                sources.append(devices["friendlyName"])
+        return sources
+
+    def _get_last_called(self):
         try:
             last_called_serial = (
                 None
@@ -748,11 +779,12 @@ class AlexaClient(MediaPlayerDevice):
                 return
         except AttributeError:
             pass
-        if self.entity_id is None:
-            # Device has not initialized yet
-            return
         email = self._login.email
-        if email not in self.hass.data[DATA_ALEXAMEDIA]["accounts"]:
+        if (
+            self.entity_id is None  # Device has not initialized yet
+            or email not in self.hass.data[DATA_ALEXAMEDIA]["accounts"]
+            or self._login.session.closed
+        ):
             return
         device = self.hass.data[DATA_ALEXAMEDIA]["accounts"][email]["devices"][
             "media_player"
@@ -996,6 +1028,25 @@ class AlexaClient(MediaPlayerDevice):
             await self.async_update()
 
     @_catch_login_errors
+    async def async_media_stop(self):
+        """Send stop command."""
+        if not self.available:
+            return
+        if self._playing_parent:
+            await self._playing_parent.async_media_stop()
+        else:
+            await self.alexa_api.stop(
+                customer_id=self._customer_id,
+                queue_delay=self.hass.data[DATA_ALEXAMEDIA]["accounts"][self.email][
+                    "options"
+                ][CONF_QUEUE_DELAY],
+            )
+        if not (
+            self.hass.data[DATA_ALEXAMEDIA]["accounts"][self._login.email]["websocket"]
+        ):
+            await self.async_update()
+
+    @_catch_login_errors
     async def async_turn_off(self):
         """Turn the client off.
 
@@ -1004,7 +1055,7 @@ class AlexaClient(MediaPlayerDevice):
         """
         self._should_poll = False
         await self.async_media_pause()
-        await self._clear_media_details()
+        self._clear_media_details()
 
     @_catch_login_errors
     async def async_turn_on(self):
@@ -1136,6 +1187,8 @@ class AlexaClient(MediaPlayerDevice):
             "available": self.available,
             "last_called": self._last_called,
             "last_called_timestamp": self._last_called_timestamp,
+            "connected_bluetooth": self._connected_bluetooth,
+            "bluetooth_list": self._bluetooth_list,
         }
         return attr
 
