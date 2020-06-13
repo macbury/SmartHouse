@@ -109,7 +109,7 @@ const styles = html`
       justify-content: space-evenly;
     }
 
-    .toolbar paper-icon-button {
+    .toolbar ha-icon-button {
       color: #319ef9;
       flex-direction: column;
       width: 44px;
@@ -126,11 +126,11 @@ const styles = html`
       cursor: pointer;
     }
 
-    .toolbar paper-icon-button:last-child {
+    .toolbar ha-icon-button:last-child {
       margin-right: 0px;
     }
 
-    .toolbar paper-icon-button:active, .toolbar paper-button:active {
+    .toolbar ha-icon-button:active, .toolbar paper-button:active {
       opacity: 0.4;
       background: rgba(0, 0, 0, 0.1);
     }
@@ -311,19 +311,19 @@ class VacuumCard extends LitElement {
         const args = service.split('.')
         this.hass.callService(args[0], args[1]);
       }
-      return html`<paper-icon-button icon="${icon}" title="${name}" @click='${execute}'></paper-icon-button>`
+      return html`<ha-icon-button icon="${icon}" title="${name}" @click='${execute}'></ha-icon-button>`
     })
 
     return html`
       <div class="toolbar">
-        <paper-icon-button  icon="hass:play" 
+        <ha-icon-button  icon="hass:play" 
                             title="Clean" class="toolbar-icon"
                             @click='${(e) => this.callService('start')}'>
-        </paper-icon-button>
-        <paper-icon-button  icon="mdi:crosshairs-gps" 
+        </ha-icon-button>
+        <ha-icon-button  icon="mdi:crosshairs-gps" 
                             title="Locate vacuum" class="toolbar-split"
                             @click='${(e) => this.callService('locate')}'>
-        </paper-icon-button>
+        </ha-icon-button>
         <div class="fill-gap"></div>
         ${buttons}
       </div>
