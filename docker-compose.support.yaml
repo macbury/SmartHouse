@@ -1,7 +1,46 @@
+
 # Supporting services, like database that always must be online
 version: '3.5'
 
 services:
+  ci:
+    image: drone/drone:1
+    env_file:
+      - '.env.ci'
+    restart: always
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - .docker/data/drone:/data
+    ports:
+      - "4282:80"
+    depends_on:
+      - git
+  ci_runner:
+    image: drone/drone-runner-docker:1
+    env_file:
+      - '.env.ci_runner'
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - ci
+  git:
+    image: gitea/gitea:latest
+    env_file:
+      - '.env.git'
+    restart: always
+    volumes:
+      - .docker/data/gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "3282:3000"
+      - "2222:22"
+    depends_on:
+      - database
   rss-bridge:
     image: rssbridge/rss-bridge:latest
     dns:

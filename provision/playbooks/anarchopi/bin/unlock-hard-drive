@@ -1,0 +1,1 @@
+sudo mount -t ext4 /dev/mapper/encrypted /data

@@ -107,3 +107,6 @@ blog/**/*
 .env.speedtest
 .env.tv
 .env.bitcoind
+.env.ci
+.env.ci_runner
+.env.git

@@ -17,6 +17,9 @@
 # - name: Install docker
 #   import_playbook: playbooks/docker/docker.yaml
 
+- name: Install anarchopi
+  import_playbook: playbooks/anarchopi/anarchopi.yaml
+
 # - name: Ad blocking stuff
 #   import_playbook: playbooks/ads/ads.yaml
 
@@ -32,8 +35,14 @@
 # - name: Install ipfs
 #   import_playbook: playbooks/ipfs/ipfs.yaml
 
-- name: Install blog
-  import_playbook: playbooks/blog/blog.yaml
+#- name: Install blog
+#  import_playbook: playbooks/blog/blog.yaml
+
+# - name: Install ci
+#   import_playbook: playbooks/ci/ci.yaml
+
+# - name: Install git
+#   import_playbook: playbooks/git/git.yaml
 
 # - name: Install grocy
 #   import_playbook: playbooks/grocy/grocy.yaml

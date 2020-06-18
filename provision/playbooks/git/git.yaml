@@ -8,7 +8,7 @@
     certbot_create_if_missing: true
     certbot_certs:
       - domains:
-        - "{{ ipfs_domain }}"
+        - "{{ git_domain }}"
 
 # Nginx
 - hosts: master
@@ -23,11 +23,21 @@
         enabled: yes
         state: restarted
   tasks:
-    - name: Create /etc/nginx/sites-enabled/ipfs.conf
+    - name: Create /etc/nginx/sites-enabled/git.conf
       template:
-        src: ipfs.conf.j2
-        dest: /etc/nginx/sites-enabled/ipfs.conf
+        src: git.conf.j2
+        dest: /etc/nginx/sites-enabled/git.conf
       notify:
         - reload nginx
         - restart nginx
+
+- hosts: master
+  become: yes
+  roles:
+    - role: weareinteractive.ufw
+  vars:
+    ufw_reset: no
+    ufw_logging: "off"
+    ufw_rules:
+      - { port: 2222, rule: allow, comment: 'Allow git ssh' }
 
