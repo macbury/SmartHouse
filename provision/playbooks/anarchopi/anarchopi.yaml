@@ -1,3 +1,5 @@
+# https://stadicus.github.io/RaspiBolt/
+
 # configure firewall
 # change docker data directory to /data
 # set command for unlock hard drive
@@ -14,67 +16,31 @@
 # bitcoin core
   # like torrents
 
-# - hosts: anarchopi
-#   become: yes
-#   roles:
-#     - role: weareinteractive.ufw
-#   vars:
-#     ufw_reset: yes
-#     ufw_logging: "off"
-#     ufw_rules:
-#       - { port: 22, rule: allow, comment: "Allow ssh", from_ip: '192.168.0.1/24' }
-#       - { port: 9091, rule: allow, comment: "Expose web ui transmission", from_ip: '192.168.0.1/24' }
-
-# - hosts:  anarchopi
-#   become: yes
-#   handlers:
-#     - name: reload systemctl
-#       become: yes
-#       command: systemctl daemon-reload
-#     - name: restart systemd-resolved
-#       service:
-#         name: systemd-resolved
-#         state: restarted
-#   tasks:
-#     - name: Ensure a locale exists
-#       locale_gen:
-#         name: en_GB.UTF-8
-#         state: present
-#     - name: Adding docker apt-key
-#       apt_key:
-#         url: https://download.docker.com/linux/raspbian/gpg
-#         state: present
-#     - name: 'Adding repository'
-#       apt_repository:
-#         repo: deb [arch=armhf] https://download.docker.com/linux/raspbian {{ ansible_lsb.codename }}  stable
-#         state: present
-#     - name: Update repositories cache and install "docker-ce" package
-#       apt:
-#         name: docker-ce
-#         update_cache: yes
-#     - name: Adding user {{ ansible_user }} to group docker
-#       user:
-#         name: '{{ ansible_user }}'
-#         group: docker
-#         append: yes
-
 - hosts: anarchopi
   become: yes
   tasks:
-    - name: Initialize torrents container
-      docker_container:
-        name: torrents
-        image: linuxserver/transmission:3.00
-        env:
-          PUID: 1000
-          PGID: 1000
-          TZ: Europe/Warsaw
-          USER: macbury
-          PASS: admin1234
-        restart_policy: unless-stopped
-        exposed_ports:
-          - 9091
-          - '51413:51413/udp'
-        volumes:
-          - /data/transmission:/config
-          - /data/downloads:/downloads
+    - apt:
+        name: build-essential
+    - apt:
+        name: libffi-dev
+    - apt:
+        name: libssl-dev
+    - name: Install cryptsetup
+      apt:
+        name: cryptsetup
+    - name: smb
+      apt:
+        name: cifs-utils
+
+- hosts: anarchopi
+  become: yes
+  roles:
+    - role: weareinteractive.ufw
+  vars:
+    ufw_reset: yes
+    ufw_logging: "off"
+    ufw_rules:
+      - { port: 22, rule: allow, comment: "Allow ssh" }
+
+- name: Configure torrents
+  import_playbook: torrents/torrents.yaml

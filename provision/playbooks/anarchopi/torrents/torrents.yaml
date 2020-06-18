@@ -1,0 +1,81 @@
+
+- hosts: anarchopi
+  become: yes
+  roles:
+    - role: weareinteractive.ufw
+  vars:
+    ufw_reset: no
+    ufw_logging: "off"
+    ufw_rules:
+      - { port: 9091, rule: allow, comment: "Expose web ui transmission" }
+      - { port: 51413, rule: allow, comment: "Expose transmission port" }
+  tasks:
+    - name: Create transmission group
+      group:
+        name: transmission
+    - name: Create transmission user
+      user:
+        name: transmission
+        group: transmission
+
+- hosts: anarchopi
+  become: yes
+  roles:
+    - role: elboletaire.transmission
+      sudo: yes
+      transmission_user: transmission
+      transmission_watch_dir_enabled: false
+      transmission_rpc_auth_required: true
+      transmission_password: transmission
+      transmission_rpc_whitelist_enabled: false
+      transmission_incomplete_dir_enabled: true
+      transmission_incomplete_dir: /data/torrents
+      transmission_download_dir: /data/downloaded
+      transmission_blocklist_enabled: true
+      transmission_blocklist_url: http://john.bitsurge.net/public/biglist.p2p.gz
+      transmission_ratio_limit: 2.0
+      transmission_ratio_limit_enabled: true
+  tasks:
+    - name: Create movies directory
+      file:
+        group: transmission
+        owner: transmission
+        path: /data/downloaded/{{ item.share }}
+        state: directory
+      loop:
+        - { share: 'Movies' }
+        - { share: 'MoviesAndTV' }
+        - { share: 'Music' }
+    - name: mount movies directory
+      mount:
+        state: mounted
+        fstype: cifs
+        opts: "domain=mr-pickle.here,username={{ qnap_username }},password={{ qnap_password }},file_mode=0664,dir_mode=0775,gid=transmission,uid=transmission"
+        src: "//mr-pickle.here/{{ item.share }}"
+        path: "/data/downloaded/{{ item.share }}"
+      loop:
+        - { share: 'Movies' }
+        - { share: 'MoviesAndTV' }
+        - { share: 'Music' }
+
+
+# Nginx
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.nginx
+  handlers:
+    - name: restart nginx
+      become: yes
+      service:
+        name: nginx
+        enabled: yes
+        state: restarted
+  tasks:
+    - name: Create /etc/nginx/sites-enabled/torrents.conf
+      template:
+        src: torrents.conf.j2
+        dest: /etc/nginx/sites-enabled/torrents.conf
+      notify:
+        - reload nginx
+        - restart nginx

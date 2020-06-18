@@ -1,0 +1,23 @@
+- hosts: anarchopi
+  become: yes
+  roles:
+    - role: weareinteractive.ufw
+  vars:
+    ufw_reset: no
+    ufw_logging: "off"
+    ufw_rules:
+      - { port: 9050, rule: allow, comment: "Expose web ui transmission" }
+  tasks:
+    - name: Create bitcoins group
+      group:
+        name: bitcoin
+    - name: Create bitcoin user
+      user:
+        name: bitcoin
+        group: bitcoin
+    - name: Create directory
+      file:
+        group: bitcoin
+        owner: bitcoin
+        path: /data/bitcoin
+        state: directory

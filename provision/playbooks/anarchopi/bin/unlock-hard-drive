@@ -1,1 +1,2 @@
+sudo cryptsetup luksOpen /dev/sda1 encrypted
 sudo mount -t ext4 /dev/mapper/encrypted /data
