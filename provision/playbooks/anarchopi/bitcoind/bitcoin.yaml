@@ -7,7 +7,7 @@
     ufw_reset: no
     ufw_logging: "off"
     ufw_rules:
-      - { port: 50001, rule: allow, comment: "Expose electrum" }
+      - { port: 8333, rule: allow, comment: "Expose p2p bitcoin port" }
   tasks:
     - name: Create bitcoins group
       group:

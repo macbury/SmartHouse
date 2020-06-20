@@ -1,0 +1,89 @@
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.nginx
+    - role: geerlingguy.certbot
+  vars:
+    certbot_auto_renew: false
+    certbot_admin_email: "{{ email }}"
+    certbot_create_if_missing: true
+    certbot_certs:
+      - domains:
+        - "{{ ipfs_domain }}"
+  handlers:
+    - name: restart nginx
+      become: yes
+      service:
+        name: nginx
+        enabled: yes
+        state: restarted
+  tasks:
+    - name: Create /etc/nginx/sites-enabled/ipfs.conf
+      template:
+        src: ipfs.conf.j2
+        dest: /etc/nginx/sites-enabled/ipfs.conf
+      notify:
+        - reload nginx
+        - restart nginx
+
+- hosts: anarchopi
+  become: yes
+  roles:
+    - role: weareinteractive.ufw
+  vars:
+    ipfs_ver: v0.6.0
+    ufw_reset: no
+    ufw_logging: "off"
+    ufw_rules:
+      - { port: 8088, rule: allow, comment: "Expose ipfs gateway" }
+      - { port: 5001, rule: allow, comment: "Expose ipfs api" }
+      - { port: 4001, rule: allow, comment: "Expose ipfs p2p" }
+  tasks:
+    - name: Create ipfs group
+      group:
+        name: ipfs
+    - name: Create ipfs user
+      user:
+        name: ipfs
+        group: ipfs
+    - name: Create directory
+      file:
+        group: ipfs
+        owner: ipfs
+        path: /data/ipfs
+        state: directory
+    - name: Create symbolic link
+      become: yes
+      file:
+        group: ipfs
+        owner: ipfs
+        src: /data/ipfs
+        dest: /home/ipfs/.ipfs
+        state: link
+    - name: Check if ipfs is installed
+      command: 'ipfs --version'
+      register: ipfs_is_installed
+      ignore_errors: True
+    - name: Download ipfs core
+      when: ipfs_is_installed is failed
+      get_url:
+        url: https://dist.ipfs.io/go-ipfs/{{ ipfs_ver }}/go-ipfs_{{ ipfs_ver }}_linux-arm.tar.gz
+        dest: /tmp/ipfs-{{ ipfs_ver }}.tar.gz
+    - name: Extract ipfs core
+      when: ipfs_is_installed is failed
+      unarchive:
+        remote_src: yes
+        src: /tmp/ipfs-{{ ipfs_ver }}.tar.gz
+        dest: /tmp
+    - name: Install ipfs core
+      when: ipfs_is_installed is failed
+      command: bash /tmp/go-ipfs/install.sh
+    - name: Create ipfs.service
+      template:
+        src: ipfs.service
+        dest: /lib/systemd/system/ipfs.service
+    - name: Restart service ipfs.service
+      systemd:
+        state: started
+        daemon_reload: yes
+        name: ipfs

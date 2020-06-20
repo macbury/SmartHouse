@@ -35,8 +35,8 @@
 # - name: Install ipfs
 #   import_playbook: playbooks/ipfs/ipfs.yaml
 
-#- name: Install blog
-#  import_playbook: playbooks/blog/blog.yaml
+- name: Install blog
+  import_playbook: playbooks/blog/blog.yaml
 
 # - name: Install ci
 #   import_playbook: playbooks/ci/ci.yaml
