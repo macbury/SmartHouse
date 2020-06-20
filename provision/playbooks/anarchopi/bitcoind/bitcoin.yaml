@@ -7,7 +7,7 @@
     ufw_reset: no
     ufw_logging: "off"
     ufw_rules:
-      - { port: 9050, rule: allow, comment: "Expose web ui transmission" }
+      - { port: 50001, rule: allow, comment: "Expose electrum" }
   tasks:
     - name: Create bitcoins group
       group:
@@ -57,3 +57,43 @@
         state: started
         daemon_reload: yes
         name: bitcoind
+
+# - hosts: master
+#   become: yes
+#   roles:
+#     - role: geerlingguy.certbot
+#   vars:
+#     certbot_auto_renew: false
+#     certbot_admin_email: "{{ email }}"
+#     certbot_create_if_missing: true
+#     certbot_certs:
+#       - domains:
+#         - "{{ electrum_domain }}"
+
+# # Nginx
+# - hosts: master
+#   become: yes
+#   roles:
+#     - role: geerlingguy.nginx
+#   handlers:
+#     - name: restart nginx
+#       become: yes
+#       service:
+#         name: nginx
+#         enabled: yes
+#         state: restarted
+#   tasks:
+#     - name: Create /etc/nginx/sites-enabled/btc-explorer.conf
+#       template:
+#         src: btc_explorer.conf.j2
+#         dest: /etc/nginx/sites-enabled/btc-explorer.conf
+#       notify:
+#         - reload nginx
+#         - restart nginx
+#     - name: Create /etc/nginx/sites-enabled/electrum.conf
+#       template:
+#         src: electrum.conf.j2
+#         dest: /etc/nginx/sites-enabled/electrum.conf
+#       notify:
+#         - reload nginx
+#         - restart nginx

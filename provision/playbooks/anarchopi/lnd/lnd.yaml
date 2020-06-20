@@ -1,0 +1,52 @@
+- hosts: anarchopi
+  become: yes
+  roles:
+    - role: weareinteractive.ufw
+  vars:
+    lnd_version: v0.10.2-beta.rc1
+    ufw_reset: no
+    ufw_logging: "off"
+    ufw_rules:
+      - { port: 50001, rule: allow, comment: "Expose electrum" }
+  tasks:
+    - name: Check if lnd is installed
+      command: 'lnd --version'
+      register: lnd_is_installed
+      ignore_errors: True
+    - name: Download lnd core
+      when: lnd_is_installed is failed
+      get_url:
+        url: https://github.com/lightningnetwork/lnd/releases/download/{{ lnd_version }}/lnd-linux-armv7-{{ lnd_version }}.tar.gz
+        dest: /tmp/lnd.tar.gz
+    - name: Extract lnd
+      when: lnd_is_installed is failed
+      unarchive:
+        remote_src: yes
+        src: /tmp/lnd.tar.gz
+        dest: /tmp
+    - name: Install lnd
+      when: lnd_is_installed is failed
+      command: install -m 0755 -o root -g root -t /usr/local/bin /tmp/lnd-{{ lnd_version }}/*
+    - name: Create directory
+      file:
+        group: bitcoin
+        owner: bitcoin
+        path: /data/lnd
+        state: directory
+    - name: Create symbolic link
+      become: yes
+      file:
+        group: bitcoin
+        owner: bitcoin
+        src: /data/lnd
+        dest: /home/bitcoin/.lnd
+        state: link
+    - name: Create lnd.service
+      template:
+        src: lnd.service
+        dest: /lib/systemd/system/lnd.service
+    - name: Restart service lnd.service
+      systemd:
+        state: started
+        daemon_reload: yes
+        name: lnd

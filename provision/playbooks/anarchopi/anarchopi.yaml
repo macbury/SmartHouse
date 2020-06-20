@@ -45,5 +45,8 @@
 # - name: Configure torrents
 #   import_playbook: torrents/torrents.yaml
 
-- name: Configure bitcoin
-  import_playbook: bitcoind/bitcoin.yaml
+# - name: Configure bitcoin
+#   import_playbook: bitcoind/bitcoin.yaml
+
+# - name: Configure lnd
+#   import_playbook: lnd/lnd.yaml
