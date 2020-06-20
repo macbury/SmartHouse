@@ -5,7 +5,7 @@
 ![Release](https://img.shields.io/github/tag/macbury/SmartHouse?label=Version)
 ![Uptime last 7 days](https://img.shields.io/uptimerobot/ratio/7/m782818639-f9a1f36b2acd090bbfaa4435.svg)
 ![Uptime Status](https://img.shields.io/uptimerobot/status/m782818639-f9a1f36b2acd090bbfaa4435.svg)
-![Maintenance](https://img.shields.io/maintenance/yes/2019.svg)
+![Maintenance](https://img.shields.io/maintenance/yes/2020.svg)
 ![Deployment](https://action-badges.now.sh/macbury/SmartHouse)
 
 **[Show me all documentation](https://macbury.github.io/SmartHouse)**
