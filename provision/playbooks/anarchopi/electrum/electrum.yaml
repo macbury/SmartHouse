@@ -1,0 +1,62 @@
+- hosts: master
+  become: yes
+  vars:
+    certbot_auto_renew: false
+    certbot_admin_email: "{{ email }}"
+    certbot_create_if_missing: true
+    certbot_certs:
+      - domains:
+        - "{{ electrum_domain }}"
+  roles:
+    - role: geerlingguy.nginx
+    - role: geerlingguy.certbot
+  handlers:
+    - name: restart nginx
+      become: yes
+      service:
+        name: nginx
+        enabled: yes
+        state: restarted
+  tasks:
+    - name: Create /etc/nginx/sites-enabled/electrum.conf
+      template:
+        src: electrum.conf.j2
+        dest: /etc/nginx/sites-enabled/electrum.conf
+      notify:
+        - reload nginx
+        - restart nginx
+
+- hosts: anarchopi
+  become: yes
+  roles:
+    - role: weareinteractive.ufw
+  vars:
+    ufw_reset: no
+    ufw_logging: "off"
+    ufw_rules:
+      - { port: 50001, rule: allow, comment: "Expose electrs rpc" }
+  tasks:
+    - name: Install clang
+      apt:
+        name: clang
+    - name: Install cmake
+      apt:
+        name: cmake 
+    - name: Check if rust is installed
+      command: 'rustc --version'
+      register: rust_is_installed
+      ignore_errors: True
+    - name: Download rust
+      when: rust_is_installed is failed
+      get_url:
+        url: https://static.rust-lang.org/dist/rust-1.42.0-armv7-unknown-linux-gnueabihf.tar.gz
+        dest: /tmp/rust.tar.gz
+    - name: Extract rust
+      when: rust_is_installed is failed
+      unarchive:
+        remote_src: yes
+        src: /tmp/rust.tar.gz
+        dest: /tmp
+    - name: Install rust
+      when: rust_is_installed is failed
+      command: bash /tmp/rust-1.42.0-armv7-unknown-linux-gnueabihf/install.sh
