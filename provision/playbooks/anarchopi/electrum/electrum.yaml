@@ -60,3 +60,66 @@
     - name: Install rust
       when: rust_is_installed is failed
       command: bash /tmp/rust-1.42.0-armv7-unknown-linux-gnueabihf/install.sh
+    - name: Check if electrs is installed
+      command: 'electrs  --help'
+      register: electrs_is_installed
+      ignore_errors: True
+    - name: Clone electrs repo
+      when: electrs_is_installed is failed
+      git:
+        repo: https://github.com/romanz/electrs.git
+        dest: /home/pi/electrs
+        accept_hostkey: yes
+        update: yes
+    - name: Compile electrs
+      when: electrs_is_installed is failed
+      command: 
+        cmd: 'cargo build --release'
+        chdir: /home/pi/electrs
+    - name: Install electrs
+      when: electrs_is_installed is failed
+      copy:
+        remote_src: true
+        src: /home/pi/electrs/target/release/electrs
+        dest: /usr/local/bin/
+    - name: Create directory
+      file:
+        group: bitcoin
+        owner: bitcoin
+        path: /data/electrs
+        state: directory
+    - name: Create symbolic link
+      become: yes
+      file:
+        group: bitcoin
+        owner: bitcoin
+        src: /data/electrs
+        dest: /home/bitcoin/.electrs
+        state: link
+    - name: Create backup directory
+      file:
+        group: bitcoin
+        owner: bitcoin
+        path: /data/backup/
+        state: directory
+    - name: Mount backup directory
+      mount:
+        state: mounted
+        fstype: cifs
+        opts: "domain=mr-pickle.here,username={{ qnap_username }},password={{ qnap_password }},file_mode=0664,dir_mode=0775,gid=bitcoin,uid=bitcoin"
+        src: "//mr-pickle.here/SDDisk2"
+        path: "/data/backup"
+    - name: Upload backup script
+      template:
+        src: backup.j2
+        dest: /usr/local/bin/raspibolt-backup
+        mode: '0555'
+    - name: Create electrs.service
+      template:
+        src: electrs.service
+        dest: /lib/systemd/system/electrs.service
+    - name: Restart service electrs.service
+      systemd:
+        state: started
+        daemon_reload: yes
+        name: electrs

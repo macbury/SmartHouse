@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+mkdir -p /data/backup/raspibolt
+rm /data/backup/raspibolt/bitcoin.tar
+tar cvf /data/backup/raspibolt/bitcoin.tar ~/.bitcoin/bitcoin.conf ~/.bitcoin/wallet.dat ~/.bitcoin/peers.dat ~/.bitcoin/banlist.dat
+rm /data/backup/raspibolt/lnd.tar
+tar cvf /data/backup/raspibolt/lnd.tar ~/.lnd/lnd.conf
+rm /data/backup/raspibolt/lnd_channels.json
+lncli exportchanbackup --all --output_file /data/backup/raspibolt/lnd_channels.json

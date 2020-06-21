@@ -5,7 +5,9 @@ services:
   tor:
     restart: unless-stopped
     build: ./tor/
-    network_mode: host
+    ports:
+      - 9050:9050
+      - 9051:9051
     volumes:
       - .docker/data/tor:/data
   btc-explorer:
