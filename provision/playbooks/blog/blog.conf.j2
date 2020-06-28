@@ -8,20 +8,7 @@ server {
   server_name h7mgmdxjv6h3p23cclcewudcej4adhyeb5emgleoru4wf2ibioklgzqd.onion;
   
   location / {
-    proxy_pass http://blog/ipns/QmSufpGo5wJNgbwATFeF2sxGUcGTabVGT1fSBkRJpzrMJn/;
-    proxy_set_header Host $host;
-
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection "upgrade";
-
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-  }
-
-  location /ipns/QmSufpGo5wJNgbwATFeF2sxGUcGTabVGT1fSBkRJpzrMJn/ {
-    proxy_pass http://blog$request_uri;
+    proxy_pass http://blog/;
     proxy_set_header Host $host;
 
     proxy_http_version 1.1;
@@ -59,21 +46,8 @@ server {
   ssl_certificate_key /etc/letsencrypt/live/macbury.ninja/privkey.pem;
   server_name macbury.ninja;
 
-  location /ipns/QmSufpGo5wJNgbwATFeF2sxGUcGTabVGT1fSBkRJpzrMJn/ {
-    proxy_pass http://blog$request_uri;
-    proxy_set_header Host $host;
-
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection "upgrade";
-
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-  }
-
   location / {
-    proxy_pass http://blog/ipns/QmSufpGo5wJNgbwATFeF2sxGUcGTabVGT1fSBkRJpzrMJn/;
+    proxy_pass http://blog/;
     proxy_set_header Host $host;
 
     proxy_http_version 1.1;

@@ -6,7 +6,7 @@ After=network.target
 User=ipfs
 Group=ipfs
 Type=simple
-Environment=IPFS_PATH=/data/ipfs
+Environment=IPFS_PATH=/mnt/hdd/ipfs
 ExecStart=/usr/local/bin/ipfs daemon --migrate
 ExecStop=/usr/bin/pkill -f ipfs
 Restart=on-failure

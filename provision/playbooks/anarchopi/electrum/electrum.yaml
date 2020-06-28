@@ -35,6 +35,7 @@
     ufw_logging: "off"
     ufw_rules:
       - { port: 50001, rule: allow, comment: "Expose electrs rpc" }
+      - { port: 50002, rule: allow, comment: "Expose electrs" }
   tasks:
     - name: Install clang
       apt:
@@ -107,7 +108,7 @@
         state: mounted
         fstype: cifs
         opts: "domain=mr-pickle.here,username={{ qnap_username }},password={{ qnap_password }},file_mode=0664,dir_mode=0775,gid=bitcoin,uid=bitcoin"
-        src: "//mr-pickle.here/SDDisk2"
+        src: "//mr-pickle.here/SDDisk1"
         path: "/data/backup"
     - name: Upload backup script
       template:

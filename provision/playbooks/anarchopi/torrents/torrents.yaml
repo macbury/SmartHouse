@@ -1,14 +1,6 @@
 
 - hosts: anarchopi
   become: yes
-  roles:
-    - role: weareinteractive.ufw
-  vars:
-    ufw_reset: no
-    ufw_logging: "off"
-    ufw_rules:
-      - { port: 9091, rule: allow, comment: "Expose web ui transmission" }
-      - { port: 51413, rule: allow, comment: "Expose transmission port" }
   tasks:
     - name: Create transmission group
       group:
@@ -29,8 +21,8 @@
       transmission_password: transmission
       transmission_rpc_whitelist_enabled: false
       transmission_incomplete_dir_enabled: true
-      transmission_incomplete_dir: /data/torrents
-      transmission_download_dir: /data/downloaded
+      transmission_incomplete_dir: /mnt/hdd/torrents
+      transmission_download_dir: /mnt/hdd/downloaded
       transmission_blocklist_enabled: true
       transmission_blocklist_url: http://john.bitsurge.net/public/biglist.p2p.gz
       transmission_ratio_limit: 2.0
@@ -40,7 +32,7 @@
       file:
         group: transmission
         owner: transmission
-        path: /data/downloaded/{{ item.share }}
+        path: /mnt/hdd/downloaded/{{ item.share }}
         state: directory
       loop:
         - { share: 'Movies' }
@@ -50,9 +42,9 @@
       mount:
         state: mounted
         fstype: cifs
-        opts: "domain=mr-pickle.here,username={{ qnap_username }},password={{ qnap_password }},file_mode=0664,dir_mode=0775,gid=transmission,uid=transmission"
-        src: "//mr-pickle.here/{{ item.share }}"
-        path: "/data/downloaded/{{ item.share }}"
+        opts: "domain=192.168.1.181,username={{ qnap_username }},password={{ qnap_password }},file_mode=0664,dir_mode=0775,gid=transmission,uid=transmission"
+        src: "//192.168.1.181/{{ item.share }}"
+        path: "/mnt/hdd/downloaded/{{ item.share }}"
       loop:
         - { share: 'Movies' }
         - { share: 'MoviesAndTV' }

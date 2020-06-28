@@ -1,4 +1,5 @@
 # https://stadicus.github.io/RaspiBolt/
+# https://mynodebtc.com/
 
 - hosts: anarchopi
   become: yes
@@ -16,16 +17,6 @@
       apt:
         name: cifs-utils
 
-- hosts: anarchopi
-  become: yes
-  roles:
-    - role: weareinteractive.ufw
-  vars:
-    ufw_reset: yes
-    ufw_logging: "off"
-    ufw_rules:
-      - { port: 22, rule: allow, comment: "Allow ssh" }
-
 - hosts: master
   become: yes
   roles:
@@ -38,14 +29,6 @@
 - name: Configure torrents
   import_playbook: torrents/torrents.yaml
 
-- name: Configure bitcoin
-  import_playbook: bitcoind/bitcoin.yaml
-
-- name: Configure lnd
-  import_playbook: lnd/lnd.yaml
-
 - name: Configure ipfs
   import_playbook: ipfs/ipfs.yaml
 
-- name: Configure electrum
-  import_playbook: electrum/electrum.yaml

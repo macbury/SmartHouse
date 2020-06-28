@@ -28,16 +28,8 @@
 
 - hosts: anarchopi
   become: yes
-  roles:
-    - role: weareinteractive.ufw
   vars:
     ipfs_ver: v0.6.0
-    ufw_reset: no
-    ufw_logging: "off"
-    ufw_rules:
-      - { port: 8088, rule: allow, comment: "Expose ipfs gateway" }
-      - { port: 5001, rule: allow, comment: "Expose ipfs api" }
-      - { port: 4001, rule: allow, comment: "Expose ipfs p2p" }
   tasks:
     - name: Create ipfs group
       group:
@@ -50,14 +42,14 @@
       file:
         group: ipfs
         owner: ipfs
-        path: /data/ipfs
+        path: /mnt/hdd/ipfs
         state: directory
     - name: Create symbolic link
       become: yes
       file:
         group: ipfs
         owner: ipfs
-        src: /data/ipfs
+        src: /mnt/hdd/ipfs
         dest: /home/ipfs/.ipfs
         state: link
     - name: Check if ipfs is installed
@@ -87,3 +79,10 @@
         state: started
         daemon_reload: yes
         name: ipfs
+    - name: Mount backup directory
+      mount:
+        state: mounted
+        fstype: cifs
+        opts: "domain=192.168.1.181,username={{ qnap_username }},password={{ qnap_password }},file_mode=0664,dir_mode=0775,gid=bitcoin,uid=bitcoin"
+        src: "//192.168.1.181/SDDisk1"
+        path: "/mnt/hdd/backup"

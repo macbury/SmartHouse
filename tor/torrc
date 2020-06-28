@@ -9,3 +9,11 @@ DataDirectory /data
 
 HiddenServiceDir /data/services/macbury.ninja/
 HiddenServicePort 80 127.0.0.1:80
+
+HiddenServiceDir /data/services/electrs/
+HiddenServiceVersion 3
+HiddenServicePort 50002 192.168.1.157:50002
+
+HiddenServiceDir /data/services/bitcoin/
+HiddenServiceVersion 3
+HiddenServicePort 8333 192.168.1.157:8333
