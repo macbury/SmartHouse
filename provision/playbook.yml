@@ -17,8 +17,8 @@
 # - name: Install docker
 #   import_playbook: playbooks/docker/docker.yaml
 
-# - name: Install anarchopi
-#   import_playbook: playbooks/anarchopi/anarchopi.yaml
+- name: Install anarchopi
+  import_playbook: playbooks/anarchopi/anarchopi.yaml
 
 # - name: Ad blocking stuff
 #   import_playbook: playbooks/ads/ads.yaml

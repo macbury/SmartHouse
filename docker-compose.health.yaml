@@ -8,10 +8,3 @@ services:
     network_mode: host
     volumes:
       - .docker/data/tor:/data
-  btc-explorer:
-    restart: unless-stopped
-    build: ./btc-explorer/
-    ports:
-      - 19080:19080
-    env_file:
-      - '.env.bitcoind'

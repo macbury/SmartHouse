@@ -51,10 +51,14 @@ services:
   node-red:
     image: nodered/node-red:latest
     restart: unless-stopped
+    dns:
+      - 9.9.9.9
+      - 149.112.112.112
     ports:
       - 51880:1880
     environment:
       - TZ=Europe/Warsaw
+      - NODE_TLS_REJECT_UNAUTHORIZED=0
     volumes:
       - .docker/data/node-red:/data
   grocy:

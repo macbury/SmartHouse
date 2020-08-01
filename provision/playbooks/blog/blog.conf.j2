@@ -7,8 +7,9 @@ server {
   listen [::]:80;
   server_name h7mgmdxjv6h3p23cclcewudcej4adhyeb5emgleoru4wf2ibioklgzqd.onion;
   
+
   location / {
-    proxy_pass http://blog/;
+    proxy_pass http://blog/ipns/QmSufpGo5wJNgbwATFeF2sxGUcGTabVGT1fSBkRJpzrMJn/;
     proxy_set_header Host $host;
 
     proxy_http_version 1.1;
@@ -18,6 +19,9 @@ server {
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+    proxy_intercept_errors on;
+    error_page 404 = http://$server_name;
   }
 
   error_page 404 403 @error;
