@@ -9,8 +9,8 @@ import voluptuous as vol
 from homeassistant.core import callback
 from homeassistant.components.sensor import ENTITY_ID_FORMAT, PLATFORM_SCHEMA
 from homeassistant.const import (
-    ATTR_FRIENDLY_NAME, ATTR_UNIT_OF_MEASUREMENT,
-    ATTR_ICON, CONF_ENTITIES, EVENT_HOMEASSISTANT_START, STATE_UNKNOWN)
+    ATTR_FRIENDLY_NAME, ATTR_UNIT_OF_MEASUREMENT, ATTR_ICON, CONF_ENTITIES,
+    EVENT_HOMEASSISTANT_START, STATE_UNKNOWN, CONF_VALUE_TEMPLATE)
 from homeassistant.exceptions import TemplateError
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.entity import Entity, async_generate_entity_id
@@ -18,18 +18,21 @@ from homeassistant.helpers.event import async_track_state_change
 from homeassistant.helpers.restore_state import RestoreEntity
 from homeassistant.helpers import template as template_helper
 
-__version__ = '1.0.0'
+__version__ = '1.1.0'
 
 _LOGGER = logging.getLogger(__name__)
 
 CONF_ATTRIBUTE = "attribute"
 CONF_TIME_FORMAT = "time_format"
+CONF_ROUND_TO = "round_to"
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Optional(ATTR_ICON): cv.string,
     vol.Optional(ATTR_FRIENDLY_NAME): cv.string,
     vol.Optional(ATTR_UNIT_OF_MEASUREMENT): cv.string,
     vol.Optional(CONF_TIME_FORMAT): cv.string,
+    vol.Optional(CONF_ROUND_TO): cv.positive_int,
+    vol.Optional(CONF_VALUE_TEMPLATE): cv.string,
     vol.Required(CONF_ATTRIBUTE): cv.string,
     vol.Required(CONF_ENTITIES): cv.entity_ids
 })
@@ -54,16 +57,22 @@ def async_setup_platform(hass, config, async_add_devices, discovery_info=None):
                               | timestamp_custom('{2}') }}}}\
                               {{% else %}} {3} {{% endif %}}").format(
                 device, attr, time_format, STATE_UNKNOWN)
-        elif attr == "battery" or attr == "battery_level":
-            state_template = ("{{% if states('{0}') != '{2}' %}}\
-                              {{{{ states.{0}.attributes['{1}'] | float }}}}\
-                              {{% else %}} {2} {{% endif %}}").format(
-                device, attr, STATE_UNKNOWN)
         else:
-            state_template = ("{{% if states('{0}') != '{2}' %}}\
-                              {{{{ states.{0}.attributes['{1}'] }}}}\
-                              {{% else %}} {2} {{% endif %}}").format(
-                device, attr, STATE_UNKNOWN)
+            round_to = config.get(CONF_ROUND_TO, None)
+            additional_template = config.get(CONF_VALUE_TEMPLATE, "")
+
+            state_template = "{{% if states('{0}') != '{2}' %}}"
+
+            if round_to is None:
+                state_template += "{{{{ states.{0}.attributes['{1}'] {4} }}}}"
+            elif round_to > 0:
+                state_template += "{{{{ (states.{0}.attributes['{1}'] | float) | round({3}) {4} }}}}"
+            else:
+                state_template += "{{{{ states.{0}.attributes['{1}'] | int {4} }}}}"
+
+            state_template += "{{% else %}} {2} {{% endif %}}"
+            state_template = state_template.format(
+                device, attr, STATE_UNKNOWN, round_to, additional_template)
 
         _LOGGER.info("Adding attribute: %s of entity: %s", attr, device)
         _LOGGER.debug("Applying template: %s", state_template)
@@ -77,9 +86,6 @@ def async_setup_platform(hass, config, async_add_devices, discovery_info=None):
         if device_state is not None:
             device_friendly_name = device_state.attributes.get('friendly_name')
         else:
-            device_friendly_name = None
-
-        if device_friendly_name is None:
             device_friendly_name = device.split(".", 1)[1]
 
         friendly_name = config.get(ATTR_FRIENDLY_NAME, device_friendly_name)
@@ -222,16 +228,16 @@ class AttributeSensor(RestoreEntity):
         if entity_state is not None:
             device_friendly_name = entity_state.attributes.get('friendly_name')
         else:
-            device_friendly_name = None
-
-        if device_friendly_name is not None:
             self._name = device_friendly_name
 
         try:
             self._state = self._template.async_render()
         except TemplateError as ex:
-            if ex.args and ex.args[0].startswith(
-                    "UndefinedError: 'None' has no attribute"):
+            if ex.args and (
+                    ex.args[0].startswith(
+                        "UndefinedError: 'None' has no attribute") or
+                    ex.args[0].startswith(
+                        "UndefinedError: 'mappingproxy object' has no attribute")):
                 # Common during HA startup - so just a warning
                 _LOGGER.warning('Could not render attribute sensor for %s,'
                                 ' the state is unknown.', self._entity)
@@ -244,8 +250,11 @@ class AttributeSensor(RestoreEntity):
             try:
                 self._icon = self._icon_template.async_render()
             except TemplateError as ex:
-                if ex.args and ex.args[0].startswith(
-                        "UndefinedError: 'None' has no attribute"):
+                if ex.args and (
+                        ex.args[0].startswith(
+                            "UndefinedError: 'None' has no attribute") or
+                        ex.args[0].startswith(
+                            "UndefinedError: 'mappingproxy object' has no attribute")):
                     # Common during HA startup - so just a warning
                     _LOGGER.warning('Could not render icon template %s,'
                                     ' the state is unknown.', self._name)

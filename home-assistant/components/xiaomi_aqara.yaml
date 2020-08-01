@@ -1,5 +1,0 @@
-discovery_retry: 30
-gateways:
-  - key: !env_var HOME_ASSISTANT_XIAOMI_AQARA_KEY
-    mac: !env_var HOME_ASSISTANT_XIAOMI_AQARA_MAC
-    host: '192.168.1.183'

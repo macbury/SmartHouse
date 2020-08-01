@@ -86,9 +86,9 @@ weather: !include components/weather.yaml
 webostv: !include components/webostv.yaml
 websocket_api:
 # X
-xiaomi_aqara: !include components/xiaomi_aqara.yaml
 # Y
 # Z
+zeroconf:
 zone: !include components/zones.yaml
 zwave: !include components/zwave.yaml
 # V

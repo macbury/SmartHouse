@@ -8,7 +8,10 @@ from homeassistant.components.binary_sensor import PLATFORM_SCHEMA, ENTITY_ID_FO
 from homeassistant.const import CONF_NAME, CONF_RADIUS, CONF_API_KEY, ATTR_ATTRIBUTION, CONF_LATITUDE, CONF_LONGITUDE, \
     CONF_SCAN_INTERVAL
 import homeassistant.helpers.config_validation as cv
-from homeassistant.components.binary_sensor import BinarySensorDevice
+try:
+    from homeassistant.components.binary_sensor import BinarySensorEntity
+except ImportError:
+    from homeassistant.components.binary_sensor import BinarySensorDevice as BinarySensorEntity
 from homeassistant.helpers.entity import async_generate_entity_id
 
 _LOGGER = logging.getLogger(__name__)
@@ -96,7 +99,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     sensor_name = '{} - '.format(name)
     x = convert_to_dm(longitude)
     y = convert_to_dm(latitude)
-    updater = BurzeDzisNetDataUpdater(x, y, radius, api_key, scan_interval)
+    updater = BurzeDzisNetDataUpdater(hass, x, y, radius, api_key, scan_interval)
     await updater.async_update()
     for warning_type in warnings:
         uid = '{}_{}'.format(name, warning_type)
@@ -109,7 +112,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     async_add_entities(sensors, True)
 
 
-class BurzeDzisNetSensor(BinarySensorDevice):
+class BurzeDzisNetSensor(BinarySensorEntity):
 
     def __init__(self, entity_id, name, updater):
         self.entity_id = entity_id
@@ -188,7 +191,8 @@ class BurzeDzisNetStormsNearbySensor(BurzeDzisNetSensor):
 
 
 class BurzeDzisNetDataUpdater:
-    def __init__(self, x, y, radius, api_key, scan_interval):
+    def __init__(self, hass, x, y, radius, api_key, scan_interval):
+        self._hass = hass
         self._x = x
         self._y = y
         self._radius = radius
@@ -198,6 +202,9 @@ class BurzeDzisNetDataUpdater:
         self.async_update = Throttle(scan_interval)(self._async_update)
 
     async def _async_update(self):
+        await self._hass.async_add_executor_job(self._update_data)
+
+    def _update_data(self):
         from zeep import Client
         from zeep.exceptions import Fault
         service = Client('https://burze.dzis.net/soap.php?WSDL').service
