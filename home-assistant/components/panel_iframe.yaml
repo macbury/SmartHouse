@@ -1,33 +1,10 @@
-wiki:
-  title: "Wiki"
-  url: https://macbury.github.io/SmartHouse/
-  icon: 'mdi:file-document-box-search-outline'
 ads:
   require_admin: true
   title: "AdGuard"
   url: !env_var ADS_GUARD_URL
   icon: 'mdi:shield-home'
-ha_grafana:
-  require_admin: true
-  title: "Grafana"
-  url: '/grafana/'
-  icon: 'mdi:database'
 ha_glances:
   require_admin: true
   title: "Glances"
   url: '/glances/1'
   icon: 'mdi:ubuntu'
-ha_sonarr:
-  require_admin: true
-  title: "Sonarr"
-  url: "/sonarr"
-  icon: 'mdi:radar'
-ha_bazarr:
-  require_admin: true
-  title: "Bazzar"
-  url: "/bazarr"
-  icon: 'mdi:subtitles'
-ha_grocy:
-  title: "Grocy"
-  url: !env_var GROCY_URL
-  icon: 'mdi:pasta'

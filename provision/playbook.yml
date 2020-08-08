@@ -32,8 +32,8 @@
 # - name: Install gotify
 #   import_playbook: playbooks/gotify/gotify.yaml
 
-- name: Install blog
-  import_playbook: playbooks/blog/blog.yaml
+# - name: Install blog
+#   import_playbook: playbooks/blog/blog.yaml
 
 # - name: Install ci
 #   import_playbook: playbooks/ci/ci.yaml

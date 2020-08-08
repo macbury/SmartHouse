@@ -34,14 +34,6 @@
     - break
     - type: horizontal-stack
       cards:
-        - type: light
-          entity: light.arek_szafka
-          icon: mdi:desk-lamp
-        - type: light
-          entity: light.ola_szafka
-          icon: mdi:desk-lamp
-    - type: horizontal-stack
-      cards:
         - type: entity-button
           entity: light.bedroom
           icon: mdi:ceiling-light

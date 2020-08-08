@@ -26,9 +26,11 @@
     ufw_rules:
       - { port: 9051, rule: allow, comment: "Allow tor" }
 
-- name: Configure torrents
-  import_playbook: torrents/torrents.yaml
+# - name: Configure torrents
+#   import_playbook: torrents/torrents.yaml
 
-- name: Configure ipfs
-  import_playbook: ipfs/ipfs.yaml
+# - name: Configure ipfs
+#   import_playbook: ipfs/ipfs.yaml
 
+- name: Configure adguard
+  import_playbook: adguard/adguard.yaml

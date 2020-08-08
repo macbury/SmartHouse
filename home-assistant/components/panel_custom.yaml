@@ -3,3 +3,8 @@
   sidebar_icon: mdi:robot-vacuum
   url_path: vacuum_plan
   require_admin: true
+
+- name: zwavegraph2
+  sidebar_title: Z-Wave Graph
+  sidebar_icon: mdi:access-point-network
+  url_path: zwave

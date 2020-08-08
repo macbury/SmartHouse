@@ -1,0 +1,15 @@
+- id: '1596707193800'
+  alias: Send door code near work
+  description: ''
+  trigger:
+  - entity_id: device_tracker.arek
+    event: enter
+    platform: zone
+    zone: zone.codesthq
+  condition: []
+  action:
+  - data:
+      message: 6 kluczyk 7153
+      title: Kod do bramy
+    service: notify.gotify
+  mode: single

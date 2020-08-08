@@ -21,7 +21,7 @@
           aspect_ratio: 16x10
           entity: person.arek
     - type: map
-      dark_mode: true
+      dark_mode: false
       default_zoom: 17
       entities:
         - device_tracker.arek
@@ -115,7 +115,7 @@
             fill: fade
     - type: custom:mini-graph-card
       entities:
-        - sensor.nowa_huta_aqi
+        - sensor.krakow_aqi
         - sensor.mean_aqi
       line_color: '#a8a8a8'
       name: 'AQI'

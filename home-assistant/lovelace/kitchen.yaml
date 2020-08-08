@@ -84,15 +84,6 @@
               show:
                 points: true
                 fill: fade
-    - type: picture-glance
-      title: Puss Feeder
-      entity: camera.him_cam
-      entities:
-        - calendar.cat_feed_schedule
-        - binary_sensor.puss_feeder_motion_detected
-        - script.feed_the_cat
-        - binary_sensor.iss
-      camera_image: camera.him_cam
       
     - type: thermostat
       entity: climate.kitchen
