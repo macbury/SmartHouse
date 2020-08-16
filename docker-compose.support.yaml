@@ -285,3 +285,18 @@ services:
       - INCOMPLETE_PATH=/download
     depends_on:
       - redis
+  detox:
+    restart: unless-stopped
+    image: macbury/detox:latest
+    ports:
+      - 11000:3000
+    volumes:
+      - /tmp/detox-cache:/detox/tmp/cache
+      - .docker/log/detox:/detox/log
+    depends_on:
+      - database
+      - redis
+    env_file:
+      - '.env.detox'
+    environment:
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/detox_production?sslmode=disable

@@ -250,9 +250,6 @@ function smart_house_command_media() {
   source "${SMART_HOUSE_DIR}/scripts/media.sh"
 }
 
-function smart_house_command_pihole() {
-  source "${SMART_HOUSE_DIR}/scripts/pihole.sh"
-}
 
 function smart_house_command_support() {
   source "${SMART_HOUSE_DIR}/scripts/support.sh"

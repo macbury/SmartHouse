@@ -20,6 +20,9 @@
 - name: Install anarchopi
   import_playbook: playbooks/anarchopi/anarchopi.yaml
 
+# - name: Install detox
+#   import_playbook: playbooks/detox/detox.yaml
+
 # - name: Ad blocking stuff
 #   import_playbook: playbooks/ads/ads.yaml
 
@@ -298,7 +301,7 @@
 #         create: True
 
 # Setup oh my zsh
-# - hosts: 
+# - hosts:
 #     - master
 #     - dev
 #   become: yes

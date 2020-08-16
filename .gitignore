@@ -110,3 +110,4 @@ blog/**/*
 .env.ci
 .env.ci_runner
 .env.git
+.env.detox
