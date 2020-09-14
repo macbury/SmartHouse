@@ -4,7 +4,7 @@ version: '3.5'
 
 services:
   ci:
-    image: drone/drone:1
+    image: drone/drone:1.9.0
     env_file:
       - '.env.ci'
     restart: always
@@ -17,7 +17,7 @@ services:
     depends_on:
       - git
   ci_runner:
-    image: drone/drone-runner-docker:1
+    image: drone/drone-runner-docker:1.4.0
     env_file:
       - '.env.ci_runner'
     restart: always
@@ -233,27 +233,6 @@ services:
       - .docker/data/esphome:/config
       - /etc/localtime:/etc/localtime:ro
     network_mode: host
-  notes:
-    build: ./notes/
-    ports:
-      - 12005:3000
-    links:
-      - mysql
-    env_file:
-      - '.env.notes'
-      - '.env.mysql'
-  rss:
-    image: miniflux/miniflux:latest
-    restart: unless-stopped
-    ports:
-      - 12008:8080
-    environment:
-      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/miniflux?sslmode=disable
-    env_file:
-      - '.env.rss'
-    dns:
-      - 9.9.9.9
-      - 149.112.112.112
   speedtest:
     image: macbury/speedtest:latest
     env_file:
@@ -271,20 +250,6 @@ services:
       - .env.monio
     depends_on:
       - database
-  ytdl:
-    image: yt-music-download-helper:latest
-    restart: unless-stopped
-    ports:
-      - "127.0.0.1:7887:3000"
-    volumes:
-      - /mnt/Music/YouTube:/output
-      - /mnt/UsbDisk/YouTube:/download
-    environment:
-      - REDIS_URL=redis://redis:6379/5
-      - COMPLETED_PATH=/output
-      - INCOMPLETE_PATH=/download
-    depends_on:
-      - redis
   detox:
     restart: unless-stopped
     image: macbury/detox:latest
@@ -299,4 +264,24 @@ services:
     env_file:
       - '.env.detox'
     environment:
-      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/detox_production?sslmode=disable
+      - DETOX_DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/detox_production?sslmode=disable
+
+  onlyoffice:
+    image: onlyoffice/documentserver
+    environment:
+      - POSTGRESQL_SERVER_HOST=database
+      - POSTGRESQL_SERVER_PORT=5432
+      - POSTGRESQL_SERVER_DB_NAME=onlyoffice
+      - POSTGRESQL_SERVER_USER=onlyoffice
+      - POSTGRESQL_SERVER_PASS=QFX6Mcjz2Q6ptN9wVBNgchXUow1bAJnBOKIDdGNFY
+    depends_on:
+      - database
+    ports:
+      - '59111:80'
+    stdin_open: true
+    restart: always
+    volumes:
+       # - .docker/data/onlyoffice-settings/default.json:/etc/onlyoffice/documentserver/default.json
+       - .docker/data/onlyoffice/:/var/www/onlyoffice/Data
+       - .docker/data/onlyoffice-cache/:/var/lib/onlyoffice
+       - .docker/data/onlyoffice-postgresql/:/var/lib/postgresql

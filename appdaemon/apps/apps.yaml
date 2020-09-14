@@ -41,17 +41,6 @@ humidifier_bedroom:
   calendar: calendar.bedroom_humidifier
   humidity_sensor: sensor.bedroom_humidity
 
-heating_living_room:
-  module: adaptive_room_heating
-  class: AdaptiveRoomHeating
-  calendar: calendar.salon_env
-  outside_temperature: sensor.dark_sky_temperature
-  temperature_sensor: sensor.living_room_temperature
-  family_devices: group.family
-  climate: climate.living_room
-  max_temperature: 25
-  min_temperature: 20
-
 batteries:
   module: battery
   class: BatteryWatcher
@@ -65,30 +54,6 @@ bedroom_air:
   family_devices: 'group.family'
   fallback: 5400
   mode: 'Auto'
-
-heating_bedroom:
-  module: adaptive_room_heating
-  class: AdaptiveRoomHeating
-  calendar: calendar.sypialnia_env
-  outside_temperature: sensor.dark_sky_temperature
-  temperature_sensor: sensor.bedroom_temperature
-  family_devices: group.family
-  climate: climate.bedroom
-  main_light: input_boolean.giggid
-  max_temperature: 23
-  min_temperature: 22
-
-heating_kitchen:
-  module: adaptive_room_heating
-  class: AdaptiveRoomHeating
-  calendar: calendar.kuchnia_env
-  outside_temperature: sensor.dark_sky_temperature
-  temperature_sensor: sensor.kitchen_temperature
-  family_devices: group.family
-  climate: climate.kitchen
-  max_temperature: 24
-  min_temperature: 20
-  main_light: input_boolean.pizza
 
 
 

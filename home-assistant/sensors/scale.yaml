@@ -1,0 +1,27 @@
+- platform: mqtt
+  name: "Arek Weight"
+  state_topic: "home/miscale/Arek/weight"
+  value_template: "{{ value_json['Weight'] }}"
+  unit_of_measurement: "kg"
+  json_attributes_topic: "home/miscale/Arek/weight"
+  icon: mdi:scale-bathroom
+
+- platform: mqtt
+  name: "Arek BMI"
+  state_topic: "home/miscale/Arek/weight"
+  value_template: "{{ value_json['BMI'] }}"
+  icon: mdi:human-pregnant
+
+- platform: mqtt
+  name: "Ola Weight"
+  state_topic: "home/miscale/Ola/weight"
+  value_template: "{{ value_json['Weight'] }}"
+  unit_of_measurement: "kg"
+  json_attributes_topic: "home/miscale/Ola/weight"
+  icon: mdi:scale-bathroom
+
+- platform: mqtt
+  name: "Ola BMI"
+  state_topic: "home/miscale/Ola/weight"
+  value_template: "{{ value_json['BMI'] }}"
+  icon: mdi:human-pregnant

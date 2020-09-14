@@ -3,7 +3,7 @@ version: '3.5'
 
 services:
   emby:
-    image: emby/embyserver:beta
+    image: emby/embyserver:latest
     ports:
       - 8096:8096
     environment:
@@ -15,8 +15,19 @@ services:
       - /dev/dri:/dev/dri
     volumes:
       - .docker/data/emby/config:/config
+      - .docker/log/emby/tmp/:/mnt/tmp
       - /mnt/Movies:/mnt/Movies
       - /mnt/Books:/mnt/Books
       - /mnt/MoviesAndTV:/mnt/MoviesAndTV
       - /mnt/Multimedia:/mnt/Multimedia
       - /mnt/Music:/mnt/Music
+
+  plex:
+    network_mode: host
+    image: plexinc/pms-docker:latest
+    env_file:
+      - .env.plex
+    volumes:
+      - .docker/data/plex/config:/config
+      - .docker/data/plex/transcode:/transcode
+      - /mnt:/data

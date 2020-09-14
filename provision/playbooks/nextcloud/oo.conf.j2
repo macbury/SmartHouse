@@ -1,27 +1,24 @@
-upstream nc {
-  server 127.0.0.1:4333 fail_timeout=5;
+upstream oo {
+  server 127.0.0.1:59111 fail_timeout=5;
 }
 
 server {
   listen 80;
   listen [::]:80;
-  server_name {{ nextcloud_domain }};
+  server_name {{ oo_domain }};
   return 301 https://$server_name$request_uri;
 }
 
 server {
   listen 443 ssl;
   ssl        on;
-  ssl_certificate /etc/letsencrypt/live/{{ nextcloud_domain }}/fullchain.pem;
-  ssl_certificate_key /etc/letsencrypt/live/{{ nextcloud_domain }}/privkey.pem;
-  server_name {{ nextcloud_domain }};
-
-  add_header X-Frame-Options "SAMEORIGIN";
-  add_header X-XSS-Protection "1; mode=block";
+  ssl_certificate /etc/letsencrypt/live/{{ oo_domain }}/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/{{ oo_domain }}/privkey.pem;
+  server_name {{ oo_domain }};
 
 
   location / {
-    proxy_pass         http://nc;
+    proxy_pass         http://oo;
     proxy_http_version 1.1;
 
     # Ensuring it can use websockets

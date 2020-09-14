@@ -3,6 +3,22 @@
   roles:
     - role: geerlingguy.certbot
   vars:
+    certbot_install_from_source: true
+    certbot_keep_updated: true
+    certbot_auto_renew: false
+    certbot_admin_email: "{{ email }}"
+    certbot_create_if_missing: true
+    certbot_create_method: standalone
+    certbot_certs:
+      - domains:
+        - "{{ oo_domain }}"
+
+
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.certbot
+  vars:
     certbot_auto_renew: false
     certbot_admin_email: "{{ email }}"
     certbot_create_if_missing: true
@@ -27,6 +43,13 @@
       template:
         src: nextcloud.conf.j2
         dest: /etc/nginx/sites-enabled/nextcloud.conf
+      notify:
+        - reload nginx
+        - restart nginx
+    - name: Create /etc/nginx/sites-enabled/oo.conf
+      template:
+        src: oo.conf.j2
+        dest: /etc/nginx/sites-enabled/oo.conf
       notify:
         - reload nginx
         - restart nginx

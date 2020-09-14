@@ -10,6 +10,21 @@
       - domains:
         - "{{ media_domain }}"
 
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.certbot
+  vars:
+    certbot_install_from_source: true
+    certbot_keep_updated: true
+    certbot_auto_renew: false
+    certbot_admin_email: "{{ email }}"
+    certbot_create_if_missing: true
+    certbot_create_method: standalone
+    certbot_certs:
+      - domains:
+        - "{{ plex_domain }}"
+
 # Nginx
 - hosts: master
   become: yes
@@ -30,6 +45,13 @@
       notify:
         - reload nginx
         - restart nginx
+    - name: Create /etc/nginx/sites-enabled/plex.conf
+      template:
+        src: plex.conf.j2
+        dest: /etc/nginx/sites-enabled/plex.conf
+      notify:
+        - reload nginx
+        - restart nginx
 
 - hosts: master
   become: yes
@@ -41,3 +63,13 @@
     ufw_rules:
       - { port: 7359, rule: allow, comment: 'Emby port' }
       - { port: 1900, rule: allow, comment: 'Emby port' }
+      - { port: 32400, rule: allow, comment: 'Plex companion' }
+      - { port: 3005, rule: allow, comment: 'Plex companion' }
+      - { port: 5353, rule: allow, comment: 'Plex bonjur shit' }
+      - { port: 1900, rule: allow, comment: 'Plex dlna shit' }
+      - { port: 8324, rule: allow, comment: 'Plex other shit' }
+      - { port: 32469, rule: allow, comment: 'Plex other shit' }
+      - { port: 32410, rule: allow, comment: 'Plex GDM network discover' }
+      - { port: 32412, rule: allow, comment: 'Plex GDM network discover' }
+      - { port: 32413, rule: allow, comment: 'Plex GDM network discover' }
+      - { port: 32414, rule: allow, comment: 'Plex GDM network discover' }

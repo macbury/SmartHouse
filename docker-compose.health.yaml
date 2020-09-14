@@ -8,3 +8,4 @@ services:
     network_mode: host
     volumes:
       - .docker/data/tor:/data
+  

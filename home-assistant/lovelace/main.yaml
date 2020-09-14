@@ -73,6 +73,12 @@ views:
     path: corridor
     cards: !include corridor.yaml
 
+  - title: Balkon
+    panel: true
+    icon: mdi:tree
+    path: balcony
+    cards: !include balcony.yaml
+
   # - title: Kamery
   #   panel: true
   #   icon: mdi:cctv

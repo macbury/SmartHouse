@@ -1,18 +1,12 @@
 - type: custom:layout-card
-  layout: vertical
+  layout: horizontal
   max_columns: 3
   cards:
     - type: horizontal-stack
       cards:
-        - type: entity-button
-          entity: light.bathroom
-          icon: mdi:ceiling-light
-    - break
-    - type: horizontal-stack
-      cards:
         - type: custom:mini-graph-card
           entities:
-            - sensor.bathroom_temperature
+            - sensor.balcone_temperature
           line_color: '#E53935'
           hours_to_show: 24
           points_per_hour: 1
@@ -24,7 +18,7 @@
             fill: fade
         - type: custom:mini-graph-card
           entities:
-            - sensor.bathroom_humidity
+            - sensor.balcone_humidity
           line_color: '#3949AB'
           hours_to_show: 24
           points_per_hour: 1
@@ -36,14 +30,4 @@
     - type: entities
       show_header_toggle: false
       entities:
-        - binary_sensor.bathroom_door
-    - type: entities
-      show_header_toggle: false
-      entities:
-        - sensor.arek_weight
-        - sensor.arek_bmi
-    - type: entities
-      show_header_toggle: false
-      entities:
-        - sensor.ola_weight 
-        - sensor.ola_bmi
+        - binary_sensor.balcone_door

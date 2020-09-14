@@ -36,6 +36,8 @@
       hide_volume: true
       show_progress: false
       show_source: full
+    - type: entity
+      entity: sensor.kitchen_next_timer
     - break
     - type: custom:vacuum-card
       entity: vacuum.main_vacuum

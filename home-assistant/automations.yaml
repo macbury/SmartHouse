@@ -13,3 +13,62 @@
       title: Kod do bramy
     service: notify.gotify
   mode: single
+- id: '1597867269400'
+  alias: If Arek weight change announce it to everybody in home
+  description: ''
+  trigger:
+  - above: '70'
+    entity_id: sensor.arek_weight
+    platform: numeric_state
+  condition: []
+  action:
+  - data:
+      message: Your weight is {{states.sensor.arek_weight.state}} kilo, so you are
+        still fat.
+      title: Weight
+    service: notify.gotify
+  mode: single
+- id: '1597870082700'
+  alias: Do not disturb alexa if nobody home or it is night
+  description: ''
+  trigger:
+  - entity_id: group.family
+    from: Home
+    platform: state
+    to: Away
+  - at: '23:00'
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.everywhere_do_not_disturb_switch
+    service: switch.turn_on
+  mode: single
+- id: '1597870159000'
+  alias: Enable alexa devices at morning or if somebody is coming back
+  description: ''
+  trigger:
+  - entity_id: group.family
+    from: Away
+    platform: state
+    to: Home
+  - at: '7:00'
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.everywhere_do_not_disturb_switch
+    service: switch.turn_off
+  mode: single
+- id: '1598889031447'
+  alias: Turn off light for xiaomi fan
+  description: ''
+  trigger:
+  - at: 0:02
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    entity_id: fan.bedroom_air_purifier
+    service: xiaomi_miio.fan_set_led_brightness
+  mode: single
