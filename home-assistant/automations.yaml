@@ -72,3 +72,14 @@
     entity_id: fan.bedroom_air_purifier
     service: xiaomi_miio.fan_set_led_brightness
   mode: single
+- id: '1600170239579'
+  alias: Heal network
+  description: ''
+  trigger:
+  - at: '4:00'
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    service: zwave.heal_network
+  mode: single
