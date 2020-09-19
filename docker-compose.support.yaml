@@ -263,22 +263,3 @@ services:
     environment:
       - DETOX_DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/detox_production?sslmode=disable
 
-  onlyoffice:
-    image: onlyoffice/documentserver
-    environment:
-      - POSTGRESQL_SERVER_HOST=database
-      - POSTGRESQL_SERVER_PORT=5432
-      - POSTGRESQL_SERVER_DB_NAME=onlyoffice
-      - POSTGRESQL_SERVER_USER=onlyoffice
-      - POSTGRESQL_SERVER_PASS=QFX6Mcjz2Q6ptN9wVBNgchXUow1bAJnBOKIDdGNFY
-    depends_on:
-      - database
-    ports:
-      - '59111:80'
-    stdin_open: true
-    restart: always
-    volumes:
-       # - .docker/data/onlyoffice-settings/default.json:/etc/onlyoffice/documentserver/default.json
-       - .docker/data/onlyoffice/:/var/www/onlyoffice/Data
-       - .docker/data/onlyoffice-cache/:/var/lib/onlyoffice
-       - .docker/data/onlyoffice-postgresql/:/var/lib/postgresql
