@@ -20,7 +20,6 @@ services:
     volumes:
       - ./home-assistant:/config
       - /var/log/fail2ban.log:/fail2ban/fail2ban.log:ro
-      - /tmp:/tmp
     devices:
       - ${HOME_ASSISTANT_ZWAVE_DEV}:/dev/ttyACM0
   appdaemon:

@@ -187,7 +187,6 @@ services:
     volumes:
       - ./postgresql/:/docker-entrypoint-initdb.d/
       - .docker/data/postgresql:/data
-      - /tmp/shared:/shared
   mysql:
     image: mysql:latest
     env_file:
@@ -245,7 +244,6 @@ services:
     network_mode: host
     volumes:
       - .docker/data/monio/:/app/storage
-      - /tmp/monio-cache:/app/tmp/rails-cache
     env_file:
       - .env.monio
     depends_on:
@@ -254,9 +252,8 @@ services:
     restart: unless-stopped
     image: macbury/detox:latest
     ports:
-      - 11000:3000
+      - 11000:5000
     volumes:
-      - /tmp/detox-cache:/detox/tmp/cache
       - .docker/log/detox:/detox/log
     depends_on:
       - database
