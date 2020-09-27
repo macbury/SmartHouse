@@ -17,8 +17,11 @@
 # - name: Install docker
 #   import_playbook: playbooks/docker/docker.yaml
 
-- name: Install anarchopi
-  import_playbook: playbooks/anarchopi/anarchopi.yaml
+- name: Install HomeAssistant
+  import_playbook: playbooks/home-assistant/home-assistant.yaml
+
+# - name: Install anarchopi
+#   import_playbook: playbooks/anarchopi/anarchopi.yaml
 
 # - name: Install detox
 #   import_playbook: playbooks/detox/detox.yaml
@@ -77,8 +80,8 @@
 # - name: Install simplelogin client
 #   import_playbook: playbooks/simplelogin/simplelogin.yaml
 
-- name: Install media emby
-  import_playbook: playbooks/media/media.yaml
+# - name: Install media emby
+#   import_playbook: playbooks/media/media.yaml
 
 # - name: Install nextcloud
 #   import_playbook: playbooks/nextcloud/nextcloud.yaml
@@ -92,17 +95,6 @@
 # - name: Install Decibel Meter
 #   import_playbook: playbooks/decibel_meter/decibel_meter.yaml
 
-# - hosts: master
-#   become: yes
-#   roles:
-#     - role: geerlingguy.certbot
-#   vars:
-#     certbot_auto_renew: false
-#     certbot_admin_email: "{{ email }}"
-#     certbot_create_if_missing: true
-#     certbot_certs:
-#       - domains:
-#         - "{{ domain }}"
 
 
 # - hosts: master
@@ -189,13 +181,7 @@
 #       notify:
 #         - reload nginx
 #         - restart nginx
-#     - name: Create /etc/nginx/sites-enabled/home-assistant.conf
-#       template:
-#         src: ./etc/nginx/sites-enabled/home-assistant.conf.j2
-#         dest: /etc/nginx/sites-enabled/home-assistant.conf
-#       notify:
-#         - reload nginx
-#         - restart nginx
+
     # - name: Create /etc/nginx/sites-enabled/monio.conf
     #   template:
     #     src: ./etc/nginx/sites-enabled/monio.conf.j2

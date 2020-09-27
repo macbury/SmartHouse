@@ -9,3 +9,6 @@ time_zone: Europe/Warsaw
 customize: !include customize.yaml
 whitelist_external_dirs:
   - /tmp
+
+external_url: !env_var HOME_ASSISTANT_EXTERNAL_URL
+internal_url: !env_var HOME_ASSISTANT_INTERNAL_URL

@@ -10,14 +10,6 @@ upstream glances {
   server 127.0.0.1:4108 fail_timeout=0;
 }
 
-upstream sonarr {
-  server 127.0.0.1:8989 fail_timeout=0;
-}
-
-upstream lidarr {
-  server 127.0.0.1:18686 fail_timeout=0;
-}
-
 server {
   listen 80;
   listen [::]:80;
@@ -26,13 +18,31 @@ server {
 }
 
 server {
+  listen {{ home_assistant_external_port }} ssl;
+  ssl        on;
+  ssl_certificate /etc/letsencrypt/live/{{ domain }}/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/{{ domain }}/privkey.pem;
+  server_name {{ domain }};
+
+  location / {
+    proxy_pass http://hass/;
+    proxy_set_header Host $host;
+
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+}
+
+server {
   listen 443 ssl;
   ssl        on;
   ssl_certificate /etc/letsencrypt/live/{{ domain }}/fullchain.pem;
   ssl_certificate_key /etc/letsencrypt/live/{{ domain }}/privkey.pem;
   server_name {{ domain }};
-  
-
 
   location /api/alexa/flash_briefings {
     proxy_set_header Host $host;
@@ -137,36 +147,6 @@ server {
     rewrite  ^/grafana/(.*)  /$1 break;
     proxy_pass http://grafana/;
     proxy_set_header Host $host;
-
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection "upgrade";
-  }
-
-  location /sonarr {
-    allow 192.168.0.0/16;
-    allow 10.0.0.0/16;
-    deny all;
-
-    proxy_pass http://sonarr;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection "upgrade";
-  }
-
-  location /lidarr {
-    allow 192.168.0.0/16;
-    allow 10.0.0.0/16;
-    deny all;
-
-    proxy_pass http://lidarr;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;

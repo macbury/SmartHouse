@@ -1,0 +1,45 @@
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.certbot
+  vars:
+    certbot_install_from_source: true
+    certbot_keep_updated: true
+    certbot_auto_renew: false
+    certbot_admin_email: "{{ email }}"
+    certbot_create_if_missing: true
+    certbot_create_method: standalone
+    certbot_certs:
+      - domains:
+        - "{{ domain }}"
+
+# Nginx
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.nginx
+  handlers:
+    - name: restart nginx
+      become: yes
+      service:
+        name: nginx
+        enabled: yes
+        state: restarted
+  tasks:
+    - name: Create /etc/nginx/sites-enabled/home-assistant.conf
+      template:
+        src: ./home-assistant.conf.j2
+        dest: /etc/nginx/sites-enabled/home-assistant.conf
+      notify:
+        - reload nginx
+        - restart nginx
+
+- hosts: master
+  become: yes
+  roles:
+    - role: weareinteractive.ufw
+  vars:
+    ufw_reset: no
+    ufw_logging: "off"
+    ufw_rules:
+      - { port: "{{ home_assistant_external_port }}", rule: allow, comment: 'External ha port' }
