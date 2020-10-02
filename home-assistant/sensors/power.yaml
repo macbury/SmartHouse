@@ -10,7 +10,6 @@
             float(states.sensor.fibaro_system_fgs213_switch_power_4.state)+
             float(states.sensor.fibaro_system_fgs213_switch_power_5.state)+
             float(states.sensor.fibaro_system_fgs213_switch_power_7.state)+
-            float(states.sensor.fibaro_system_fgs213_switch_power_8.state)+
             float(states.sensor.fibaro_system_fgs213_switch_power_9.state)+
             float(states.sensor.fibaro_system_fgs223_double_relay_power.state)+
             float(states.sensor.fibaro_system_fgs223_double_relay_power.state)+

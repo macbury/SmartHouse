@@ -2,10 +2,10 @@
   id: arek
   user_id: dee430bb89094c628fd84988492c87ed
   device_trackers:
-    - device_tracker.arek
+    - device_tracker.sm_s10_arek
 
 - name: Ola
   id: ola
   user_id: 5818d1fef6d840769796caa99959610d
   device_trackers:
-    - device_tracker.ola
+    - device_tracker.sm_g8_ola

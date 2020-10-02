@@ -83,3 +83,45 @@
   - data: {}
     service: zwave.heal_network
   mode: single
+- id: '1601236736500'
+  alias: Pause TV if Arek has a Call
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.arek_phone_state
+    to: ringing
+    from: idle
+  - platform: state
+    entity_id: sensor.arek_phone_state
+    from: idle
+    to: offhook
+  condition:
+  - condition: state
+    entity_id: person.arek
+    state: home
+  action:
+  - service: media_player.media_pause
+    data: {}
+    entity_id: media_player.tv
+  mode: single
+- id: '1601237413600'
+  alias: Pause TV if Arek has a Call (Duplicate)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.olas8_stan_telefonu
+    to: ringing
+    from: idle
+  - platform: state
+    entity_id: sensor.olas8_stan_telefonu
+    from: idle
+    to: offhook
+  condition:
+  - condition: state
+    entity_id: person.ola
+    state: home
+  action:
+  - service: media_player.media_pause
+    data: {}
+    entity_id: media_player.tv
+  mode: single

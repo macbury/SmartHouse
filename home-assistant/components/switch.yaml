@@ -1,3 +1,42 @@
+- platform: template
+  switches:
+    living_room_heater:
+      value_template: "{{ states.climate.living_room.attributes.temperature == 28 }}"
+      turn_on:
+        service: climate.set_temperature
+        data:
+          entity_id: climate.living_room
+          temperature: 28
+      turn_off:
+        service: climate.set_temperature
+        data:
+          entity_id: climate.living_room
+          temperature: 7
+    bedroom_heater:
+      value_template: "{{ states.climate.bedroom.attributes.temperature == 28 }}"
+      turn_on:
+        service: climate.set_temperature
+        data:
+          entity_id: climate.bedroom
+          temperature: 28
+      turn_off:
+        service: climate.set_temperature
+        data:
+          entity_id: climate.bedroom
+          temperature: 7
+    kitchen_heater:
+      value_template: "{{ states.climate.kitchen.attributes.temperature == 28 }}"
+      turn_on:
+        service: climate.set_temperature
+        data:
+          entity_id: climate.kitchen
+          temperature: 28
+      turn_off:
+        service: climate.set_temperature
+        data:
+          entity_id: climate.kitchen
+          temperature: 7
+
 - platform: flux
   lights:
     - light.arek_szafka

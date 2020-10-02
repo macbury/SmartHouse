@@ -88,4 +88,4 @@
                 fill: fade
       
     - type: thermostat
-      entity: climate.kitchen
+      entity: climate.kitchen_thermostat

@@ -71,7 +71,7 @@ class AirPurifierAI(hass.Hass):
     self.adapt_air_purifier_mode()
   
   def future_turn_on(self):
-    self.log("Future Adapting speed")
+    self.log("Future Adapting speed!")
     self.turn_on()
     self.switch_to_mode()
     self.update_handle = None
@@ -88,12 +88,9 @@ class AirPurifierAI(hass.Hass):
         if 'alt_mode_entity' not in self.args:
           self.log("Will adapt now")
           self.future_turn_on()
-        elif self.alt_mode_entity_working():
+        else:
           self.log("Will adapt now")
           self.future_turn_on()
-        else:
-          self.log("Will adapt speed in 10 minutes")
-          self.update_handle = self.run_in(self.future_turn_on, 10 * 60)
       else:
         self.log("Turning off...")
         self.turn_off()

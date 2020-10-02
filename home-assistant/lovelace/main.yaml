@@ -51,7 +51,7 @@ views:
 
   - title: Sypialnia
     panel: true
-    icon: mdi:hotel
+    icon: mdi:bed
     path: bedroom
     cards: !include bedroom.yaml
 

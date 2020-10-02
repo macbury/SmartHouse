@@ -42,6 +42,14 @@
           entity: switch.giggid
           icon: mdi:account-arrow-left
 
+    - type: horizontal-stack
+      cards:
+        - type: entity-button
+          entity: light.arek_szafka
+          icon: mdi:floor-lamp
+        - type: entity-button
+          entity: light.ola_szafka
+          icon: mdi:floor-lamp
     - type: custom:mini-media-player
       entity: media_player.bedroom
       name: 'Alexa'
@@ -54,4 +62,4 @@
       show_source: full
     - type: thermostat
       title: Bedroom
-      entity: climate.bedroom
+      entity: climate.bedroom_thermostat

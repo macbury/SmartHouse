@@ -10,8 +10,7 @@ calendar: !include components/calendar.yaml
 camera: !include components/camera.yaml
 config:
 cover: !include components/cover.yaml
-climate:
-  - platform: zwave
+climate: !include components/climate.yaml
 # D
 discovery:
 device_tracker: !include components/device_tracker.yaml

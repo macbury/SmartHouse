@@ -12,7 +12,10 @@
           name: Ola
           aspect_ratio: 16x10
           entity: person.ola
-        - type: picture-entity
+        - type: picture-glance
+          entities:
+            - person.arek
+            - sensor.arek_activity
           state_image:
             home: /local/presence/arek/home.png
             not_home: /local/presence/arek/away.png
@@ -20,12 +23,14 @@
           name: Arek
           aspect_ratio: 16x10
           entity: person.arek
+
     - type: map
       dark_mode: false
       default_zoom: 17
+      hours_to_show: 4
       entities:
-        - device_tracker.arek
-        - device_tracker.ola
+        - person.arek
+        - person.ola
 
     - break
 

@@ -20,7 +20,7 @@
 
 - platform: switch
   name: Hall Balls
-  entity_id: switch.hall_balls
+  entity_id: switch.new_hall_balls
 
 - platform: switch
   name: Dinner table

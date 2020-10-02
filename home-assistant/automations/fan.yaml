@@ -6,10 +6,10 @@
     - platform: time
       at: '23:59:59'
   action:
-    - service: xiaomi_miio.set_led_off
+    - service: xiaomi_miio.fan_set_led_off
       data:
         entity_id: "fan.living_room_air_purifier"
-    - service: xiaomi_miio.set_led_off
+    - service: xiaomi_miio.fan_set_led_off
       data:
         entity_id: "fan.bedroom_air_purifier"
 
@@ -21,9 +21,9 @@
     - platform: time
       at: '7:00:00'
   action:
-    - service: xiaomi_miio.set_led_on
+    - service: xiaomi_miio.fan_set_led_on
       data:
         entity_id: "fan.living_room_air_purifier"
-    - service: xiaomi_miio.set_led_off
+    - service: xiaomi_miio.fan_set_led_on
       data:
         entity_id: "fan.bedroom_air_purifier"

@@ -1,3 +1,7 @@
+person.ola:
+  entity_picture: /local/presence/ola/home.png
+person.arek:
+  entity_picture: /local/presence/arek/home.png
 sensor.nowa_huta_bzn:
   friendly_name: "Benzen"
 sensor.nowa_huta_co:

@@ -32,7 +32,7 @@
     - type: custom:air-purifier-card
       entity: fan.living_room_air_purifier
     - type: thermostat
-      entity: climate.living_room
+      entity: climate.living_room_thermostat
     - break
     - type: horizontal-stack
       cards:
