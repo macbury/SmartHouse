@@ -125,3 +125,18 @@
     data: {}
     entity_id: media_player.tv
   mode: single
+- id: '1601668124100'
+  alias: Prysznic
+  description: ''
+  trigger:
+  - platform: time
+    at: '19:00'
+  condition:
+  - condition: state
+    entity_id: group.family
+    state: home
+  action:
+  - service: notify.all
+    data:
+      message: Prysznic!
+  mode: single

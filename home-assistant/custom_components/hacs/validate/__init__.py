@@ -1,7 +1,7 @@
 import asyncio
 import glob
 import importlib
-from os.path import dirname, join
+from os.path import dirname, join, sep
 
 from custom_components.hacs.share import SHARE, get_hacs
 
@@ -9,6 +9,7 @@ from custom_components.hacs.share import SHARE, get_hacs
 def _initialize_rules():
     rules = glob.glob(join(dirname(__file__), "**/*.py"))
     for rule in rules:
+        rule = rule.replace(sep, "/")
         rule = rule.split("custom_components/hacs")[-1]
         rule = f"custom_components/hacs{rule}".replace("/", ".")[:-3]
         importlib.import_module(rule)
@@ -35,16 +36,16 @@ async def async_run_repository_checks(repository):
         *[
             check._async_run_check()
             for check in checks or []
-            if hacs.action or not check.action_only
+            if hacs.system.action or not check.action_only
         ]
     )
 
-    total = len([x for x in checks if hacs.action or not x.action_only])
+    total = len([x for x in checks if hacs.system.action or not x.action_only])
     failed = len([x for x in checks if x.failed])
 
     if failed != 0:
         repository.logger.error(f"{failed}/{total} checks failed")
-        if hacs.action:
+        if hacs.system.action:
             exit(1)
     else:
         repository.logger.debug(f"All ({total}) checks passed")

@@ -48,7 +48,7 @@
           icon: mdi:seat-recline-extra
         - name: Clean bedroom
           service: script.clean_bedroom
-          icon: mdi:hotel
+          icon: mdi:bed
         - name: Clean kitchen
           service: script.clean_kitchen
           icon: mdi:fridge
