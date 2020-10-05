@@ -29,10 +29,11 @@
               show:
                 points: true
                 fill: fade
-    - type: custom:air-purifier-card
-      entity: fan.living_room_air_purifier
+
     - type: thermostat
       entity: climate.living_room_thermostat
+    - type: custom:air-purifier-card
+      entity: fan.living_room_air_purifier
     - break
     - type: horizontal-stack
       cards:
@@ -53,14 +54,6 @@
     - type: horizontal-stack
       cards:
         - type: entity-button
-          entity: light.christmas_balls
-          icon: mdi:led-strip-variant
-        - type: entity-button
-          entity: switch.living_room_humidifier
-          icon: mdi:air-humidifier
-    - type: horizontal-stack
-      cards:
-        - type: entity-button
           entity: cover.living_room
           icon: mdi:arrow-down-bold-box
           name: 'Opuść rolety'
@@ -78,7 +71,8 @@
             service: 'cover.open_cover'
             service_data:
               entity_id: cover.living_room
-
+    - type: humidifier
+      entity: humidifier.living_room
     # Wallpaper and stuff
     - break
     - type: entities

@@ -1,0 +1,19 @@
+- name: Living Room
+  humidifier: switch.living_room_humidifier
+  target_sensor: sensor.living_room_humidity
+  min_humidity: 20
+  max_humidity: 80
+  target_humidity: 50
+  away_humidity: 40
+  away_fixed: True
+  sensor_stale_duration: 00:15:00
+
+- name: Bedroom
+  humidifier: switch.bedroom_humidifier_switch
+  target_sensor: sensor.bedroom_humidity
+  min_humidity: 20
+  max_humidity: 80
+  target_humidity: 50
+  away_humidity: 40
+  away_fixed: True
+  sensor_stale_duration: 00:15:00

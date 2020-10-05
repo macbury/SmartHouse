@@ -17,11 +17,11 @@
 # - name: Install docker
 #   import_playbook: playbooks/docker/docker.yaml
 
-- name: Install HomeAssistant
-  import_playbook: playbooks/home-assistant/home-assistant.yaml
+# - name: Install HomeAssistant
+#   import_playbook: playbooks/home-assistant/home-assistant.yaml
 
-# - name: Install anarchopi
-#   import_playbook: playbooks/anarchopi/anarchopi.yaml
+- name: Install anarchopi
+  import_playbook: playbooks/anarchopi/anarchopi.yaml
 
 # - name: Install detox
 #   import_playbook: playbooks/detox/detox.yaml

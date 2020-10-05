@@ -20,6 +20,7 @@ fan: !include components/fan.yaml
 ffmpeg:
 # G
 group: !include groups.yaml
+generic_hygrostat: !include components/generic_hygrostat.yaml
 # H
 homeassistant: !include components/homeassistant.yaml
 http: !include components/http.yaml
