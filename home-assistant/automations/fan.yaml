@@ -12,6 +12,9 @@
     - service: xiaomi_miio.fan_set_led_off
       data:
         entity_id: "fan.bedroom_air_purifier"
+    - service: xiaomi_miio.fan_set_led_off
+      data:
+        entity_id: "fan.living_room_humidifier"
 
 - alias: Switch on fan leds after sunrise
   trigger:
@@ -27,3 +30,6 @@
     - service: xiaomi_miio.fan_set_led_on
       data:
         entity_id: "fan.bedroom_air_purifier"
+    - service: xiaomi_miio.fan_set_led_on
+      data:
+        entity_id: "fan.living_room_humidifier"

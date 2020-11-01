@@ -8,6 +8,13 @@ temperature_lamp:
   cold_temperature: 14.0
   hot_temperature: 28.0
 
+living_room_bedroom:
+  module: humidifier
+  class: HumidifierController
+  humidifer: humidifier.living_room
+  family_devices: group.family
+  calendar: calendar.salon_env
+
 living_room_air:
   module: air_purifier_ai
   class: AirPurifierAI
@@ -19,14 +26,6 @@ living_room_air:
   alt_mode_entity: switch.living_room_humidifier
   mode: 'Auto'
   alt_mode: 'Silent'
-
-humidifier_living_room:
-  module: humidifier
-  class: HumidifierController
-  humidifer: humidifier.living_room
-  family_devices: group.family
-  balcone_door: binary_sensor.balcone_door
-  calendar: calendar.salon_env
 
 humidifier_bedroom:
   module: humidifier
@@ -58,6 +57,7 @@ bedroom_air:
   family_devices: 'group.family'
   fallback: 5400
   mode: 'Auto'
+  light: light.bedroom
 
 
 heating_living_room:

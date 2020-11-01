@@ -15,11 +15,27 @@
     - sensor.bathroom_humidity
     - sensor.corridor_humidity
     - sensor.kitchen_humidity
+    - sensor.living_room_humidifier_humidity
+
+- platform: min_max
+  name: Mean Living Room Humidity
+  type: mean
+  entity_ids:
+    - sensor.living_room_humidity
+    - sensor.living_room_humidifier_humidity
+
+- platform: min_max
+  name: Mean Living Room Temperature
+  type: mean
+  entity_ids:
+    - sensor.living_room_humidifier_temperature
+    - sensor.living_room_temperature
 
 - platform: min_max
   name: mean_temperature
   type: mean
   entity_ids:
+    - sensor.living_room_humidifier_temperature
     - sensor.living_room_temperature
     - sensor.bathroom_temperature
     - sensor.bedroom_temperature

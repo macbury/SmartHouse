@@ -174,7 +174,7 @@ services:
     env_file:
       - '.env.influxdb'
   database:
-    image: postgres:9.6.10-alpine
+    image: postgres:9.6.19-alpine
     restart: unless-stopped
     security_opt:
       - seccomp:unconfined
@@ -210,56 +210,21 @@ services:
       - .docker/data/grafana:/var/lib/grafana
     depends_on:
       - influxdb
-  glances:
-    restart: unless-stopped
-    image: nicolargo/glances
-    environment:
-      - GLANCES_OPT=-w
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./glances/:/glances/conf/
-    ports:
-      - 4108:61208
-  vacuum:
-    build: ./vacuum/
-    volumes:
-      - .docker/data/vacuum:/app/public
-    ports:
-      - 10005:3000
+
   esphome:
     image: esphome/esphome:latest
     volumes:
       - .docker/data/esphome:/config
       - /etc/localtime:/etc/localtime:ro
     network_mode: host
-  speedtest:
-    image: macbury/speedtest:latest
-    env_file:
-      - '.env.speedtest'
-    ports:
-      - 6888:80
   monio:
     restart: unless-stopped
     image: macbury/mon.io:latest
-    network_mode: host
+    ports:
+      - 14000:3000
     volumes:
       - .docker/data/monio/:/app/storage
     env_file:
       - .env.monio
     depends_on:
       - database
-  detox:
-    restart: unless-stopped
-    image: macbury/detox:latest
-    ports:
-      - 11000:5000
-    volumes:
-      - .docker/log/detox:/detox/log
-    depends_on:
-      - database
-      - redis
-    env_file:
-      - '.env.detox'
-    environment:
-      - DETOX_DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/detox_production?sslmode=disable
-

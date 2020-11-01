@@ -17,6 +17,10 @@ function health_command_up() {
   docker-compose --file docker-compose.health.yaml --project-name health up
 }
 
+function health_command_docker-compose() {
+  docker-compose --file docker-compose.health.yaml --project-name support $SUBCOMMAND_ARGS
+}
+
 function health_command_down() {
   docker-compose --file docker-compose.health.yaml --project-name health down
 }

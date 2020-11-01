@@ -4,6 +4,11 @@
   token: !env_var HOME_ASSISTANT_LIVING_ROOM_AIR_PURIFIER_TOKEN
 
 - platform: xiaomi_miio
+  name: Living Room Humidifier
+  host: 192.168.1.136
+  token: !env_var HOME_ASSISTANT_XIAOMI_LIVING_ROOM_HUMIDIFIER
+
+- platform: xiaomi_miio
   name: bedroom_air_purifier
   host: 192.168.1.48
   token: !env_var HOME_ASSISTANT_BEDROOM_AIR_PURIFIER_TOKEN

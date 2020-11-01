@@ -8,4 +8,35 @@ services:
     network_mode: host
     volumes:
       - .docker/data/tor:/data
-  
+  detox:
+    restart: unless-stopped
+    image: macbury/detox:latest
+    network_mode: host
+    volumes:
+      - .docker/log/detox:/detox/log
+    env_file:
+      - '.env.detox'
+    environment:
+      - DETOX_DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@0.0.0.0:4101/detox_production?sslmode=disable
+  speedtest:
+    image: macbury/speedtest:latest
+    env_file:
+      - '.env.speedtest'
+    ports:
+      - 6888:80
+  glances:
+    restart: unless-stopped
+    image: nicolargo/glances
+    environment:
+      - GLANCES_OPT=-w
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./glances/:/glances/conf/
+    ports:
+      - 4108:61208
+  vacuum:
+    build: ./vacuum/
+    volumes:
+      - .docker/data/vacuum:/app/public
+    ports:
+      - 10005:3000

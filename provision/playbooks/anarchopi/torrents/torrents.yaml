@@ -21,8 +21,8 @@
       transmission_password: transmission
       transmission_rpc_whitelist_enabled: false
       transmission_incomplete_dir_enabled: true
-      transmission_incomplete_dir: /mnt/hdd/torrents
-      transmission_download_dir: /mnt/hdd/downloaded
+      transmission_incomplete_dir: /home/transmission/torrents
+      transmission_download_dir: /home/transmission/downloaded
       transmission_blocklist_enabled: true
       transmission_blocklist_url: http://john.bitsurge.net/public/biglist.p2p.gz
       transmission_ratio_limit: 2.0
@@ -44,7 +44,7 @@
         fstype: cifs
         opts: "domain=192.168.1.181,username={{ qnap_username }},password={{ qnap_password }},file_mode=0664,dir_mode=0775,gid=transmission,uid=transmission"
         src: "//192.168.1.181/{{ item.share }}"
-        path: "/mnt/hdd/downloaded/{{ item.share }}"
+        path: "/home/transmission/downloaded/{{ item.share }}"
       loop:
         - { share: 'Movies' }
         - { share: 'MoviesAndTV' }

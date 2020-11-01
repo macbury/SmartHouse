@@ -63,6 +63,7 @@ class AdaptiveRoomHeating(hass.Hass):
     else self.anyone_in_home():
       self.log("Nobody home or night")
       self.stop_heating()
+
     if self.anyone_in_home():
       self.change_preset('none')
     else:

@@ -12,7 +12,10 @@ class AirPurifierAI(hass.Hass):
 
     if 'balcone_door' in self.args:
       self.listen_state(self.on_adaptation_callback, entity = self.args['balcone_door'])
-    
+
+    if 'light' in self.args:
+      self.listen_state(self.on_adaptation_callback, entity = self.args['light'])
+
     if 'alt_mode_entity' in self.args:
       self.log("Watching entity: {}".format(self.args['alt_mode_entity']))
       self.listen_state(self.on_adaptation_callback, entity = self.args['alt_mode_entity'])
@@ -29,6 +32,12 @@ class AirPurifierAI(hass.Hass):
   def balcone_door_opened(self):
     if 'balcone_door' in self.args:
       return self.get_state(self.args['balcone_door']) == 'on'
+    else:
+      return False
+
+  def light_is_on(self):
+    if 'light' in self.args:
+      return self.get_state(self.args['light']) == 'on'
     else:
       return False
 
@@ -69,7 +78,7 @@ class AirPurifierAI(hass.Hass):
   def on_adaptation_callback(self, entity, attribute, old, new, kwargs):
     self.log("State callback triggered for {} from {} to {}. Adapting air quality".format(entity, old, new))
     self.adapt_air_purifier_mode()
-  
+
   def future_turn_on(self):
     self.log("Future Adapting speed!")
     self.turn_on()
@@ -79,7 +88,10 @@ class AirPurifierAI(hass.Hass):
   def adapt_air_purifier_mode(self):
     if self.anyone_in_home():
       self.log("People home")
-      if self.balcone_door_opened():
+      if self.light_is_on():
+        self.log("Main light is on")
+        self.turn_on()
+      elif self.balcone_door_opened():
         self.log("Balcone door is opened")
         self.turn_off()
       elif self.cleaning_time():

@@ -20,7 +20,7 @@
                 fill: fade
             - type: custom:mini-graph-card
               entities:
-                - sensor.living_room_humidity
+                - sensor.mean_living_room_humidity
               line_color: '#3949AB'
               hours_to_show: 24
               points_per_hour: 1
@@ -32,8 +32,6 @@
 
     - type: thermostat
       entity: climate.living_room_thermostat
-    - type: custom:air-purifier-card
-      entity: fan.living_room_air_purifier
     - break
     - type: horizontal-stack
       cards:
@@ -71,9 +69,9 @@
             service: 'cover.open_cover'
             service_data:
               entity_id: cover.living_room
+    # Wallpaper and stuff
     - type: humidifier
       entity: humidifier.living_room
-    # Wallpaper and stuff
     - break
     - type: entities
       title: Telewizor
@@ -128,3 +126,8 @@
       show_progress: false
       show_source: false
       toggle_power: true
+
+    - type: entities
+      show_header_toggle: false
+      entities:
+        - fan.living_room_humidifier
