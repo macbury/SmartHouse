@@ -1,0 +1,1 @@
+docker exec --user www-data support_nextcloud_1 php occ upgrade

@@ -19,6 +19,7 @@
 .env.graylog
 .env.ethereum
 .env.dpodcast
+.env.smasher
 .DS_Store
 .backups/**/*
 *.zip

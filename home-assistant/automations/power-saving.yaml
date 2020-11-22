@@ -3,10 +3,22 @@
     platform: time
     at: '01:00:00'
   action:
-    service: media_player.turn_off
-    entity_id:
-      - media_player.tv
-      - media_player.soundbar
+    - service: media_player.turn_off
+      entity_id:
+        - media_player.tv
+        - media_player.soundbar
+    - service: switch.turn_off
+      entity_id:
+        - switch.living_room_work_desk
+
+- alias: Switch on work desk in morning
+  trigger:
+    platform: time
+    at: '07:00:00'
+  action:
+    - service: switch.turn_on
+      entity_id:
+        - switch.living_room_work_desk
 
 - alias: Switch off running shit if nobody is home
   trigger:

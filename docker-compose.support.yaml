@@ -155,6 +155,11 @@ services:
     depends_on:
       - database
       - redis
+    healthcheck:
+      test: [ "CMD", "curl", "http://localhost" ]
+      timeout: 45s
+      interval: 30s
+      retries: 3
   mqtt:
     restart: unless-stopped
     image: eclipse-mosquitto:latest
@@ -226,5 +231,14 @@ services:
       - .docker/data/monio/:/app/storage
     env_file:
       - .env.monio
+    depends_on:
+      - database
+  smasher:
+    restart: unless-stopped
+    image: olxia172/checklist.smasher:latest
+    ports:
+      - 14001:3001
+    env_file:
+      - .env.smasher
     depends_on:
       - database

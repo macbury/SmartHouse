@@ -41,6 +41,15 @@ function support_command_restart() {
   support_command_start;
 }
 
+function support_command_health-check() {
+  docker ps | grep support | grep unhealthy;
+  local status=$?;
+  if [ $status -eq 0 ]; then
+    echo "Unhealthy containers, fire in the hole!";
+    support_command_restart;
+  fi
+}
+
 function support_command_docker-compose() {
   eval "docker-compose --file docker-compose.support.yaml --project-name support ${SUBCOMMAND_ARGS}"
 }

@@ -26,6 +26,9 @@
 # - name: Install detox
 #   import_playbook: playbooks/detox/detox.yaml
 
+#- name: Install smasher
+#  import_playbook: playbooks/smasher/smasher.yaml
+
 # - name: Ad blocking stuff
 #   import_playbook: playbooks/ads/ads.yaml
 

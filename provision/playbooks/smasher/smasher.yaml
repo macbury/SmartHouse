@@ -10,7 +10,7 @@
     certbot_create_if_missing: true
     certbot_certs:
       - domains:
-        - "{{ detox_domain }}"
+        - "{{ smasher_domain }}"
 
 # Nginx
 - hosts: master
@@ -25,10 +25,10 @@
         enabled: yes
         state: restarted
   tasks:
-    - name: Create /etc/nginx/sites-enabled/detox.conf
+    - name: Create /etc/nginx/sites-enabled/smasher.conf
       template:
-        src: detox.conf.j2
-        dest: /etc/nginx/sites-enabled/detox.conf
+        src: smasher.conf.j2
+        dest: /etc/nginx/sites-enabled/smasher.conf
       notify:
         - reload nginx
         - restart nginx
