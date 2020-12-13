@@ -1,20 +1,17 @@
 {% set modules = [
-  '/local/custom_ui/kkm-card.js',
   '/local/custom-lovelace/vacuum/card.js',
   '/local/custom-lovelace/air-purifier/card.js',
-  '/local/custom-lovelace/qr-card/card.js',
 
   '/hacsfiles/mini-graph-card/mini-graph-card-bundle.js',
   '/hacsfiles/mini-media-player/mini-media-player-bundle.js',
   '/hacsfiles/weather-card/weather-card.js',
-  '/hacsfiles/lovelace-layout-card/layout-card.js'
+  '/hacsfiles/lovelace-layout-card/layout-card.js',
+  '/hacsfiles/lovelace-card-tools/card-tools.js'
 
   ] %}
 
 {% set js = [
-  '/local/custom_ui/monster-card.js',
-  '/local/custom-lovelace/light-card.js',
-  '/local/custom-lovelace/card-tools.js'
+  '/local/custom-lovelace/light-card.js'
   ] %}
 
 resources:
