@@ -26,25 +26,27 @@
         "version": "Različica"
     },
     "config": {
-        "abort": {
-            "single_instance_allowed": "Dovoljena je samo ena konfiguracija HACS."
-        },
-        "error": {
-            "auth": "Osebni dostopni žeton ni pravilen."
-        },
         "step": {
+            "device": {
+                "description": "Open {url} and paste this key `{code}` to authorize HACS, when you have done that click 'submit'",
+                "title": "HACS"
+            },
             "user": {
                 "data": {
-                    "appdaemon": "Omogoči odkrivanje in sledenje aplikacij AppDaemon",
-                    "netdaemon": "Omogoči odkrivanje in sledenje aplikacij NetDaemon",
-                    "python_script": "Omogoči odkrivanje in sledenje python_scripts",
-                    "sidepanel_icon": "Ikona stranske plošče",
-                    "sidepanel_title": "Naslov stranske plošče",
-                    "theme": "Omogoči odkrivanje in sledenje tem",
-                    "token": "GitHub žeton za osebni dostop"
+                    "acc_addons": "I know that there are no add-ons in HACS",
+                    "acc_disable": "I know that if I get issues with Home Assistant I should disable all my custom_components",
+                    "acc_logs": "I know how to access Home Assistant logs",
+                    "acc_untested": "I know that everything inside HACS is custom and untested by Home Assistant",
+                    "appdaemon": "Enable AppDaemon apps discovery & tracking",
+                    "netdaemon": "Enable NetDaemon apps discovery & tracking",
+                    "python_script": "Enable python_scripts discovery & tracking",
+                    "sidepanel_icon": "Side panel icon",
+                    "sidepanel_title": "Side panel title",
+                    "theme": "Enable Themes discovery & tracking",
+                    "token": "GitHub Personal Access Token"
                 },
-                "description": "Če potrebujete pomoč pri konfiguraciji, poglejte tukaj: https:\/\/hacs.xyz\/docs\/configuration\/start",
-                "title": "HACS (Home Assistant Community Store)"
+                "description": "Before you can setup HACS you need to acknowledge the following",
+                "title": "HACS"
             }
         },
         "title": "HACS (Home Assistant Community Store)"

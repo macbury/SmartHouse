@@ -7,7 +7,7 @@
         "appdaemon_plural": "AppDaemon Apps",
         "background_task": "Achtergrond taak is draaiende, de pagina herhaalt zichzelf wanneer dit klaar is.",
         "check_log_file": "Controleer het logbestand voor meer details.",
-        "continue": "Doorgaan",
+        "continue": "Verder",
         "disabled": "Uitgeschakeld",
         "documentation": "Documentatie",
         "element": "element",
@@ -41,25 +41,27 @@
         "version": "Versie"
     },
     "config": {
-        "abort": {
-            "single_instance_allowed": "Je kunt maar een enkele configuratie van HACS tegelijk hebben."
-        },
-        "error": {
-            "auth": "Persoonlijke Toegang Token is niet correct."
-        },
         "step": {
+            "device": {
+                "description": "Open {url} and paste this key `{code}` to authorize HACS, when you have done that click 'submit'",
+                "title": "HACS"
+            },
             "user": {
                 "data": {
-                    "appdaemon": "Zet AppDaemon apps ontdekken & traceren aan",
-                    "netdaemon": "Zet NetDaemon apps ontdekken & traceren aan",
-                    "python_script": "Zet python_scripts ontdekken & traceren aan",
-                    "sidepanel_icon": "Zijpaneel icoon",
-                    "sidepanel_title": "Zijpaneel titel",
-                    "theme": "Zet Themes ontdekken & traceren aan",
-                    "token": "GitHub Persoonlijke Toegang Token"
+                    "acc_addons": "I know that there are no add-ons in HACS",
+                    "acc_disable": "I know that if I get issues with Home Assistant I should disable all my custom_components",
+                    "acc_logs": "I know how to access Home Assistant logs",
+                    "acc_untested": "I know that everything inside HACS is custom and untested by Home Assistant",
+                    "appdaemon": "Enable AppDaemon apps discovery & tracking",
+                    "netdaemon": "Enable NetDaemon apps discovery & tracking",
+                    "python_script": "Enable python_scripts discovery & tracking",
+                    "sidepanel_icon": "Side panel icon",
+                    "sidepanel_title": "Side panel title",
+                    "theme": "Enable Themes discovery & tracking",
+                    "token": "GitHub Personal Access Token"
                 },
-                "description": "Als je hulp nodig hebt met de configuratie, kun je hier verder kijken: https:\/\/hacs.xyz\/docs\/configuration\/start",
-                "title": "HACS (Home Assistant Community Store)"
+                "description": "Before you can setup HACS you need to acknowledge the following",
+                "title": "HACS"
             }
         },
         "title": "HACS (Home Assistant Community Store)"
@@ -68,7 +70,7 @@
         "add_to_lovelace": "Weet u zeker dat u dit wilt toevoegen aan uw Lovelace bronnen?",
         "bg_task": "Actie is geblokkeerd terwijl achtergrondtaken actief zijn.",
         "cancel": "Annuleer",
-        "continue": "Weet je zeker dat je wilt doorgaan?",
+        "continue": "Weet je zeker dat je door wilt gaan?",
         "delete": "Weet u zeker dat u '{item}' wilt verwijderen?",
         "delete_installed": "'{item}' is geïnstalleerd, je dient het eerst te deïnstalleren voordat je het kan verwijderen.",
         "exist": "{item} bestaat al.",
@@ -231,7 +233,7 @@
         "installed": "Geinstalleerd",
         "lovelace_copy_example": "Kopier het voorbeeld naar je klembord",
         "lovelace_instruction": "Wanneer je dit gaat toevoegen aan je lovelace configuratie gebruik dit",
-        "lovelace_no_js_type": "Kon niet achterhalen welk type plugin dit is, controleer de repository van de plugin.",
+        "lovelace_no_js_type": "Kon niet achterhalen welk type plugin dit is, check de repository van de plugin.",
         "newest": "nieuwste",
         "note_appdaemon": "je moet het nog steeds toevoegen aan je 'apps.yaml' bestand",
         "note_installed": "Wanneer geïnstalleerd, staat het in",

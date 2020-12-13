@@ -6,6 +6,7 @@
         "appdaemon_apps": "AppDaemon Apps",
         "appdaemon_plural": "AppDaemon Apps",
         "background_task": "Ejecutando tareas en segundo plano. Se refrescará automaticamente esta página al finalizar.",
+        "cancel": "Cancelar",
         "check_log_file": "Compruebe el archivo de registro para obtener más detalles.",
         "continue": "Continuar",
         "disabled": "Deshabilitado",
@@ -31,6 +32,7 @@
         "python_script": "Python Script",
         "python_script_plural": "Python Scripts",
         "python_scripts": "Python Scripts",
+        "reload": "Recargar",
         "repositories": "Repositorios",
         "repository": "Repositorio",
         "settings": "configuraciones",
@@ -42,25 +44,27 @@
         "version": "Versión"
     },
     "config": {
-        "abort": {
-            "single_instance_allowed": "Sólo se permite una única configuración de HACS."
-        },
-        "error": {
-            "auth": "El token de acceso personal no es correcto."
-        },
         "step": {
+            "device": {
+                "description": "Open {url} and paste this key `{code}` to authorize HACS, when you have done that click 'submit'",
+                "title": "HACS"
+            },
             "user": {
                 "data": {
-                    "appdaemon": "Habilitar el descubrimiento y seguimiento de las aplicaciones de AppDaemon",
-                    "netdaemon": "Habilitar el descubrimiento y seguimiento de las aplicaciones de NetDaemon",
-                    "python_script": "Habilitar el descubrimiento y seguimiento en python_scripts",
-                    "sidepanel_icon": "Ícono del panel lateral",
-                    "sidepanel_title": "Título del panel lateral",
-                    "theme": "Habilitar el descubrimiento y seguimiento de temas",
-                    "token": "Token de acceso personal de GitHub"
+                    "acc_addons": "I know that there are no add-ons in HACS",
+                    "acc_disable": "I know that if I get issues with Home Assistant I should disable all my custom_components",
+                    "acc_logs": "I know how to access Home Assistant logs",
+                    "acc_untested": "I know that everything inside HACS is custom and untested by Home Assistant",
+                    "appdaemon": "Enable AppDaemon apps discovery & tracking",
+                    "netdaemon": "Enable NetDaemon apps discovery & tracking",
+                    "python_script": "Enable python_scripts discovery & tracking",
+                    "sidepanel_icon": "Side panel icon",
+                    "sidepanel_title": "Side panel title",
+                    "theme": "Enable Themes discovery & tracking",
+                    "token": "GitHub Personal Access Token"
                 },
-                "description": "Si necesitas ayuda con la configuración, visita la siguiente pagina: https:\/\/hacs.xyz\/docs\/configuration\/start",
-                "title": "HACS (Home Assistant Community Store)"
+                "description": "Before you can setup HACS you need to acknowledge the following",
+                "title": "HACS"
             }
         },
         "title": "HACS (Home Assistant Community Store)"
@@ -133,8 +137,14 @@
         "available_version": "Versión disponible",
         "changelog": "Registro de cambios",
         "installed_version": "Versión instalada",
-        "releasenotes": "Notas de la versión para {release}",
+        "releasenotes": "Notas de lanzamiento para {release}",
         "title": "Actualización pendiente"
+    },
+    "dialog": {
+        "reload": {
+            "confirm": "¿Quieres hacer eso ahora?",
+            "description": "Necesitas limpiar el caché de tu navegador cuando cambies los recursos de Lovelace."
+        }
     },
     "entry": {
         "information": "Información",
@@ -150,16 +160,24 @@
             },
             "removed": "Repositorio '{repository}' eliminado",
             "resources": {
-                "content": "Tienes {number} elementos de Lovelace que no están cargados correctamente en Lovelace.",
-                "title": "No está cargado en Lovelace"
+                "content": "Tienes {number} elementos de Lovelace que no se cargan correctamente en Lovelace.",
+                "title": "No está cargada en Lovelace"
             },
             "restart": {
                 "content": "Tienes {number} integraciones que requieren un reinicio de Home Assistant, puedes hacerlo desde la sección 'Controles del Servidor' en la parte de configuración de la UI de Home Assistant.",
-                "title": "Reinicio pendiente"
+                "title": "Pendiente de reinicio"
+            },
+            "setup": {
+                "content": "HACS se está configurando, durante este tiempo alguna información puede estar perdida o ser incorrecta",
+                "title": "HACS se está configurando"
             },
             "startup": {
                 "content": "HACS se está iniciando, durante este tiempo alguna información podría faltar o ser incorrecta",
                 "title": "HACS se está iniciando"
+            },
+            "waiting": {
+                "content": "HACS está esperando a que Home Assistant finalice el inicio antes de iniciar las tareas de inicio",
+                "title": "HACS está esperando"
             },
             "wrong_frontend_installed": {
                 "content": "Tienes instalada la versión {running} de la interfaz de HACS, pero se esperaba la versión {expected}, si ves este mensaje, Home Assistant no pudo instalar la nueva versión, intenta reiniciar Home Assistant.",
@@ -178,7 +196,7 @@
         "custom_repositories": "Repositorios personalizados",
         "dismiss": "Descartar todos los repositorios nuevos",
         "documentation": "Documentación",
-        "open_issue": "Abrir issue",
+        "open_issue": "Abrir incidencias",
         "reload": "Recargar la ventana"
     },
     "options": {
@@ -214,7 +232,7 @@
         "information": "Información",
         "new_repository": "Nuevo repositorio",
         "not_loaded": "Sin cargar",
-        "open_issue": "Abrir issue",
+        "open_issue": "Abrir incidencias",
         "open_source": "Código abierto",
         "pending_restart": "Pendiente de reinicio",
         "pending_update": "Actualización pendiente",
@@ -246,7 +264,7 @@
         "note_integration": "deberá agregar esto a su archivo 'configuration.yaml'",
         "note_plugin": "deberá agregar esto a su configuración de lovelace ('ui-lovelace.yaml' o en el editor UI de lovelace)",
         "note_plugin_post_107": "todavía necesita agregarlo a su configuración de lovelace ('configuration.yaml' o al editor de recursos '\/config\/lovelace\/resources')",
-        "open_issue": "Abrir issue",
+        "open_issue": "Abrir incidencias",
         "open_plugin": "Abrir elemento",
         "reinstall": "Reinstalar",
         "repository": "Repositorio",
@@ -266,6 +284,10 @@
             "description": "Mostrar información sobre HACS",
             "title": "Acerca de"
         },
+        "addon": {
+            "description": "No hay complementos (addons) en HACS, pero puede hacer clic aquí para ir a la pestaña Supervisor",
+            "title": "Complementos (addons)"
+        },
         "automation": {
             "description": "Aquí es donde se encuentran python_scripts, aplicaciones AppDaemon y aplicaciones NetDaemon",
             "title": "Automatización"
@@ -283,7 +305,7 @@
     "settings": {
         "add_custom_repository": "AGREGAR REPOSITORIO PERSONALIZADO",
         "adding_new_repo": "Añadiendo un nuevo repositorio '{repo}'.",
-        "adding_new_repo_category": "Con la categoría '{category}'.",
+        "adding_new_repo_category": "Con la categoría '{categoría}'.",
         "bg_task_custom": "Los repositorios personalizados están ocultos mientras se ejecutan las tareas en segundo plano.",
         "category": "Categoría",
         "compact_mode": "Modo compacto",

@@ -3,6 +3,13 @@
 version: '3.5'
 
 services:
+  transfer:
+    image: dutchcoders/transfer.sh:latest
+    ports:
+      - "18031:8080"
+    env_file:
+      - '.env.transfer'
+    restart: always
   ci:
     image: drone/drone:1.9.0
     env_file:

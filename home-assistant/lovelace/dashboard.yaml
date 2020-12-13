@@ -34,9 +34,8 @@
 
     - break
 
-    - type: "custom:weather-card"
+    - type: weather-forecast
       entity: weather.dark_sky
-      icons: "/community_plugin/weather-card/icons/"
     - type: horizontal-stack
       cards:
         - type: custom:mini-graph-card
@@ -74,20 +73,6 @@
           animate: true
           hour24: true
           extrema: true
-          show:
-            points: true
-            fill: fade
-    - type: horizontal-stack
-      cards:
-        - type: custom:mini-graph-card
-          entities:
-            - sensor.poland_coronavirus_current
-          line_color: '#9c27b0'
-          name: 'Aktywnie'
-          hours_to_show: 168
-          animate: true
-          hour24: false
-          points_per_hour: 0.05
           show:
             points: true
             fill: fade

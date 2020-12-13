@@ -164,3 +164,43 @@
         type: announce
         method: all
   mode: single
+- id: '1606652899700'
+  alias: Ola wyjedża od Dzidki
+  description: ''
+  trigger:
+  - platform: zone
+    entity_id: person.ola
+    zone: zone.dzidka
+    event: leave
+  condition: []
+  action:
+  - service: notify.alexa_media_living_room
+    data:
+      message: Ola is leaving Dzidka House
+      data:
+        type: announce
+        method: all
+  - delay: '10'
+  - service: notify.alexa_media_kitchen
+    data:
+      message: Ola is leaving Dzidka House
+      data:
+        type: announce
+        method: all
+  mode: single
+- id: '1607521396700'
+  alias: Humidifier is in dry mode
+  description: Tell people in the house that humidifier is out of water
+  trigger:
+  - platform: state
+    entity_id: fan.living_room_humidifier
+    attribute: dry
+    from: 'False'
+    to: 'True'
+  condition: []
+  action:
+  - service: notify.all
+    data:
+      title: Nawilżacz
+      message: Uzupełnij wodę w nawilżaczu!
+  mode: single

@@ -26,25 +26,27 @@
         "version": "Έκδοση"
     },
     "config": {
-        "abort": {
-            "single_instance_allowed": "Μονάχα μία ρύθμιση των παραμέτρων του HACS επιτρέπεται."
-        },
-        "error": {
-            "auth": "Το διακριτικό πρόσβασης δεν είναι σωστό."
-        },
         "step": {
+            "device": {
+                "description": "Open {url} and paste this key `{code}` to authorize HACS, when you have done that click 'submit'",
+                "title": "HACS"
+            },
             "user": {
                 "data": {
-                    "appdaemon": "Ενεργοποίηση εύρεσης & παρακολούθησης για το AppDaemon",
-                    "netdaemon": "Ενεργοποίηση εύρεσης & παρακολούθησης για το NetDaemon",
-                    "python_script": "Ενεργοποίηση εύρεσης & παρακολούθησης για τα python_scripts",
-                    "sidepanel_icon": "Εικονίδιο πλαϊνού πάνελ",
-                    "sidepanel_title": "Τίτλος πλαϊνού πάνελ",
-                    "theme": "Ενεργοποίηση εύρεσης & παρακολούθησης για τα θεμάτων",
-                    "token": "Διακριτικό πρόσβασης του GitHub"
+                    "acc_addons": "I know that there are no add-ons in HACS",
+                    "acc_disable": "I know that if I get issues with Home Assistant I should disable all my custom_components",
+                    "acc_logs": "I know how to access Home Assistant logs",
+                    "acc_untested": "I know that everything inside HACS is custom and untested by Home Assistant",
+                    "appdaemon": "Enable AppDaemon apps discovery & tracking",
+                    "netdaemon": "Enable NetDaemon apps discovery & tracking",
+                    "python_script": "Enable python_scripts discovery & tracking",
+                    "sidepanel_icon": "Side panel icon",
+                    "sidepanel_title": "Side panel title",
+                    "theme": "Enable Themes discovery & tracking",
+                    "token": "GitHub Personal Access Token"
                 },
-                "description": "Εάν χρειαστείτε βοήθεια με τις ρυθμίσεις ανατρέξτε εδώ: https:\/\/hacs.xyz\/docs\/configuration\/start",
-                "title": "HACS (Home Assistant Community Store)"
+                "description": "Before you can setup HACS you need to acknowledge the following",
+                "title": "HACS"
             }
         },
         "title": "HACS (Home Assistant Community Store)"

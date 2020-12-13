@@ -16,7 +16,6 @@ class AdaptiveRoomHeating(hass.Hass):
   def outside_temperature(self):
     return float(self.get_state(self.args['outside_temperature']))
 
-
   def anyone_in_home(self):
     return self.get_state(self.args['family_devices']) == 'home'
 
@@ -43,26 +42,18 @@ class AdaptiveRoomHeating(hass.Hass):
     self.call_service('climate/turn_on', entity_id=self.args['climate'])
 
   def change_preset(self, preset):
-    self.log("Change preset")
-    self.call_service('climate/set_preset_mode', entity_id=self.args['climate'], preset=preset)
+    self.log("Change preset to: {}".format(preset))
+    self.call_service('climate/set_preset_mode', entity_id=self.args['climate'], preset_mode=preset)
 
   def on_adaptation_callback(self, entity, attribute, old, new, kwargs):
     self.log("State callback triggered for {} from {} to {}. Adapting temperature".format(entity, old, new))
     self.adapt_temperature()
+    
 
   def adapt_temperature(self):
     if self.main_light_on():
       self.log("Main light is on, increasing temperature")
-      self.start_heating()
-    elif self.outside_temperature() > 20:
-      self.log("Outside temperature is {}, lowering temperature".format(self.outside_temperature()))
-      self.stop_heating()
-    elif self.anyone_in_home() and self.heating_time():
-      self.log("Somebody is home, and still heating time is")
-      self.start_heating()
-    else self.anyone_in_home():
-      self.log("Nobody home or night")
-      self.stop_heating()
+      self.change_preset('none')
 
     if self.anyone_in_home():
       self.change_preset('none')

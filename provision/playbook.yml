@@ -20,6 +20,9 @@
 # - name: Install HomeAssistant
 #   import_playbook: playbooks/home-assistant/home-assistant.yaml
 
+- name: Install transfer
+  import_playbook: playbooks/transfer/transfer.yaml
+
 - name: Install anarchopi
   import_playbook: playbooks/anarchopi/anarchopi.yaml
 

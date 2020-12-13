@@ -40,26 +40,28 @@
         "version": "Version"
     },
     "config": {
-        "abort": {
-            "single_instance_allowed": "Kun en enkelt konfiguration af HACS er tilladt."
-        },
-        "error": {
-            "auth": "Personlig adgangstoken er ikke korrekt."
-        },
         "step": {
+            "device": {
+                "description": "Open {url} and paste this key `{code}` to authorize HACS, when you have done that click 'submit'",
+                "title": "HACS"
+            },
             "user": {
                 "data": {
-                    "appdaemon": "Aktiver opdagelse & sporing af AppDaemon-apps",
-                    "netdaemon": "Aktiver opdagelse og sporing af NetDaemon-apps",
-                    "python_script": "Aktivér opdagelse og sporing af python_scripts",
-                    "sidepanel_icon": "Sidepanelikon",
-                    "sidepanel_title": "Sidepanelets titel",
-                    "theme": "Aktivér opdagelse og sporing af temaer",
-                    "token": "GitHub personlig adgangstoken"
-                },
-                "description": "Hvis du har brug for hjælp til konfigurationen, så kig her: https:\/\/hacs.xyz\/docs\/configuration\/start"
+                    "acc_addons": "I know that there are no add-ons in HACS",
+                    "acc_disable": "I know that if I get issues with Home Assistant I should disable all my custom_components",
+                    "acc_logs": "I know how to access Home Assistant logs",
+                    "acc_untested": "I know that everything inside HACS is custom and untested by Home Assistant",
+                    "appdaemon": "Enable AppDaemon apps discovery & tracking",
+                    "netdaemon": "Enable NetDaemon apps discovery & tracking",
+                    "python_script": "Enable python_scripts discovery & tracking",
+                    "sidepanel_icon": "Side panel icon",
+                    "sidepanel_title": "Side panel title",
+                    "theme": "Enable Themes discovery & tracking",
+                    "token": "GitHub Personal Access Token"
+                }
             }
-        }
+        },
+        "title": "HACS (Home Assistant Community Store)"
     },
     "confirm": {
         "add_to_lovelace": "Er du sikker på, at du vil tilføje dette til dine Lovelace-ressourcer?",
@@ -67,7 +69,7 @@
         "cancel": "Annuller",
         "continue": "Er du sikker på, at du vil fortsætte?",
         "delete": "Er du sikker på, at du vil slette '{Item}'?",
-        "delete_installed": "'{item}' er installeret. Du skal afinstallere det, før du kan slette det.",
+        "delete_installed": "'{item}' er installeret, du skal afinstallere det, før du kan slette det.",
         "exist": "{item} findes allerede",
         "generic": "Er du sikker?",
         "home_assistant_is_restarting": "Vent venligst - Home Assistant genstarter nu.",

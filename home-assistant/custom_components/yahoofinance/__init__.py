@@ -1,0 +1,1 @@
+"""The Yahoo finance component."""

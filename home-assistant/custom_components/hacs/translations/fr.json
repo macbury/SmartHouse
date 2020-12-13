@@ -6,12 +6,14 @@
         "appdaemon_apps": "Applications AppDaemon",
         "appdaemon_plural": "AppDaemon Apps",
         "background_task": "Tache de fond en cours, cette page se rechargera une fois terminée",
+        "cancel": "Annuler",
         "check_log_file": "Consultez votre fichier journal pour plus de détails.",
         "continue": "Continuer",
         "disabled": "Désactivé",
         "documentation": "Documentation",
         "element": "élément",
         "hacs_is_disabled": "HACS est désactivé",
+        "ignore": "Ignorer",
         "install": "Installer",
         "installed": "installés",
         "integration": "Intégration",
@@ -30,6 +32,7 @@
         "python_script": "Script Python",
         "python_script_plural": "Scripts Python",
         "python_scripts": "Scripts Python",
+        "reload": "Recharger",
         "repositories": "Dépôts",
         "repository": "Dépôt",
         "settings": "paramètres",
@@ -37,7 +40,7 @@
         "theme_plural": "Thèmes",
         "themes": "Thèmes",
         "uninstall": "Désinstaller",
-        "update": "Mise à jour",
+        "update": "Mettre à jour",
         "version": "Version"
     },
     "config": {
@@ -45,21 +48,30 @@
             "single_instance_allowed": "Une seule configuration de HACS est autorisée."
         },
         "error": {
+            "acc": "Vous devez accepter toutes les déclarations avant de continuer",
             "auth": "Le jeton personnel d'accès est invalide."
         },
         "step": {
+            "device": {
+                "description": "Open {url} and paste this key `{code}` to authorize HACS, when you have done that click 'submit'",
+                "title": "HACS"
+            },
             "user": {
                 "data": {
-                    "appdaemon": "Activer la découverte et le suivi des applications AppDaemon",
-                    "netdaemon": "Activer la découverte et le suivi des applications NetDaemon",
-                    "python_script": "Activer la découverte et le suivi des scripts python",
-                    "sidepanel_icon": "Icône de la barre latérale",
-                    "sidepanel_title": "Titre de la barre latérale",
-                    "theme": "Activer la découverte et le suivi des thèmes",
-                    "token": "Jeton d'accès personnel GitHub"
+                    "acc_addons": "I know that there are no add-ons in HACS",
+                    "acc_disable": "I know that if I get issues with Home Assistant I should disable all my custom_components",
+                    "acc_logs": "I know how to access Home Assistant logs",
+                    "acc_untested": "I know that everything inside HACS is custom and untested by Home Assistant",
+                    "appdaemon": "Enable AppDaemon apps discovery & tracking",
+                    "netdaemon": "Enable NetDaemon apps discovery & tracking",
+                    "python_script": "Enable python_scripts discovery & tracking",
+                    "sidepanel_icon": "Side panel icon",
+                    "sidepanel_title": "Side panel title",
+                    "theme": "Enable Themes discovery & tracking",
+                    "token": "GitHub Personal Access Token"
                 },
-                "description": "Si vous avez besoin d'aide pour la configuration, jetez un œil ici: https:\/\/hacs.xyz\/docs\/configuration\/start",
-                "title": "HACS (Home Assistant Community Store)"
+                "description": "Before you can setup HACS you need to acknowledge the following",
+                "title": "HACS"
             }
         },
         "title": "HACS (Home Assistant Community Store)"
@@ -111,7 +123,7 @@
         "loading": "Chargement des informations ...",
         "no_info": "Le développeur n'a pas fourni plus d'informations pour ce dépôt",
         "open_issues": "Open issues",
-        "open_repo": "Dépôt ouvert",
+        "open_repo": "Ouvrir dépôt",
         "stars": "Étoiles",
         "version_installed": "Version installée"
     },
@@ -122,12 +134,24 @@
         "type": "Type",
         "url": "URL"
     },
+    "dialog_removed": {
+        "link": "Lien externe vers plus d'informations",
+        "name": "Nom du dépôt",
+        "reason": "Raison de la suppression",
+        "type": "Type de suppression"
+    },
     "dialog_update": {
         "available_version": "Version disponible",
         "changelog": "Changelog",
         "installed_version": "Version installée",
         "releasenotes": "Notes de version pour {release}",
         "title": "Mise à jour en attente"
+    },
+    "dialog": {
+        "reload": {
+            "confirm": "Voulez-vous faire cela maintenant ?",
+            "description": "Vous devez vider le cache de votre navigateur lors de la modification des ressources Lovelace."
+        }
     },
     "entry": {
         "information": "Information",
@@ -141,17 +165,26 @@
                 "content": "Certains dépôts peuvent ne pas apparaître tant que cette opération n'est pas terminée",
                 "title": "Tâches d’arrière-plan en attente"
             },
+            "removed": "Dépôt '{repository}' supprimé",
             "resources": {
                 "content": "Vous avez {number} éléments Lovelace qui ne sont pas chargés correctement dans Lovelace.",
                 "title": "Non chargé dans Lovelace"
             },
             "restart": {
-                "content": "Vous disposez de {number} intégrations qui nécessitent un redémarrage de Home Assistant, vous pouvez le faire à partir de la section \"Commandes du serveur\" sous la partie configuration de l'interface utilisateur de Home Assistant.",
+                "content": "Vous disposez de {number} intégrations qui nécessitent un redémarrage de Home Assistant, vous pouvez le faire à partir de la section \"Contrôle du serveur\" dans la partie configuration de l'interface utilisateur de Home Assistant.",
                 "title": "En attente de redémarrage"
+            },
+            "setup": {
+                "content": "HACS est en cours de configuration, pendant ce temps, certaines informations peuvent être manquantes ou incorrectes",
+                "title": "HACS se met en place"
             },
             "startup": {
                 "content": "HACS démarre, pendant ce temps, certaines informations peuvent être manquantes ou incorrectes",
                 "title": "HACS est en train de démarrer"
+            },
+            "waiting": {
+                "content": "HACS attend que Home Assistant termine le démarrage avant de démarrer les tâches de démarrage",
+                "title": "HACS attend"
             },
             "wrong_frontend_installed": {
                 "content": "Vous avez {running} du frontend HACS installé, mais la version {expected} était attendue. Si ce message s'affiche, Home Assistant n'a pas pu installer la nouvelle version, essayez de redémarrer Home Assistant.",
@@ -179,7 +212,7 @@
                 "data": {
                     "appdaemon": "Activer la découverte et le suivi des applications AppDaemon",
                     "country": "Filtrer par code pays.",
-                    "debug": "Activez le débogage.",
+                    "debug": "Activer le débogage.",
                     "experimental": "Activer les fonctionnalités expérimentales",
                     "netdaemon": "Activer la découverte et le suivi des applications NetDaemon",
                     "not_in_use": "Non utilisé avec YAML",
@@ -228,7 +261,7 @@
         "hide": "Masquer",
         "hide_beta": "Masquer les bêta",
         "install": "Installer",
-        "installed": "Installé",
+        "installed": "Installés",
         "lovelace_copy_example": "Copier cet exemple dans le presse-papier",
         "lovelace_instruction": "Quand vous l'ajoutez à votre configuration lovelace, utilisez",
         "lovelace_no_js_type": "Impossible de déterminer le type de plugin, veuillez vérifier le dépôt",
@@ -249,12 +282,18 @@
         "upgrade": "Mettre à jour"
     },
     "search": {
+        "installed": "Rechercher des dépôts installés",
+        "installed_new": "Rechercher des dépôts installés ou nouveaux",
         "placeholder": "Rechercher un dépôt"
     },
     "sections": {
         "about": {
             "description": "Afficher des informations sur le système HACS",
             "title": "À propos de"
+        },
+        "addon": {
+            "description": "Il n'y a pas de modules complémentaires dans HACS, mais vous pouvez cliquer ici pour aller au superviseur",
+            "title": "Modules complémentaires"
         },
         "automation": {
             "description": "C'est ici que vous trouverez les scripts python, les applications AppDaemon et NetDaemon",

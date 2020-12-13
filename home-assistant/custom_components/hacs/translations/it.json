@@ -6,6 +6,7 @@
         "appdaemon_apps": "Applicazioni AppDaemon",
         "appdaemon_plural": "Applicazioni AppDaemon",
         "background_task": "Attività in esecuzione, questa pagina sarà ricaricata al termine.",
+        "cancel": "Annulla",
         "check_log_file": "Controlla il tuo file di registro per maggiori dettagli.",
         "continue": "Continua",
         "disabled": "Disabilitato",
@@ -30,6 +31,7 @@
         "python_script": "Script python",
         "python_script_plural": "Script in Python",
         "python_scripts": "Script python",
+        "reload": "Ricarica",
         "repositories": "Repository",
         "repository": "Repository",
         "settings": "Impostazioni",
@@ -41,25 +43,25 @@
         "version": "Versione"
     },
     "config": {
-        "abort": {
-            "single_instance_allowed": "È consentita una sola configurazione di HACS."
-        },
-        "error": {
-            "auth": "Il token di accesso personale non è corretto."
-        },
         "step": {
+            "device": {
+                "description": "Open {url} and paste this key `{code}` to authorize HACS, when you have done that click 'submit'",
+                "title": "HACS"
+            },
             "user": {
                 "data": {
-                    "appdaemon": "Abilita il rilevamento e il monitoraggio delle applicazioni AppDaemon",
-                    "netdaemon": "Abilita il rilevamento e il monitoraggio delle applicazioni NetDaemon",
-                    "python_script": "Abilita il rilevamento e il monitoraggio dei python_scripts",
-                    "sidepanel_icon": "Icona nel pannello laterale",
-                    "sidepanel_title": "Titolo nel pannello laterale",
-                    "theme": "Abilita individuazione e tracciamento dei temi",
-                    "token": "Token di accesso personale GitHub"
-                },
-                "description": "Se hai bisogno di aiuto con la configurazione dai un'occhiata qui: https:\/\/hacs.xyz\/docs\/configuration\/start",
-                "title": "HACS (Home Assistant Community Store)"
+                    "acc_addons": "I know that there are no add-ons in HACS",
+                    "acc_disable": "I know that if I get issues with Home Assistant I should disable all my custom_components",
+                    "acc_logs": "I know how to access Home Assistant logs",
+                    "acc_untested": "I know that everything inside HACS is custom and untested by Home Assistant",
+                    "appdaemon": "Enable AppDaemon apps discovery & tracking",
+                    "netdaemon": "Enable NetDaemon apps discovery & tracking",
+                    "python_script": "Enable python_scripts discovery & tracking",
+                    "sidepanel_icon": "Side panel icon",
+                    "sidepanel_title": "Side panel title",
+                    "theme": "Enable Themes discovery & tracking",
+                    "token": "GitHub Personal Access Token"
+                }
             }
         },
         "title": "HACS (Home Assistant Community Store)"
@@ -129,6 +131,12 @@
         "releasenotes": "Note di rilascio per {release}",
         "title": "Aggiornamento in sospeso"
     },
+    "dialog": {
+        "reload": {
+            "confirm": "Vuoi farlo adesso?",
+            "description": "È necessario cancellare la cache del browser quando si modificano le risorse di Lovelace."
+        }
+    },
     "entry": {
         "information": "Informazioni",
         "intro": "Gli aggiornamenti e i messaggi importanti verranno visualizzati qui se presenti",
@@ -149,9 +157,17 @@
                 "content": "Hai {number} integrazioni che richiedono il riavvio di Home Assistant, puoi farlo dalla sezione \"Controlli del server\" nella sezione Impostazioni dell'interfaccia utente di Home Assistant.",
                 "title": "In attesa di riavvio"
             },
+            "setup": {
+                "content": "HACS è in fase di configurazione, durante questo periodo alcune informazioni potrebbero essere mancanti o errate",
+                "title": "HACS si sta installando"
+            },
             "startup": {
                 "content": "HACS si sta avviando, durante questo periodo alcune informazioni potrebbero essere mancanti o errate",
                 "title": "HACS si sta avviando"
+            },
+            "waiting": {
+                "content": "HACS è in attesa che Home Assistant finisca l'avvio prima di iniziare le attività di avvio",
+                "title": "HACS è in attesa"
             },
             "wrong_frontend_installed": {
                 "content": "Hai installato {running} del frontend HACS, ma era attesa la versione {expected}, se viene visualizzato questo messaggio Home Assistant non è stato in grado di installare la nuova versione, prova a riavviare Home Assistant.",
@@ -230,18 +246,18 @@
         "install": "Installa",
         "installed": "Installato",
         "lovelace_copy_example": "Copia l'esempio negli appunti",
-        "lovelace_instruction": "Quando lo aggiungi nella configurazione di lovelace, usa questo",
+        "lovelace_instruction": "Quando lo aggiungi nella configurazione di Lovelace, usa questo",
         "lovelace_no_js_type": "Impossibile determinare il tipo di questo elemento, controllare il repository.",
         "newest": "Più recente",
         "note_appdaemon": "dovrai aggiungerlo nel file 'apps.yaml'",
         "note_installed": "Una volta installato, si troverà in",
         "note_integration": "dovrai aggiungerlo nel file 'configuration.yaml'",
-        "note_plugin": "devi aggiungere la configurazione nel file 'ui-lovelace.yaml' oppure via Editor RAW della UI.",
-        "note_plugin_post_107": "devi aggiungere la configurazione nel file 'ui-lovelace.yaml' oppure via Editor RAW della UI.",
+        "note_plugin": "è comunque necessario aggiungerlo alla configurazione Lovelace ('ui-lovelace.yaml' o nell'editor grezzo di configurazione dell'Interfaccia Utente)",
+        "note_plugin_post_107": "è comunque necessario aggiungerlo alla configurazione di Lovelace ('configuration.yaml' o nell'editor di risorse '\/config\/lovelace\/resources')",
         "open_issue": "Segnala anomalia",
         "open_plugin": "Apri elemento",
         "reinstall": "Reinstalla",
-        "repository": "Archivio Software (Repository)",
+        "repository": "Repository",
         "restart_home_assistant": "Riavvia Home Assistant",
         "show_beta": "Visualizza beta",
         "uninstall": "Rimuovi",
@@ -257,6 +273,10 @@
         "about": {
             "description": "Mostra informazioni su HACS",
             "title": "Informazioni su"
+        },
+        "addon": {
+            "description": "Non ci sono componenti aggiuntivi in HACS, ma puoi fare clic qui per accedere al supervisore",
+            "title": "Componenti aggiuntivi"
         },
         "automation": {
             "description": "Qui trovi python_scripts, app AppDaemon e app NetDaemon",

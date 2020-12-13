@@ -26,25 +26,27 @@
         "version": "Versiune"
     },
     "config": {
-        "abort": {
-            "single_instance_allowed": "Doar o singură configurație pentru HACS este permisă."
-        },
-        "error": {
-            "auth": "Token-ul de acces personal nu este corect."
-        },
         "step": {
+            "device": {
+                "description": "Open {url} and paste this key `{code}` to authorize HACS, when you have done that click 'submit'",
+                "title": "HACS"
+            },
             "user": {
                 "data": {
-                    "appdaemon": "Activați descoperirea și urmărirea aplicațiilor AppDaemon",
-                    "netdaemon": "Activați descoperirea și urmărirea aplicațiilor NetDaemon",
-                    "python_script": "Activați descoperirea și urmărirea python_scripts",
-                    "sidepanel_icon": "Pictogramă Panou lateral",
-                    "sidepanel_title": "Titlu panou lateral",
-                    "theme": "Activați descoperirea și urmărirea temelor",
-                    "token": "Token de acces personal GitHub"
+                    "acc_addons": "I know that there are no add-ons in HACS",
+                    "acc_disable": "I know that if I get issues with Home Assistant I should disable all my custom_components",
+                    "acc_logs": "I know how to access Home Assistant logs",
+                    "acc_untested": "I know that everything inside HACS is custom and untested by Home Assistant",
+                    "appdaemon": "Enable AppDaemon apps discovery & tracking",
+                    "netdaemon": "Enable NetDaemon apps discovery & tracking",
+                    "python_script": "Enable python_scripts discovery & tracking",
+                    "sidepanel_icon": "Side panel icon",
+                    "sidepanel_title": "Side panel title",
+                    "theme": "Enable Themes discovery & tracking",
+                    "token": "GitHub Personal Access Token"
                 },
-                "description": "Dacă aveți nevoie de ajutor pentru configurare, uitați-vă aici: https:\/\/hacs.xyz\/docs\/configuration\/start",
-                "title": "HACS (Home Assistant Community Store)"
+                "description": "Before you can setup HACS you need to acknowledge the following",
+                "title": "HACS"
             }
         },
         "title": "HACS (Home Assistant Community Store)"

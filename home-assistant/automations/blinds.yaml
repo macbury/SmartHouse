@@ -11,10 +11,9 @@
         entity_id: sun.sun
         state: above_horizon
   action:
-    - service: cover.set_cover_position
+    - service: cover.open_cover
       data:
         entity_id: cover.living_room
-        position: 47
 
 - alias: Close blinds if it is too bright
   trigger:

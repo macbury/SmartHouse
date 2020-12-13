@@ -6,12 +6,14 @@
         "appdaemon_apps": "AppDaemon Appok",
         "appdaemon_plural": "AppDaemon appok",
         "background_task": "Éppen háttérfeladat fut, ez az oldal frissülni fog, ha kész.",
+        "cancel": "Mégse",
         "check_log_file": "További részletekért ellenőrizd a naplófájlt.",
         "continue": "Folytatás",
         "disabled": "Tiltva",
         "documentation": "Dokumentáció",
         "element": "bővítmény",
         "hacs_is_disabled": "A HACS le van tiltva",
+        "ignore": "Mellőzés",
         "install": "Telepítés",
         "installed": "Telepített",
         "integration": "Integráció",
@@ -30,6 +32,7 @@
         "python_script": "Python Szkript",
         "python_script_plural": "Python szkriptek",
         "python_scripts": "Python Szkriptek",
+        "reload": "Újratöltés",
         "repositories": "Tárolók",
         "repository": "Tároló",
         "settings": "beállítások",
@@ -42,24 +45,33 @@
     },
     "config": {
         "abort": {
-            "single_instance_allowed": "Csak egyetlen HACS-konfiguráció megengedett."
+            "single_instance_allowed": "Csak egyetlen HACS konfiguráció megengedett."
         },
         "error": {
-            "auth": "A Személyes Hozzáférési Token nem megfelelő."
+            "acc": "El kell fogadnod minden nyilatkozatot a folytatás előtt",
+            "auth": "A személyes hozzáférési token nem megfelelő"
         },
         "step": {
+            "device": {
+                "description": "Open {url} and paste this key `{code}` to authorize HACS, when you have done that click 'submit'",
+                "title": "HACS"
+            },
             "user": {
                 "data": {
-                    "appdaemon": "AppDaemon appok felfedezésének és nyomon követésének engedélyezése",
-                    "netdaemon": "NetDaemon appok felfedezésének és nyomon követésének engedélyezése",
-                    "python_script": "Python szkriptek felfedezésének és nyomon követésének engedélyezése",
-                    "sidepanel_icon": "Oldalsó panel ikon",
-                    "sidepanel_title": "Oldalsó panel cím",
-                    "theme": "Témák felfedezésének és nyomon követésének engedélyezése",
-                    "token": "GitHub Személyes Hozzáférési Token"
+                    "acc_addons": "I know that there are no add-ons in HACS",
+                    "acc_disable": "I know that if I get issues with Home Assistant I should disable all my custom_components",
+                    "acc_logs": "I know how to access Home Assistant logs",
+                    "acc_untested": "I know that everything inside HACS is custom and untested by Home Assistant",
+                    "appdaemon": "Enable AppDaemon apps discovery & tracking",
+                    "netdaemon": "Enable NetDaemon apps discovery & tracking",
+                    "python_script": "Enable python_scripts discovery & tracking",
+                    "sidepanel_icon": "Side panel icon",
+                    "sidepanel_title": "Side panel title",
+                    "theme": "Enable Themes discovery & tracking",
+                    "token": "GitHub Personal Access Token"
                 },
-                "description": "Ha segítségre van szükséged a konfigurációval kapcsolatban, akkor tekintsd meg ezt az oldalt: https:\/\/hacs.xyz\/docs\/configuration\/start",
-                "title": "HACS (Home Assistant Community Store)"
+                "description": "Before you can setup HACS you need to acknowledge the following",
+                "title": "HACS"
             }
         },
         "title": "HACS (Home Assistant Community Store)"
@@ -122,11 +134,24 @@
         "type": "Típus",
         "url": "URL"
     },
+    "dialog_removed": {
+        "link": "Külső link további információkhoz",
+        "name": "Tároló neve",
+        "reason": "Eltávolítás oka",
+        "type": "Eltávolítás típusa"
+    },
     "dialog_update": {
         "available_version": "Elérhető verzió",
         "changelog": "Változási napló",
         "installed_version": "Telepített verzió",
+        "releasenotes": "{release} kiadási megjegyzései",
         "title": "Frissítés érhető el"
+    },
+    "dialog": {
+        "reload": {
+            "confirm": "Meg szeretnéd most ezt tenni?",
+            "description": "Törölnöd kell a böngésződ gyorsítótárát a Lovelace erőforrások módosításakor."
+        }
     },
     "entry": {
         "information": "Információ",
@@ -140,9 +165,30 @@
                 "content": "Előfordulhat, hogy egyes tárolók nem jelennek meg, amíg ez be nem fejeződik",
                 "title": "Függőben lévő háttérfeladatok"
             },
+            "removed": "Eltávolított tároló '{repository}'",
+            "resources": {
+                "title": "Nincs betöltve a Lovelace-ben"
+            },
+            "restart": {
+                "title": "Újraindításra vár"
+            },
+            "setup": {
+                "content": "A HACS beállítása folyamatban van, ez idő alatt bizonyos információk hiányozhatnak vagy helytelenek lehetnek",
+                "title": "A HACS beállítása folyamatban van"
+            },
             "startup": {
-                "content": "A HACS éppen indul, ezidő alatt egyes információk hiányozhatnak vagy helytelenek lehetnek",
+                "content": "A HACS éppen indul, ez idő alatt bizonyos információk hiányozhatnak vagy helytelenek lehetnek",
                 "title": "A HACS éppen indul"
+            },
+            "waiting": {
+                "content": "A HACS az indítási feladatok megkezdése előtt arra vár, hogy a Home Assistant befejezze az indulást",
+                "title": "A HACS vár"
+            },
+            "wrong_frontend_installed": {
+                "title": "Nem várt frontend verzió"
+            },
+            "wrong_frontend_loaded": {
+                "title": "Nem várt frontend verzió"
             }
         },
         "pending_updates": "Frissítések érhetők el"
@@ -188,8 +234,10 @@
         "hide": "Elrejtés",
         "information": "Információ",
         "new_repository": "Új tároló",
+        "not_loaded": "Nincs betöltve",
         "open_issue": "Probléma jelentése",
         "open_source": "Forrás megnyitása",
+        "pending_restart": "Újraindításra vár",
         "pending_update": "Frissítés érhető el",
         "reinstall": "Újratelepítés",
         "report": "Jelentés eltávolításra",
@@ -230,12 +278,18 @@
         "upgrade": "Frissítés"
     },
     "search": {
+        "installed": "Telepített tárolók keresése",
+        "installed_new": "Telepített vagy új tárolók keresése",
         "placeholder": "Tároló keresése"
     },
     "sections": {
         "about": {
             "description": "Információk megjelenítése a HACS-ről",
             "title": "Névjegy"
+        },
+        "addon": {
+            "description": "A HACS-ban nincsenek kiegészítők, de ide kattintva eljuthatsz a supervisor-hoz",
+            "title": "Kiegészítők"
         },
         "automation": {
             "description": "Itt Python szkripteket, AppDaemon és NetDaemon appokat találsz",
@@ -286,6 +340,7 @@
         "no_repositories": "Nincsenek tárolók",
         "no_repositories_desc1": "Úgy tűnik, még nincsenek telepítve tárolók ebben a szekcióban.",
         "no_repositories_desc2": "Kattints az alsó sarokban található + jelre az első hozzáadásához!",
+        "no_repositories_found_desc2": "Próbálj valami mást keresni!",
         "pending_upgrades": "Frissítések érhetők el",
         "placeholder_search": "Kérlek adj meg egy keresési kifejezést...",
         "sort": "rendezés",

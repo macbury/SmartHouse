@@ -36,25 +36,27 @@
         "version": "Versjon"
     },
     "config": {
-        "abort": {
-            "single_instance_allowed": "Berre éin enkelt konfigurasjon av HACS er tillete."
-        },
-        "error": {
-            "auth": "Personleg tilgangsnøkkel er ikkje korrekt."
-        },
         "step": {
+            "device": {
+                "description": "Open {url} and paste this key `{code}` to authorize HACS, when you have done that click 'submit'",
+                "title": "HACS"
+            },
             "user": {
                 "data": {
-                    "appdaemon": "Aktiver AppDeamon-appar-oppdaging og sporing",
-                    "netdaemon": "Aktiver NetDeamon-appar-oppdaging og sporing",
-                    "python_script": "Aktiver pythonscript-oppdaging og sporing",
-                    "sidepanel_icon": "Sidepanelikon",
-                    "sidepanel_title": "Sidepaneltittel",
-                    "theme": "Aktiver tema-oppdaging og sporing",
-                    "token": "Personleg GitHub tilgangsnøkkel"
+                    "acc_addons": "I know that there are no add-ons in HACS",
+                    "acc_disable": "I know that if I get issues with Home Assistant I should disable all my custom_components",
+                    "acc_logs": "I know how to access Home Assistant logs",
+                    "acc_untested": "I know that everything inside HACS is custom and untested by Home Assistant",
+                    "appdaemon": "Enable AppDaemon apps discovery & tracking",
+                    "netdaemon": "Enable NetDaemon apps discovery & tracking",
+                    "python_script": "Enable python_scripts discovery & tracking",
+                    "sidepanel_icon": "Side panel icon",
+                    "sidepanel_title": "Side panel title",
+                    "theme": "Enable Themes discovery & tracking",
+                    "token": "GitHub Personal Access Token"
                 },
-                "description": "Dersom du treng hjelp med konfigurasjonen, ta ein kik her: https:\/\/hacs.xyz\/docs\/configuration\/start",
-                "title": "HACS (Home Assistant Community Store)"
+                "description": "Before you can setup HACS you need to acknowledge the following",
+                "title": "HACS"
             }
         },
         "title": "HACS (Home Assistant Community Store)"

@@ -1,0 +1,34 @@
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.certbot
+  vars:
+    certbot_install_from_source: true
+    certbot_keep_updated: true
+    certbot_auto_renew: true
+    certbot_admin_email: "{{ email }}"
+    certbot_create_if_missing: true
+    certbot_certs:
+      - domains:
+        - "{{ transfer_domain }}"
+
+# Nginx
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.nginx
+  handlers:
+    - name: restart nginx
+      become: yes
+      service:
+        name: nginx
+        enabled: yes
+        state: restarted
+  tasks:
+    - name: Create /etc/nginx/sites-enabled/transfer.conf
+      template:
+        src: transfer.conf.j2
+        dest: /etc/nginx/sites-enabled/transfer.conf
+      notify:
+        - reload nginx
+        - restart nginx

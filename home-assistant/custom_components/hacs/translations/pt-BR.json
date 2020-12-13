@@ -12,6 +12,7 @@
         "documentation": "Documentação",
         "element": "elemento",
         "hacs_is_disabled": "HACS está desativado",
+        "ignore": "Ignorar",
         "install": "Instalar",
         "installed": "instalado",
         "integration": "Integração",
@@ -41,25 +42,27 @@
         "version": "Versão"
     },
     "config": {
-        "abort": {
-            "single_instance_allowed": "Apenas uma configuração do HACS é permitida."
-        },
-        "error": {
-            "auth": "Token de acesso pessoal incorreto."
-        },
         "step": {
+            "device": {
+                "description": "Open {url} and paste this key `{code}` to authorize HACS, when you have done that click 'submit'",
+                "title": "HACS"
+            },
             "user": {
                 "data": {
-                    "appdaemon": "Habilitar descoberta & rastreamento de apps AppDaemon",
-                    "netdaemon": "Habilitar NetDaemon apps descoberta & rastreamento",
-                    "python_script": "Habilitar descoberta & rastreamento de python_scripts",
-                    "sidepanel_icon": "Icone do painel lateral",
-                    "sidepanel_title": "Titulo do painel lateral",
-                    "theme": "Habilitar descoberta & rastreamento de temas",
-                    "token": "Token de acesso pessoal do GitHub"
+                    "acc_addons": "I know that there are no add-ons in HACS",
+                    "acc_disable": "I know that if I get issues with Home Assistant I should disable all my custom_components",
+                    "acc_logs": "I know how to access Home Assistant logs",
+                    "acc_untested": "I know that everything inside HACS is custom and untested by Home Assistant",
+                    "appdaemon": "Enable AppDaemon apps discovery & tracking",
+                    "netdaemon": "Enable NetDaemon apps discovery & tracking",
+                    "python_script": "Enable python_scripts discovery & tracking",
+                    "sidepanel_icon": "Side panel icon",
+                    "sidepanel_title": "Side panel title",
+                    "theme": "Enable Themes discovery & tracking",
+                    "token": "GitHub Personal Access Token"
                 },
-                "description": "Se você preciar de ajuda com a configuração olhe aqui: https:\/\/hacs.xyz\/docs\/configuration\/start",
-                "title": "HACS (Home Assistant Community Store)"
+                "description": "Before you can setup HACS you need to acknowledge the following",
+                "title": "HACS"
             }
         },
         "title": "HACS (Home Assistant Community Store)"
@@ -122,6 +125,12 @@
         "type": "Tipo",
         "url": "URL"
     },
+    "dialog_removed": {
+        "link": "Link externo para mais informações",
+        "name": "Nome do Repositório",
+        "reason": "Motivo da remoção",
+        "type": "Tipo da Remoção"
+    },
     "dialog_update": {
         "available_version": "Versão disponível",
         "changelog": "Registro de mudanças",
@@ -131,7 +140,7 @@
     },
     "entry": {
         "information": "Informações",
-        "intro": "Atualizações e mensagens importantes serão mostradas aqui se houver",
+        "intro": "Atualizações e mensagens importantes serão mostradas aqui, quando necessário",
         "messages": {
             "disabled": {
                 "content": "Verifique seu arquivo de log para mais detalhes.",
@@ -141,12 +150,13 @@
                 "content": "Alguns repositórios podem não aparecer até que isso seja concluído",
                 "title": "Tarefas em segundo plano pendentes"
             },
+            "removed": "Repositório {repository} removido",
             "resources": {
-                "content": "Tem {número} elementos do Lovelace que não são carregados corretamente no Lovelace.",
-                "title": "Não carregado em Lovelace"
+                "content": "Existem {number} elementos do Lovelace que não estão carregados corretamente no Lovelace.",
+                "title": "Não carregado no Lovelace"
             },
             "restart": {
-                "content": "Tem {número} integrações que requerem um reinício do Home Assistant. Você pode fazer isso na seção 'Controles do Servidor' na parte de configuração do Home Assistant UI.",
+                "content": "Existem {number} integrações que requerem um reinício do Home Assistant. Você pode fazer isso na seção 'Controles do Servidor' na parte de configuração do Home Assistant UI.",
                 "title": "Reinicialização pendente"
             },
             "startup": {
@@ -245,12 +255,12 @@
         "restart_home_assistant": "Reiniciar Home Assistant",
         "show_beta": "Mostrar beta",
         "uninstall": "Desinstalar",
-        "update_information": "Atualizar informação",
-        "upgrade": "Melhorar"
+        "update_information": "Atualizar informações",
+        "upgrade": "Atualizar"
     },
     "search": {
-        "installed": "Procure repositórios instalados",
-        "installed_new": "Procure repositórios instalados ou novos",
+        "installed": "Buscar repositórios instalados",
+        "installed_new": "Buscar repositórios instalados ou novos",
         "placeholder": "Procurar repositório"
     },
     "sections": {
@@ -292,7 +302,7 @@
         "repository_configuration": "Configuração do Repositório",
         "save": "Salvar",
         "table": "Tabela",
-        "table_view": "Vista de mesa",
+        "table_view": "Visualização em tabela",
         "unhide": "reexibir",
         "upgrade_all": "Atualizar tudo"
     },

@@ -6,12 +6,14 @@
         "appdaemon_apps": "AppDaemon应用",
         "appdaemon_plural": "AppDaemon应用",
         "background_task": "后台任务正在运行，完成后将重新加载此页面。",
+        "cancel": "取消",
         "check_log_file": "请查看日志文件以了解更多信息。",
         "continue": "继续",
         "disabled": "禁用",
         "documentation": "文档",
         "element": "元素",
         "hacs_is_disabled": "HACS已禁用",
+        "ignore": "忽略",
         "install": "安装",
         "installed": "已安装",
         "integration": "集成",
@@ -30,6 +32,7 @@
         "python_script": "Python脚本",
         "python_script_plural": "Python脚本",
         "python_scripts": "Python脚本",
+        "reload": "重新加载",
         "repositories": "储存库数量",
         "repository": "存储库",
         "settings": "设置",
@@ -45,21 +48,30 @@
             "single_instance_allowed": "仅允许单个HACS配置。"
         },
         "error": {
+            "acc": "您需要先确认所有声明，然后才能继续",
             "auth": "个人访问令牌不正确。"
         },
         "step": {
+            "device": {
+                "description": "Open {url} and paste this key `{code}` to authorize HACS, when you have done that click 'submit'",
+                "title": "HACS"
+            },
             "user": {
                 "data": {
-                    "appdaemon": "启用AppDaemon应用发现和跟踪",
-                    "netdaemon": "启用NetDaemon应用发现和跟踪",
-                    "python_script": "启用python_scripts发现和跟踪",
-                    "sidepanel_icon": "侧面板图标",
-                    "sidepanel_title": "侧面板标题",
-                    "theme": "启用主题发现和跟踪",
-                    "token": "GitHub个人访问令牌"
+                    "acc_addons": "I know that there are no add-ons in HACS",
+                    "acc_disable": "I know that if I get issues with Home Assistant I should disable all my custom_components",
+                    "acc_logs": "I know how to access Home Assistant logs",
+                    "acc_untested": "I know that everything inside HACS is custom and untested by Home Assistant",
+                    "appdaemon": "Enable AppDaemon apps discovery & tracking",
+                    "netdaemon": "Enable NetDaemon apps discovery & tracking",
+                    "python_script": "Enable python_scripts discovery & tracking",
+                    "sidepanel_icon": "Side panel icon",
+                    "sidepanel_title": "Side panel title",
+                    "theme": "Enable Themes discovery & tracking",
+                    "token": "GitHub Personal Access Token"
                 },
-                "description": "如果您需要有关配置的帮助，请在此处查看：https:\/\/hacs.xyz\/docs\/configuration\/start",
-                "title": "HACS (Home Assistant Community Store)"
+                "description": "Before you can setup HACS you need to acknowledge the following",
+                "title": "HACS"
             }
         },
         "title": "HACS (Home Assistant Community Store)"
@@ -122,12 +134,24 @@
         "type": "Type",
         "url": "URL"
     },
+    "dialog_removed": {
+        "link": "外部链接以获取更多信息",
+        "name": "存储库名称",
+        "reason": "删除原因",
+        "type": "删除类型"
+    },
     "dialog_update": {
         "available_version": "可用版本",
         "changelog": "更改日志",
         "installed_version": "已安装版本",
         "releasenotes": "更新日志{release}",
         "title": "待更新"
+    },
+    "dialog": {
+        "reload": {
+            "confirm": "您现在要这样做吗？",
+            "description": "更改Lovelace资源时，您需要清除浏览器缓存。"
+        }
     },
     "entry": {
         "information": "详情",
@@ -141,6 +165,7 @@
                 "content": "在完成此操作之前，某些存储库可能不会显示",
                 "title": "待处理的后台任务"
             },
+            "removed": "删除了存储库“ {repository}”",
             "resources": {
                 "content": "您有{number} 个Lovelace元素未正确加载到Lovelace中。",
                 "title": "未载入Lovelace"
@@ -149,9 +174,17 @@
                 "content": "您有{number}集成，需要重新启动Home Assistant，您可以从Home Assistant 的配置下的“服务器控制”部分执行此操作。",
                 "title": "待重启"
             },
+            "setup": {
+                "content": "HACS正在配置，在此期间某些信息可能丢失或不正确",
+                "title": "HACS正在配置"
+            },
             "startup": {
                 "content": "HACS正在启动，在此期间某些信息可能丢失或不正确",
                 "title": "HACS正在启动"
+            },
+            "waiting": {
+                "content": "HACS在开始启动任务之前正在等待Home Assistant完成启动",
+                "title": "HACS正在等待"
             },
             "wrong_frontend_installed": {
                 "content": "您已经安装了{running}的HACS前端，但是{expected}版本是{expected} ，如果看到此消息，则Home Assistant无法安装新版本，请尝试重新启动Home Assistant。",
@@ -249,12 +282,18 @@
         "upgrade": "升级"
     },
     "search": {
+        "installed": "搜索已安装的存储库",
+        "installed_new": "搜索已安装或新的存储库",
         "placeholder": "搜索存储库"
     },
     "sections": {
         "about": {
             "description": "显示有关HACS的信息",
             "title": "关于"
+        },
+        "addon": {
+            "description": "HACS 中没有附加组件，但您可以单击此处联系管理员",
+            "title": "附加组件"
         },
         "automation": {
             "description": "在这里可以找到python_scripts，AppDaemon应用程序和NetDaemon应用程序",

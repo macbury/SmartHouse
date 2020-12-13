@@ -26,25 +26,27 @@
         "version": "Version"
     },
     "config": {
-        "abort": {
-            "single_instance_allowed": "Endast en konfiguration kan användas i HACS."
-        },
-        "error": {
-            "auth": "Personal Access Token är inte korrekt."
-        },
         "step": {
+            "device": {
+                "description": "Open {url} and paste this key `{code}` to authorize HACS, when you have done that click 'submit'",
+                "title": "HACS"
+            },
             "user": {
                 "data": {
-                    "appdaemon": "Upptäck och följ Appdaemon applikationer",
-                    "netdaemon": "Upptäck och följ NetDaemon applikationer",
-                    "python_script": "Upptäck och följ python_scripts",
-                    "sidepanel_icon": "Ikon för sidpanel",
-                    "sidepanel_title": "Rubrik för sidpanel",
-                    "theme": "Upptäck och följ teman",
+                    "acc_addons": "I know that there are no add-ons in HACS",
+                    "acc_disable": "I know that if I get issues with Home Assistant I should disable all my custom_components",
+                    "acc_logs": "I know how to access Home Assistant logs",
+                    "acc_untested": "I know that everything inside HACS is custom and untested by Home Assistant",
+                    "appdaemon": "Enable AppDaemon apps discovery & tracking",
+                    "netdaemon": "Enable NetDaemon apps discovery & tracking",
+                    "python_script": "Enable python_scripts discovery & tracking",
+                    "sidepanel_icon": "Side panel icon",
+                    "sidepanel_title": "Side panel title",
+                    "theme": "Enable Themes discovery & tracking",
                     "token": "GitHub Personal Access Token"
                 },
-                "description": "Om du behöver hjälp med konfigurationen, se här: https:\/\/hacs.xyz\/docs\/configuration\/start",
-                "title": "HACS (Home Assistant Community Store)"
+                "description": "Before you can setup HACS you need to acknowledge the following",
+                "title": "HACS"
             }
         },
         "title": "HACS (Home Assistant Community Store)"
@@ -114,7 +116,7 @@
         "installed": "Installerad",
         "lovelace_copy_example": "Kopiera exemplet till urklipp",
         "lovelace_instruction": "När du lägger till denna till din lovelace konfiguration, använd",
-        "lovelace_no_js_type": "Kan inte avgöra villken typ av plugin, kontrollera i GIT \nrepository",
+        "lovelace_no_js_type": "Kan inte avgöra villken typ av plugin, kontrollera i GIT \\nrepository",
         "newest": "nyaste",
         "note_appdaemon": "du behöver fortfarande lägga till den till filen 'apps.yaml'",
         "note_installed": "När den är installerad kommer den finnas i",
@@ -130,6 +132,11 @@
         "uninstall": "Avinstallera",
         "update_information": "Uppdatera information",
         "upgrade": "Uppdatera"
+    },
+    "sections": {
+        "addon": {
+            "title": "Tillägg"
+        }
     },
     "settings": {
         "add_custom_repository": "LÄGG TILL ETT REPOSITORY",

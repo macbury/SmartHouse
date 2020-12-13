@@ -12,6 +12,7 @@
         "documentation": "Документация",
         "element": "элемент",
         "hacs_is_disabled": "HACS отключен",
+        "ignore": "Игнорировать",
         "install": "Установить",
         "installed": "установлено",
         "integration": "Интеграция",
@@ -41,25 +42,27 @@
         "version": "Версия"
     },
     "config": {
-        "abort": {
-            "single_instance_allowed": "Разрешена только одна настройка HACS."
-        },
-        "error": {
-            "auth": "Неверный токен персонального доступа."
-        },
         "step": {
+            "device": {
+                "description": "Open {url} and paste this key `{code}` to authorize HACS, when you have done that click 'submit'",
+                "title": "HACS"
+            },
             "user": {
                 "data": {
-                    "appdaemon": "Включить поиск и отслеживание приложений AppDaemon",
-                    "netdaemon": "Включить поиск и отслеживание приложений NetDaemon",
-                    "python_script": "Включить поиск и отслеживание скриптов Python",
-                    "sidepanel_icon": "Иконка в боковом меню",
-                    "sidepanel_title": "Название в боковом меню",
-                    "theme": "Включить поиск и отслеживание тем",
-                    "token": "Персональный токен доступа GitHub"
+                    "acc_addons": "I know that there are no add-ons in HACS",
+                    "acc_disable": "I know that if I get issues with Home Assistant I should disable all my custom_components",
+                    "acc_logs": "I know how to access Home Assistant logs",
+                    "acc_untested": "I know that everything inside HACS is custom and untested by Home Assistant",
+                    "appdaemon": "Enable AppDaemon apps discovery & tracking",
+                    "netdaemon": "Enable NetDaemon apps discovery & tracking",
+                    "python_script": "Enable python_scripts discovery & tracking",
+                    "sidepanel_icon": "Side panel icon",
+                    "sidepanel_title": "Side panel title",
+                    "theme": "Enable Themes discovery & tracking",
+                    "token": "GitHub Personal Access Token"
                 },
-                "description": "Если вам нужна помощь с настройкой, посмотрите: https:\/\/hacs.xyz\/docs\/configuration\/start",
-                "title": "HACS (Home Assistant Community Store)"
+                "description": "Before you can setup HACS you need to acknowledge the following",
+                "title": "HACS"
             }
         },
         "title": "HACS (Home Assistant Community Store)"
@@ -122,6 +125,12 @@
         "type": "Тип",
         "url": "Ссылка"
     },
+    "dialog_removed": {
+        "link": "Внешняя ссылка для получения дополнительной информации",
+        "name": "Имя репозитория",
+        "reason": "Причина удаления",
+        "type": "Тип удаления"
+    },
     "dialog_update": {
         "available_version": "Доступная версия",
         "changelog": "Изменения",
@@ -141,6 +150,7 @@
                 "content": "Некоторые репозитории могут не отображаться до тех пор, пока это не будет завершено",
                 "title": "Выполняются фоновые задачи"
             },
+            "removed": "Репозиторий удален '{repository}'",
             "resources": {
                 "content": "У вас есть {number} элементов Lovelace, которые не загружаются должным образом.",
                 "title": "Не загружено в Lovelace"
@@ -249,6 +259,8 @@
         "upgrade": "Обновить"
     },
     "search": {
+        "installed": "Поиск установленных репозиторий",
+        "installed_new": "Поиск установленных или новых репозиторий",
         "placeholder": "Поиск репозитория"
     },
     "sections": {

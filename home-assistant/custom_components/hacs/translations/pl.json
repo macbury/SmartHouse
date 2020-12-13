@@ -6,6 +6,7 @@
         "appdaemon_apps": "Aplikacje AppDaemon",
         "appdaemon_plural": "Aplikacje AppDaemon",
         "background_task": "Wykonywanie zadania w tle, ta strona zostanie odświeżona, gdy zadanie zostanie ukończone.",
+        "cancel": "Anuluj",
         "check_log_file": "Sprawdź plik dziennika, aby uzyskać więcej informacji.",
         "continue": "Kontynuuj",
         "disabled": "Wyłączony",
@@ -31,6 +32,7 @@
         "python_script": "Skrypt Python",
         "python_script_plural": "Skrypty języka Python",
         "python_scripts": "Skrypty Python",
+        "reload": "Wczytaj ponownie",
         "repositories": "Repozytoria",
         "repository": "Repozytorium",
         "settings": "ustawienia",
@@ -46,21 +48,30 @@
             "single_instance_allowed": "Dozwolona jest tylko jedna konfiguracja HACS."
         },
         "error": {
-            "auth": "Osobisty token dostępu jest nieprawidłowy."
+            "acc": "Musisz potwierdzić wszystkie oświadczenia przed kontynuowaniem",
+            "auth": "Osobisty token dostępu jest nieprawidłowy"
         },
         "step": {
+            "device": {
+                "description": "Open {url} and paste this key `{code}` to authorize HACS, when you have done that click 'submit'",
+                "title": "HACS"
+            },
             "user": {
                 "data": {
-                    "appdaemon": "Włącz wykrywanie i śledzenie aplikacji AppDaemon",
-                    "netdaemon": "Włącz wykrywanie i śledzenie aplikacji NetDaemon",
-                    "python_script": "Włącz wykrywanie i śledzenie skryptów Python",
-                    "sidepanel_icon": "Ikona w panelu bocznym",
-                    "sidepanel_title": "Tytuł w panelu bocznym",
-                    "theme": "Włącz wykrywanie i śledzenie motywów",
-                    "token": "Osobisty token dostępu GitHub"
+                    "acc_addons": "I know that there are no add-ons in HACS",
+                    "acc_disable": "I know that if I get issues with Home Assistant I should disable all my custom_components",
+                    "acc_logs": "I know how to access Home Assistant logs",
+                    "acc_untested": "I know that everything inside HACS is custom and untested by Home Assistant",
+                    "appdaemon": "Enable AppDaemon apps discovery & tracking",
+                    "netdaemon": "Enable NetDaemon apps discovery & tracking",
+                    "python_script": "Enable python_scripts discovery & tracking",
+                    "sidepanel_icon": "Side panel icon",
+                    "sidepanel_title": "Side panel title",
+                    "theme": "Enable Themes discovery & tracking",
+                    "token": "GitHub Personal Access Token"
                 },
-                "description": "Jeśli potrzebujesz pomocy w konfiguracji, przejdź na stronę: https:\/\/hacs.xyz\/docs\/configuration\/start",
-                "title": "HACS (Home Assistant Community Store)"
+                "description": "Before you can setup HACS you need to acknowledge the following",
+                "title": "HACS"
             }
         },
         "title": "HACS (Home Assistant Community Store)"
@@ -136,6 +147,12 @@
         "releasenotes": "Informacje o {release}",
         "title": "Dostępna aktualizacja"
     },
+    "dialog": {
+        "reload": {
+            "confirm": "Czy chcesz to zrobić teraz?",
+            "description": "Musisz wyczyścić pamięć podręczną przeglądarki po zmianie zasobów Lovelace."
+        }
+    },
     "entry": {
         "information": "Informacje",
         "intro": "Aktualizacje i ważne komunikaty będą wyświetlane w tym miejscu",
@@ -154,12 +171,20 @@
                 "title": "Nie załadowano w Lovelace"
             },
             "restart": {
-                "content": "Integracje, które wymagają ponownego uruchomienia Home Assistanta: {number}\nMożesz to zrobić w sekcji 'Kontrola serwera' konfiguracji Home Assistanta.",
+                "content": "Integracje, które wymagają ponownego uruchomienia Home Assistanta: {number}\\nMożesz to zrobić w sekcji 'Kontrola serwera' konfiguracji Home Assistanta.",
                 "title": "Oczekiwanie na restart"
+            },
+            "setup": {
+                "content": "HACS jest konfigurowany, w tym czasie może brakować niektórych informacji lub są one nieprawidłowe",
+                "title": "HACS jest konfigurowany"
             },
             "startup": {
                 "content": "HACS uruchamia się, w tym czasie może brakować pewnych informacji lub mogą one być nieprawidłowe.",
                 "title": "HACS uruchamia się"
+            },
+            "waiting": {
+                "content": "HACS czeka na zakończenie uruchamiania Home Assistanta przed rozpoczęciem własnych zadań",
+                "title": "HACS czeka"
             },
             "wrong_frontend_installed": {
                 "content": "Masz zainstalowany interfejs HACS w wersji {running}, a wersja {expected} była oczekiwana. Komunikat ten oznacza, że Home Assistant nie mógł zainstalować nowej wersji interfejsu HACS, spróbuj ponownie uruchomić Home Assistanta.",
@@ -294,7 +319,7 @@
         "custom_repositories": "REPOZYTORIA NIESTANDARDOWE",
         "delete": "Usuń",
         "display": "Sposób wyświetlania",
-        "grid": "Siatka",
+        "grid": "kratka",
         "hacs_repo": "Repozytorium HACS",
         "hidden_repositories": "ukryte repozytoria",
         "missing_category": "Musisz wybrać kategorię",
