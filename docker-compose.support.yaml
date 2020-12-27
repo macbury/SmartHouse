@@ -167,15 +167,6 @@ services:
       timeout: 45s
       interval: 30s
       retries: 3
-  mqtt:
-    restart: unless-stopped
-    image: eclipse-mosquitto:latest
-    ports:
-      - 0.0.0.0:4105:1883
-    volumes:
-      - .docker/data/mosquitto:/mosquitto/data
-      - .docker/log/mosquitto.log:/mosquitto/log/mosquitto.log
-      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
   influxdb:
     restart: unless-stopped
     image: influxdb:latest

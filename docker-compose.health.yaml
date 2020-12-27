@@ -2,6 +2,29 @@
 version: '3.5'
 
 services:
+  hub:
+    image: selenium/hub
+    ports:
+      - "4444:4444"
+    environment:
+      GRID_MAX_SESSION: 16
+      GRID_BROWSER_TIMEOUT: 3000
+      GRID_TIMEOUT: 3000
+  firefox:
+    image: selenium/node-firefox-debug
+    depends_on:
+      - hub
+    environment:
+      HUB_PORT_4444_TCP_ADDR: hub
+      HUB_PORT_4444_TCP_PORT: 4444
+      NODE_MAX_SESSION: 16
+      NODE_MAX_INSTANCES: 16
+    volumes:
+      - /dev/shm:/dev/shm
+    ports:
+      - "9001:5900"
+    links:
+      - hub
   tor:
     restart: unless-stopped
     build: ./tor/

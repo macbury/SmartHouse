@@ -1,0 +1,15 @@
+- hosts: master
+  become: yes
+  tasks:
+    - name: Create zwave.service
+      template:
+        src: zwave.service.j2
+        dest: /lib/systemd/system/zwave.service
+    - name: Reload daemon
+      systemd:
+        daemon_reload: yes
+    - name: Reload service zwave, in all cases
+      systemd:
+        name: zwave
+        state: reloaded
+        enabled: yes

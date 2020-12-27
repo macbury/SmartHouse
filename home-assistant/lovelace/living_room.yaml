@@ -52,6 +52,14 @@
     - type: horizontal-stack
       cards:
         - type: entity-button
+          entity: switch.christmas_tree
+          name: Choinka
+        - type: entity-button
+          entity: fan.living_room_humidifier
+          name: Humidifier
+    - type: horizontal-stack
+      cards:
+        - type: entity-button
           entity: cover.living_room
           icon: mdi:arrow-down-bold-box
           name: 'Opuść rolety'
@@ -127,7 +135,3 @@
       show_source: false
       toggle_power: true
 
-    - type: entities
-      show_header_toggle: false
-      entities:
-        - fan.living_room_humidifier

@@ -1,0 +1,25 @@
+version: '3'
+services:
+  ozwd:
+    image: openzwave/ozwdaemon:latest
+    network_mode: host
+    security_opt:
+      - seccomp:unconfined
+    devices:
+      - "/dev/ttyACM0"
+    volumes:
+      - .docker/data/ozwd/:/opt/ozw/config
+    ports:
+      - "1983:1983"
+    restart: unless-stopped
+    env_file:
+      - '.env.zwave'
+  mqtt:
+    restart: unless-stopped
+    image: eclipse-mosquitto:latest
+    ports:
+      - 0.0.0.0:4105:1883
+    volumes:
+      - .docker/data/mosquitto:/mosquitto/data
+      - .docker/log/mosquitto.log:/mosquitto/log/mosquitto.log
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf

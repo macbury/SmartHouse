@@ -6,6 +6,7 @@ smart-house health start
 smart-house media mount
 smart-house pihole start
 smart-house support start
+smart-house zwave start
 smart-house media start
 smart-house restart
 sudo systemctl restart fail2ban

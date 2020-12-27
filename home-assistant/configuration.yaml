@@ -90,6 +90,5 @@ websocket_api:
 # Z
 zeroconf:
 zone: !include components/zones.yaml
-zwave: !include components/zwave.yaml
 # V
 vacuum: !include components/vacuum.yaml

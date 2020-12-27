@@ -133,8 +133,6 @@ function smart_house_command_add-mosquitto-user() {
   mkdir -p $SMART_HOUSE_DIR/.docker/data/mosquitto;
   mosquitto_passwd -b $SMART_HOUSE_DIR/.docker/data/mosquitto/users.db $COMMAND_ARGS $random_password;
 
-  docker-compose restart mqtt;
-
   echo "Username: $COMMAND_ARGS";
   echo "Password: $random_password";
 }
@@ -250,11 +248,14 @@ function smart_house_command_media() {
   source "${SMART_HOUSE_DIR}/scripts/media.sh"
 }
 
-
 function smart_house_command_support() {
   source "${SMART_HOUSE_DIR}/scripts/support.sh"
 }
 
 function smart_house_command_health() {
   source "${SMART_HOUSE_DIR}/scripts/health.sh"
+}
+
+function smart_house_command_zwave() {
+  source "${SMART_HOUSE_DIR}/scripts/zwave.sh"
 }

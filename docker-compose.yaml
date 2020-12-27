@@ -2,7 +2,7 @@
 version: '3.5'
 services:
   home-assistant:
-    image: homeassistant/home-assistant:0.118.5
+    image: homeassistant/home-assistant:0.115.6
     extra_hosts:
       - "outside:${HOME_ASSISTANT_IP}"
     env_file:

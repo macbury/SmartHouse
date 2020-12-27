@@ -204,3 +204,30 @@
       title: Nawilżacz
       message: Uzupełnij wodę w nawilżaczu!
   mode: single
+- id: '1607889011300'
+  alias: Switch on choinka
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+  condition:
+  - condition: state
+    entity_id: group.family
+    state: home
+  action:
+  - service: switch.turn_on
+    data: {}
+    entity_id: switch.christmas_tree
+  mode: single
+- id: '1607889099900'
+  alias: Switch off choinka
+  description: ''
+  trigger:
+  - platform: time
+    at: '23:59'
+  condition: []
+  action:
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.christmas_tree
+  mode: single

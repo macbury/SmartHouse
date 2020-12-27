@@ -3,6 +3,7 @@
 *.log
 .env.transfer
 .env
+.env.zwave
 .env.simplelogin
 .env.monio
 .env.podcast
@@ -114,3 +115,4 @@ blog/**/*
 .env.git
 .env.detox
 home-assistant/*.html
+.env.zwave

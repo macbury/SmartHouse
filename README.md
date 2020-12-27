@@ -31,18 +31,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-
-  detox:
-    restart: unless-stopped
-    image: macbury/detox:latest
-    ports:
-      - 11000:3000
-    depends_on:
-      - database
-      - redis
-    environment:
-      - REDIS_URL=redis://redis:6379/7
-      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/detox_production?sslmode=disable
-      - SECRET_KEY_BASE=m8MuB3EsetvlrXm3kVlbLzlRYHRlWuS1S5LlyfxKI2d1xLgCKiyrTUIgb19ThAYaaZhf0HBCnC5hDbYefm3FBmgi1mrGr5hGByYc
-      - APP_HOST=https://detox.macbury.ninja
