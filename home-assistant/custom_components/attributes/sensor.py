@@ -17,8 +17,9 @@ from homeassistant.helpers.entity import Entity, async_generate_entity_id
 from homeassistant.helpers.event import async_track_state_change
 from homeassistant.helpers.restore_state import RestoreEntity
 from homeassistant.helpers import template as template_helper
+from homeassistant.util import slugify
 
-__version__ = '1.1.0'
+__version__ = '1.1.1'
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -165,6 +166,7 @@ class AttributeSensor(RestoreEntity):
         self.entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, device_id,
                                                   hass=hass)
         self._name = friendly_name
+        self._unique_id = slugify(f"{entity_id}_{device_id}")
         self._unit_of_measurement = unit_of_measurement
         self._template = state_template
         self._state = None
@@ -201,6 +203,11 @@ class AttributeSensor(RestoreEntity):
         return self._name
 
     @property
+    def unique_id(self):
+        """Return the unique ID of the sensor."""
+        return self._unique_id
+
+    @property
     def state(self):
         """Return the state of the sensor."""
         return self._state
@@ -227,8 +234,8 @@ class AttributeSensor(RestoreEntity):
         entity_state = self.hass.states.get(self._entity)
         if entity_state is not None:
             device_friendly_name = entity_state.attributes.get('friendly_name')
-        else:
-            self._name = device_friendly_name
+            if device_friendly_name is not None:
+                self._name = device_friendly_name
 
         try:
             self._state = self._template.async_render()

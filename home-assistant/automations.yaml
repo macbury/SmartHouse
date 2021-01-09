@@ -231,3 +231,15 @@
     data: {}
     entity_id: switch.christmas_tree
   mode: single
+- id: '1609398359663'
+  alias: Switch off light balls
+  description: ''
+  trigger:
+  - platform: time
+    at: '8:00'
+  condition: []
+  action:
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.hall_light
+  mode: single

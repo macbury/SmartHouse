@@ -3,6 +3,27 @@
 version: '3.5'
 
 services:
+  synapse:
+    image: "matrixdotorg/synapse:v1.23.1"
+    restart: "unless-stopped"
+    ports:
+      - "127.0.0.1:18008:8008"
+      - "127.0.0.1:18448:8448"
+    volumes:
+      - ".docker/data/im:/data"
+    env_file:
+      - '.env.im'
+    depends_on:
+      - redis
+  synapse_admin:
+    image: awesometechnologies/synapse-admin:latest
+    ports:
+      - "127.0.0.1:18009:80"
+  protonmail:
+    image: macbury/protonmail:latest
+    restart: unless-stopped
+    volumes:
+      - .docker/data/protonmail:/root
   transfer:
     image: dutchcoders/transfer.sh:latest
     ports:

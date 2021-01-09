@@ -8,8 +8,11 @@
 # - name: Basic packages
 #   import_playbook: playbooks/packages.yaml
 
-- name: Zwave
-  import_playbook: playbooks/zwave/zwave.yaml
+# - name: Zwave
+#   import_playbook: playbooks/zwave/zwave.yaml
+
+- name: Matrix
+  import_playbook: playbooks/matrix/matrix.yaml
 
 # - name: House keeping
 #   import_playbook: playbooks/housekeeping.yaml

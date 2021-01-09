@@ -1,6 +1,7 @@
 .docker/data/**/*
 .docker/log/**/*
 *.log
+.env.im
 .env.transfer
 .env
 .env.zwave

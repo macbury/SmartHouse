@@ -1,7 +1,16 @@
-- platform: mqtt
-  name: 'desk'
-  command_topic: "linak_desk/height/cm/set"
-  state_topic: "linak_desk/height/cm"
-  qos: 2
-  retain: true
-
+- platform: template
+  covers:
+    living_room:
+      device_class: blind
+      friendly_name: "Cover"
+      optimistic: true
+      open_cover:
+        service: cover.set_cover_position
+        data:
+          entity_id: cover.living_room_controller
+          position: 100
+      close_cover:
+        service: cover.set_cover_position
+        data:
+          entity_id: cover.living_room_controller
+          position: 0
