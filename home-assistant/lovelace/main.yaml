@@ -40,12 +40,6 @@ views:
     icon: 'mdi:seat-recline-extra'
     cards: !include living_room.yaml
 
-  # - title: Pracownia
-  #   panel: true
-  #   path: desk
-  #   icon: 'mdi:desktop-mac-dashboard'
-  #   cards: !include desk.yaml
-
   - title: Sypialnia
     panel: true
     icon: mdi:bed
@@ -76,6 +70,11 @@ views:
     path: balcony
     cards: !include balcony.yaml
 
+  - title: Majątek
+    panel: true
+    path: invest
+    icon: 'mdi:cash'
+    cards: !include invest.yaml
   # - title: Kamery
   #   panel: true
   #   icon: mdi:cctv

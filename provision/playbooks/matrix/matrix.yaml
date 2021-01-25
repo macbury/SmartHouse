@@ -13,6 +13,21 @@
       - domains:
         - "{{ im_domain }}"
 
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.certbot
+  vars:
+    certbot_install_from_source: true
+    certbot_keep_updated: true
+    certbot_auto_renew: false
+    certbot_admin_email: "{{ email }}"
+    certbot_create_if_missing: true
+    certbot_create_method: standalone
+    certbot_certs:
+      - domains:
+        - "{{ jitsi_domain }}"
+
 # Nginx
 - hosts: master
   become: yes
@@ -33,6 +48,19 @@
       notify:
         - reload nginx
         - restart nginx
+    - name: Add an apt key for jitsi
+      apt_key:
+        url: https://download.jitsi.org/jitsi-key.gpg.key
+        state: present
+    - name: Add jitsi deb source
+      apt_repository:
+        repo: deb https://download.jitsi.org stable/
+        state: present
+        filename: jitsi
+
+    # - name: Install jitsi-meet
+    #   apt:
+    #     name: jitsi-meet
 
 - hosts: master
   become: yes
@@ -43,3 +71,5 @@
     ufw_logging: "off"
     ufw_rules:
       - { port: 8448, rule: allow, comment: 'Matrix federation port' }
+      - { port: 10000, rule: allow, comment: 'for general network video/audio communications' }
+      - { port: 5349, rule: allow, comment: 'for fallback network video/audio communications over TCP (when UDP is blocked for example), served by coturn' }

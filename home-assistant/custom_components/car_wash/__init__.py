@@ -10,4 +10,6 @@ For more details about this platform, please refer to the documentation at
 https://github.com/Limych/ha-car_wash/
 """
 
-from .binary_sensor import VERSION
+# Base component constants
+VERSION = "dev"
+ISSUE_URL = "https://github.com/Limych/ha-car_wash/issues"

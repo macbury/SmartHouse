@@ -27,23 +27,6 @@ living_room_air:
   mode: 'Auto'
   alt_mode: 'Silent'
 
-humidifier_bedroom:
-  module: humidifier
-  class: HumidifierController
-  humidifer: humidifier.bedroom
-  family_devices: group.family
-  calendar: calendar.bedroom_humidifier
-
-# humidifier_bedroom:
-#   module: humidifier
-#   class: HumidifierController
-#   humidifer: switch.bedroom_humidifier_switch
-#   max_humidity: 60.0
-#   min_humidity: 55.0
-#   family_devices: group.family
-#   calendar: calendar.bedroom_humidifier
-#   humidity_sensor: sensor.bedroom_humidity
-
 batteries:
   module: battery
   class: BatteryWatcher

@@ -1,0 +1,8 @@
+ 
+- platform: template
+  sensors:
+    all_portfolio_value:
+      friendly_name: "Całkowity wynik"
+      unit_of_measurement: 'zł'
+      value_template: >- 
+        {{ float(states.sensor.obligacje.state) + float(states.sensor.portfolio_market_value.state) }}

@@ -2,6 +2,10 @@ upstream im {
   server 127.0.0.1:18008 fail_timeout=0;
 }
 
+upstream riot {
+  server 127.0.0.1:18010 fail_timeout=0;
+}
+
 server {
   listen 80;
   listen [::]:80;
@@ -19,6 +23,16 @@ server {
   ssl_certificate_key /etc/letsencrypt/live/{{ im_domain }}/privkey.pem;
   server_name {{ im_domain }};
 
+  location /.well-known/matrix/server {
+    return 200 '{"m.server": "{{ im_domain }}"}';
+    add_header Content-Type application/json;
+  }
+  location /.well-known/matrix/client {
+    return 200 '{"m.homeserver": {"base_url": "{{ im_domain }}"},"m.identity_server": {"base_url": "https://vector.im"}}';
+    add_header Content-Type application/json;
+    add_header "Access-Control-Allow-Origin" *;
+  }
+
   location ~* ^(\/_synapse\/admin) {
     allow 192.168.0.0/16;
     allow 10.0.0.0/16;
@@ -33,6 +47,14 @@ server {
 
   location ~* ^(\/_matrix|\/_synapse\/client) {
     proxy_pass http://im;
+    proxy_set_header X-Forwarded-For $remote_addr;
+    # Nginx by default only allows file uploads up to 1M in size
+    # Increase client_max_body_size to match max_upload_size defined in homeserver.yaml
+    client_max_body_size 50M;
+  }
+
+  location / {
+    proxy_pass http://riot;
     proxy_set_header X-Forwarded-For $remote_addr;
     # Nginx by default only allows file uploads up to 1M in size
     # Increase client_max_body_size to match max_upload_size defined in homeserver.yaml

@@ -3,6 +3,42 @@
 version: '3.5'
 
 services:
+  mastodon_web:
+    image: tootsuite/mastodon
+    restart: unless-stopped
+    env_file: .env.mastodon
+    command: bash -c "rm -f /mastodon/tmp/pids/server.pid; bundle exec rails s -p 3000"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:3000/health || exit 1"]
+    ports:
+      - "127.0.0.1:7730:3000"
+    depends_on:
+      - database
+      - redis
+    volumes:
+      - .docker/data/mastodon:/opt/mastodon/public/system/
+  mastodon_streaming:
+    image: tootsuite/mastodon
+    restart: unless-stopped
+    env_file: .env.mastodon
+    command: node ./streaming
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1"]
+    ports:
+      - "127.0.0.1:7740:4000"
+    depends_on:
+      - database
+      - redis
+  mastodon_sidekiq:
+    image: tootsuite/mastodon
+    restart: unless-stopped
+    env_file: .env.mastodon
+    command: bundle exec sidekiq
+    depends_on:
+      - database
+      - redis
+    volumes:
+      - .docker/data/mastodon:/opt/mastodon/public/system/
   synapse:
     image: "matrixdotorg/synapse:v1.23.1"
     restart: "unless-stopped"
@@ -15,15 +51,45 @@ services:
       - '.env.im'
     depends_on:
       - redis
+      - database
+  # synapse_telegram:
+  #   image: dock.mau.dev/tulir/mautrix-telegram:v0.9.0
+  #   restart: "unless-stopped"
+  #   ports:
+  #     - 29317:29317
+  #   volumes:
+  #     - ".docker/data/synapse_telegram/:/data"
+  #   depends_on:
+  #     - synapse
+  # synapse_discord:
+  #   image: halfshot/matrix-appservice-discord:v1.0.0
+  #   restart: "unless-stopped"
+  #   ports:
+  #     - '19005:9005'
+  #   volumes:
+  #     - ".docker/data/discord_synapse/:/data"
+  #   depends_on:
+  #     - synapse
+  synapse_riot:
+    image: "vectorim/element-web:latest"
+    restart: "unless-stopped"
+    ports:
+      - "127.0.0.1:18010:80"
+    volumes:
+      - ".docker/data/synapse_riot/config.json:/app/config.json"
+    depends_on:
+      - synapse
   synapse_admin:
     image: awesometechnologies/synapse-admin:latest
     ports:
       - "127.0.0.1:18009:80"
-  protonmail:
-    image: macbury/protonmail:latest
-    restart: unless-stopped
-    volumes:
-      - .docker/data/protonmail:/root
+    depends_on:
+      - synapse
+  # protonmail:
+  #   image: macbury/protonmail:latest
+  #   restart: unless-stopped
+  #   volumes:
+  #     - .docker/data/protonmail:/root
   transfer:
     image: dutchcoders/transfer.sh:latest
     ports:
@@ -89,83 +155,12 @@ services:
       - NODE_TLS_REJECT_UNAUTHORIZED=0
     volumes:
       - .docker/data/node-red:/data
-  grocy:
-    image: linuxserver/grocy:latest
-    ports:
-      - '59000:80'
-    volumes:
-      - .docker/data/grocy2:/config
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Warsaw
-  simple-login-crontab:
-    image: simplelogin/app:1.0.0
-    network_mode: host
-    restart: unless-stopped
-    depends_on:
-      - database
-    env_file:
-      - '.env.simplelogin'
-    volumes:
-      - .docker/data/simple-login/keys/dkim.key:/dkim.key
-      - .docker/data/simple-login/keys/dkim.pub.key:/dkim.pub.key
-      - .env.simplelogin:/code/.env
-    command: yacron -c /code/crontab.yml
-  simple-login-email:
-    image: simplelogin/app:1.0.0
-    network_mode: host
-    restart: unless-stopped
-    ports:
-      - "0.0.0.0:20381:20381"
-    depends_on:
-      - database
-    env_file:
-      - '.env.simplelogin'
-    volumes:
-      - .docker/data/simple-login/keys/dkim.key:/dkim.key
-      - .docker/data/simple-login/keys/dkim.pub.key:/dkim.pub.key
-      - .env.simplelogin:/code/.env
-    command: python email_handler.py
-  simple-login:
-    image: simplelogin/app:1.0.0
-    network_mode: host
-    restart: unless-stopped
-    ports:
-      - "0.0.0.0:7777:7777"
-    depends_on:
-      - database
-    env_file:
-      - '.env.simplelogin'
-    volumes:
-      - .docker/data/simple-login/keys/dkim.key:/dkim.key
-      - .docker/data/simple-login/keys/dkim.pub.key:/dkim.pub.key
-      - .env.simplelogin:/code/.env
   gotify:
     image: gotify/server:latest
     ports:
       - "0.0.0.0:5580:80"
     volumes:
       - .docker/data/gotify:/app/data
-  orion:
-    build: ./orion/
-    restart: unless-stopped
-    ports:
-      - "127.0.0.1:5500:5000"
-      - "127.0.0.1:5501:8080"
-    depends_on:
-      - mysql
-      - redis
-  firefox:
-    build: ./ff-sync/
-    network_mode: host
-    restart: unless-stopped
-    env_file:
-      - '.env.syncserver'
-    environment:
-      - SYNCSERVER_SQLURI=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:4101/ffsync
-    depends_on:
-      - database
   redis:
     image: redis:4.0.10
     ports:
@@ -211,12 +206,6 @@ services:
     volumes:
       - ./postgresql/:/docker-entrypoint-initdb.d/
       - .docker/data/postgresql:/data
-  mysql:
-    image: mysql:latest
-    env_file:
-      - '.env.mysql'
-    volumes:
-      - .docker/data/mysql:/var/lib/mysql
   grafana:
     image: grafana/grafana:6.5.0
     restart: unless-stopped
@@ -234,7 +223,6 @@ services:
       - .docker/data/grafana:/var/lib/grafana
     depends_on:
       - influxdb
-
   esphome:
     image: esphome/esphome:latest
     volumes:

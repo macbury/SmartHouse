@@ -13,7 +13,13 @@ import logging
 from datetime import datetime
 
 import voluptuous as vol
-from homeassistant.components.binary_sensor import BinarySensorDevice
+
+try:
+    from homeassistant.components.binary_sensor import BinarySensorEntity
+except ImportError:
+    from homeassistant.components.binary_sensor import (
+        BinarySensorDevice as BinarySensorEntity,
+    )
 from homeassistant.components.weather import (
     ATTR_FORECAST_PRECIPITATION,
     ATTR_FORECAST_TIME,
@@ -31,9 +37,11 @@ from homeassistant.helpers.event import async_track_state_change
 from homeassistant.util import dt as dt_util
 from homeassistant.util.temperature import convert as convert_temperature
 
-from .const import (
+from . import (
     VERSION,
     ISSUE_URL,
+)
+from .const import (
     CONF_WEATHER,
     DEFAULT_NAME,
     DEFAULT_DAYS,
@@ -68,7 +76,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     async_add_entities([CarWashBinarySensor(hass, name, weather, days)])
 
 
-class CarWashBinarySensor(BinarySensorDevice):
+class CarWashBinarySensor(BinarySensorEntity):
     """Implementation of an Car Wash binary sensor."""
 
     def __init__(self, hass, friendly_name, weather_entity, days):

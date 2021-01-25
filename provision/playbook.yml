@@ -14,6 +14,9 @@
 - name: Matrix
   import_playbook: playbooks/matrix/matrix.yaml
 
+# - name: Mastodon
+#   import_playbook: playbooks/mastodon/mastodon.yaml
+
 # - name: House keeping
 #   import_playbook: playbooks/housekeeping.yaml
 

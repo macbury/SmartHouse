@@ -1,0 +1,23 @@
+{
+    "config": {
+        "abort": {
+            "single_instance_allowed": "Dozvoljena je samo jedna Grocy konfiguracija"
+        },
+        "error": {
+            "auth": "Nešto je pošlo po zlu."
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "api_key": "Grocy API ključ",
+                    "port": "Broj port-a (9192)",
+                    "url": "Grocy API URL (npr. \"http:\/\/yourgrocyurl.com\")",
+                    "verify_ssl": "Provjerite SSL certifikat."
+                },
+                "description": "Ako vam je potrebna pomoć oko konfiguracije, pogledajte ovdje: https:\/\/github.com\/custom-components\/grocy",
+                "title": "Grocy"
+            }
+        },
+        "title": "Grocy"
+    }
+}

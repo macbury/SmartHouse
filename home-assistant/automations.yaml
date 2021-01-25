@@ -243,3 +243,27 @@
     data: {}
     entity_id: switch.hall_light
   mode: single
+- id: '1610810175829'
+  alias: Ola wyjedża od Anki
+  description: ''
+  trigger:
+  - platform: zone
+    entity_id: person.ola
+    zone: zone.anka
+    event: leave
+  condition: []
+  action:
+  - service: notify.alexa_media_living_room
+    data:
+      message: Ola is leaving Anka House
+      data:
+        type: announce
+        method: all
+  - delay: '10'
+  - service: notify.alexa_media_kitchen
+    data:
+      message: Ola is leaving Anka House
+      data:
+        type: announce
+        method: all
+  mode: single

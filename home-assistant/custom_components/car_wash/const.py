@@ -5,10 +5,6 @@ For more details about this platform, please refer to the documentation at
 https://github.com/Limych/ha-car_wash/
 """
 
-# Base component constants
-VERSION = "1.2.12"
-ISSUE_URL = "https://github.com/Limych/ha-car_wash/issues"
-
 CONF_WEATHER = "weather"
 CONF_DAYS = "days"
 

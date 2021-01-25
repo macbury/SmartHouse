@@ -1,0 +1,49 @@
+- type: custom:layout-card
+  layout: horizontal
+  max_columns: 3
+  cards:
+    - type: horizontal-stack
+      cards:
+        - type: custom:mini-graph-card
+          entities:
+            - sensor.obligacje
+          line_color: '#343a37'
+          hours_to_show: 720
+          animate: true
+          hour24: true
+          points_per_hour: 0.05
+          show:
+            points: true
+            fill: fade
+    - type: horizontal-stack
+      cards:
+        - type: custom:mini-graph-card
+          entities:
+            - sensor.portfolio_market_value
+          line_color: '#9C27B0'
+          hours_to_show: 720
+          animate: true
+          hour24: true
+          points_per_hour: 0.05
+          show:
+            points: true
+            fill: fade
+    - type: custom:layout-card
+      layout: horizontal
+      max_columns: 1
+      cards:
+        - type: horizontal-stack
+          cards:
+            - type: custom:mini-graph-card
+              entities:
+                - sensor.all_portfolio_value
+              line_color: '#FFD700'
+              hours_to_show: 720
+              animate: true
+              hour24: true
+              points_per_hour: 0.05
+              show:
+                points: true
+                fill: fade
+
+

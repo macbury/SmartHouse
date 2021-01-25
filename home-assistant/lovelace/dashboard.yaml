@@ -94,28 +94,17 @@
             fill: fade
         - type: custom:mini-graph-card
           entities:
-            - sensor.paliwo_95
-          line_color: '#343a37'
-          hours_to_show: 336
+            - sensor.krakow_aqi
+            - sensor.mean_aqi
+          line_color: '#a8a8a8'
+          name: 'AQI'
+          hours_to_show: 24
+          points_per_hour: 1
           animate: true
           hour24: true
-          points_per_hour: 0.05
+          lower_bound: 0
           show:
             points: true
             fill: fade
-    - type: custom:mini-graph-card
-      entities:
-        - sensor.krakow_aqi
-        - sensor.mean_aqi
-      line_color: '#a8a8a8'
-      name: 'AQI'
-      hours_to_show: 24
-      points_per_hour: 1
-      animate: true
-      hour24: true
-      lower_bound: 0
-      show:
-        points: true
-        fill: fade
 
 
