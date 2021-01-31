@@ -267,3 +267,18 @@
         type: announce
         method: all
   mode: single
+- id: '1612103094478'
+  alias: Bedroom window opened too long
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.bedroom_window
+    from: 'off'
+    to: 'on'
+    for: '1:10:00'
+  condition: []
+  action:
+  - service: notify.all
+    data:
+      message: Okno w sypialni otwarte zbyt długo
+  mode: single

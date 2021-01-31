@@ -37,6 +37,7 @@ bedroom_air:
   class: AirPurifierAI
   calendar: calendar.sypialnia_env
   fan_id: 'fan.bedroom_air_purifier'
+  balcone_door: binary_sensor.bedroom_window
   family_devices: 'group.family'
   fallback: 5400
   mode: 'Auto'
@@ -51,6 +52,7 @@ heating_living_room:
   temperature_sensor: sensor.living_room_temperature
   family_devices: group.family
   climate: climate.living_room_thermostat
+  window_door: binary_sensor.balcone_door
   max_temperature: 25
   min_temperature: 20
 
@@ -75,6 +77,7 @@ heating_bedroom:
   temperature_sensor: sensor.bedroom_temperature
   family_devices: group.family
   climate: climate.bedroom_thermostat
+  window_door: binary_sensor.bedroom_window
   main_light: input_boolean.giggid
   max_temperature: 23
   min_temperature: 22

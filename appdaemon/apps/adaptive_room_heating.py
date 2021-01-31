@@ -13,11 +13,24 @@ class AdaptiveRoomHeating(hass.Hass):
       self.log('Dont have support for main light')
     self.adapt_temperature()
 
+    if 'window_door' in self.args:
+      self.log('Has support for window or door')
+      self.listen_state(self.on_adaptation_callback, entity = self.args['window_door'])
+    else:
+      self.log('Dont have support for main light')
+    self.adapt_temperature()
+
   def outside_temperature(self):
     return float(self.get_state(self.args['outside_temperature']))
 
   def anyone_in_home(self):
     return self.get_state(self.args['family_devices']) == 'home'
+
+  def window_opened(self):
+    if 'window_door' in self.args:
+      return self.get_state(self.args['window_door']) == 'on'
+    else:
+      return False
 
   def heating_time(self):
     if self.get_state(self.args['calendar']) == 'on':
@@ -51,6 +64,11 @@ class AdaptiveRoomHeating(hass.Hass):
     
 
   def adapt_temperature(self):
+    if self.window_opened():
+      self.stop_heating()
+    else:
+      self.start_heating()
+
     if self.main_light_on():
       self.log("Main light is on, increasing temperature")
       self.change_preset('none')
