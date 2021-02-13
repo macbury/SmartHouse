@@ -7,35 +7,35 @@ Alexa Config Flow.
 For more details about this platform, please refer to the documentation at
 https://community.home-assistant.io/t/echo-devices-alexa-as-media-player-testers-needed/58639
 """
-from asyncio import sleep, Lock
-from aiohttp import web_response
+from asyncio import sleep
 from collections import OrderedDict
+import datetime
 from datetime import timedelta
 from functools import reduce
 import logging
-import datetime
-from typing import Any, Optional, Text
 import re
+from typing import Any, Dict, List, Optional, Text
+from yarl import URL
 
+from aiohttp import ClientConnectionError, ClientSession, web, web_response
+from aiohttp.web_exceptions import HTTPBadRequest
 from alexapy import (
     AlexaLogin,
-    AlexapyConnectionError,
     AlexaProxy,
+    AlexapyConnectionError,
     AlexapyPyotpInvalidKey,
+    __version__ as alexapy_version,
     hide_email,
     obfuscate,
-    __version__ as alexapy_version,
 )
 from homeassistant import config_entries
 from homeassistant.components.http.view import HomeAssistantView
-from homeassistant.const import (
-    CONF_EMAIL,
-    CONF_PASSWORD,
-    CONF_SCAN_INTERVAL,
-    CONF_URL,
-)
+from homeassistant.const import CONF_EMAIL, CONF_PASSWORD, CONF_SCAN_INTERVAL, CONF_URL
 from homeassistant.core import callback
+from homeassistant.data_entry_flow import UnknownFlow
+from homeassistant.exceptions import Unauthorized
 from homeassistant.helpers import config_validation as cv
+from homeassistant.helpers.event import async_call_later
 from homeassistant.helpers.network import get_url
 from homeassistant.util import slugify
 import voluptuous as vol
@@ -43,17 +43,19 @@ import voluptuous as vol
 from .const import (
     AUTH_CALLBACK_NAME,
     AUTH_CALLBACK_PATH,
+    AUTH_PROXY_NAME,
+    AUTH_PROXY_PATH,
     CONF_COOKIES_TXT,
     CONF_DEBUG,
     CONF_EXCLUDE_DEVICES,
-    CONF_INCLUDE_DEVICES,
-    CONF_QUEUE_DELAY,
     CONF_HASS_URL,
-    CONF_SECURITYCODE,
+    CONF_INCLUDE_DEVICES,
     CONF_OAUTH,
     CONF_OAUTH_LOGIN,
     CONF_OTPSECRET,
     CONF_PROXY,
+    CONF_QUEUE_DELAY,
+    CONF_SECURITYCODE,
     CONF_TOTP_REGISTER,
     DATA_ALEXAMEDIA,
     DEFAULT_QUEUE_DELAY,
@@ -84,6 +86,8 @@ class AlexaMediaFlowHandler(config_entries.ConfigFlow):
 
     VERSION = 1
     CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
+    proxy: AlexaProxy = None
+    proxy_view: "AlexaMediaAuthorizationProxyView" = None
 
     def _update_ord_dict(self, old_dict: OrderedDict, new_dict: dict) -> OrderedDict:
         result: OrderedDict = OrderedDict()
@@ -175,7 +179,6 @@ class AlexaMediaFlowHandler(config_entries.ConfigFlow):
         self.totp_register = OrderedDict(
             [(vol.Optional(CONF_TOTP_REGISTER, default=False), bool)]
         )
-        self.proxy = None
 
     async def async_step_import(self, import_config):
         """Import a config entry from configuration.yaml."""
@@ -274,39 +277,114 @@ class AlexaMediaFlowHandler(config_entries.ConfigFlow):
                 ].get("login_obj")
             except KeyError:
                 self.login = None
-        if not self.login or self.login.session.closed:
-            _LOGGER.debug("Creating new login")
-            uuid_dict = await calculate_uuid(
-                self.hass, self.config.get(CONF_EMAIL), self.config[CONF_URL]
+        try:
+            if not self.login or self.login.session.closed:
+                _LOGGER.debug("Creating new login")
+                uuid_dict = await calculate_uuid(
+                    self.hass, self.config.get(CONF_EMAIL), self.config[CONF_URL]
+                )
+                uuid = uuid_dict["uuid"]
+                self.login = AlexaLogin(
+                    url=self.config[CONF_URL],
+                    email=self.config.get(CONF_EMAIL, ""),
+                    password=self.config.get(CONF_PASSWORD, ""),
+                    outputpath=self.hass.config.path,
+                    debug=self.config[CONF_DEBUG],
+                    otp_secret=self.config.get(CONF_OTPSECRET, ""),
+                    uuid=uuid,
+                    oauth_login=self.config.get(CONF_OAUTH_LOGIN, True),
+                )
+            else:
+                _LOGGER.debug("Using existing login")
+                if self.config.get(CONF_EMAIL):
+                    self.login.email = self.config.get(CONF_EMAIL)
+                if self.config.get(CONF_PASSWORD):
+                    self.login.password = self.config.get(CONF_PASSWORD)
+                if self.config.get(CONF_OTPSECRET):
+                    self.login.set_totp(self.config.get(CONF_OTPSECRET, ""))
+        except AlexapyPyotpInvalidKey:
+            return self.async_show_form(
+                step_id="user",
+                errors={"base": "2fa_key_invalid"},
+                description_placeholders={"message": ""},
             )
-            uuid = uuid_dict["uuid"]
-            self.login = AlexaLogin(
-                url=self.config[CONF_URL],
-                email=self.config.get(CONF_EMAIL, ""),
-                password=self.config.get(CONF_PASSWORD, ""),
-                outputpath=self.hass.config.path,
-                debug=self.config[CONF_DEBUG],
-                otp_secret=self.config.get(CONF_OTPSECRET, ""),
-                uuid=uuid,
-                oauth_login=self.config.get(CONF_OAUTH_LOGIN, True),
-            )
-        else:
-            _LOGGER.debug("Using existing login")
-            if self.config.get(CONF_EMAIL):
-                self.login.email = self.config.get(CONF_EMAIL)
-            if self.config.get(CONF_PASSWORD):
-                self.login.password = self.config.get(CONF_PASSWORD)
-            if self.config.get(CONF_OTPSECRET):
-                self.login.set_totp(self.config.get(CONF_OTPSECRET, ""))
         hass_url: Text = user_input.get(CONF_HASS_URL)
-        self.proxy = AlexaProxy(self.login, hass_url)
-        await self.proxy.start_proxy()
-        self.hass.http.register_view(AlexaMediaAuthorizationCallbackView)
-        callback_url = f"{hass_url}{AUTH_CALLBACK_PATH}?flow_id={self.flow_id}"
-        proxy_url = f"{self.proxy.access_url()}?config_flow_id={self.flow_id}&callback_url={callback_url}"
+        hass_url_valid: bool = False
+        async with ClientSession() as session:
+            try:
+                async with session.get(hass_url) as resp:
+                    hass_url_valid = resp.status == 200
+            except ClientConnectionError:
+                hass_url_valid = False
+        if not hass_url_valid:
+            _LOGGER.debug(
+                "Unable to connect to provided Home Assistant url: %s", hass_url
+            )
+            return self.async_show_form(
+                step_id="user",
+                errors={"base": "hass_url_invalid"},
+                description_placeholders={"message": ""},
+            )
+        if not self.proxy:
+            self.proxy = AlexaProxy(
+                self.login, str(URL(hass_url).with_path(AUTH_PROXY_PATH))
+            )
+        # Swap the login object
+        self.proxy.change_login(self.login)
+        if (
+            user_input
+            and user_input.get(CONF_OTPSECRET)
+            and user_input.get(CONF_OTPSECRET).replace(" ", "")
+        ):
+            otp: Text = self.login.get_totp_token()
+            if otp:
+                _LOGGER.debug("Generating OTP from %s", otp)
+                return self.async_show_form(
+                    step_id="totp_register",
+                    data_schema=vol.Schema(self.totp_register),
+                    errors={},
+                    description_placeholders={
+                        "email": self.login.email,
+                        "url": self.login.url,
+                        "message": otp,
+                    },
+                )
+        return await self.async_step_start_proxy(user_input)
+
+    async def async_step_start_proxy(self, user_input=None):
+        """Start proxy for login."""
+        _LOGGER.debug(
+            "Starting proxy for %s - %s", hide_email(self.login.email), self.login.url,
+        )
+        if not self.proxy_view:
+            self.proxy_view = AlexaMediaAuthorizationProxyView(self.proxy.all_handler)
+        else:
+            _LOGGER.debug("Found existing proxy_view")
+            self.proxy_view.handler = self.proxy.all_handler
+        self.hass.http.register_view(AlexaMediaAuthorizationCallbackView())
+        self.hass.http.register_view(self.proxy_view)
+        callback_url = (
+            URL(self.config["hass_url"])
+            .with_path(AUTH_CALLBACK_PATH)
+            .with_query({"flow_id": self.flow_id})
+        )
+
+        proxy_url = self.proxy.access_url().with_query(
+            {"config_flow_id": self.flow_id, "callback_url": str(callback_url)}
+        )
         if self.login.lastreq:
-            proxy_url = f"{self.proxy.access_url()}/resume?config_flow_id={self.flow_id}&callback_url={callback_url}"
-        return self.async_external_step(step_id="check_proxy", url=proxy_url)
+            self.proxy.last_resp = self.login.lastreq
+            self.proxy.session.cookie_jar.update_cookies(
+                self.login._session.cookie_jar.filter_cookies(
+                    self.proxy._host_url.with_path("/")
+                )
+            )
+            proxy_url = (
+                self.proxy.access_url().with_path(AUTH_PROXY_PATH) / "resume"
+            ).with_query(
+                {"config_flow_id": self.flow_id, "callback_url": str(callback_url)}
+            )
+        return self.async_external_step(step_id="check_proxy", url=str(proxy_url))
 
     async def async_step_check_proxy(self, user_input=None):
         """Check status of proxy for login."""
@@ -315,8 +393,7 @@ class AlexaMediaFlowHandler(config_entries.ConfigFlow):
             hide_email(self.login.email),
             self.login.url,
         )
-        if self.proxy:
-            await self.proxy.stop_proxy()
+        self.proxy_view.reset()
         return self.async_external_step_done(next_step_id="finish_proxy")
 
     async def async_step_finish_proxy(self, user_input=None):
@@ -470,6 +547,8 @@ class AlexaMediaFlowHandler(config_entries.ConfigFlow):
                         "message": otp,
                     },
                 )
+        if self.proxy:
+            return await self.async_step_start_proxy(user_input)
         return await self.async_step_process("totp_register", self.config)
 
     async def async_step_claimspicker(self, user_input=None):
@@ -572,7 +651,7 @@ class AlexaMediaFlowHandler(config_entries.ConfigFlow):
                 "expires_in": login.expires_in,
             }
             self.hass.data.setdefault(
-                DATA_ALEXAMEDIA, {"accounts": {}, "config_flows": {}, "lock": Lock()},
+                DATA_ALEXAMEDIA, {"accounts": {}, "config_flows": {}},
             )
             if existing_entry:
                 self.hass.config_entries.async_update_entry(
@@ -948,14 +1027,77 @@ class AlexaMediaAuthorizationCallbackView(HomeAssistantView):
     name = AUTH_CALLBACK_NAME
     requires_auth = False
 
-    async def get(self, request):
+    async def get(self, request: web.Request):
         """Receive authorization confirmation."""
         hass = request.app["hass"]
-        await hass.config_entries.flow.async_configure(
-            flow_id=request.query["flow_id"], user_input=None
-        )
-
+        try:
+            await hass.config_entries.flow.async_configure(
+                flow_id=request.query["flow_id"], user_input=None
+            )
+        except (KeyError, UnknownFlow) as ex:
+            _LOGGER.debug("Callback flow_id is invalid.")
+            raise HTTPBadRequest() from ex
         return web_response.Response(
             headers={"content-type": "text/html"},
             text="<script>window.close()</script>Success! This window can be closed",
         )
+
+
+class AlexaMediaAuthorizationProxyView(HomeAssistantView):
+    """Handle proxy connections."""
+
+    url: Text = AUTH_PROXY_PATH
+    extra_urls: List[Text] = [f"{AUTH_PROXY_PATH}/{{tail:.*}}"]
+    name: Text = AUTH_PROXY_NAME
+    requires_auth: bool = False
+    handler: web.RequestHandler = None
+    known_ips: Dict[Text, datetime.datetime] = {}
+    auth_seconds: int = 300
+
+    def __init__(self, handler: web.RequestHandler):
+        """Initialize routes for view.
+
+        Args:
+            handler (web.RequestHandler): Handler to apply to all method types
+
+        """
+        AlexaMediaAuthorizationProxyView.handler = handler
+        for method in ("get", "post", "delete", "put", "patch", "head", "options"):
+            setattr(self, method, self.check_auth())
+
+    @classmethod
+    def check_auth(cls):
+        """Wrap authentication into the handler."""
+
+        async def wrapped(request, **kwargs):
+            """Notify that the API is running."""
+            hass = request.app["hass"]
+            success = False
+            if (
+                request.remote not in cls.known_ips
+                or (datetime.datetime.now() - cls.known_ips.get(request.remote)).seconds
+                > cls.auth_seconds
+            ):
+                try:
+                    flow_id = request.url.query["config_flow_id"]
+                except KeyError as ex:
+                    raise Unauthorized() from ex
+                for flow in hass.config_entries.flow.async_progress():
+                    if flow["flow_id"] == flow_id:
+                        _LOGGER.debug(
+                            "Found flow_id; adding %s to known_ips for %s seconds",
+                            request.remote,
+                            cls.auth_seconds,
+                        )
+                        success = True
+                if not success:
+                    raise Unauthorized()
+                cls.known_ips[request.remote] = datetime.datetime.now()
+            return await cls.handler(request, **kwargs)
+
+        return wrapped
+
+    @classmethod
+    def reset(cls) -> None:
+        """Reset the view."""
+        cls.known_ips = {}

@@ -9,7 +9,7 @@ https://community.home-assistant.io/t/echo-devices-alexa-as-media-player-testers
 """
 from datetime import timedelta
 
-__version__ = "3.6.2"
+__version__ = "3.8.0"
 PROJECT_URL = "https://github.com/custom-components/alexa_media_player/"
 ISSUE_URL = "{}issues".format(PROJECT_URL)
 
@@ -94,3 +94,5 @@ If you have any issues with this you need to open an issue here:
 
 AUTH_CALLBACK_PATH = "/auth/alexamedia/callback"
 AUTH_CALLBACK_NAME = "auth:alexamedia:callback"
+AUTH_PROXY_PATH = "/auth/alexamedia/proxy"
+AUTH_PROXY_NAME = "auth:alexamedia:proxy"

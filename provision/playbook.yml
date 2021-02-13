@@ -11,8 +11,8 @@
 # - name: Zwave
 #   import_playbook: playbooks/zwave/zwave.yaml
 
-- name: Matrix
-  import_playbook: playbooks/matrix/matrix.yaml
+# - name: Matrix
+#   import_playbook: playbooks/matrix/matrix.yaml
 
 # - name: Mastodon
 #   import_playbook: playbooks/mastodon/mastodon.yaml
@@ -95,8 +95,8 @@
 # - name: Install simplelogin client
 #   import_playbook: playbooks/simplelogin/simplelogin.yaml
 
-# - name: Install media emby
-#   import_playbook: playbooks/media/media.yaml
+- name: Install media emby
+  import_playbook: playbooks/media/media.yaml
 
 # - name: Install nextcloud
 #   import_playbook: playbooks/nextcloud/nextcloud.yaml

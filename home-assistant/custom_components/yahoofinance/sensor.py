@@ -11,20 +11,24 @@ from homeassistant.helpers.entity import Entity, async_generate_entity_id
 
 from .const import (
     ATTR_CURRENCY_SYMBOL,
+    ATTR_QUOTE_SOURCE_NAME,
+    ATTR_QUOTE_TYPE,
     ATTR_SYMBOL,
     ATTR_TRENDING,
     ATTRIBUTION,
     CONF_DECIMAL_PLACES,
     CONF_SHOW_TRENDING_ICON,
     CONF_SYMBOLS,
+    CONF_TARGET_CURRENCY,
     CURRENCY_CODES,
     DATA_CURRENCY_SYMBOL,
     DATA_FINANCIAL_CURRENCY,
+    DATA_QUOTE_SOURCE_NAME,
+    DATA_QUOTE_TYPE,
     DATA_REGULAR_MARKET_PREVIOUS_CLOSE,
     DATA_REGULAR_MARKET_PRICE,
     DATA_SHORT_NAME,
     DEFAULT_CURRENCY,
-    DEFAULT_CURRENCY_SYMBOL,
     DEFAULT_ICON,
     DOMAIN,
     HASS_DATA_CONFIG,
@@ -44,8 +48,9 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     symbols = domain_config[CONF_SYMBOLS]
 
     options = {
-        CONF_SHOW_TRENDING_ICON: domain_config[CONF_SHOW_TRENDING_ICON],
+        CONF_TARGET_CURRENCY: domain_config.get(CONF_TARGET_CURRENCY),
         CONF_DECIMAL_PLACES: domain_config[CONF_DECIMAL_PLACES],
+        CONF_SHOW_TRENDING_ICON: domain_config[CONF_SHOW_TRENDING_ICON],
     }
 
     sensors = [
@@ -63,9 +68,13 @@ class YahooFinanceSensor(Entity):
     _icon = DEFAULT_ICON
     _market_price = None
     _short_name = None
+    _target_currency = None
+    _original_currency = None
 
-    def __init__(self, hass, coordinator, symbol, options) -> None:
+    def __init__(self, hass, coordinator, symbol_definition, options) -> None:
         """Initialize the sensor."""
+        symbol = symbol_definition.get("symbol")
+        self._hass = hass
         self._symbol = symbol
         self._coordinator = coordinator
         self.entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, symbol, hass=hass)
@@ -73,18 +82,26 @@ class YahooFinanceSensor(Entity):
         self._decimal_places = options[CONF_DECIMAL_PLACES]
         self._previous_close = None
 
+        # if not symbol.endswith("=X"):
+        self._target_currency = symbol_definition.get(CONF_TARGET_CURRENCY)
+
         self._attributes = {
             ATTR_ATTRIBUTION: ATTRIBUTION,
-            ATTR_CURRENCY_SYMBOL: DEFAULT_CURRENCY_SYMBOL,
-            ATTR_SYMBOL: self._symbol,
+            ATTR_CURRENCY_SYMBOL: None,
+            ATTR_SYMBOL: symbol,
+            ATTR_QUOTE_TYPE: None,
+            ATTR_QUOTE_SOURCE_NAME: None,
         }
 
         # Initialize all numeric attributes to None
-        for key in NUMERIC_DATA_KEYS:
+        for value in NUMERIC_DATA_KEYS:
+            key = value[0]
             self._attributes[key] = None
 
         # Delay initial data population to `available` which is called from `_async_write_ha_state`
-        _LOGGER.debug("Created %s", self.entity_id)
+        _LOGGER.debug(
+            "Created %s target_currency=%s", self.entity_id, self._target_currency
+        )
 
     @property
     def name(self) -> str:
@@ -120,7 +137,7 @@ class YahooFinanceSensor(Entity):
         return self._icon
 
     def _round(self, value):
-        """Return formatted value based on decimal_places"""
+        """Return formatted value based on decimal_places."""
         if value is None:
             return None
 
@@ -130,6 +147,48 @@ class YahooFinanceSensor(Entity):
             return int(value)
 
         return round(value, self._decimal_places)
+
+    def _get_target_currency_conversion(self) -> float:
+        if self._target_currency and self._original_currency:
+            data = self._coordinator.data
+            if data is not None:
+                source_symbol = (
+                    f"{self._original_currency}{self._target_currency}=X".upper()
+                )
+                _LOGGER.debug(f"Conversion symbol = {source_symbol}")
+                symbol_data = data.get(source_symbol)
+
+                if symbol_data is not None:
+                    return symbol_data[DATA_REGULAR_MARKET_PRICE]
+                else:
+                    self._coordinator.add_symbol(source_symbol)
+
+        return None
+
+    @staticmethod
+    def safe_convert(value, conversion):
+        """Return the converted value. The original value is returned if there is no conversion."""
+        if value is None:
+            return None
+        if conversion is None:
+            return value
+        return value * conversion
+
+    def _get_original_currency(self, symbol_data):
+        # Prefer currency over financialCurrency, for foreign symbols financialCurrency
+        # can represent the remote currency. But financialCurrency can also be None.
+        financial_currency = symbol_data[DATA_FINANCIAL_CURRENCY]
+        currency = symbol_data[DATA_CURRENCY_SYMBOL]
+
+        _LOGGER.debug(
+            "Updated %s (currency=%s, financialCurrency=%s)",
+            self._symbol,
+            ("None" if currency is None else currency),
+            ("None" if financial_currency is None else financial_currency),
+        )
+
+        currency = currency or financial_currency or DEFAULT_CURRENCY
+        return currency
 
     def _update_data(self) -> None:
         """Update local fields."""
@@ -144,26 +203,37 @@ class YahooFinanceSensor(Entity):
             _LOGGER.debug("Symbol data is None")
             return
 
+        self._original_currency = self._get_original_currency(symbol_data)
+        conversion = self._get_target_currency_conversion()
+        _LOGGER.debug(f"Currency conversion = {conversion}")
+
         self._short_name = symbol_data[DATA_SHORT_NAME]
-        self._market_price = symbol_data[DATA_REGULAR_MARKET_PRICE]
-        self._previous_close = symbol_data[DATA_REGULAR_MARKET_PREVIOUS_CLOSE]
-
-        for key in NUMERIC_DATA_KEYS:
-            self._attributes[key] = self._round(symbol_data[key])
-
-        # Prefer currency over financialCurrency, for foreign symbols financialCurrency
-        # can represent the remote currency. But financialCurrency can also be None.
-        financial_currency = symbol_data[DATA_FINANCIAL_CURRENCY]
-        currency = symbol_data[DATA_CURRENCY_SYMBOL]
-
-        _LOGGER.debug(
-            "Updated %s (currency=%s, financialCurrency=%s)",
-            self._symbol,
-            ("None" if currency is None else currency),
-            ("None" if financial_currency is None else financial_currency),
+        self._market_price = self.safe_convert(
+            symbol_data[DATA_REGULAR_MARKET_PRICE], conversion
+        )
+        self._previous_close = self.safe_convert(
+            symbol_data[DATA_REGULAR_MARKET_PREVIOUS_CLOSE], conversion
         )
 
-        currency = currency or financial_currency or DEFAULT_CURRENCY
+        for value in NUMERIC_DATA_KEYS:
+            key = value[0]
+            attr_value = symbol_data[key]
+
+            # Convert if currency value
+            if value[1]:
+                attr_value = self.safe_convert(attr_value, conversion)
+
+            self._attributes[key] = self._round(attr_value)
+
+        # Add some other string attributes
+        self._attributes[ATTR_QUOTE_TYPE] = symbol_data[DATA_QUOTE_TYPE]
+        self._attributes[ATTR_QUOTE_SOURCE_NAME] = symbol_data[DATA_QUOTE_SOURCE_NAME]
+
+        # Use target_currency if we have conversion data, otherwise keep using the currency from data.
+        if conversion is not None:
+            currency = self._target_currency or self._original_currency
+        else:
+            currency = self._original_currency
 
         self._currency = currency.upper()
         lower_currency = self._currency.lower()
@@ -171,7 +241,7 @@ class YahooFinanceSensor(Entity):
         trending_state = self._calc_trending_state()
 
         # Fall back to currency based icon if there is no trending state
-        if not trending_state is None:
+        if trending_state is not None:
             self._attributes[ATTR_TRENDING] = trending_state
 
             if self._show_trending_icon:
@@ -182,8 +252,8 @@ class YahooFinanceSensor(Entity):
             self._icon = f"mdi:currency-{lower_currency}"
 
         # If this one of the known currencies, then include the correct currency symbol.
-        if lower_currency in CURRENCY_CODES:
-            self._attributes[ATTR_CURRENCY_SYMBOL] = CURRENCY_CODES[lower_currency]
+        # Don't show $ as the CurrencySymbol even if we can't get one.
+        self._attributes[ATTR_CURRENCY_SYMBOL] = CURRENCY_CODES.get(lower_currency)
 
     def _calc_trending_state(self):
         """Return the trending state for the symbol."""

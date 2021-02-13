@@ -53,6 +53,15 @@
         - reload nginx
         - restart nginx
 
+    - name: Create /etc/nginx/sites-enabled/sonarr.conf
+      template:
+        src: sonarr.conf.j2
+        dest: /etc/nginx/sites-enabled/sonarr.conf
+      notify:
+        - reload nginx
+        - restart nginx
+
+
 - hosts: master
   become: yes
   roles:

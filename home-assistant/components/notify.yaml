@@ -23,3 +23,7 @@
     - service: ola
     - service: gotify
     - service: tv
+
+- name: tortuga
+  platform: matrix
+  default_room: !env_var HOME_ASSISTANT_MATRIX_ROOM
