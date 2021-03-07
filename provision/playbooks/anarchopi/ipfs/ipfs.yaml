@@ -1,35 +1,35 @@
-- hosts: master
-  become: yes
-  roles:
-    - role: geerlingguy.nginx
-    - role: geerlingguy.certbot
-  vars:
-    certbot_auto_renew: false
-    certbot_admin_email: "{{ email }}"
-    certbot_create_if_missing: true
-    certbot_certs:
-      - domains:
-        - "{{ ipfs_domain }}"
-  handlers:
-    - name: restart nginx
-      become: yes
-      service:
-        name: nginx
-        enabled: yes
-        state: restarted
-  tasks:
-    - name: Create /etc/nginx/sites-enabled/ipfs.conf
-      template:
-        src: ipfs.conf.j2
-        dest: /etc/nginx/sites-enabled/ipfs.conf
-      notify:
-        - reload nginx
-        - restart nginx
+# - hosts: master
+#   become: yes
+#   roles:
+#     - role: geerlingguy.nginx
+#     - role: geerlingguy.certbot
+#   vars:
+#     certbot_auto_renew: false
+#     certbot_admin_email: "{{ email }}"
+#     certbot_create_if_missing: true
+#     certbot_certs:
+#       - domains:
+#         - "{{ ipfs_domain }}"
+#   handlers:
+#     - name: restart nginx
+#       become: yes
+#       service:
+#         name: nginx
+#         enabled: yes
+#         state: restarted
+#   tasks:
+#     - name: Create /etc/nginx/sites-enabled/ipfs.conf
+#       template:
+#         src: ipfs.conf.j2
+#         dest: /etc/nginx/sites-enabled/ipfs.conf
+#       notify:
+#         - reload nginx
+#         - restart nginx
 
-- hosts: anarchopi
+- hosts: media
   become: yes
   vars:
-    ipfs_ver: v0.6.0
+    ipfs_ver: v0.7.0
   tasks:
     - name: Create ipfs group
       group:
@@ -38,20 +38,6 @@
       user:
         name: ipfs
         group: ipfs
-    - name: Create directory
-      file:
-        group: ipfs
-        owner: ipfs
-        path: /mnt/hdd/ipfs
-        state: directory
-    - name: Create symbolic link
-      become: yes
-      file:
-        group: ipfs
-        owner: ipfs
-        src: /mnt/hdd/ipfs
-        dest: /home/ipfs/.ipfs
-        state: link
     - name: Check if ipfs is installed
       command: 'ipfs --version'
       register: ipfs_is_installed
@@ -59,7 +45,7 @@
     - name: Download ipfs core
       when: ipfs_is_installed is failed
       get_url:
-        url: https://dist.ipfs.io/go-ipfs/{{ ipfs_ver }}/go-ipfs_{{ ipfs_ver }}_linux-arm.tar.gz
+        url: https://dist.ipfs.io/go-ipfs/{{ ipfs_ver }}/go-ipfs_{{ ipfs_ver }}_linux-amd64.tar.gz
         dest: /tmp/ipfs-{{ ipfs_ver }}.tar.gz
     - name: Extract ipfs core
       when: ipfs_is_installed is failed
@@ -79,10 +65,10 @@
         state: started
         daemon_reload: yes
         name: ipfs
-    - name: Mount backup directory
-      mount:
-        state: mounted
-        fstype: cifs
-        opts: "domain=192.168.1.181,username={{ qnap_username }},password={{ qnap_password }},file_mode=0664,dir_mode=0775,gid=bitcoin,uid=bitcoin"
-        src: "//192.168.1.181/SDDisk1"
-        path: "/mnt/hdd/backup"
+    # - name: Mount backup directory
+    #   mount:
+    #     state: mounted
+    #     fstype: cifs
+    #     opts: "domain=192.168.1.181,username={{ qnap_username }},password={{ qnap_password }},file_mode=0664,dir_mode=0775,gid=bitcoin,uid=bitcoin"
+    #     src: "//192.168.1.181/SDDisk1"
+    #     path: "/mnt/hdd/backup"

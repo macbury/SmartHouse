@@ -4,6 +4,7 @@ import json
 import os
 import tempfile
 import zipfile
+import shutil
 
 from aiogithubapi import AIOGitHubAPIException
 from queueman import QueueManager
@@ -258,7 +259,11 @@ class HacsRepository(RepositoryHelpers):
         # Attach repository
         current_etag = self.data.etag_repository
         await common_update_data(self, ignore_issues, force)
-        if (current_etag == self.data.etag_repository) and not force:
+        if (
+            not self.data.installed
+            and (current_etag == self.data.etag_repository)
+            and not force
+        ):
             self.logger.debug(
                 "Did not update %s, content was not modified", self.data.full_name
             )
@@ -313,17 +318,24 @@ class HacsRepository(RepositoryHelpers):
                 validate.errors.append(f"[{content.name}] was not downloaded")
                 return
 
-            result = await async_save_file(
-                f"{tempfile.gettempdir()}/{self.data.filename}", filecontent
-            )
-            with zipfile.ZipFile(
-                f"{tempfile.gettempdir()}/{self.data.filename}", "r"
-            ) as zip_file:
+            temp_dir = await self.hacs.hass.async_add_executor_job(tempfile.mkdtemp)
+            temp_file = f"{temp_dir}/{self.data.filename}"
+
+            result = await async_save_file(temp_file, filecontent)
+            with zipfile.ZipFile(temp_file, "r") as zip_file:
                 zip_file.extractall(self.content.path.local)
+
+            def cleanup_temp_dir():
+                """Cleanup temp_dir."""
+                if os.path.exists(temp_dir):
+                    self.logger.debug("Cleaning up %s", temp_dir)
+                    shutil.rmtree(temp_dir)
 
             if result:
                 self.logger.info("%s Download of %s completed", self, content.name)
+                await self.hacs.hass.async_add_executor_job(cleanup_temp_dir)
                 return
+
             validate.errors.append(f"[{content.name}] was not downloaded")
         except (Exception, BaseException):
             validate.errors.append("Download was not completed")

@@ -1,7 +1,13 @@
 - type: custom:layout-card
-  layout: horizontal
-  max_columns: 3
+  layout: veritical
+  max_columns: 4
   cards:
+    - type: horizontal-stack
+      cards:
+        - type: gauge
+          max: 15
+          entity: sensor.current_portfolio_percent_performance
+
     - type: horizontal-stack
       cards:
         - type: custom:mini-graph-card

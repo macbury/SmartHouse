@@ -9,5 +9,6 @@ commands:
     name: download_movie
   - expression: "alexa (?P<message>.*)"
     name: alexa_say
-  - word: hello
-    name: hello
+  - expression: "yt (?P<message>.*)"
+    name: download_yt_music
+

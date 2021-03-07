@@ -71,7 +71,7 @@ function mount_share() {
   sudo mkdir -p /mnt/$share
   unmount_share $share
 
-  sudo mount -t cifs //mr-pickle.here/$share /mnt/$share -o username=$HOME_ASSISTANT_QNAP_USERNAME -o password=$HOME_ASSISTANT_QNAP_PASSWORD -o gid=samba,file_mode=0664,dir_mode=0775
+  sudo mount -t cifs //mr-pickle.here/$share /mnt/$share -o username=$HOME_ASSISTANT_QNAP_USERNAME -o password=$HOME_ASSISTANT_QNAP_PASSWORD -o gid=samba,file_mode=0664,dir_mode=0775,noperm
 }
 
 function smart_house_command_enpass() {

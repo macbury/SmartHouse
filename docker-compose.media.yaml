@@ -14,25 +14,6 @@ services:
       - .docker/data/snarr:/config
       - /mnt/MoviesAndTV:/tv
       - /home/downloads:/downloads
-  emby:
-    image: emby/embyserver:latest
-    ports:
-      - 8096:8096
-    environment:
-      - UID=1000
-      - GID=100 
-      - GIDLIST=100,44,1,0,1003
-      - TZ=Warsaw
-    devices:
-      - /dev/dri:/dev/dri
-    volumes:
-      - .docker/data/emby/config:/config
-      - .docker/log/emby/tmp/:/mnt/tmp
-      - /mnt/Movies:/mnt/Movies
-      - /mnt/Books:/mnt/Books
-      - /mnt/MoviesAndTV:/mnt/MoviesAndTV
-      - /mnt/Multimedia:/mnt/Multimedia
-      - /mnt/Music:/mnt/Music
 
   plex:
     network_mode: host
