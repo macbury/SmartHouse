@@ -68,7 +68,7 @@
         state: below_horizon
       - condition: time
         after: '16:00:00'
-        before: '23:59:59'
+        before: '22:00:00'
       - condition: or
         conditions:
           - condition: state

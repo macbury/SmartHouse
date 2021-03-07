@@ -1,36 +1,38 @@
 # https://stadicus.github.io/RaspiBolt/
 # https://mynodebtc.com/
 
-- hosts: anarchopi
-  become: yes
-  tasks:
-    - apt:
-        name: build-essential
-    - apt:
-        name: libffi-dev
-    - apt:
-        name: libssl-dev
-    - name: Install cryptsetup
-      apt:
-        name: cryptsetup
-    - name: smb
-      apt:
-        name: cifs-utils
+# - hosts: 
+#     - anarchopi
+#     - media
+#   become: yes
+#   tasks:
+#     - apt:
+#         name: build-essential
+#     - apt:
+#         name: libffi-dev
+#     - apt:
+#         name: libssl-dev
+#     - name: Install cryptsetup
+#       apt:
+#         name: cryptsetup
+#     - name: smb
+#       apt:
+#         name: cifs-utils
 
-- hosts: master
-  become: yes
-  roles:
-    - role: weareinteractive.ufw
-  vars:
-    ufw_reset: no
-    ufw_rules:
-      - { port: 9051, rule: allow, comment: "Allow tor" }
+# - hosts: master
+#   become: yes
+#   roles:
+#     - role: weareinteractive.ufw
+#   vars:
+#     ufw_reset: no
+#     ufw_rules:
+#       - { port: 9051, rule: allow, comment: "Allow tor" }
 
-- name: Configure torrents
-  import_playbook: torrents/torrents.yaml
+# - name: Configure torrents
+#   import_playbook: torrents/torrents.yaml
 
 # - name: Configure ipfs
 #   import_playbook: ipfs/ipfs.yaml
 
-# - name: Configure adguard
-#   import_playbook: adguard/adguard.yaml
+- name: Configure adguard
+  import_playbook: adguard/adguard.yaml

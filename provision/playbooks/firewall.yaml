@@ -1,11 +1,16 @@
-- hosts: master
+- hosts:
+    - master
+    - media
   become: yes
   roles:
     - role: weareinteractive.ufw
   vars:
+    ansible_os_family: Debian
     ufw_reset: yes
     ufw_logging: "off"
     ufw_rules:
+      - { port: 8008, rule: allow, comment: 'Synapse' }
+      - { port: 8448, rule: allow, comment: 'Synapse' }
       - { port: 9050, rule: allow, comment: "Tor Control Port" }
       - { port: 8123, rule: allow, comment: 'HomeAssistant' }
       - { port: 3128, rule: allow, comment: 'squid' }

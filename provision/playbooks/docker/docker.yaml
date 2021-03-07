@@ -2,6 +2,7 @@
 - hosts: 
     - master
     - dev
+    - media
   become: yes
   handlers:
     - name: reload systemctl
@@ -30,6 +31,10 @@
       apt:
         name: docker-ce
         update_cache: yes
+    - name: Install pip
+      apt:
+        name: python3-pip
+        update_cache: yes
     - name: 'Docker compose'
       pip:
         name: docker-compose
@@ -38,17 +43,3 @@
         name: '{{ ansible_user }}'
         group: docker
         append: yes
-    - name: Download docker-volume-netshare
-      get_url:
-        url: https://github.com/ContainX/docker-volume-netshare/releases/download/v0.36/docker-volume-netshare_0.36_amd64.deb
-        dest: "/tmp/docker-volume-netshare.deb"
-    - name: Install docker-volume-netshare
-      apt: 
-        deb: /tmp/docker-volume-netshare.deb
-      sudo: true
-    - name: Create docker-netshare.service
-      template:
-        src: ./docker-netshare.service
-        dest: /lib/systemd/system/docker-netshare.service
-      notify:
-        - reload systemctl

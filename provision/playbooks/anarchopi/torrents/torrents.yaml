@@ -1,5 +1,6 @@
 
-- hosts: anarchopi
+- hosts:
+    - media
   become: yes
   tasks:
     - name: Create transmission group
@@ -10,7 +11,8 @@
         name: transmission
         group: transmission
 
-- hosts: anarchopi
+- hosts: 
+    - media
   become: yes
   roles:
     - role: elboletaire.transmission
@@ -32,7 +34,7 @@
       file:
         group: transmission
         owner: transmission
-        path: /mnt/hdd/downloaded/{{ item.share }}
+        path: /home/transmission/downloaded/{{ item.share }}
         state: directory
       loop:
         - { share: 'Movies' }
@@ -71,3 +73,14 @@
       notify:
         - reload nginx
         - restart nginx
+
+- hosts: media
+  become: yes
+  roles:
+    - role: weareinteractive.ufw
+  vars:
+    ansible_os_family: 'Debian'
+    ufw_reset: no
+    ufw_logging: "off"
+    ufw_rules:
+      - { port: 9091, rule: allow, comment: "Transmission webui" }

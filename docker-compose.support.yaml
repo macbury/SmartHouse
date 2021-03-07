@@ -110,17 +110,6 @@ services:
       - "4282:80"
     depends_on:
       - git
-  ci_runner:
-    image: drone/drone-runner-docker:1.4.0
-    env_file:
-      - '.env.ci_runner'
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    depends_on:
-      - ci
   git:
     image: gitea/gitea:latest
     env_file:
@@ -143,7 +132,7 @@ services:
     ports:
       - '59900:80'
   node-red:
-    image: nodered/node-red:latest
+    build: ./node-red/
     restart: unless-stopped
     dns:
       - 9.9.9.9
@@ -155,6 +144,7 @@ services:
       - NODE_TLS_REJECT_UNAUTHORIZED=0
     volumes:
       - .docker/data/node-red:/data
+      - /mnt/Music:/music
   gotify:
     image: gotify/server:latest
     ports:

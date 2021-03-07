@@ -1,17 +1,5 @@
 - hosts: anarchopi
   become: yes
-  roles:
-    - role: weareinteractive.ufw
-  vars:
-    ufw_reset: no
-    ufw_logging: "off"
-    ufw_rules:
-      - { port: 53, rule: allow, comment: "Adguard DNS" }
-      - { port: 3000, rule: allow, comment: "Adguard install WebUI" }
-      - { port: 6300, rule: allow, comment: "Adguard WebUI" }
-      - { port: 68, rule: allow, comment: 'Allow Adguard DNS' }
-      - { port: 853, rule: allow, comment: 'Allow Adguard DNS' }
-      - { port: 67, rule: allow, comment: 'Allow PiHole DNS' }
   tasks:
     - name: Check if adguard is installed
       command: 'AdGuardHome --version'
@@ -20,7 +8,7 @@
     - name: Download ADGuard
       when: adguard_is_installed is failed
       get_url:
-        url: https://static.adguard.com/adguardhome/release/AdGuardHome_linux_arm.tar.gz
+        url: https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.105.1/AdGuardHome_linux_armv7.tar.gz
         dest: /tmp/AdGuardHome_linux_arm.tar.gz
     - name: Extract ADGuard
       when: adguard_is_installed is failed
@@ -43,6 +31,23 @@
       command: 
         cmd: 'AdGuardHome -s install'
         chdir: /root
+
+- hosts: anarchopi
+  become: yes
+  roles:
+    - role: weareinteractive.ufw
+  vars:
+    ansible_os_family: 'Debian'
+    ufw_reset: no
+    ufw_logging: "off"
+    ufw_rules:
+      - { port: 22, rule: allow, comment: "Allow ssh" }
+      - { port: 53, rule: allow, comment: "Adguard DNS" }
+      - { port: 3000, rule: allow, comment: "Adguard install WebUI" }
+      - { port: 6300, rule: allow, comment: "Adguard WebUI" }
+      - { port: 68, rule: allow, comment: 'Allow Adguard DNS' }
+      - { port: 853, rule: allow, comment: 'Allow Adguard DNS' }
+      - { port: 67, rule: allow, comment: 'Allow PiHole DNS' }
 
 - hosts: master
   become: yes
