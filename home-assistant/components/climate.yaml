@@ -1,19 +1,20 @@
 - platform: zwave
+
 - platform: generic_thermostat
   name: Living Room Thermostat
   heater: switch.living_room_heater
   target_sensor: sensor.living_room_temperature
   away_temp: 20
   keep_alive:
-    minutes: 30
+    minutes: 10
 
 - platform: generic_thermostat
   name: Bedroom Thermostat
   heater: switch.bedroom_heater
-  target_sensor: sensor.bedroom_temperature
+  target_sensor: sensor.corridor_temperature
   away_temp: 20
   keep_alive:
-    minutes: 30
+    minutes: 10
 
 - platform: generic_thermostat
   name: Kitchen Thermostat
@@ -21,4 +22,4 @@
   target_sensor: sensor.kitchen_temperature
   away_temp: 20
   keep_alive:
-    minutes: 30
+    minutes: 10

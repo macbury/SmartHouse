@@ -13,7 +13,6 @@ cover: !include components/cover.yaml
 climate: !include components/climate.yaml
 # D
 discovery:
-device_tracker: !include components/device_tracker.yaml
 # E
 # F
 fan: !include components/fan.yaml
@@ -59,7 +58,6 @@ notify: !include components/notify.yaml
 # P
 panel_custom: !include components/panel_custom.yaml
 person: !include components/person.yaml
-proximity: !include components/proximity.yaml
 # R
 rest_command: !include components/rest_commands.yaml
 # S

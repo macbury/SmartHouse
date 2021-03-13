@@ -1,9 +1,0 @@
-home:
-  ignored_zones:
-    - codesthq
-    - Port COM
-  devices:
-    - device_tracker.ola
-    - device_tracker.arek
-  tolerance: 50
-  unit_of_measurement: km
