@@ -2,6 +2,14 @@
 version: '3.5'
 
 services:
+  stonks:
+    restart: unless-stopped
+    image: macbury/mos:latest
+    network_mode: host
+    env_file:
+      - '.env.mos'
+    environment:
+      - MASTER_STONKS_DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@0.0.0.0:4101/mos_production?sslmode=disable
   hub:
     image: selenium/hub
     ports:
@@ -37,6 +45,7 @@ services:
     network_mode: host
     volumes:
       - .docker/log/detox:/detox/log
+      - .docker/data/detox:/detox/public/data
     env_file:
       - '.env.detox'
     environment:

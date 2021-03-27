@@ -40,7 +40,7 @@ services:
     volumes:
       - .docker/data/mastodon:/opt/mastodon/public/system/
   synapse:
-    image: "matrixdotorg/synapse:v1.23.1"
+    image: "matrixdotorg/synapse:latest"
     restart: "unless-stopped"
     ports:
       - "127.0.0.1:18008:8008"

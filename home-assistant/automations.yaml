@@ -282,3 +282,15 @@
     data:
       message: Okno w sypialni otwarte zbyt długo
   mode: single
+- id: '1616752611416'
+  alias: Lazy switch off automations
+  description: ''
+  trigger:
+  - platform: homeassistant
+    event: start
+  condition: []
+  action:
+  - service: automation.turn_off
+    data: {}
+    entity_id: automation.inform_me_if_number_of_beerbug_patients_changed
+  mode: single

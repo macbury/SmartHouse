@@ -24,6 +24,7 @@
 .env.ethereum
 .env.dpodcast
 .env.smasher
+.env.mos
 .DS_Store
 .backups/**/*
 *.zip
