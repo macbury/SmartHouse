@@ -1,8 +1,0 @@
-- alias: Inform me if number of beerbug patients changed
-  trigger:
-    - platform: state
-      entity_id:  sensor.poland_coronavirus_current
-  action:
-    - service: notify.gotify
-      data:
-        message: Beer bug people count {{ states.sensor.poland_coronavirus_current.state }}

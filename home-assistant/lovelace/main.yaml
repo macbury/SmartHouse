@@ -70,11 +70,6 @@ views:
     path: balcony
     cards: !include balcony.yaml
 
-  - title: Majątek
-    panel: true
-    path: invest
-    icon: 'mdi:cash'
-    cards: !include invest.yaml
   # - title: Kamery
   #   panel: true
   #   icon: mdi:cctv

@@ -39,17 +39,6 @@ services:
     network_mode: host
     volumes:
       - .docker/data/tor:/data
-  detox:
-    restart: unless-stopped
-    image: macbury/detox:latest
-    network_mode: host
-    volumes:
-      - .docker/log/detox:/detox/log
-      - .docker/data/detox:/detox/public/data
-    env_file:
-      - '.env.detox'
-    environment:
-      - DETOX_DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@0.0.0.0:4101/detox_production?sslmode=disable
   speedtest:
     image: macbury/speedtest:latest
     env_file:

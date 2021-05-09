@@ -294,3 +294,38 @@
     data: {}
     entity_id: automation.inform_me_if_number_of_beerbug_patients_changed
   mode: single
+- id: '1620048655385'
+  alias: Ola is in Galeria krakowska
+  description: ''
+  use_blueprint:
+    path: homeassistant/notify_leaving_zone.yaml
+    input:
+      person_entity: person.ola
+      zone_entity: zone.galeria_krakowka
+      notify_device: 3465c7e083aa4509b0ca3a5e796fc854
+- id: '1620403076688'
+  alias: Switch mosquitto killer in bedroom on before going to sleep
+  description: ''
+  trigger:
+  - platform: time
+    at: '22:00'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 393d9062483711eba990cfaff72586ab
+    entity_id: switch.mosquitto_killer
+    domain: switch
+  mode: single
+- id: '1620403128707'
+  alias: Switch off mosquitto killer at morning
+  description: ''
+  trigger:
+  - platform: time
+    at: '6:00'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 393d9062483711eba990cfaff72586ab
+    entity_id: switch.mosquitto_killer
+    domain: switch
+  mode: single
