@@ -321,7 +321,7 @@
   description: ''
   trigger:
   - platform: time
-    at: '6:00'
+    at: '7:00'
   condition: []
   action:
   - type: turn_off

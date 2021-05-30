@@ -10,6 +10,9 @@
 #   roles:
 #     - aeimer.install_bat
 
+- name: Doh dns
+  import_playbook: playbooks/doh_dns/doh_dns.yaml
+
 # - name: Basic packages
 #   import_playbook: playbooks/packages.yaml
 
