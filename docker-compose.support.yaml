@@ -175,7 +175,7 @@ services:
       retries: 3
   influxdb:
     restart: unless-stopped
-    image: influxdb:latest
+    image: influxdb:1.8.6
     ports:
       - "0.0.0.0:18086:8086"
     volumes:
