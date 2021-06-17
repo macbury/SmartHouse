@@ -3,6 +3,7 @@
   "name": "Burze.dzis.net",
   "documentation": "https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net",
   "dependencies": [],
-  "codeowners": ["PiotrMachowski"],
-  "requirements": ["zeep"]
+  "codeowners": ["@PiotrMachowski"],
+  "requirements": ["zeep"],
+  "version": "v1.0.3"
 }

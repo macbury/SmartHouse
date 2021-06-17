@@ -23,3 +23,14 @@
   away_temp: 20
   keep_alive:
     minutes: 10
+
+- platform: generic_hygrostat
+  name: Living Room
+  dryer: fan.living_room_humidifier
+  target_sensor: sensor.mean_living_room_humidity
+  min_humidity: 50
+  max_humidity: 80
+  target_humidity: 60
+  away_humidity: 50
+  away_fixed: True
+  sensor_stale_duration: 01:00:00

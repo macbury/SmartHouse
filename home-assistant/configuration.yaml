@@ -1,6 +1,5 @@
 # A
 api:
-asuswrt: !include components/asuswrt.yaml
 alexa: !include components/alexa.yaml
 automation: !include_dir_merge_list automations/
 # B
@@ -19,7 +18,6 @@ fan: !include components/fan.yaml
 ffmpeg:
 # G
 group: !include groups.yaml
-generic_hygrostat: !include components/generic_hygrostat.yaml
 # H
 homeassistant: !include components/homeassistant.yaml
 http: !include components/http.yaml

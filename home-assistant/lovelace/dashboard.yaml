@@ -107,4 +107,69 @@
             points: true
             fill: fade
 
+    - type: horizontal-stack
+      cards:
+        - type: custom:mini-graph-card
+          entities:
+            - sensor.asuswrt_upload_speed
+          line_color: '#3CF'
+          hours_to_show: 24
+          points_per_hour: 1
+          animate: true
+          hour24: true
+          extrema: true
+          show:
+            points: true
+            fill: fade
+        - type: custom:mini-graph-card
+          entities:
+            - sensor.asuswrt_download_speed
+          line_color: '#FF9000'
+          hours_to_show: 24
+          points_per_hour: 1
+          animate: true
+          hour24: true
+          show:
+            points: true
+            fill: fade
 
+    - type: horizontal-stack
+      cards:
+        - type: custom:mini-graph-card
+          entities:
+            - sensor.speedtest_upload
+          line_color: '#66bb6a'
+          hours_to_show: 24
+          points_per_hour: 1
+          animate: true
+          hour24: true
+          extrema: true
+          show:
+            points: true
+            fill: fade
+        - type: custom:mini-graph-card
+          entities:
+            - sensor.speedtest_download
+          line_color: '#0DA035'
+          hours_to_show: 24
+          points_per_hour: 1
+          animate: true
+          hour24: true
+          show:
+            points: true
+            fill: fade
+
+    - type: horizontal-stack
+      cards:
+        - type: custom:mini-graph-card
+          entities:
+            - sensor.speedtest_ping
+          line_color: '#03a9f4'
+          hours_to_show: 24
+          points_per_hour: 1
+          animate: true
+          hour24: true
+          extrema: true
+          show:
+            points: true
+            fill: fade
