@@ -1,17 +1,7 @@
-temperature_lamp:
-  module: temperature_lamp
-  class: TemperatureLamp
-  calendar_id: calendar.moods
-  family_devices: 'group.family'
-  outside_temperature_id: sensor.dark_sky_apparent_temperature
-  light_id: light.status_light
-  cold_temperature: 14.0
-  hot_temperature: 28.0
-
 living_room_bedroom:
   module: humidifier
   class: HumidifierController
-  humidifer: humidifier.living_room
+  humidifer: fan.living_room_humidifier
   family_devices: group.family
   calendar: calendar.salon_env
 
