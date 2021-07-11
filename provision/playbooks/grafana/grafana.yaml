@@ -1,0 +1,19 @@
+- hosts: master
+  become: yes
+  roles:
+    - role: geerlingguy.nginx
+  handlers:
+    - name: restart nginx
+      become: yes
+      service:
+        name: nginx
+        enabled: yes
+        state: restarted
+  tasks:
+    - name: Create /etc/nginx/sites-enabled/grafana.conf
+      template:
+        src: grafana.conf.j2
+        dest: /etc/nginx/sites-enabled/grafana.conf
+      notify:
+        - reload nginx
+        - restart nginx

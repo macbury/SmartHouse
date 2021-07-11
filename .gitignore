@@ -119,3 +119,4 @@ blog/**/*
 .env.detox
 home-assistant/*.html
 .env.zwave
+.env.errbit

@@ -27,7 +27,7 @@ bedroom_air:
   class: AirPurifierAI
   calendar: calendar.sypialnia_env
   fan_id: 'fan.bedroom_air_purifier'
-  balcone_door: binary_sensor.bedroom_window
+  #balcone_door: binary_sensor.bedroom_window
   family_devices: 'group.family'
   fallback: 5400
   mode: 'Auto'

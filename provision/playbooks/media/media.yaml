@@ -94,36 +94,6 @@
     - media
   become: yes
   tasks:
-    - name: 'Install glances'
-      pip:
-        name: glances
-    - name: 'Install bottle'
-      pip:
-        name: bottle
-    - name: Create glances.service
-      template:
-        src: ./glances.service
-        dest: /lib/systemd/system/glances.service
-    - name: enable glances service
-      systemd:
-        name: glances
-        state: started
-        enabled: yes
-        daemon_reload: yes
-    - name: Create emby group
-      group:
-        name: emby
-    - name: Create emby user
-      user:
-        name: emby
-        group: emby
-    - name: Download Emby
-      get_url:
-        url: https://github.com/MediaBrowser/Emby.Releases/releases/download/4.5.4.0/emby-server-deb_4.5.4.0_amd64.deb
-        dest: /tmp/emby-server.deb
-    - name: Install emby server
-      apt:
-        deb: /tmp/emby-server.deb
     - name: Create movies directory
       file:
         group: emby

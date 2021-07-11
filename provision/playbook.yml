@@ -10,8 +10,8 @@
 #   roles:
 #     - aeimer.install_bat
 
-- name: Doh dns
-  import_playbook: playbooks/doh_dns/doh_dns.yaml
+#- name: Doh dns
+#  import_playbook: playbooks/doh_dns/doh_dns.yaml
 
 # - name: Basic packages
 #   import_playbook: playbooks/packages.yaml
@@ -43,8 +43,8 @@
 # - name: Install anarchopi
 #   import_playbook: playbooks/anarchopi/anarchopi.yaml
 
-- name: Install master of stonks
-  import_playbook: playbooks/master_of_stonks/master_of_stonks.yaml
+#- name: Install master of stonks
+#  import_playbook: playbooks/master_of_stonks/master_of_stonks.yaml
 
 # - name: Install detox
 #   import_playbook: playbooks/detox/detox.yaml
@@ -54,6 +54,13 @@
 
 # - name: Ad blocking stuff
 #   import_playbook: playbooks/ads/ads.yaml
+
+# - name: Grafana
+#   import_playbook: playbooks/grafana/grafana.yaml
+
+- name: Errbit
+  import_playbook: playbooks/errbit/errbit.yaml
+
 
 # - name: Speed test help tool
 #   import_playbook: playbooks/speedtest/speedtest.yaml
@@ -106,8 +113,8 @@
 # - name: Install simplelogin client
 #   import_playbook: playbooks/simplelogin/simplelogin.yaml
 
-# - name: Install media emby
-#   import_playbook: playbooks/media/media.yaml
+#- name: Install media emby
+#  import_playbook: playbooks/media/media.yaml
 
 # - name: Install nextcloud
 #   import_playbook: playbooks/nextcloud/nextcloud.yaml

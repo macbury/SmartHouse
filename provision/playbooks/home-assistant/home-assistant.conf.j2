@@ -2,14 +2,6 @@ upstream hass {
   server 127.0.0.1:8123 fail_timeout=0;
 }
 
-upstream grafana {
-  server 127.0.0.1:4100 fail_timeout=0;
-}
-
-upstream glances {
-  server 127.0.0.1:4108 fail_timeout=0;
-}
-
 server {
   listen 80;
   listen [::]:80;
@@ -138,34 +130,6 @@ server {
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
   }
-
-  location /grafana {
-    allow 192.168.0.0/16;
-    allow 10.0.0.0/16;
-    deny all;
-
-    rewrite  ^/grafana/(.*)  /$1 break;
-    proxy_pass http://grafana/;
-    proxy_set_header Host $host;
-
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection "upgrade";
-  }
-
-  location /glances {
-    allow 192.168.0.0/16;
-    allow 10.0.0.0/16;
-    deny all;
-
-    rewrite /glances/(.*) /$1 break;
-    proxy_pass http://glances/;
-    proxy_set_header Host $http_host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-  }
-
 
   error_page 404 403 @error;
 

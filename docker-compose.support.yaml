@@ -197,22 +197,22 @@ services:
       - ./postgresql/:/docker-entrypoint-initdb.d/
       - .docker/data/postgresql:/data
   grafana:
-    image: grafana/grafana:6.5.0
+    image: grafana/grafana:8.0.5
     restart: unless-stopped
-    user: "472"
+    user: "root"
     env_file:
       - '.env.grafana'
       - '.env.influxdb'
       - '.env.local'
     environment:
-      GF_SERVER_DOMAIN: "${HOME_ASSISTANT_DOMAIN}"
-      GF_SERVER_ROOT_URL: "https://${HOME_ASSISTANT_DOMAIN}/grafana/"
+      GF_SERVER_DOMAIN: "${HOME_ASSISTANT_GRAFANA}"
+      GF_SERVER_ROOT_URL: "https://${HOME_ASSISTANT_GRAFANA}/"
     ports:
       - "127.0.0.1:4100:3000"
-    volumes:
-      - .docker/data/grafana:/var/lib/grafana
     depends_on:
       - influxdb
+    volumes:
+      - .docker/data/graf:/var/lib/grafana
   esphome:
     image: esphome/esphome:latest
     volumes:
@@ -239,3 +239,20 @@ services:
       - .env.smasher
     depends_on:
       - database
+  mongo:
+    image: mongo:4.1
+    network_mode: bridge
+    volumes:
+      - .docker/data/mongo/data:/data/db
+      - .docker/data/mongo/dump:/dump
+  errbit:
+    image: errbit/errbit:latest
+    network_mode: bridge
+    ports:
+      - "127.0.0.1:4666:8080"
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    env_file:
+      - '.env.errbit'

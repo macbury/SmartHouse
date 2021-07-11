@@ -17,9 +17,8 @@ services:
   mqtt:
     restart: unless-stopped
     image: eclipse-mosquitto:latest
-    ports:
-      - 0.0.0.0:4105:1883
+    network_mode: host
     volumes:
       - .docker/data/mosquitto:/mosquitto/data
-      - .docker/log/mosquitto.log:/mosquitto/log/mosquitto.log
+      #- .docker/log/mosquitto.log:/mosquitto/log/mosquitto.log
       - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf

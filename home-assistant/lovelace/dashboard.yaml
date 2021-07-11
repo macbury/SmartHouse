@@ -32,6 +32,10 @@
         - person.arek
         - person.ola
 
+    - type: iframe
+      url: https://www.ventusky.com/?p=50.02;19.89;7&l=rain-1h
+      aspect_ratio: 100%
+
     - break
 
     - type: weather-forecast
