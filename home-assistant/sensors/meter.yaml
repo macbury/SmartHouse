@@ -1,5 +1,0 @@
-- platform: mqtt
-  name: Living Room Noise Level
-  state_topic: "home/living_room/decibel_meter"
-  expire_after: 60
-  unit_of_measurement: '%'

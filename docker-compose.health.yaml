@@ -6,6 +6,8 @@ services:
     restart: unless-stopped
     image: macbury/mos:latest
     network_mode: host
+    volumes:
+      - .docker/data/stonks/:/mos/tmp
     env_file:
       - '.env.mos'
     environment:

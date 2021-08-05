@@ -32,6 +32,8 @@
 
     - type: thermostat
       entity: climate.living_room_thermostat
+    - type: thermostat
+      entity: climate.air_conditioner
     - break
     - type: horizontal-stack
       cards:
@@ -49,14 +51,6 @@
         - type: entity-button
           entity: light.work_desk
           icon: mdi:track-light
-    - type: horizontal-stack
-      cards:
-        - type: entity-button
-          entity: switch.christmas_tree
-          name: Choinka
-        - type: entity-button
-          entity: fan.living_room_humidifier
-          name: Humidifier
     - type: horizontal-stack
       cards:
         - type: entity-button

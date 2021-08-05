@@ -3,6 +3,9 @@ logs:
   homeassistant.components.http.ban: warning
   xiaomi_gateway: error
   matrix: debug
+  xiaomi_miio: debug
   homeassistant.components.matrix: debug
   homeassistant.components.xiaomi_aqara: error
   homeassistant.components.switch.xiaomi_aqara: debug
+  homeassistant.components.xiaomi_miio: debug
+  homeassistant.components.xiaomi_miio.vacuum: debug
