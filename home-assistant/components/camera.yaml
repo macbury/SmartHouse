@@ -1,28 +1,33 @@
-- platform: generic
+- platform: xiaomi_cloud_map_extractor
   name: Vacuum Map
-  still_image_url: http://localhost:10005/map.png
-  framerate: 1
-
-- platform: generic
-  name: Vacuum Grid Map
-  still_image_url: http://localhost:10005/map.grid.png
-  framerate: 1
-
-- platform: ffmpeg
-  input: https://hoktastream1.webcamera.pl/wentzl_cam_be5c6c/wentzl_cam_be5c6c.stream/playlist.m3u8
-  name: Main Square
-
-- platform: ffmpeg
-  input: https://hoktastream2.webcamera.pl/krakow_cam_4c3e37/krakow_cam_4c3e37.stream/chunks.m3u8
-  name: Wawel 
-
-- platform: mjpeg
-  mjpeg_url: !env_var HOME_ASSISTANT_HIM_CAM_URL
-  username: pi
-  password: !env_var HOME_ASSISTANT_HIM_CAM_PASSWORD
-  name: him_cam
-
-
-- platform: mjpeg
-  mjpeg_url: http://192.168.1.237:2971/camera/stream
-  name: Nexus 7
+  host: 192.168.1.222
+  country: "de"
+  token: !env_var HOME_ASSISTANT_VACUUM_TOKEN
+  username: !env_var HOME_ASSISTANT_XIAOMI_USERNAME
+  password: !env_var HOME_ASSISTANT_XIAOMI_PASSWORD
+  draw: ['all']
+  attributes:
+    - calibration_points
+    - charger
+    - cleaned_rooms
+    - country
+    - goto
+    - goto_path
+    - goto_predicted_path
+    - image
+    - is_empty
+    - map_name
+    - no_go_areas
+    - no_mopping_areas
+    - obstacles
+    - ignored_obstacles
+    - obstacles_with_photo
+    - ignored_obstacles_with_photo
+    - path
+    - room_numbers
+    - rooms
+    - vacuum_position
+    - vacuum_room
+    - vacuum_room_name
+    - walls
+    - zones
