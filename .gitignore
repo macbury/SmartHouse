@@ -120,3 +120,5 @@ blog/**/*
 home-assistant/*.html
 .env.zwave
 .env.errbit
+.log.1
+.log.*

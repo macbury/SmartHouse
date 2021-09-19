@@ -43,6 +43,7 @@ logger: !include components/logger.yaml
 lovelace:
   mode: yaml
 # M
+my:
 mqtt: !include components/mqtt.yaml
 matrix: !include components/matrix.yaml
 map:

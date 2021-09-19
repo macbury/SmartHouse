@@ -1,9 +1,0 @@
-{
-  "domain": "generic_hygrostat",
-  "name": "Generic Hygrostat",
-  "documentation": "https://github.com/avdeevsv91/ha_generic_hygrostat",
-  "requirements": [],
-  "dependencies": ["sensor", "switch"],
-  "codeowners": [],
-  "version": "2021.03.04"
-}

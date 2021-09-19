@@ -58,8 +58,8 @@
 # - name: Grafana
 #   import_playbook: playbooks/grafana/grafana.yaml
 
-- name: Errbit
-  import_playbook: playbooks/errbit/errbit.yaml
+#- name: Errbit
+#  import_playbook: playbooks/errbit/errbit.yaml
 
 
 # - name: Speed test help tool
@@ -113,8 +113,8 @@
 # - name: Install simplelogin client
 #   import_playbook: playbooks/simplelogin/simplelogin.yaml
 
-#- name: Install media emby
-#  import_playbook: playbooks/media/media.yaml
+- name: Install media emby
+  import_playbook: playbooks/media/media.yaml
 
 # - name: Install nextcloud
 #   import_playbook: playbooks/nextcloud/nextcloud.yaml
