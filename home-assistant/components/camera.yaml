@@ -1,7 +1,7 @@
 - platform: xiaomi_cloud_map_extractor
   name: Vacuum Map
-  host: 192.168.1.132
-  country: "de"
+  host: 192.168.1.131
+  country: "sg"
   token: !env_var HOME_ASSISTANT_VACUUM_TOKEN
   username: !env_var HOME_ASSISTANT_XIAOMI_USERNAME
   password: !env_var HOME_ASSISTANT_XIAOMI_PASSWORD

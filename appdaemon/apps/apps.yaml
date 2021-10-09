@@ -34,19 +34,6 @@ bedroom_air:
   light: light.bedroom
 
 
-heating_living_room:
-  module: adaptive_room_heating
-  class: AdaptiveRoomHeating
-  calendar: calendar.salon_env
-  outside_temperature: sensor.dark_sky_temperature
-  temperature_sensor: sensor.living_room_temperature
-  family_devices: group.family
-  climate: climate.living_room_thermostat
-  window_door: binary_sensor.balcone_door
-  max_temperature: 25
-  min_temperature: 20
-
-
 heating_kitchen:
   module: adaptive_room_heating
   class: AdaptiveRoomHeating

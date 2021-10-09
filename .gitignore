@@ -122,3 +122,4 @@ home-assistant/*.html
 .env.errbit
 .log.1
 .log.*
+home-assistant/home-assistant.log.*
