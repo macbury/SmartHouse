@@ -13,6 +13,7 @@ climate: !include components/climate.yaml
 # D
 discovery:
 # E
+energy:
 # F
 fan: !include components/fan.yaml
 ffmpeg:
@@ -77,7 +78,7 @@ telegram_bot: !include components/telegram.yaml
 # U
 uilogs:
 updater:
-  include_used_components: true
+utility_meter: !include components/utility_meter.yaml
 # W
 wake_on_lan:
 weather: !include components/weather.yaml

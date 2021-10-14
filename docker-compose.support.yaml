@@ -3,42 +3,6 @@
 version: '3.5'
 
 services:
-  mastodon_web:
-    image: tootsuite/mastodon
-    restart: unless-stopped
-    env_file: .env.mastodon
-    command: bash -c "rm -f /mastodon/tmp/pids/server.pid; bundle exec rails s -p 3000"
-    healthcheck:
-      test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:3000/health || exit 1"]
-    ports:
-      - "127.0.0.1:7730:3000"
-    depends_on:
-      - database
-      - redis
-    volumes:
-      - .docker/data/mastodon:/opt/mastodon/public/system/
-  mastodon_streaming:
-    image: tootsuite/mastodon
-    restart: unless-stopped
-    env_file: .env.mastodon
-    command: node ./streaming
-    healthcheck:
-      test: ["CMD-SHELL", "wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1"]
-    ports:
-      - "127.0.0.1:7740:4000"
-    depends_on:
-      - database
-      - redis
-  mastodon_sidekiq:
-    image: tootsuite/mastodon
-    restart: unless-stopped
-    env_file: .env.mastodon
-    command: bundle exec sidekiq
-    depends_on:
-      - database
-      - redis
-    volumes:
-      - .docker/data/mastodon:/opt/mastodon/public/system/
   synapse:
     image: "matrixdotorg/synapse:latest"
     restart: "unless-stopped"

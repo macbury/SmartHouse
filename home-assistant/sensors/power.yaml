@@ -1,0 +1,15 @@
+- platform: template
+  sensors:
+    correct_energy_consumption:
+      friendly_name: Correct Energy Consumption
+      icon_template: mdi:flash
+      unit_of_measurement: kWh
+      value_template: "{{ states('sensor.power_consumption_in_kwh') | float }}"
+      availability_template: >
+        {% if is_state("sensor.power_consumption_in_kwh", "unavailable") %}
+          false
+        {% elif is_state("sensor.power_consumption_in_kwh", "unknown") %}
+          false
+        {% else %}
+          true
+        {%- endif %}

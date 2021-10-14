@@ -306,26 +306,14 @@
 - id: '1620403076688'
   alias: Switch mosquitto killer in bedroom on before going to sleep
   description: ''
-  trigger:
-  - platform: time
-    at: '22:00'
+  trigger: []
   condition: []
-  action:
-  - type: turn_on
-    device_id: 393d9062483711eba990cfaff72586ab
-    entity_id: switch.mosquitto_killer
-    domain: switch
+  action: []
   mode: single
 - id: '1620403128707'
   alias: Switch off mosquitto killer at morning
   description: ''
-  trigger:
-  - platform: time
-    at: '7:00'
+  trigger: []
   condition: []
-  action:
-  - type: turn_off
-    device_id: 393d9062483711eba990cfaff72586ab
-    entity_id: switch.mosquitto_killer
-    domain: switch
+  action: []
   mode: single

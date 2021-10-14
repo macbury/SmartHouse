@@ -1,0 +1,17 @@
+hourly_energy:
+  source: sensor.correct_energy_consumption
+  name: Hourly Energy
+  cycle: hourly
+daily_energy:
+  source: sensor.correct_energy_consumption
+  name: Daily Energy
+  cycle: daily
+monthly_energy:
+  source: sensor.correct_energy_consumption
+  name: Monthly Energy
+  cycle: monthly
+yearly_energy:
+  source: sensor.correct_energy_consumption
+  name: Yearly Energy
+  cycle: yearly
+
