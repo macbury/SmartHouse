@@ -1,7 +1,7 @@
-living_room_bedroom:
+living_room_humidity:
   module: humidifier
   class: HumidifierController
-  humidifer: fan.living_room_humidifier
+  humidifer: humidifier.living_room_humidifer
   family_devices: group.family
   calendar: calendar.salon_env
 

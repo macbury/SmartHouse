@@ -73,7 +73,7 @@
               entity_id: cover.living_room
     # Wallpaper and stuff
     - type: humidifier
-      entity: humidifier.living_room
+      entity: humidifier.living_room_humidifer
     - break
     - type: entities
       title: Telewizor

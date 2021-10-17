@@ -38,11 +38,11 @@ class HumidifierController(hass.Hass):
 
   def turn_off(self):
     self.log("Turning off humidifier")
-    self.call_service('fan/turn_off', entity_id=self.humidifer_id)
+    self.call_service('humidifer/turn_off', entity_id=self.humidifer_id)
 
   def turn_on(self):
     self.log("Turning on humidifier")
-    self.call_service('fan/turn_on', entity_id=self.humidifer_id)
+    self.call_service('humidifier/turn_on', entity_id=self.humidifer_id)
 
   def adapt(self):
     self.log("Starting adaptation")
