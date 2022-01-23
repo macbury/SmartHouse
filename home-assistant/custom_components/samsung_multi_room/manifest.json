@@ -1,5 +1,6 @@
 {
   "domain": "soundbar",
+  "vetsion": "1.0",
   "name": "SamsungMultiRoom",
   "documentation": "http://macbury.ninja",
   "requirements": [
