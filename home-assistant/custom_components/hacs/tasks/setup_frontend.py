@@ -1,11 +1,10 @@
 """"Starting setup task: Frontend"."""
 from __future__ import annotations
 
-from hacs_frontend import locate_dir
-from hacs_frontend.version import VERSION as FE_VERSION
-
 from ..const import DOMAIN
 from ..enums import HacsStage
+from ..hacs_frontend import locate_dir
+from ..hacs_frontend.version import VERSION as FE_VERSION
 from ..webresponses.frontend import HacsFrontendDev
 from .base import HacsTask
 
@@ -27,7 +26,7 @@ class Task(HacsTask):
 
     stages = [HacsStage.SETUP]
 
-    def execute(self) -> None:
+    async def async_execute(self) -> None:
 
         # Register themes
         self.hass.http.register_static_path(f"{URL_BASE}/themes", self.hass.config.path("themes"))
@@ -48,7 +47,7 @@ class Task(HacsTask):
         )
         if "frontend_extra_module_url" not in self.hass.data:
             self.hass.data["frontend_extra_module_url"] = set()
-        self.hass.data["frontend_extra_module_url"].add("/hacsfiles/iconset.js")
+        self.hass.data["frontend_extra_module_url"].add(f"{URL_BASE}/iconset.js")
 
         # Register www/community for all other files
         use_cache = self.hacs.core.lovelace_mode == "storage"

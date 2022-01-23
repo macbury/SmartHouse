@@ -32,9 +32,7 @@
 
     - type: thermostat
       entity: climate.living_room_thermostat
-    - type: thermostat
-      entity: climate.air_conditioner
-    - break
+    - type: custom:layout-break
     - type: horizontal-stack
       cards:
         - type: entity-button
@@ -74,7 +72,13 @@
     # Wallpaper and stuff
     - type: humidifier
       entity: humidifier.living_room_humidifer
-    - break
+    - type: entities
+      title: Oczyszzczacz
+      show_header_toggle: false
+      entities:
+        - sensor.living_room_aqi
+        - fan.living_room_air_purifier
+    - type: custom:layout-break
     - type: entities
       title: Telewizor
       show_header_toggle: false

@@ -14,4 +14,3 @@ home_yearly_energy:
   source: sensor.energy_spent
   name: Home Yearly Energy
   cycle: yearly
-

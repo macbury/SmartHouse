@@ -2,39 +2,6 @@
 version: '3.5'
 
 services:
-  stonks:
-    restart: unless-stopped
-    image: macbury/mos:latest
-    network_mode: host
-    volumes:
-      - .docker/data/stonks/:/mos/tmp
-    env_file:
-      - '.env.mos'
-    environment:
-      - MASTER_STONKS_DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@0.0.0.0:4101/mos_production?sslmode=disable
-  hub:
-    image: selenium/hub
-    ports:
-      - "4444:4444"
-    environment:
-      GRID_MAX_SESSION: 16
-      GRID_BROWSER_TIMEOUT: 3000
-      GRID_TIMEOUT: 3000
-  firefox:
-    image: selenium/node-firefox-debug
-    depends_on:
-      - hub
-    environment:
-      HUB_PORT_4444_TCP_ADDR: hub
-      HUB_PORT_4444_TCP_PORT: 4444
-      NODE_MAX_SESSION: 16
-      NODE_MAX_INSTANCES: 16
-    volumes:
-      - /dev/shm:/dev/shm
-    ports:
-      - "9001:5900"
-    links:
-      - hub
   tor:
     restart: unless-stopped
     build: ./tor/
@@ -47,19 +14,3 @@ services:
       - '.env.speedtest'
     ports:
       - 6888:80
-  glances:
-    restart: unless-stopped
-    image: nicolargo/glances
-    environment:
-      - GLANCES_OPT=-w
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./glances/:/glances/conf/
-    ports:
-      - 4108:61208
-  vacuum:
-    build: ./vacuum/
-    volumes:
-      - .docker/data/vacuum:/app/public
-    ports:
-      - 10005:3000

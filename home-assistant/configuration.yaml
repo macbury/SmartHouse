@@ -25,7 +25,7 @@ http: !include components/http.yaml
 history:
 hue: !include components/hue.yaml
 # I
-influxdb: !include components/influxdb.yaml
+# influxdb: !include components/influxdb.yaml
 ifttt:
   key: !env_var HOME_ASSISTANT_IFTTT
 input_number: !include components/input_number.yaml

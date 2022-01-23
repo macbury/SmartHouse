@@ -16,24 +16,6 @@ services:
     depends_on:
       - redis
       - database
-  # synapse_telegram:
-  #   image: dock.mau.dev/tulir/mautrix-telegram:v0.9.0
-  #   restart: "unless-stopped"
-  #   ports:
-  #     - 29317:29317
-  #   volumes:
-  #     - ".docker/data/synapse_telegram/:/data"
-  #   depends_on:
-  #     - synapse
-  # synapse_discord:
-  #   image: halfshot/matrix-appservice-discord:v1.0.0
-  #   restart: "unless-stopped"
-  #   ports:
-  #     - '19005:9005'
-  #   volumes:
-  #     - ".docker/data/discord_synapse/:/data"
-  #   depends_on:
-  #     - synapse
   synapse_riot:
     image: "vectorim/element-web:latest"
     restart: "unless-stopped"
@@ -137,15 +119,6 @@ services:
       timeout: 45s
       interval: 30s
       retries: 3
-  influxdb:
-    restart: unless-stopped
-    image: influxdb:1.8.6
-    ports:
-      - "0.0.0.0:18086:8086"
-    volumes:
-      - .docker/data/influxdb:/var/lib/influxdb
-    env_file:
-      - '.env.influxdb'
   database:
     image: postgres:9.6.19-alpine
     restart: unless-stopped
@@ -160,23 +133,6 @@ services:
     volumes:
       - ./postgresql/:/docker-entrypoint-initdb.d/
       - .docker/data/postgresql:/data
-  grafana:
-    image: grafana/grafana:8.0.5
-    restart: unless-stopped
-    user: "root"
-    env_file:
-      - '.env.grafana'
-      - '.env.influxdb'
-      - '.env.local'
-    environment:
-      GF_SERVER_DOMAIN: "${HOME_ASSISTANT_GRAFANA}"
-      GF_SERVER_ROOT_URL: "https://${HOME_ASSISTANT_GRAFANA}/"
-    ports:
-      - "127.0.0.1:4100:3000"
-    depends_on:
-      - influxdb
-    volumes:
-      - .docker/data/graf:/var/lib/grafana
   esphome:
     image: esphome/esphome:latest
     volumes:
@@ -194,29 +150,3 @@ services:
       - .env.monio
     depends_on:
       - database
-  smasher:
-    restart: unless-stopped
-    image: olxia172/checklist.smasher:latest
-    ports:
-      - 14001:3001
-    env_file:
-      - .env.smasher
-    depends_on:
-      - database
-  mongo:
-    image: mongo:4.1
-    network_mode: bridge
-    volumes:
-      - .docker/data/mongo/data:/data/db
-      - .docker/data/mongo/dump:/dump
-  errbit:
-    image: errbit/errbit:latest
-    network_mode: bridge
-    ports:
-      - "127.0.0.1:4666:8080"
-    depends_on:
-      - mongo
-    links:
-      - mongo
-    env_file:
-      - '.env.errbit'

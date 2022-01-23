@@ -18,7 +18,7 @@
   trigger:
     platform: state
     entity_id: person.ola
-    to: 'codesthq'
+    to: 'chargify'
   action:
     - service: notify.gotify
       data:
@@ -29,7 +29,7 @@
   trigger:
     - platform: state
       entity_id: person.arek
-      from: 'codesthq'
+      from: 'chargify'
       to: 'not_home'
   condition:
     - condition: state
@@ -51,7 +51,7 @@
   trigger:
     platform: state
     entity_id: person.arek
-    to: 'codesthq'
+    to: 'chargify'
     for: '00:05:00'
   condition:
     - condition: state
@@ -71,7 +71,7 @@
   condition:
     - condition: state
       entity_id: person.arek
-      state: codesthq
+      state: chargify
     - condition: state
       entity_id: sensor.arek_jedzenie
       state: 'on'
@@ -90,7 +90,7 @@
   condition:
     - condition: state
       entity_id: person.arek
-      state: codesthq
+      state: chargify
   action:
     - service: notify.lunching
       data_template:

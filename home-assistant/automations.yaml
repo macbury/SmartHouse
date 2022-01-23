@@ -317,3 +317,23 @@
   condition: []
   action: []
   mode: single
+- id: '1642450576503'
+  alias: Tag Hulajnoga is scanned
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: cb152ef9-080d-4aae-9cbc-e15a8b241f99
+  condition: []
+  action:
+  - service: notify.mobile_app_arek
+    data:
+      message: command_screen_on
+      title: keep_screen_on
+  - service: notify.mobile_app_arek
+    data:
+      message: command_activity
+      title: adriandp.m365dashboard
+      data:
+        channel: adriandp.m365dashboard
+        tag: android.intent.action.VIEW
+  mode: single
