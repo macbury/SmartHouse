@@ -2,8 +2,6 @@
 import json
 import logging
 
-import voluptuous as vol
-
 from homeassistant.components.websocket_api import event_message
 from homeassistant.const import (
     CONF_ENTITY_ID,
@@ -11,13 +9,15 @@ from homeassistant.const import (
     CONF_ID,
     CONF_STATE,
     CONF_TYPE,
+    EVENT_HOMEASSISTANT_START,
     EVENT_STATE_CHANGED,
 )
-from homeassistant.core import callback
+from homeassistant.core import CoreState, callback
 from homeassistant.helpers import entity_platform, trigger
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity import ToggleEntity
+import voluptuous as vol
 
 from . import NodeRedEntity
 from .const import (
@@ -85,32 +85,25 @@ async def _async_setup_entity(hass, config, async_add_entities, connection):
     async_add_entities([switch_class(hass, config, connection)])
 
 
-class NodeRedSwitch(ToggleEntity, NodeRedEntity):
+class NodeRedSwitch(NodeRedEntity, ToggleEntity):
     """Node-RED Switch class."""
+
+    _component = CONF_SWITCH
+    _bidirectional = True
 
     def __init__(self, hass, config, connection):
         """Initialize the switch."""
         super().__init__(hass, config)
         self._message_id = config[CONF_ID]
         self._connection = connection
-        self._state = config.get(CONF_STATE, True)
-        self._component = CONF_SWITCH
-        self._available = True
+
+        self._attr_state = config.get(CONF_STATE, True)
+        self._attr_icon = self._config.get(CONF_ICON, SWITCH_ICON)
 
     @property
     def is_on(self) -> bool:
         """Return the state of the switch."""
-        return self._state
-
-    @property
-    def icon(self):
-        """Return the icon of the sensor."""
-        return self._config.get(CONF_ICON, SWITCH_ICON)
-
-    @property
-    def available(self) -> bool:
-        """Return True if entity is available."""
-        return self._available
+        return self._attr_state
 
     async def async_turn_off(self, **kwargs) -> None:
         """Turn off the switch."""
@@ -143,32 +136,15 @@ class NodeRedSwitch(ToggleEntity, NodeRedEntity):
             )
         )
 
-    @callback
-    def handle_lost_connection(self):
-        """Set availability to False when disconnected."""
-        self._available = False
-        self.async_write_ha_state()
+    def update_entity_state_attributes(self, msg):
+        """Update the entity state attributes."""
+        super().update_entity_state_attributes(msg)
+        self._attr_state = msg.get(CONF_STATE)
 
-    @callback
-    def handle_discovery_update(self, msg, connection):
-        """Update entity config."""
-        if CONF_REMOVE in msg:
-            # Remove entity
-            self.hass.async_create_task(self.async_remove())
-        else:
-            self._available = True
-            self._state = msg[CONF_STATE]
-            self._config = msg[CONF_CONFIG]
-            self._message_id = msg[CONF_ID]
-            self._connection = connection
-            self._connection.subscriptions[msg[CONF_ID]] = self.handle_lost_connection
-            self.async_write_ha_state()
-
-    async def async_added_to_hass(self) -> None:
-        """Run when entity about to be added to hass."""
-        await super().async_added_to_hass()
-
-        self._connection.subscriptions[self._message_id] = self.handle_lost_connection
+    def update_discovery_config(self, msg):
+        """Update the entity config."""
+        super().update_discovery_config(msg)
+        self._attr_icon = msg[CONF_CONFIG].get(CONF_ICON, SWITCH_ICON)
 
 
 class NodeRedDeviceTrigger(NodeRedSwitch):
@@ -187,19 +163,16 @@ class NodeRedDeviceTrigger(NodeRedSwitch):
         self.remove_device_trigger()
 
     async def add_device_trigger(self):
-        """Validate device trigger."""
+        """Add device trigger."""
 
-        @callback
-        def forward_trigger(event, context=None):
-            """Forward events to websocket."""
-            message = event_message(
-                self._message_id,
-                {"type": EVENT_DEVICE_TRIGGER, "data": event["trigger"]},
-            )
-            self._connection.send_message(
-                json.dumps(message, cls=NodeRedJSONEncoder, allow_nan=False)
+        if self.hass.state == CoreState.running:
+            await self._attach_triggers()
+        else:
+            self._unsub_start = self.hass.bus.async_listen_once(
+                EVENT_HOMEASSISTANT_START, self._attach_triggers
             )
 
+    async def _attach_triggers(self, start_event=None) -> None:
         try:
             trigger_config = await trigger.async_validate_trigger_config(
                 self.hass, [self._trigger_config]
@@ -207,7 +180,7 @@ class NodeRedDeviceTrigger(NodeRedSwitch):
             self._unsubscribe_device_trigger = await trigger.async_initialize_triggers(
                 self.hass,
                 trigger_config,
-                forward_trigger,
+                self.forward_trigger,
                 DOMAIN,
                 DOMAIN,
                 _LOGGER.log,
@@ -216,6 +189,17 @@ class NodeRedDeviceTrigger(NodeRedSwitch):
             _LOGGER.error(
                 f"Error initializing device trigger '{self._node_id}': {str(ex)}",
             )
+
+    @callback
+    def forward_trigger(self, event, context=None):
+        """Forward events to websocket."""
+        message = event_message(
+            self._message_id,
+            {"type": EVENT_DEVICE_TRIGGER, "data": event["trigger"]},
+        )
+        self._connection.send_message(
+            json.dumps(message, cls=NodeRedJSONEncoder, allow_nan=False)
+        )
 
     def remove_device_trigger(self):
         """Remove device trigger."""

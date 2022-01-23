@@ -2,8 +2,6 @@
 import json
 import logging
 
-import voluptuous as vol
-
 from homeassistant.components import device_automation
 from homeassistant.components.device_automation.exceptions import (
     DeviceNotFound,
@@ -31,6 +29,7 @@ from homeassistant.core import callback
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.dispatcher import async_dispatcher_send
 from homeassistant.helpers.typing import HomeAssistantType
+import voluptuous as vol
 
 from .const import (
     CONF_ATTRIBUTES,
@@ -95,7 +94,7 @@ async def websocket_device_action(hass, connection, msg):
         vol.Required(CONF_SERVER_ID): cv.string,
         vol.Required(CONF_NODE_ID): cv.string,
         vol.Optional(CONF_CONFIG, default={}): dict,
-        vol.Optional(CONF_STATE): vol.Any(bool, str, int, float),
+        vol.Optional(CONF_STATE): vol.Any(bool, str, int, float, None),
         vol.Optional(CONF_ATTRIBUTES): dict,
         vol.Optional(CONF_REMOVE): bool,
         vol.Optional(CONF_DEVICE_INFO): dict,
@@ -117,7 +116,7 @@ def websocket_discovery(hass, connection, msg):
         vol.Required(CONF_TYPE): "nodered/entity",
         vol.Required(CONF_SERVER_ID): cv.string,
         vol.Required(CONF_NODE_ID): cv.string,
-        vol.Required(CONF_STATE): vol.Any(bool, str, int, float),
+        vol.Required(CONF_STATE): vol.Any(bool, str, int, float, None),
         vol.Optional(CONF_ATTRIBUTES, default={}): dict,
     }
 )

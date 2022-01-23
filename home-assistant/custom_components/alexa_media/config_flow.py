@@ -380,10 +380,8 @@ class AlexaMediaFlowHandler(config_entries.ConfigFlow):
         )
         if self.login.lastreq:
             self.proxy.last_resp = self.login.lastreq
-            self.proxy.session.cookie_jar.update_cookies(
-                self.login._session.cookie_jar.filter_cookies(
-                    self.proxy._host_url.with_path("/")
-                )
+            self.proxy.session.cookies = self.login._session.cookie_jar.filter_cookies(
+                self.proxy._host_url.with_path("/")
             )
             proxy_url = (
                 self.proxy.access_url().with_path(AUTH_PROXY_PATH) / "resume"
@@ -663,8 +661,10 @@ class AlexaMediaFlowHandler(config_entries.ConfigFlow):
             }
             self.hass.data.setdefault(
                 DATA_ALEXAMEDIA,
-                {"accounts": {}, "config_flows": {}},
+                {"accounts": {}, "config_flows": {}, "notify_service": None},
             )
+            self.hass.data[DATA_ALEXAMEDIA].setdefault("accounts", {})
+            self.hass.data[DATA_ALEXAMEDIA].setdefault("config_flows", {})
             if existing_entry:
                 self.hass.config_entries.async_update_entry(
                     existing_entry, data=self.config
@@ -677,6 +677,12 @@ class AlexaMediaFlowHandler(config_entries.ConfigFlow):
                 self.hass.components.persistent_notification.async_dismiss(
                     f"alexa_media_{slugify(email)}{slugify(login.url[7:])}"
                 )
+                if not self.hass.data[DATA_ALEXAMEDIA]["accounts"].get(
+                    self.config[CONF_EMAIL]
+                ):
+                    self.hass.data[DATA_ALEXAMEDIA]["accounts"][
+                        self.config[CONF_EMAIL]
+                    ] = {}
                 self.hass.data[DATA_ALEXAMEDIA]["accounts"][self.config[CONF_EMAIL]][
                     "login_obj"
                 ] = self.login
