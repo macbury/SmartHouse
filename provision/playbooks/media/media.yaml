@@ -104,6 +104,7 @@
         - { share: 'Movies' }
         - { share: 'MoviesAndTV' }
         - { share: 'Music' }
+        - { share: 'Public' }
     - name: mount movies directory
       mount:
         state: mounted
@@ -115,3 +116,4 @@
         - { share: 'Movies' }
         - { share: 'MoviesAndTV' }
         - { share: 'Music' }
+        - { share: 'Public' }

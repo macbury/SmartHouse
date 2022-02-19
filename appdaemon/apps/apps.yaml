@@ -16,6 +16,7 @@ living_room_air:
   alt_mode_entity: switch.living_room_humidifier
   mode: 'Auto'
   alt_mode: 'Silent'
+  light: light.tv_stand
 
 batteries:
   module: battery

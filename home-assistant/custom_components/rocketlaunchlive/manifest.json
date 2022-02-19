@@ -1,0 +1,17 @@
+{
+    "domain": "rocketlaunchlive",
+    "name": "Rocket Launch Live - Next 5 Launches",
+    "config_flow": true,
+    "documentation": "https://github.com/djtimca/harocketlaunchlive",
+    "requirements": [
+      "rocketlaunchlive==0.0.2"
+    ],
+    "ssdp": [],
+    "zeroconf": [],
+    "homekit": {},
+    "dependencies": [],
+    "codeowners": [
+      "@djtimca"
+    ],
+    "version": "009"
+  }

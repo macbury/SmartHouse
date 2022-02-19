@@ -2,8 +2,10 @@
   "domain": "burze_dzis_net",
   "name": "Burze.dzis.net",
   "documentation": "https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net",
+  "issue_tracker": "https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/issues",
   "dependencies": [],
   "codeowners": ["@PiotrMachowski"],
   "requirements": ["zeep"],
-  "version": "v1.0.3"
+  "version": "v1.0.4",
+  "iot_class": "cloud_polling"
 }

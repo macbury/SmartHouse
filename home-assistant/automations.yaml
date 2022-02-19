@@ -337,3 +337,32 @@
         channel: adriandp.m365dashboard
         tag: android.intent.action.VIEW
   mode: single
+- id: '1645086358331'
+  alias: Open Cover at night
+  description: Open cover at night for better ventilation
+  trigger:
+  - platform: time
+    at: '21:00:00'
+  - platform: state
+    entity_id: light.tv_stand
+    for:
+      hours: 0
+      minutes: 15
+      seconds: 0
+    to: 'off'
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: light.tv_stand
+      state: 'off'
+    - condition: time
+      after: '21:00:00'
+      before: 05:00:00
+  action:
+  - service: cover.set_cover_position
+    data:
+      position: 70
+    target:
+      entity_id: cover.living_room_controller
+  mode: single

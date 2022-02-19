@@ -1,3 +1,4 @@
+
 - type: custom:layout-card
   layout: vertical
   max_columns: 3
@@ -18,14 +19,6 @@
         - type: entity-button
           entity: light.coffee
           icon: mdi:coffee
-    - type: horizontal-stack
-      cards:
-        - type: light
-          entity: light.gatewa_ambient_light
-          icon: mdi:spotlight-beam
-        - type: entity-button
-          entity: script.quick_feed_the_cat
-          icon: mdi:cat
     - type: custom:mini-media-player
       entity: media_player.kitchen
       name: 'Alexa'
@@ -36,9 +29,10 @@
       hide_volume: true
       show_progress: false
       show_source: full
+    - type: custom:layout-break
     - type: entity
       entity: sensor.kitchen_next_timer
-    - break
+    - type: custom:layout-break
     - type: custom:vacuum-card
       entity: vacuum.main_vacuum
       map: camera.vacuum_map
@@ -58,7 +52,7 @@
         - name: Clean bathroom
           service: script.clean_bathroom
           icon: mdi:shower
-    - break
+    - type: custom:layout-break
     - type: horizontal-stack
       cards:
         - type: horizontal-stack

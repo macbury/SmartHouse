@@ -4,7 +4,7 @@ import logging
 
 from homeassistant.util import Throttle
 from homeassistant.util.dt import parse_datetime
-from homeassistant.components.binary_sensor import PLATFORM_SCHEMA, ENTITY_ID_FORMAT
+from homeassistant.components.binary_sensor import DEVICE_CLASS_SAFETY, PLATFORM_SCHEMA, ENTITY_ID_FORMAT
 from homeassistant.const import CONF_NAME, CONF_RADIUS, CONF_API_KEY, ATTR_ATTRIBUTION, CONF_LATITUDE, CONF_LONGITUDE, \
     CONF_SCAN_INTERVAL
 import homeassistant.helpers.config_validation as cv
@@ -121,10 +121,14 @@ class BurzeDzisNetSensor(BinarySensorEntity):
         self._data = None
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         output = dict()
         output[ATTR_ATTRIBUTION] = ATTRIBUTION
         return output
+
+    @property
+    def device_class(self):
+        return DEVICE_CLASS_SAFETY
 
     async def async_update(self):
         await self._updater.async_update()
@@ -142,8 +146,8 @@ class BurzeDzisNetWarningsSensor(BurzeDzisNetSensor):
         return data is not None and data[self._warning_key] > 0
 
     @property
-    def device_state_attributes(self):
-        output = super().device_state_attributes
+    def extra_state_attributes(self):
+        output = super().extra_state_attributes
         if self.is_on:
             data = self._updater.ostrzezenia_pogodowe_output
             output['level'] = data[self._warning_key]
@@ -171,8 +175,8 @@ class BurzeDzisNetStormsNearbySensor(BurzeDzisNetSensor):
         return data is not None and data['liczba'] > 0
 
     @property
-    def device_state_attributes(self):
-        output = super().device_state_attributes
+    def extra_state_attributes(self):
+        output = super().extra_state_attributes
         if self.is_on:
             data = self._updater.szukaj_burzy_output
             output['number'] = data['liczba']

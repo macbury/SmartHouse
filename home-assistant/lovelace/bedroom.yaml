@@ -31,9 +31,7 @@
                 fill: fade
     - type: custom:air-purifier-card
       entity: fan.bedroom_air_purifier
-    - type: humidifier
-      entity: humidifier.bedroom
-    - break
+    - type: custom:layout-break
     - type: horizontal-stack
       cards:
         - type: entity-button
@@ -44,14 +42,6 @@
           entity: switch.giggid
           icon: mdi:account-arrow-left
 
-    - type: horizontal-stack
-      cards:
-        - type: entity-button
-          entity: light.arek_szafka
-          icon: mdi:floor-lamp
-        - type: entity-button
-          entity: light.ola_szafka
-          icon: mdi:floor-lamp
     - type: custom:mini-media-player
       entity: media_player.bedroom
       name: 'Alexa'

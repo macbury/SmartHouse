@@ -50,6 +50,7 @@ matrix: !include components/matrix.yaml
 map:
 mobile_app:
 media_player: !include components/media_player.yaml
+media_source:
 # N
 recorder: !include components/recorder.yaml
 notify: !include components/notify.yaml

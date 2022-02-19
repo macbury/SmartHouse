@@ -7,7 +7,7 @@
         - type: entity-button
           entity: light.bathroom
           icon: mdi:ceiling-light
-    - break
+    - type: custom:layout-break
     - type: horizontal-stack
       cards:
         - type: custom:mini-graph-card
