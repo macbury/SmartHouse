@@ -61,7 +61,6 @@ class AdaptiveRoomHeating(hass.Hass):
   def on_adaptation_callback(self, entity, attribute, old, new, kwargs):
     self.log("State callback triggered for {} from {} to {}. Adapting temperature".format(entity, old, new))
     self.adapt_temperature()
-    
 
   def adapt_temperature(self):
     if self.window_opened():
