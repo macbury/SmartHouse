@@ -77,7 +77,6 @@ tts:
     service_name: google_say
 telegram_bot: !include components/telegram.yaml
 # U
-uilogs:
 updater:
 utility_meter: !include components/utility_meter.yaml
 # W

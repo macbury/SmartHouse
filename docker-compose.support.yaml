@@ -4,7 +4,7 @@ version: '3.5'
 
 services:
   synapse:
-    image: "matrixdotorg/synapse:latest"
+    image: "matrixdotorg/synapse:v1.49.2"
     restart: "unless-stopped"
     ports:
       - "127.0.0.1:18008:8008"

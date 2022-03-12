@@ -16,7 +16,6 @@ from homeassistant.const import ATTR_ATTRIBUTION
 from homeassistant.helpers.entity import async_generate_entity_id
 from homeassistant.helpers.typing import StateType
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
-from homeassistant.util import slugify
 
 from custom_components.yahoofinance import SymbolDefinition, convert_to_float
 from custom_components.yahoofinance.coordinator import YahooSymbolUpdateCoordinator

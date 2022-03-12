@@ -1,3 +1,5 @@
 db_url: !env_var HOME_ASSISTANT_DB_URL
-purge_interval: 100000
-purge_keep_days: 100000
+purge_interval: 1
+purge_keep_days: 31
+auto_purge: true
+commit_interval: 60

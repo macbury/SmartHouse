@@ -47,28 +47,3 @@ heating_kitchen:
   min_temperature: 20
   main_light: input_boolean.pizza
 
-heating_bedroom:
-  module: adaptive_room_heating
-  class: AdaptiveRoomHeating
-  calendar: calendar.sypialnia_env
-  outside_temperature: sensor.dark_sky_temperature
-  temperature_sensor: sensor.corridor_temperature
-  family_devices: group.family
-  climate: climate.bedroom_thermostat
-  window_door: binary_sensor.bedroom_window
-  main_light: input_boolean.giggid
-  max_temperature: 23
-  min_temperature: 22
-
-
-heating_living_room:
-  module: adaptive_room_heating
-  class: AdaptiveRoomHeating
-  calendar: calendar.salon_env
-  outside_temperature: sensor.dark_sky_temperature
-  temperature_sensor: sensor.living_room_temperature
-  family_devices: group.family
-  climate: climate.living_room_thermostat
-  window_door: binary_sensor.balcone_door
-  max_temperature: 25
-  min_temperature: 20

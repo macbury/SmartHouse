@@ -366,3 +366,208 @@
     target:
       entity_id: cover.living_room_controller
   mode: single
+- id: '1646553657957'
+  alias: Inform about wibor change
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.wibor_6m
+  condition: []
+  action:
+  - service: notify.mobile_app_arek
+    data:
+      title: Zmiana w wiborze
+      message: 'Wibor 3M: {{ states.sensor.wibor_3m.state }}% Wibor 6M: {{ states.sensor.wibor_6m.state
+        }}% Wibor 1R: {{ states.sensor.wibor_1r.state }}%
+
+        '
+  mode: single
+- id: '1647105271183'
+  alias: Switch on heating in living room
+  description: Control heating when people are at home
+  trigger:
+  - platform: state
+    entity_id: group.family
+    to: home
+  - platform: time_pattern
+    minutes: /15
+    hours: '*'
+    seconds: '0'
+  - platform: state
+    entity_id: light.tv_stand
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: group.family
+    state: home
+  - condition: or
+    conditions:
+    - condition: time
+      before: '22:00:00'
+      after: 06:00:00
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+      - sat
+      - sun
+    - condition: state
+      entity_id: light.main
+      state: 'on'
+    - condition: state
+      entity_id: light.tv_stand
+      state: 'on'
+  action:
+  - service: climate.turn_on
+    data: {}
+    target:
+      area_id: dda95038c688443c8f09298c9bfaa699
+  mode: single
+- id: '1647105615976'
+  alias: Switch off heating in living room
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: group.family
+    from: home
+  - platform: time_pattern
+    minutes: /15
+    hours: '*'
+    seconds: '0'
+  - platform: state
+    entity_id: light.tv_stand
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: group.family
+    state: away
+  - condition: or
+    conditions:
+    - condition: time
+      before: '23:59:59'
+      after: '22:00:00'
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+      - sat
+      - sun
+    - condition: state
+      entity_id: light.main
+      state: 'off'
+    - condition: state
+      entity_id: light.tv_stand
+      state: 'off'
+    - condition: time
+      before: 06:00:00
+      after: 00:00:00
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+      - sat
+      - sun
+  action:
+  - service: climate.turn_off
+    data: {}
+    target:
+      area_id: dda95038c688443c8f09298c9bfaa699
+  mode: single
+- id: '1647106767817'
+  alias: Switch on heating in bedroom
+  description: Control heating when people are at home
+  trigger:
+  - platform: state
+    entity_id: group.family
+    to: home
+  - platform: time_pattern
+    minutes: /15
+    hours: '*'
+    seconds: '0'
+  - platform: state
+    entity_id: binary_sensor.bedroom_window
+    to: 'off'
+  - platform: state
+    entity_id: switch.bedroom_light
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: group.family
+    state: home
+  - condition: or
+    conditions:
+    - condition: time
+      before: '23:59:59'
+      after: '22:00:00'
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+      - sat
+      - sun
+    - condition: state
+      entity_id: switch.bedroom_light
+      state: 'on'
+  - condition: state
+    entity_id: binary_sensor.bedroom_window
+    state: 'off'
+  action:
+  - service: climate.turn_on
+    data: {}
+    target:
+      area_id: 4cace17378b54e209cb762aca1227055
+  mode: single
+- id: '1647106993795'
+  alias: Switch off heating in bedroom
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: group.family
+    from: home
+  - platform: time_pattern
+    minutes: /15
+    hours: '*'
+    seconds: '0'
+  - platform: state
+    entity_id: binary_sensor.bedroom_window
+    to: 'on'
+  - platform: state
+    entity_id: switch.bedroom_light
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: group.family
+    state: away
+  - condition: or
+    conditions:
+    - condition: time
+      before: '22:00:00'
+      after: 06:00:00
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+      - sat
+      - sun
+    - condition: state
+      entity_id: switch.bedroom_light
+      state: 'off'
+  - condition: state
+    entity_id: binary_sensor.bedroom_window
+    state: 'on'
+  action:
+  - service: climate.turn_off
+    data: {}
+    target:
+      area_id: 4cace17378b54e209cb762aca1227055
+  mode: single

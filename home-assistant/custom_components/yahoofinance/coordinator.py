@@ -5,10 +5,13 @@ https://github.com/iprak/yahoofinance
 """
 from __future__ import annotations
 
+import asyncio
 from datetime import timedelta
+from http import HTTPStatus
 import logging
 from typing import Final
 
+import aiohttp
 import async_timeout
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import event
@@ -165,15 +168,23 @@ class YahooSymbolUpdateCoordinator(DataUpdateCoordinator):
 
     async def get_json(self) -> dict:
         """Get the JSON data."""
-        json = None
+
         url = BASE + ",".join(self._symbols)
         _LOGGER.debug("Requesting data from '%s'", url)
 
-        async with async_timeout.timeout(WEBSESSION_TIMEOUT):
-            response = await self.websession.get(url)
-            json = await response.json()
+        try:
+            async with async_timeout.timeout(WEBSESSION_TIMEOUT):
+                response = await self.websession.get(url)
 
-        return json
+                if response.status == HTTPStatus.OK:
+                    return await response.json()
+
+                _LOGGER.error("Received status %s for %s", response.status, url)
+
+        except (asyncio.TimeoutError, aiohttp.ClientError):
+            _LOGGER.error("Timed out getting data from %s", url)
+
+        return None
 
     async def _async_update(self) -> dict:
         """

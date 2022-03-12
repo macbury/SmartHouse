@@ -54,4 +54,4 @@
       show_source: full
     - type: thermostat
       title: Bedroom
-      entity: climate.bedroom_thermostat
+      entity: climate.bedroom_thermostatic_valve
