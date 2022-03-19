@@ -3,19 +3,18 @@ import datetime
 
 class AdaptiveRoomHeating(hass.Hass):
   def initialize(self):
-    self.listen_state(self.on_adaptation_callback, entity = self.args['outside_temperature'])
-    self.listen_state(self.on_adaptation_callback, entity = self.args['family_devices'])
-    self.listen_state(self.on_adaptation_callback, entity = self.args['calendar'])
+    self.listen_state(self.on_adaptation_callback, entity_id = self.args['outside_temperature'])
+    self.listen_state(self.on_adaptation_callback, entity_id = self.args['family_devices'])
+    self.listen_state(self.on_adaptation_callback, entity_id = self.args['calendar'])
     if 'main_light' in self.args:
       self.log('Has support for main light')
-      self.listen_state(self.on_adaptation_callback, entity = self.args['main_light'])
+      self.listen_state(self.on_adaptation_callback, entity_id = self.args['main_light'])
     else:
       self.log('Dont have support for main light')
-    self.adapt_temperature()
 
     if 'window_door' in self.args:
       self.log('Has support for window or door')
-      self.listen_state(self.on_adaptation_callback, entity = self.args['window_door'])
+      self.listen_state(self.on_adaptation_callback, entity_id = self.args['window_door'])
     else:
       self.log('Dont have support for main light')
     self.adapt_temperature()
@@ -64,15 +63,14 @@ class AdaptiveRoomHeating(hass.Hass):
 
   def adapt_temperature(self):
     if self.window_opened():
+      self.log("Window is opened, stopping heating")
       self.stop_heating()
-    else:
+    elif self.main_light_on():
+      self.log("light is on, start heating")
       self.start_heating()
-
-    if self.main_light_on():
-      self.log("Main light is on, increasing temperature")
-      self.change_preset('none')
-
-    if self.anyone_in_home():
-      self.change_preset('none')
+    elif self.anyone_in_home() and self.heating_time():
+      self.log("Family in home, and heating time")
+      self.start_heating()
     else:
-      self.change_preset('away')
+      self.log("Stopping heating")
+      self.stop_heating()

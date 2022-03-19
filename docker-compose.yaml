@@ -2,7 +2,7 @@
 version: '3.5'
 services:
   home-assistant:
-    image: homeassistant/home-assistant:2022.3.3
+    image: homeassistant/home-assistant:2022.3.5
     extra_hosts:
       - "outside:${HOME_ASSISTANT_IP}"
     env_file:

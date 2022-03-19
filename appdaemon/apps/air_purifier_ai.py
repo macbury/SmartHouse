@@ -7,18 +7,18 @@ class AirPurifierAI(hass.Hass):
     self.fan_id = self.args['fan_id']
     self.update_handle = None
     self.log("Current fan: {}".format(self.fan_id))
-    self.listen_state(self.on_adaptation_callback, entity = self.args['family_devices'])
-    self.listen_state(self.on_adaptation_callback, entity = self.args['calendar'])
+    self.listen_state(self.on_adaptation_callback, entity_id = self.args['family_devices'])
+    self.listen_state(self.on_adaptation_callback, entity_id = self.args['calendar'])
 
     if 'balcone_door' in self.args:
-      self.listen_state(self.on_adaptation_callback, entity = self.args['balcone_door'])
+      self.listen_state(self.on_adaptation_callback, entity_id = self.args['balcone_door'])
 
     if 'light' in self.args:
-      self.listen_state(self.on_adaptation_callback, entity = self.args['light'])
+      self.listen_state(self.on_adaptation_callback, entity_id = self.args['light'])
 
     if 'alt_mode_entity' in self.args:
       self.log("Watching entity: {}".format(self.args['alt_mode_entity']))
-      self.listen_state(self.on_adaptation_callback, entity = self.args['alt_mode_entity'])
+      self.listen_state(self.on_adaptation_callback, entity_id = self.args['alt_mode_entity'])
 
     self.log("Finished configuration")
     self.adapt_air_purifier_mode()

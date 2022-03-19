@@ -6,10 +6,10 @@ class HumidifierController(hass.Hass):
 
     self.humidifer_id = self.args['humidifer']
 
-    self.listen_state(self.on_adaptation_callback, entity = self.args['family_devices'])
-    self.listen_state(self.on_adaptation_callback, entity = self.args['calendar'])
+    self.listen_state(self.on_adaptation_callback, entity_id = self.args['family_devices'])
+    self.listen_state(self.on_adaptation_callback, entity_id = self.args['calendar'])
     if 'balcone_door' in self.args:
-      self.listen_state(self.on_adaptation_callback, entity = self.args['balcone_door'])
+      self.listen_state(self.on_adaptation_callback, entity_id = self.args['balcone_door'])
 
     self.adapt()
 
