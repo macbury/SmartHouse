@@ -3,6 +3,14 @@
 version: '3.5'
 
 services:
+  glances:
+    image: nicolargo/glances:latest-full
+    volumes:
+      - "./glances/glances.conf:/glances/conf/glances.conf"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    network_mode: 'host'
+    environment:
+      - GLANCES_OPT=-w
   synapse:
     image: "matrixdotorg/synapse:v1.49.2"
     restart: "unless-stopped"

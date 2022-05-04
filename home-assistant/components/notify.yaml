@@ -27,3 +27,10 @@
 - name: tortuga
   platform: matrix
   default_room: !env_var HOME_ASSISTANT_MATRIX_ROOM
+
+- name: twitter
+  platform: twitter
+  consumer_key: !env_var TWITTER_API_KEY
+  consumer_secret: !env_var TWITTER_CONSUMER_KEY
+  access_token: !env_var TWITTER_ACCESS_TOKEN
+  access_token_secret: !env_var TWITTER_ACCESS_TOKEN_SECRET

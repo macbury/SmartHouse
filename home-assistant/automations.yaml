@@ -382,3 +382,28 @@
 
         '
   mode: single
+- id: '1648111535506'
+  alias: Remind me to charge my scooter
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: person.arek
+    to: home
+    for:
+      hours: 0
+      minutes: 30
+      seconds: 0
+  - platform: state
+    entity_id: person.arek
+    to: chargify
+    for:
+      hours: 0
+      minutes: 30
+      seconds: 0
+  condition: []
+  action:
+  - service: notify.mobile_app_arek
+    data:
+      title: Podłącz chulajnoge do ładowania
+      message: Podłącz chulajnoge do ładowania
+  mode: single

@@ -1,4 +1,4 @@
-ControlPort 0.0.0.0:9051
+ControlPort 127.0.0.1:9051
 CookieAuthentication 1
 
 CookieAuthFileGroupReadable 1

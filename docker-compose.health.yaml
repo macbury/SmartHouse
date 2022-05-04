@@ -2,12 +2,6 @@
 version: '3.5'
 
 services:
-  tor:
-    restart: unless-stopped
-    build: ./tor/
-    network_mode: host
-    volumes:
-      - .docker/data/tor:/data
   speedtest:
     image: macbury/speedtest:latest
     env_file:
