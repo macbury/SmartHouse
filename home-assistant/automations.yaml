@@ -105,7 +105,7 @@
     entity_id: media_player.tv
   mode: single
 - id: '1601237413600'
-  alias: Pause TV if Arek has a Call (Duplicate)
+  alias: 'Pause TV if Ola has a Call '
   description: ''
   trigger:
   - platform: state
@@ -406,4 +406,38 @@
     data:
       title: Podłącz chulajnoge do ładowania
       message: Podłącz chulajnoge do ładowania
+  mode: single
+- id: '1651729432557'
+  alias: Tweet wibor change
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.wibor_3m
+  condition: []
+  action:
+  - service: notify.twitter
+    data:
+      message: 'Zmiana w #wibor: Wibor 3M: {{ states.sensor.wibor_3m.state }}% Wibor
+        6M: {{ states.sensor.wibor_6m.state }}% Wibor 1R: {{ states.sensor.wibor_1r.state
+        }}%
+
+        '
+  mode: single
+- id: '1652639456782'
+  alias: Close blinds on sunset
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sun.sun
+    to: below_horizon
+    for:
+      hours: 0
+      minutes: 15
+      seconds: 0
+  condition: []
+  action:
+  - service: cover.close_cover
+    data: {}
+    target:
+      entity_id: cover.living_room
   mode: single

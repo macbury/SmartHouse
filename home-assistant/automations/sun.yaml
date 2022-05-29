@@ -1,18 +1,3 @@
-- alias: Close blinds on sunset
-  trigger:
-    - platform: sun
-      event: sunset
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: 'group.family'
-        state: 'home'
-  action:
-    - service: cover.close_cover
-      data:
-        entity_id: cover.living_room
-
 - alias: Switch on tv stand room light 
   trigger:
     - platform: sun

@@ -33,25 +33,12 @@
     - type: entity
       entity: sensor.kitchen_next_timer
     - type: custom:layout-break
-    - type: custom:vacuum-card
+    - type: custom:xiaomi-vacuum-map-card
       entity: vacuum.main_vacuum
-      map: camera.vacuum_map
-      actions:
-        - name: Clean living room
-          service: script.clean_living_room
-          icon: mdi:seat-recline-extra
-        - name: Clean bedroom
-          service: script.clean_bedroom
-          icon: mdi:bed
-        - name: Clean kitchen
-          service: script.clean_kitchen
-          icon: mdi:fridge
-        - name: Clean corridor
-          service: script.clean_corridor
-          icon: mdi:door-closed
-        - name: Clean bathroom
-          service: script.clean_bathroom
-          icon: mdi:shower
+      map_source:
+        camera: camera.vacuum_map
+      calibration_source:
+        camera: true
     - type: custom:layout-break
     - type: horizontal-stack
       cards:
