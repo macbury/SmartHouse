@@ -9,3 +9,4 @@ logs:
   homeassistant.components.switch.xiaomi_aqara: debug
   homeassistant.components.xiaomi_miio: debug
   homeassistant.components.xiaomi_miio.vacuum: debug
+  homeassistant.components.rest_command: debug

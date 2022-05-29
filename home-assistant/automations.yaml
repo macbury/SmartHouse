@@ -441,3 +441,39 @@
     target:
       entity_id: cover.living_room
   mode: single
+- id: '1653834917217'
+  alias: Send location update to node red and then next cloud for arek
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - device_tracker.sm_s10_arek
+    attribute: longitude
+  - platform: state
+    entity_id:
+    - device_tracker.sm_s10_arek
+    attribute: longitude
+  condition: []
+  action:
+  - event: location-updated
+    event_data:
+      entity_id: device_tracker.sm_s10_arek
+  mode: single
+- id: '1653839172809'
+  alias: Send location update to node red and then next cloud for Ola
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - person.ola
+    attribute: longitude
+  - platform: state
+    entity_id:
+    - person.ola
+    attribute: longitude
+  condition: []
+  action:
+  - event: location-updated
+    event_data:
+      entity_id: device_tracker.sm_g8_ola
+  mode: single

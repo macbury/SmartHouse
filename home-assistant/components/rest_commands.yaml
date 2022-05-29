@@ -13,3 +13,4 @@ wake_nexus:
   method: POST
   content_type: 'application/json; charset=utf-8'
   payload: '{"wake": true, "wakeTime": 20}'
+
