@@ -114,7 +114,7 @@ services:
   nextcloud:
     build: ./nextcloud/
     ports:
-      - 4333:80
+      - 4333:9000
     env_file:
       - '.env.nextcloud'
     volumes:
