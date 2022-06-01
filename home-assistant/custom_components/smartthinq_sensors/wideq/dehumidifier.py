@@ -9,7 +9,7 @@ from .const import (
     FEAT_PM10,
     FEAT_PM25,
     FEAT_TARGET_HUMIDITY,
-    STATE_OPTIONITEM_NONE,
+    FEAT_WATER_TANK_FULL,
 )
 from .core_exceptions import InvalidRequestError
 from .device import Device, DeviceStatus
@@ -22,8 +22,9 @@ SUPPORT_DHUM_WIND_STRENGTH = ["SupportWindStrength", "support.airState.windStren
 DHUM_STATE_OPERATION = ["Operation", "airState.operation"]
 DHUM_STATE_OPERATION_MODE = ["OpMode", "airState.opMode"]
 DHUM_STATE_CURRENT_HUM = ["SensorHumidity", "airState.humidity.current"]
-DHUM_STATE_TARGET_HUM = ["DesiredHumidity", "airState.humidity.desired"]
+DHUM_STATE_TARGET_HUM = ["HumidityCfg", "airState.humidity.desired"]
 DHUM_STATE_WIND_STRENGTH = ["WindStrength", "airState.windStrength"]
+DHUM_STATE_TANK_LIGHT = ["WatertankLight", "airState.miscFuncState.watertankLight"]
 DHUM_STATE_PM1 = ["SensorPM1", "airState.quality.PM1"]
 DHUM_STATE_PM10 = ["SensorPM10", "airState.quality.PM10"]
 DHUM_STATE_PM25 = ["SensorPM2", "airState.quality.PM2"]
@@ -150,6 +151,12 @@ class DeHumidifierDevice(Device):
         op = DHumOp.ON if turn_on else DHumOp.OFF
         keys = self._get_cmd_keys(CMD_STATE_OPERATION)
         op_value = self.model_info.enum_value(keys[2], op.value)
+        if self._should_poll:
+            # different power command for ThinQ1 devices
+            cmd = "Start" if turn_on else "Stop"
+            await self.set(keys[0], keys[2], key=None, value=cmd)
+            self._status.update_status(keys[2], op_value)
+            return
         await self.set(keys[0], keys[1], key=keys[2], value=op_value)
 
     async def set_op_mode(self, mode):
@@ -197,7 +204,7 @@ class DeHumidifierDevice(Device):
         await super().set(
             ctrl_key, command, key=key, value=value, data=data, ctrl_path=ctrl_path
         )
-        if self._status:
+        if key is not None and self._status:
             self._status.update_status(key, value)
 
     def reset_status(self):
@@ -313,6 +320,13 @@ class DeHumidifierStatus(DeviceStatus):
         return self._update_feature(FEAT_TARGET_HUMIDITY, value, False)
 
     @property
+    def water_tank_full(self):
+        value = self.lookup_enum(DHUM_STATE_TANK_LIGHT)
+        if value is None:
+            return None
+        return self._update_feature(FEAT_WATER_TANK_FULL, value)
+
+    @property
     def pm1(self):
         value = self.lookup_range(DHUM_STATE_PM1)
         if value is None:
@@ -337,7 +351,5 @@ class DeHumidifierStatus(DeviceStatus):
         _ = [
             self.current_humidity,
             self.target_humidity,
-            self.pm1,
-            self.pm10,
-            self.pm25,
+            self.water_tank_full,
         ]
