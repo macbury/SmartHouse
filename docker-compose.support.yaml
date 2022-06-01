@@ -12,7 +12,7 @@ services:
     environment:
       - GLANCES_OPT=-w
   synapse:
-    image: "matrixdotorg/synapse:v1.49.2"
+    image: "matrixdotorg/synapse:v1.60.0"
     restart: "unless-stopped"
     ports:
       - "127.0.0.1:18008:8008"
@@ -128,8 +128,10 @@ services:
       interval: 30s
       retries: 3
   database:
-    image: postgres:9.6.19-alpine
+    image: postgres:14.3-alpine3.16
     restart: unless-stopped
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: "md5"
     security_opt:
       - seccomp:unconfined
     ports:
@@ -139,8 +141,7 @@ services:
     env_file:
       - '.env.postgresql'
     volumes:
-      - ./postgresql/:/docker-entrypoint-initdb.d/
-      - .docker/data/postgresql:/data
+      - .docker/data/next_postgresql:/data
   esphome:
     image: esphome/esphome:latest
     volumes:
