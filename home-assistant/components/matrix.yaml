@@ -1,7 +1,7 @@
 homeserver: !env_var HOME_ASSISTANT_MATRIX_SERVER
 username: !env_var HOME_ASSISTANT_MATRIX_USER
 password: !env_var HOME_ASSISTANT_MATRIX_PASSWORD
-rooms: [!env_var HOME_ASSISTANT_MATRIX_ROOM]
+rooms: [!env_var HOME_ASSISTANT_MATRIX_ROOM, !env_var HOME_ASSISTANT_DIETLY_MATRIX_ROOM]
 commands:
   - expression: "tv (?P<magnet>.*)"
     name: download_tv

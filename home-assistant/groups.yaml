@@ -2,3 +2,9 @@ family:
   entities:
     - person.arek
     - person.ola
+
+windows:
+  entities:
+    - binary_sensor.bedroom_window
+    - binary_sensor.living_room_window
+    - binary_sensor.balcone_door

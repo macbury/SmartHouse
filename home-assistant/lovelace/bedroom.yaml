@@ -29,6 +29,62 @@
               show:
                 points: true
                 fill: fade
+    - type: horizontal-stack
+      cards:
+        - type: horizontal-stack
+          cards:
+            - type: custom:mini-graph-card
+              entities:
+                - sensor.jakosc_powietrza_volatile_organic_compound
+              line_color: '#00838f'
+              hours_to_show: 24
+              points_per_hour: 1
+              animate: true
+              hour24: true
+              extrema: true
+              show:
+                points: true
+                fill: fade
+            - type: custom:mini-graph-card
+              entities:
+                - sensor.corridor_pressure
+              line_color: '#558b2f'
+              hours_to_show: 24
+              points_per_hour: 1
+              animate: true
+              hour24: true
+              show:
+                points: true
+                fill: fade
+
+    - type: horizontal-stack
+      cards:
+        - type: horizontal-stack
+          cards:
+            - type: custom:mini-graph-card
+              entities:
+                - sensor.jakosc_powietrza_carbon_dioxide
+              line_color: '#f9a825'
+              hours_to_show: 24
+              points_per_hour: 1
+              animate: true
+              hour24: true
+              extrema: true
+              show:
+                points: true
+                fill: fade
+            - type: custom:mini-graph-card
+              entities:
+                - sensor.jakosc_powietrza_formaldehyde
+              line_color: '#558b2f'
+              hours_to_show: 24
+              points_per_hour: 1
+              animate: true
+              hour24: true
+              show:
+                points: true
+                fill: fade
+
     - type: custom:air-purifier-card
       entity: fan.bedroom_air_purifier
     - type: custom:layout-break

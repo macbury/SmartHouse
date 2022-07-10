@@ -1,6 +1,7 @@
 auth_providers:
   - type: homeassistant
 name: !env_var HOME_ASSISTANT_NAME
+currency: PLN
 latitude: !env_var HOME_ASSISTANT_LAT
 longitude: !env_var HOME_ASSISTANT_LNG
 elevation: !env_var HOME_ASSISTANT_ELEVATION

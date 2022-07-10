@@ -477,3 +477,90 @@
     event_data:
       entity_id: device_tracker.sm_g8_ola
   mode: single
+- id: '1655194812809'
+  alias: Notify Arek if whosoff is not filled if he visits office
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - person.arek
+    to: chargify
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+  condition:
+  - condition: state
+    entity_id: binary_sensor.arek_works_from_office_today
+    state: 'off'
+  action:
+  - service: notify.mobile_app_arek
+    data:
+      message: Wypełnij whosoff
+      title: Whosoff
+  mode: single
+- id: '1656338307544'
+  alias: Switch off air condition if nobody home
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - group.family
+    from: home
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+  condition: []
+  action:
+  - service: climate.turn_off
+    data: {}
+    target:
+      entity_id: climate.air_condition
+  mode: single
+- id: '1656349030861'
+  alias: 'Tell me about bottle on balcony '
+  description: ''
+  trigger:
+  - platform: time
+    at: '19:30:00'
+  condition:
+  - condition: state
+    entity_id: group.family
+    state: home
+  action:
+  - service: notify.alexa_media_living_room
+    data:
+      data:
+        type: announce
+        method: all
+      message: Hey, Ola check the bottle with water for flowers.
+  - service: notify.all
+    data:
+      message: Sprawdź butle z wodą na balkonie
+  mode: single
+- id: '1656418899672'
+  alias: Outside is colder than inside
+  description: ''
+  trigger:
+  - platform: template
+    value_template: '{% if((states.sensor.mean_temperature.state | float) - (states.sensor.balcone_temperature.state
+      | float) > 1.0) %}true{% endif %}'
+  condition:
+  - condition: state
+    entity_id: climate.air_condition
+    state: cool
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+  - condition: state
+    entity_id: group.family
+    state: home
+  action:
+  - service: notify.all
+    data:
+      message: Temperatura na zewnątrz({{states.sensor.balcone_temperature.state}}
+        C) jest mniejsza niż w salonie({{ states.sensor.mean_temperature.state }}
+        C), można otworzyć okna
+  mode: single

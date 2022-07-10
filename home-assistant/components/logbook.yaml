@@ -9,6 +9,9 @@ include:
     - binary_sensor.hall_pir
   domains:
     - switch
+    - binary_sensor
+    - climate
+    - zone
     - media_player
     - light
     - device_tracker

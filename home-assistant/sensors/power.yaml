@@ -4,3 +4,8 @@
   unit_prefix: k
   round: 4
 
+- platform: integration
+  source: sensor.cool_as_ice_energy_current
+  name: "Air condition energy used"
+  unit_prefix: k
+  round: 4

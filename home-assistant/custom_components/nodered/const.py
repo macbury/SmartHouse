@@ -2,7 +2,7 @@
 # Base component constants
 DOMAIN = "nodered"
 DOMAIN_DATA = f"{DOMAIN}_data"
-VERSION = "1.0.8"
+VERSION = "1.0.9"
 
 ISSUE_URL = "https://github.com/zachowj/hass-node-red/issues"
 
@@ -40,7 +40,7 @@ NODERED_ENTITY = "nodered_entity_{}_{}"
 SERVICE_TRIGGER = "trigger"
 
 # Defaults
-NAME = DOMAIN
+NAME = "Node-RED Companion"
 SWITCH_ICON = "mdi:electric-switch-closed"
 
 STARTUP_MESSAGE = f"""

@@ -6,6 +6,7 @@
     - sensor.living_room_aqi
     - sensor.bedroom_aqi
 
+
 - platform: min_max
   name: mean_humidity
   type: mean
@@ -23,25 +24,28 @@
   entity_ids:
     - sensor.living_room_humidity
     - sensor.living_room_humidifier_humidity
-
+    - sensor.jakosc_powietrza_humidity
 - platform: min_max
   name: Mean Living Room Temperature
   type: mean
   entity_ids:
     - sensor.living_room_humidifier_temperature
     - sensor.living_room_temperature
+    - sensor.cool_as_ice_room_temperature
+    - sensor.living_room_thermostat_air_temperature_2
 
 - platform: min_max
   name: mean_temperature
   type: mean
   entity_ids:
-    - sensor.living_room_humidifier_temperature
     - sensor.living_room_temperature
     - sensor.bathroom_temperature
     - sensor.bedroom_temperature
     - sensor.corridor_temperature
     - sensor.kitchen_temperature
-
+    - sensor.cool_as_ice_room_temperature
+    - sensor.living_room_thermostat_air_temperature_2
+    - sensor.bedroom_thermostat_air_temperature_2
 - platform: min_max
   name: mean_pressure
   type: mean
