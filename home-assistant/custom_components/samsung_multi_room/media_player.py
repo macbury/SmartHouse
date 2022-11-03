@@ -27,7 +27,7 @@ from homeassistant.components.media_player.const import (
 )
 
 from homeassistant.components.media_player import (
-  MediaPlayerDevice
+  MediaPlayerEntity
 )
 
 from homeassistant.const import (
@@ -125,7 +125,7 @@ class MultiRoomApi():
   async def set_source(self, source):
     return await self._exec_set('SetFunc', 'function', source)
 
-class MultiRoomDevice(MediaPlayerDevice):
+class MultiRoomDevice(MediaPlayerEntity):
   def __init__(self, name, max_volume, api):
     _LOGGER.info('Initializing MultiRoomDevice')
     self._name = name
