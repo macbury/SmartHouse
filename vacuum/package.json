@@ -5,6 +5,6 @@
   "dependencies": {
     "canvas": "^2.5.0",
     "connect-multiparty": "^2.2.0",
-    "express": "^4.17.0"
+    "express": "^4.17.3"
   }
 }
